@@ -1,0 +1,1873 @@
+<!DOCTYPE html>
+<html lang="en" class="yui-overrride">
+<head>
+    <meta charset="utf-8">
+    <title>../src/traviso/EngineView.js - traviso.js</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700' rel='stylesheet' type='text/css'>
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            <h1 class="blue-main-title">traviso.js</h1>
+        </div>
+        <div class="yui3-u-1-4 version project-version">
+            API Docs for: 0.0.1
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/EngineView.html">EngineView</a></li>
+            
+                <li><a href="../classes/MoveEngine.html">MoveEngine</a></li>
+            
+                <li><a href="../classes/ObjectView.html">ObjectView</a></li>
+            
+                <li><a href="../classes/PathFinding.html">PathFinding</a></li>
+            
+                <li><a href="../classes/TileView.html">TileView</a></li>
+            
+                <li><a href="../classes/TRAVISO.html">TRAVISO</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/TRAVISO.html">TRAVISO</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: ../src/traviso/EngineView.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+/**
+ * @author Hakan Karlidag - @axaq
+ */
+
+
+/**
+ * Main display object container class to hold all views
+ * within the engine and all map related logic
+ *
+ * @class EngineView
+ * @extends DisplayObjectContainer
+ * @constructor
+ * @param config {Object} configuration object for the isometric engine instance
+ * @param config.mapDataPath {String} the path to the xml file that defines map data, required
+ */
+TRAVISO.EngineView = function(config)
+{
+    PIXI.DisplayObjectContainer.call(this);
+    
+    /**
+     * Configuration object for the isometric engine instance
+     * 
+     * @property {Object} config
+     * @property {Number} config.minScale=0.5 mimimum scale that the DisplayObjectContainer for the map can get, default 0.5
+     * @property {Number} config.maxScale=1.5 maximum scale that the DisplayObjectContainer for the map can get, default 1.5
+     * @property {Number} config.minZoom=-1 minimum zoom level, engine defined
+     * @property {Number} config.maxZoom=1 maximum zoom level, engine defined
+     * @property {Number} config.zoomIncrement=0.5 zoom increment amount calculated by the engine according to user settings, default 0.5
+     * @property {Number} config.numberOfZoomLevels=5 used to calculate zoom increment, defined by user, default 5
+     * @property {Number} config.initialZoomLevel=0 initial zoom level of the map, default 0
+     * @property {Number} config.instantCameraZoom=false specifies wheather to zoom instantly or with a tween animation, default false
+     * 
+     * @property {Number} config.tileHeight=74 height of a single isometric tile, default 74
+     * @property {Number} config.isoAngle=30 the angle between the topleft edge and the horizontal diagonal of a isometric quad, default 30
+     * 
+     * @property {Object} config.initialPositionFrame frame to position the engine, default { x : 0, y : 0, w : 800, h : 600 }
+     * @property {Number} config.initialPositionFrame.x x position of the engine, default 0
+     * @property {Number} config.initialPositionFrame.y y position of the engine, default 0
+     * @property {Number} config.initialPositionFrame.w width of the engine, default 800
+     * @property {Number} config.initialPositionFrame.h height of the engine, default 600
+     * 
+     * @property {Number} config.pathFindingType=TRAVISO.pfAlgorithms.ASTAR_ORTHOGONAL the type of path finding algorithm two use, default TRAVISO.pfAlgorithms.ASTAR_ORTHOGONAL
+     * 
+     * @property {Boolean} config.followCharacter=true defines if the camera will follow the current controllable or not, default true
+     * @property {Boolean} config.instantCameraRelocation=false specifies wheather the camera moves instantly or with a tween animation to the target location, default false
+     * @property {Boolean} config.instantObjectRelocation=false specifies wheather the map-objects will be moved to target location instantly or with an animation, default false
+     * 
+     * @property {Boolean} config.highlightPath=true highlight the path when the current controllable moves on the map, default true
+     * @property {Boolean} config.highlightTargetTile=true highlight the target tile when the current controllable moves on the map, default true
+     * @property {Boolean} config.tileHighlightAnimated=true animate the tile highlights, default true
+     * 
+     * @property {Boolean} config.mapDraggable=true enable dragging the map with touch-and-touchmove or mousedown-and-mousemove on the map, default true
+     * 
+     * @property {Number(Hexadecimal)} config.backgroundColor=null background color, if defined the engine will create a solid colored background for the map, default null
+     * @property {Boolean} config.useMask=false creates a mask using the position frame defined by &#x27;initialPositionFrame&#x27; property or the &#x27;posFrame&#x27; parameter that is passed to &#x27;repositionContent&#x27; method, default false
+     * 
+     * @property {String} config.mapDataPath the path to the xml file that defines map data, required
+     * @property {Array(String)} config.assetsToLoad=null array of paths to the assets that are desired to be loaded by traviso, no need to use if assets are already loaded to PIXI cache, default null 
+     * 
+     * @property {Object} config.callbackScope=null the scope to apply when calling callback functions, default null
+     * @property {Function} config.engineInstanceReadyCallback=null callback function that will be called once everything is loaded and engine instance is ready, default null
+     * @property {Function} config.tileSelectCallback=null callback function that will be called when a tile is selected, default null
+     * @property {Function} config.objectSelectCallback=null callback function that will be called when a tile with an interactive map-object on it is selected, default null
+     * @property {Function} config.objectReachedDestinationCallback=null callback function that will be called when any moving object reaches its destination, default null
+     * @property {Function} config.otherObjectsOnTheNextTileCallback=null callback function that will be called when any moving object is in move and there are other objects on the next tile, default null
+     * 
+     * @private
+     */
+
+    this.config = config || { };
+    
+    // set the properties that are true by default when not defined by the user
+    this.config.followCharacter = TRAVISO.existy(this.config.followCharacter) ? this.config.followCharacter : true;
+    this.config.highlightPath = TRAVISO.existy(this.config.highlightPath) ? this.config.highlightPath : true;
+    this.config.highlightTargetTile = TRAVISO.existy(this.config.highlightTargetTile) ? this.config.highlightTargetTile : true;
+    this.config.tileHighlightAnimated = TRAVISO.existy(this.config.tileHighlightAnimated) ? this.config.tileHighlightAnimated : true;
+    this.config.mapDraggable = TRAVISO.existy(this.config.mapDraggable) ? this.config.mapDraggable : true;
+    
+    this.setZoomParameters(this.config.minScale, this.config.maxScale, this.config.numberOfZoomLevels, this.config.initialZoomLevel, this.config.instantCameraZoom);
+    
+    /**
+     * height of a single isometric tile
+     * @property {Number} TILE_H
+     * @default 74
+     * @private
+     */
+    /**
+     * width of a single isometric tile
+     * @property {Number} TILE_W
+     * @default 128
+     * @private
+     */
+    /**
+     * the angle between the topleft edge and the horizontal diagonal of a isometric quad
+     * @property {Number} ISO_ANGLE 
+     * @default 30
+     * @private
+     */
+    /**
+     * half-height of a single isometric tile
+     * @property {Number} TILE_HALF_H 
+     * @default 37
+     * @private
+     */
+    /**
+     * half-width of a single isometric tile
+     * @property {Number} TILE_HALF_W 
+     * @default 64
+     * @private
+     */
+    /**
+     * length of a single isometric tile&#x27;s edge
+     * @property {Number} TILE_ISO_EDGE_L 
+     * @default 74
+     * @private
+     */
+    this.TILE_H = this.config.tileHeight || 74;
+    this.ISO_ANGLE = this.config.isoAngle || 30;
+    this.TILE_HALF_H = this.TILE_H / 2;
+    this.TILE_HALF_W = this.TILE_HALF_H * Math.tan((90 - this.ISO_ANGLE) * Math.PI / 180);
+    this.TILE_W = this.TILE_HALF_W * 2;
+    this.TILE_ISO_EDGE_L = this.TILE_H;
+    
+    
+    /** 
+     * specifies wheather to zoom instantly or with a tween animation
+     * @property {Boolean} instantCameraZoom 
+     * @default false
+     */
+    /** 
+     * defines if the camera will follow the current controllable or not
+     * @property {Boolean} followCharacter 
+     * @default true
+     */
+    /** 
+     * specifies wheather the camera moves instantly or with a tween animation to the target location
+     * @property {Boolean} instantCameraRelocation 
+     * @default false
+     */
+    /** 
+     * specifies wheather the map-objects will be moved to target location instantly or with an animation
+     * @property {Boolean} instantObjectRelocation 
+     * @default false
+     */
+    /** 
+     * highlight the path when the current controllable moves on the map
+     * @property {Boolean} highlightPath 
+     * @default true
+     */
+    /** 
+     * highlight the target tile when the current controllable moves on the map
+     * @property {Boolean} highlightTargetTile 
+     * @default true
+     */
+    /** 
+     * animate the tile highlights
+     * @property {Boolean} tileHighlightAnimated 
+     * @default true
+     */
+    /** 
+     * enable dragging the map with touch-and-touchmove or mousedown-and-mousemove on the map
+     * @property {Boolean} mapDraggable 
+     * @default true
+     */
+    /** 
+     * the scope to apply when calling callback functions
+     * @property {Object} callbackScope 
+     * @default null
+     */
+    /** 
+     * callback function that will be called once everything is loaded and engine instance is ready
+     * @property {Function} engineInstanceReadyCallback 
+     * @default null
+     */
+    /** 
+     * callback function that will be called when a tile is selected
+     * @property {Function} tileSelectCallback 
+     * @default null
+     */
+    /** 
+     * callback function that will be called when a tile with an interactive map-object on it is selected
+     * @property {Function} objectSelectCallback 
+     * @default null
+     */
+    /** 
+     * callback function that will be called when any moving object reaches its destination
+     * @property {Function} objectReachedDestinationCallback 
+     * @default null
+     */
+    /** 
+     * callback function that will be called when any moving object is in move and there are other objects on the next tile
+     * @property {Function} otherObjectsOnTheNextTileCallback 
+     * @default null
+     */
+    
+    var scope = this;
+    TRAVISO.loadAssetsAndData(this, function()
+    {
+        scope.onAllAssetsLoaded();
+    });
+};
+
+// constructor
+TRAVISO.EngineView.constructor = TRAVISO.EngineView;
+TRAVISO.EngineView.prototype = Object.create(PIXI.DisplayObjectContainer.prototype);
+
+TRAVISO.EngineView.prototype.config = this.config;
+
+
+
+/**
+ * This method is being called whenever all the assets are
+ * loaded and engine is ready to initialize
+ *
+ * @method onAllAssetsLoaded
+ * @private
+ */
+TRAVISO.EngineView.prototype.onAllAssetsLoaded = function()
+{
+    TRAVISO.trace(&quot;onAllAssetsLoaded&quot;);
+    
+    /**
+     * MoveEngine instance to handle all animations and tweens
+     * @property {MoveEngine} moveEngine
+     * @private
+     */
+    
+    this.moveEngine = new TRAVISO.MoveEngine(this);
+    
+    /**
+     * Current scale of the map&#x27;s display object
+     * @property {Number} currentScale
+     * @private
+     */
+    /**
+     * Current zoom amount of the map
+     * @property {Number} currentZoom
+     * @private
+     */
+    
+    this.currentScale = 1.0;
+    this.currentZoom = 0;
+    
+    this.posFrame = this.config.initialPositionFrame || { x : 0, y : 0, w : 800, h : 600 };
+
+    this.externalCenter =
+    {
+        x : this.posFrame.w &gt;&gt; 1,
+        y : this.posFrame.h &gt;&gt; 1
+    };
+    
+    
+    this.createMap();
+
+    this.repositionContent(this.config.initialPositionFrame);
+    
+    this.enableInteraction();
+    
+    if (this.config.engineInstanceReadyCallback) { this.config.engineInstanceReadyCallback.call(this.config.callbackScope, this); }
+};
+
+/**
+ * Creates the map and setups necessary parameters for future map calculations 
+ *
+ * @method createMap
+ * @private
+ */
+TRAVISO.EngineView.prototype.createMap = function()
+{
+    // create background
+	if (this.config.backgroundColor)
+    {
+    	/**
+	     * Solid colored background
+	     * @property {PIXI.Graphics} bg
+	     * @private
+	     */
+        this.bg = new PIXI.Graphics();
+        this.addChild(this.bg);
+    }
+    
+    // create mask
+    if (this.config.useMask)
+    {
+    	/**
+	     * Mask graphics for the mask
+	     * @property {PIXI.Graphics} mapMask
+	     * @private
+	     */
+        this.mapMask = new PIXI.Graphics();
+        this.addChild(this.mapMask);
+    }
+    
+    /**
+     * Display object for the map visuals
+     * @property {PIXI.DisplayObjectContainer} mapContainer
+     * @private
+     */
+    /**
+     * Display object for the ground/terrain visuals
+     * @property {PIXI.DisplayObjectContainer} groundContainer
+     * @private
+     */
+    /**
+     * Display object for the map-object visuals
+     * @property {PIXI.DisplayObjectContainer} objContainer
+     * @private
+     */
+    // create containers for visual map elements
+    this.mapContainer = new PIXI.DisplayObjectContainer();
+	this.addChild(this.mapContainer);
+    
+    // Define two layers of maps
+	// One for the world and one for the objects (static/dynamic) over it
+	// This enables us not to update the whole world in every move but instead just update the object depths over it 
+	
+	this.groundContainer = new PIXI.DisplayObjectContainer();
+	this.mapContainer.addChild(this.groundContainer);
+	
+	this.objContainer = new PIXI.DisplayObjectContainer();
+	this.mapContainer.addChild(this.objContainer);
+	
+	var groundMapData = this.mapData.groundMapData;
+    var objectsMapData = this.mapData.objectsMapData;
+    
+    var initialControllableLocation = this.mapData.initialControllableLocation;
+    
+    // set map size
+    
+    /**
+     * Number of rows in the isometric map
+     * @property {Number} mapSizeR 
+     */
+    this.mapSizeR = groundMapData.length;
+    /**
+     * Number of columns in the isometric map
+     * @property {Number} mapSizeC 
+     */
+    this.mapSizeC = groundMapData[0].length;
+	
+	// add ground image first if it is defined
+	var groundImageSprite;
+	if (this.mapData.singleGroundImagePath)
+	{
+	    groundImageSprite = new PIXI.Sprite.fromFrame(this.mapData.singleGroundImagePath);
+	    this.groundContainer.addChild(groundImageSprite);
+	    
+	    groundImageSprite.scale.set(this.mapData.singleGroundImageScale);
+	}
+	
+	// create arrays to hold tiles and objects
+	/**
+     * Array to hold map-tiles
+     * @property {Array(Array(TileView))} tileArray
+     * @private
+     */
+	this.tileArray = [];
+	/**
+     * Array to hold map-objects
+     * @property {Array(Array(ObjectView))} objArray
+     * @private
+     */
+	this.objArray = [];
+	var i, j;
+	for (i = 0; i &lt; this.mapSizeR; i++)
+	{
+		this.tileArray[i] = [];
+		this.objArray[i] = [];
+	    for (j = 0; j &lt; this.mapSizeC; j++)
+	    {
+	    	this.tileArray[i][j] = null;
+	    	this.objArray[i][j] = null;
+	    }
+	}
+	
+	
+	// Map data is being sent to path finding and after this point 
+	// its content will be different acc to the pathfinding algorithm.
+	// It is still being stored in engine.mapData but you must be aware
+	// of the structure if you want to use it after this point.
+	/**
+     * PathFinding instance to handle all path finding logic
+     * @property {PathFinding} pathFinding
+     * @private
+     */
+	this.pathFinding = new TRAVISO.PathFinding(groundMapData, objectsMapData, this.config.pathFinding);
+	
+	var tile;
+	for (i = 0; i &lt; this.mapSizeR; i++)
+	{
+	    for (j = this.mapSizeC-1; j &gt;= 0; j--)
+	    {
+	    	this.tileArray[i][j] = null;
+	    	if (groundMapData[i][j].type)
+	    	{
+		    	tile = new TRAVISO.TileView(this, groundMapData[i][j].type);
+		    	tile.position.x = this.getTilePosXFor(i,j);
+		    	tile.position.y = this.getTilePosYFor(i,j);
+		    	tile.mapPos = { c:j, r:i };
+		    	this.tileArray[i][j] = tile;
+		    	this.groundContainer.addChild(tile);
+		    	
+		    	
+		    	if (!tile.isMovableTo)
+		    	{
+		    		this.pathFinding.setCell(j,i,0);
+		    	}
+		    }
+		    else
+		    {
+		    	this.pathFinding.setCell(j,i,0);
+		    }
+		}
+	}
+	
+	/**
+     * Current controllable map-object that will be the default object to move in user interactions 
+     * @property {ObjectView} currentControllable
+     * @private
+     */
+    
+	var obj;
+	for (i = 0; i &lt; this.mapSizeR; i++)
+	{
+	    for (j = this.mapSizeC-1; j &gt;= 0; j--)
+	    {
+	    	this.objArray[i][j] = null;
+	    	if (objectsMapData[i][j].type)
+	    	{
+		    	obj = new TRAVISO.ObjectView(this, objectsMapData[i][j].type);
+		    	obj.position.x = this.getTilePosXFor(i,j);
+		    	obj.position.y = this.getTilePosYFor(i,j) + this.TILE_HALF_H;
+		    	obj.mapPos = { c:j, r:i };
+		    	
+		    	this.objContainer.addChild(obj);
+		    	
+		    	this.addObjRefToLocation(obj, obj.mapPos);
+		    	
+		    	if (initialControllableLocation &amp;&amp; initialControllableLocation.c === j &amp;&amp; initialControllableLocation.r === i)
+		    	{
+		    		this.currentControllable = obj;
+		    	}
+		    }
+		}
+	}
+	
+	// cacheAsBitmap: for now this creates problem with tile highlights
+	// this.groundContainer.cacheAsBitmap = true;
+	
+	/**
+     * Vertice points of the map
+     * @property {Array(Array(Number))} mapVertices
+     * @private
+     */
+	this.mapVertices = [
+						[this.getTilePosXFor(0,0) - this.TILE_HALF_W, this.getTilePosYFor(0,0)],
+						[this.getTilePosXFor(0,this.mapSizeC - 1), this.getTilePosYFor(0,this.mapSizeC - 1) - this.TILE_HALF_H],
+						[this.getTilePosXFor(this.mapSizeR - 1,this.mapSizeC - 1) + this.TILE_HALF_W, this.getTilePosYFor(this.mapSizeR - 1,this.mapSizeC - 1)],
+						[this.getTilePosXFor(this.mapSizeR - 1,0), this.getTilePosYFor(this.mapSizeR - 1,0) + this.TILE_HALF_H]
+					];
+	
+	/**
+     * Total width of all ground tiles  
+     * @property {Number} mapVisualWidthReal
+     * @private
+     */
+    /**
+     * Total height of all ground tiles  
+     * @property {Number} mapVisualHeightReal
+     * @private
+     */ 	
+	this.mapVisualWidthReal = this.getTilePosXFor(this.mapSizeR - 1,this.mapSizeC - 1) - this.getTilePosXFor(0,0);
+	this.mapVisualHeightReal = this.getTilePosYFor(this.mapSizeR - 1,0) - this.getTilePosYFor(0,this.mapSizeC - 1);
+	
+	if (groundImageSprite)
+	{
+	    groundImageSprite.position.x = this.mapVertices[0][0] + this.TILE_HALF_W + (this.mapVisualWidthReal -  groundImageSprite.width) / 2;
+	    groundImageSprite.position.y = this.mapVertices[1][1] + this.TILE_HALF_H + (this.mapVisualHeightReal -  groundImageSprite.height) / 2;
+	}
+	
+	this.zoomTo(this.config.initialZoomLevel, true);
+	
+	if (this.config.followCharacter &amp;&amp; initialControllableLocation)
+	{
+		this.centralizeToLocation(initialControllableLocation.c, initialControllableLocation.r, true);
+	}
+	else
+	{
+		this.centralizeToCurrentExternalCenter(true);
+	}
+};
+
+/**
+ * Calculates 2d x position of a tile 
+ *
+ * @method getTilePosXFor
+ * @param r {Number} row index of the tile
+ * @param c {Number} column index of the tile
+ * @return {Number} 2d x position of a tile
+ */
+TRAVISO.EngineView.prototype.getTilePosXFor = function(r,c)
+{
+    return (c * this.TILE_HALF_W) + (r * this.TILE_HALF_W);
+};
+/**
+ * Calculates 2d y position of a tile 
+ *
+ * @method getTilePosYFor
+ * @param r {Number} row index of the tile
+ * @param c {Number} column index of the tile
+ * @return {Number} 2d y position of a tile 
+ */
+TRAVISO.EngineView.prototype.getTilePosYFor = function(r,c)
+{
+    return (r * this.TILE_HALF_H) - (c * this.TILE_HALF_H);
+};
+
+/**
+ * Shows or hides the display object that includes the objects-layer
+ *
+ * @method showHideObjectLayer
+ * @param show=false {Boolean} 
+ */
+TRAVISO.EngineView.prototype.showHideObjectLayer = function(show)
+{
+    this.objContainer.visible = show;
+};
+/**
+ * Shows or hides the display object that includes the ground/terrain layer
+ *
+ * @method showHideGroundLayer
+ * @param show=false {Boolean} 
+ */
+TRAVISO.EngineView.prototype.showHideGroundLayer = function(show)
+{
+    this.groundContainer.visible = show;
+};
+
+/**
+ * Returns the TileView instance that sits in the location given  
+ *
+ * @method getTileAtRowAndColumn
+ * @param r {Number} row index of the tile
+ * @param c {Number} column index of the tile
+ * @return {TileView} the tile in the location given
+ */
+TRAVISO.EngineView.prototype.getTileAtRowAndColumn = function(r,c) 
+{
+    return this.tileArray[r][c];
+};
+/**
+ * Returns all the ObjectView instances referenced to the given location with the specified row and column indexes.
+ *
+ * @method getObjectsAtRowAndColumn
+ * @param r {Number} the row index of the map location
+ * @param c {Number} the column index of the map location
+ * @return {Array(ObjectView)} an array of map-objects referenced to the given location
+ */
+TRAVISO.EngineView.prototype.getObjectsAtRowAndColumn = function(r,c) 
+{
+    return this.objArray[r][c];
+};
+/**
+ * Returns all the ObjectView instances referenced to the given location.
+ *
+ * @method getObjectsAtLocation
+ * @param pos {Object} object including r and c coordinates
+ * @param pos.r {Number} the row index of the map location
+ * @param pos.c {Number} the column index of the map location
+ * @return {Array(ObjectView)} an array of map-objects referenced to the given location
+ */
+TRAVISO.EngineView.prototype.getObjectsAtLocation = function(pos) 
+{
+    return this.objArray[pos.r][pos.c];
+};
+
+/**
+ * Creates and adds a predefined (in XML file) map-object to the map using the specified object type-id.
+ *
+ * @method createAndAddObjectToLocation
+ * @param type {Number} type-id of the object as defined in the XML file
+ * @param pos {Object} object including r and c coordinates
+ * @param pos.r {Number} the row index of the map location
+ * @param pos.c {Number} the column index of the map location
+ * @return {ObjectView} the newly created map-object
+ */
+TRAVISO.EngineView.prototype.createAndAddObjectToLocation = function(type, pos) 
+{
+	return this.addObjectToLocation(new TRAVISO.ObjectView(this, type), pos);
+};
+
+/**
+ * Adds an already-created object to the map.
+ *
+ * @method addObjectToLocation
+ * @param obj {Object} either an external display object or a map-object (ObjectView)
+ * @param obj.isMovableTo {Boolean} if the object can be moved onto by other map-objects
+ * @param obj.size {Object} object that includes the size in rows and columns
+ * @param obj.size.r {Number} the size of the map-object in rows
+ * @param obj.size.c {Number} the size of the map-object in columns
+ * @param pos {Object} object including r and c coordinates
+ * @param pos.r {Number} the row index of the map location
+ * @param pos.c {Number} the column index of the map location
+ * @return {Object} the newly added object
+ */
+TRAVISO.EngineView.prototype.addObjectToLocation = function(obj, pos) 
+{
+	obj.position.x = this.getTilePosXFor(pos.r,pos.c);
+	obj.position.y = this.getTilePosYFor(pos.r,pos.c) + this.TILE_HALF_H;
+	obj.mapPos = { c:pos.c, r:pos.r };
+	
+	this.objContainer.addChild(obj);
+	
+	this.addObjRefToLocation(obj, obj.mapPos);
+	this.arrangeDepthsFromLocation(obj.mapPos);
+	
+	return obj;
+};
+
+/**
+ * Enables adding external custom display objects to the specified location.
+ * This method should be used for the objects that are not already defined in XML file and don&#x27;t have a type-id.
+ * The resulting object will be independent of engine mechanics apart from depth controls.
+ *
+ * @method addCustomObjectToLocation
+ * @param displayObject {PIXI.DisplayObject} object to be added to location
+ * @param [displayObject.isMovableTo=true] {Boolean} if the object can be moved onto by other map-objects, default true
+ * @param [displayObject.size] {Object} object that includes the size in rows and columns, default { c:1, r: 1 }
+ * @param [displayObject.size.r=1] {Number} the size of the map-object in rows
+ * @param [displayObject.size.c=1] {Number} the size of the map-object in columns
+ * @param pos {Object} object including r and c coordinates
+ * @param pos.r {Number} the row index of the map location
+ * @param pos.c {Number} the column index of the map location
+ * @return {Object} the newly added object
+ */
+TRAVISO.EngineView.prototype.addCustomObjectToLocation = function(displayObject, pos) 
+{
+	displayObject.isMovableTo = TRAVISO.existy(displayObject.isMovableTo) ? displayObject.isMovableTo : true;
+	displayObject.size = displayObject.size || { c:1, r: 1 };
+	
+	return this.addObjectToLocation(displayObject, pos);
+	
+	// this.removeObjRefFromLocation(displayObject, pos);
+};
+
+/**
+ * Removes the object and its references from the map.
+ *
+ * @method removeObjectFromLocation
+ * @param obj {Object} either an external display object or a map-object (ObjectView)
+ * @param [pos=null] {Object} object including r and c coordinates, if not defined the engine will use &#x27;obj.mapPos&#x27; to remove the map-object
+ * @param [pos.r] {Number} the row index of the map location
+ * @param [pos.c] {Number} the column index of the map location
+ */
+TRAVISO.EngineView.prototype.removeObjectFromLocation = function(obj, pos) 
+{
+	pos = pos || obj.mapPos;
+	this.objContainer.removeChild(obj);
+	this.removeObjRefFromLocation(obj, pos);
+};
+
+/**
+ * Centralizes and zooms the EngineView instance to the object specified.
+ *
+ * @method focusMapToObject
+ * @param obj {ObjectView} the object that map will be focused with respect to
+ * @param obj.mapPos {Object} the object that holds the location of the map-object on the map
+ * @param obj.mapPos.c {Number} the column index of the map location
+ * @param obj.mapPos.r {Number} the row index of the map location
+ * @param obj.size {Object} the object that holds the size of the map-object on the map
+ * @param obj.size.c {Number} the column index of the map location
+ * @param obj.size.r {Number} the row index of the map location
+ */
+TRAVISO.EngineView.prototype.focusMapToObject = function(obj)
+{
+	this.focusMapToLocation(obj.mapPos.c + (obj.size.c - 1) / 2, obj.mapPos.r - (obj.size.r - 1) / 2, 0);
+};
+
+/**
+ * Centralizes and zooms the EngineView instance to the map location specified by row and column index.
+ *
+ * @method focusMapToLocation
+ * @param c {Number} the column index of the map location
+ * @param r {Number} the row index of the map location
+ * @param zoomAmount {Number} targeted zoom level for focusing
+ */
+TRAVISO.EngineView.prototype.focusMapToLocation = function(c, r, zoomAmount)
+{
+	// NOTE: using zoomTo instead of setScale causes centralizeToPoint to be called twice (no visual problem)
+	this.zoomTo(zoomAmount, false);
+	this.centralizeToLocation(c,r);
+};
+
+/**
+ * Centralizes the EngineView instance to the object specified.
+ *
+ * @method centralizeToObject
+ * @param obj {ObjectView} the object that map will be centralized with respect to
+ * @param obj.mapPos {Object} the object that holds the location of the map-object on the map
+ * @param obj.mapPos.c {Number} the column index of the map location
+ * @param obj.mapPos.r {Number} the row index of the map location
+ */
+TRAVISO.EngineView.prototype.centralizeToObject = function(obj)
+{
+	this.centralizeToLocation(obj.mapPos.c, obj.mapPos.r);
+};
+
+/**
+ * Centralizes the EngineView instance to the map location specified by row and column index.
+ *
+ * @method centralizeToLocation
+ * @param c {Number} the column index of the map location
+ * @param r {Number} the row index of the map location
+ * @param [instantRelocate=false] {Boolean} specifies if the camera move will be animated or instant
+ */
+TRAVISO.EngineView.prototype.centralizeToLocation = function(c, r, instantRelocate)
+{
+    this.currentFocusLocation = { c: c, r: r };
+	var px = this.externalCenter.x + (this.mapVisualWidthScaled &gt;&gt; 1) - this.getTilePosXFor(r,c) * this.currentScale;
+	var py = this.externalCenter.y - this.getTilePosYFor(r,c) * this.currentScale;
+	this.centralizeToPoint(px, py, instantRelocate);
+};
+
+/**
+ * Centralizes the EngineView instance to the current location of the attention/focus.
+ *
+ * @method centralizeToCurrentFocusLocation
+ * @param [instantRelocate=false] {Boolean} specifies if the camera move will be animated or instant
+ */
+TRAVISO.EngineView.prototype.centralizeToCurrentFocusLocation = function(instantRelocate)
+{
+    this.centralizeToLocation(this.currentFocusLocation.c, this.currentFocusLocation.r, instantRelocate);
+};
+
+
+/**
+ * External center is the central point of the frame defined by the user to be used as the visual size of the engine.
+ * This method centralizes the EngineView instance with respect to this external center-point.
+ *
+ * @method centralizeToCurrentExternalCenter
+ * @param [instantRelocate=false] {Boolean} specifies if the camera move will be animated or instant
+ */
+TRAVISO.EngineView.prototype.centralizeToCurrentExternalCenter = function(instantRelocate)
+{
+	if (this.externalCenter)
+	{
+		this.currentFocusLocation = { c: this.mapSizeC &gt;&gt; 1, r: this.mapSizeR &gt;&gt; 1 };
+		this.centralizeToPoint(this.externalCenter.x, this.externalCenter.y, instantRelocate);
+	}
+};
+
+/**
+ * Centralizes the EngineView instance to the points specified.
+ *
+ * @method centralizeToPoint
+ * @param px {Number} the x coordinate of the center point with respect to EngineView frame
+ * @param py {Number} the y coordinate of the center point with respect to EngineView frame
+ * @param [instantRelocate=false] {Boolean} specifies if the relocation will be animated or instant
+ */
+TRAVISO.EngineView.prototype.centralizeToPoint = function(px, py, instantRelocate)
+{
+	if (this.tileArray)
+	{
+		px = px - (this.mapVisualWidthScaled &gt;&gt; 1);
+		if ((TRAVISO.existy(instantRelocate) &amp;&amp; instantRelocate) || (!TRAVISO.existy(instantRelocate) &amp;&amp; this.config.instantCameraRelocation))
+		{
+			this.mapContainer.position.x = px;
+			this.mapContainer.position.y = py;
+		}
+		else
+		{
+			this.moveEngine.addTween(this.mapContainer.position, 0.5, { x: px, y: py }, 0, &quot;easeInOut&quot;, true );
+		}
+	}
+};
+
+/**
+ * Sets all the parameters related to zooming in and out.
+ *
+ * @method setZoomParameters
+ * @param [minScale=0.5] {Number} mimimum scale that the DisplayObjectContainer for the map can get, default 0.5
+ * @param [maxScale=1.5] {Number} maximum scale that the DisplayObjectContainer for the map can get, default 1.5
+ * @param [numberOfZoomLevels=5] {Number} used to calculate zoom increment, defined by user, default 5
+ * @param [initialZoomLevel=0] {Number} initial zoom level of the map, default 0
+ * @param [instantCameraZoom=false] {Boolean} specifies wheather to zoom instantly or with a tween animation, default false
+ */
+TRAVISO.EngineView.prototype.setZoomParameters = function(minScale, maxScale, numberOfZoomLevels, initialZoomLevel, instantCameraZoom)
+{
+	this.config.minScale = TRAVISO.existy(minScale) ? minScale : 0.5;
+	this.config.maxScale = TRAVISO.existy(maxScale) ? maxScale : 1.5;
+    this.config.minZoom = -1;
+    this.config.maxZoom = 1;
+    this.config.zoomIncrement = TRAVISO.existy(numberOfZoomLevels) ? (numberOfZoomLevels &lt;= 1 ? 0 : 2 / (numberOfZoomLevels - 1)) : 0.5;
+	
+	this.config.initialZoomLevel = TRAVISO.existy(initialZoomLevel) ? initialZoomLevel : 0;
+	this.config.instantCameraZoom = TRAVISO.existy(instantCameraZoom) ? instantCameraZoom : false;
+};
+
+/**
+ * Sets map&#x27;s scale. 
+ *
+ * @method setScale
+ * @private
+ * @param s {Number} scale amount for both x and y coordinates
+ * @param [instantZoom=false] {Boolean} specifies if the scaling will be animated or instant
+ */
+TRAVISO.EngineView.prototype.setScale = function(s, instantZoom)
+{
+	if (s &lt; this.config.minScale) { s = this.config.minScale; }
+	else if (s &gt; this.config.maxScale) { s = this.config.maxScale; }
+	this.currentScale = s;
+	this.mapVisualWidthScaled = this.mapVisualWidthReal * this.currentScale;
+	this.mapVisualHeightScaled = this.mapVisualHeightReal * this.currentScale;
+	
+	if ((TRAVISO.existy(instantZoom) &amp;&amp; instantZoom) || (!TRAVISO.existy(instantZoom) &amp;&amp; this.config.instantCameraZoom))
+	{
+		this.mapContainer.scale.set(this.currentScale);
+	}
+	else
+	{
+		this.moveEngine.addTween(this.mapContainer.scale, 0.5, { x: this.currentScale, y: this.currentScale }, 0, &quot;easeInOut&quot;, true );
+	}
+};
+
+/**
+ * Zooms camera by to the amount given.
+ *
+ * @method zoomTo
+ * @param zoomAmount {Number} specifies zoom amount (between -1 and 1). Use -1, -0.5, 0, 0,5, 1 for better results.
+ * @param [instantZoom=false] {Boolean} specifies wheather to zoom instantly or with a tween animation
+ */
+TRAVISO.EngineView.prototype.zoomTo = function(zoomAmount, instantZoom)
+{
+    zoomAmount = zoomAmount || 0;
+    var s = TRAVISO.mathMap(zoomAmount, this.config.minZoom, this.config.maxZoom, this.config.minScale, this.config.maxScale, true);
+	s = Math.round(s * 10) / 10;
+	
+	this.currentZoom = TRAVISO.mathMap(s, this.config.minScale, this.config.maxScale, this.config.minZoom, this.config.maxZoom, true);
+	
+	this.externalCenter = this.externalCenter ? this.externalCenter : { x: (this.mapVisualWidthScaled &gt;&gt; 1), y: 0 };
+	var diff = { x: this.mapContainer.position.x + (this.mapVisualWidthScaled &gt;&gt; 1) - this.externalCenter.x, y: this.mapContainer.position.y - this.externalCenter.y };
+	var oldScale = this.currentScale;
+	
+	this.setScale(s, instantZoom);
+	
+	var ratio = this.currentScale / oldScale;
+	this.centralizeToPoint(this.externalCenter.x + diff.x * ratio, this.externalCenter.y + diff.y * ratio, (TRAVISO.existy(instantZoom) &amp;&amp; instantZoom) || (!TRAVISO.existy(instantZoom) &amp;&amp; this.config.instantCameraZoom));
+	
+	// TRAVISO.trace(&quot;scalingTo: &quot; + this.currentScale);
+	// TRAVISO.trace(&quot;zoomingTo: &quot; + this.currentZoom);
+};
+
+/**
+ * Zooms the camera one level out.
+ *
+ * @method zoomOut
+ * @param [instantZoom=false] {Boolean} specifies wheather to zoom instantly or with a tween animation
+ */
+TRAVISO.EngineView.prototype.zoomOut = function(instantZoom) 
+{
+	this.zoomTo(this.currentZoom - this.config.zoomIncrement, instantZoom);
+};
+
+/**
+ * Zooms the camera one level in.
+ *
+ * @method zoomIn
+ * @param [instantZoom=false] {Boolean} specifies wheather to zoom instantly or with a tween animation
+ */
+TRAVISO.EngineView.prototype.zoomIn = function(instantZoom) 
+{
+	this.zoomTo(this.currentZoom + this.config.zoomIncrement, instantZoom);
+};
+
+/**
+ * Returns the current controllable map-object.  
+ *
+ * @method getCurrentControllable
+ * @return {ObjectView} current controllable map-object
+ */
+TRAVISO.EngineView.prototype.getCurrentControllable = function()
+{
+    return this.currentControllable;
+};
+
+/**
+ * Sets a map-object as the current controllable. This object will be moving in further relevant user interactions.  
+ *
+ * @method setCurrentControllable
+ * @param obj {ObjectView} object to be set as current controllable
+ * @param obj.mapPos {Object} object including r and c coordinates
+ * @param obj.mapPos.c {Number} the column index of the map location
+ * @param obj.mapPos.r {Number} the row index of the map location
+ */
+TRAVISO.EngineView.prototype.setCurrentControllable = function(obj)
+{
+    this.currentControllable = obj;
+};
+
+/**
+ * Adds a reference of the given map-object to the given location in the object array.
+ * This should be called when an object moved or transfered to the corresponding location.
+ * Uses objects size property to add its reference to all relevant cells.
+ *
+ * @private
+ * @method addObjRefToLocation
+ * @param obj {ObjectView} object to be bind to location
+ * @param obj.size {Object} the object that defines the size of the map-object
+ * @param obj.size.c {Number} number of tiles that map-object covers horizontally on the isometric map
+ * @param obj.size.r {Number} number of tiles that map-object covers vertically on the isometric map
+ * @param pos {Object} object including r and c coordinates
+ * @param pos.r {Number} the row index of the map location
+ * @param pos.c {Number} the column index of the map location
+ */
+TRAVISO.EngineView.prototype.addObjRefToLocation = function(obj, pos)
+{
+	for (var k=pos.c; k &lt; pos.c + obj.size.c; k++)
+	{
+		for (var m=pos.r; m &gt; pos.r - obj.size.r; m--)
+		{
+			this.addObjRefToSingleLocation(obj, { c:k, r:m });
+		}
+	}
+};
+/**
+ * Adds a reference of the given map-object to the given location in the object array.
+ * Updates the cell as movable or not according to the object being movable onto or not.
+ *
+ * @private
+ * @method addObjRefToSingleLocation
+ * @param obj {ObjectView} object to be bind to location
+ * @param obj.isMovableTo {Boolean} is the object is movable onto by the other objects or not
+ * @param pos {Object} object including r and c coordinates
+ * @param pos.r {Number} the row index of the map location
+ * @param pos.c {Number} the column index of the map location
+ */
+TRAVISO.EngineView.prototype.addObjRefToSingleLocation = function(obj, pos) 
+{
+    if (!this.objArray[pos.r][pos.c]) { this.objArray[pos.r][pos.c] = []; }
+    var index = this.objArray[pos.r][pos.c].indexOf(obj);
+    if (index &lt; 0) { this.objArray[pos.r][pos.c].push(obj); }
+    
+    if (!obj.isMovableTo)
+    {
+    	this.pathFinding.setDynamicCell(pos.c,pos.r,0);
+    }
+};
+/**
+ * Removes references of the given map-object from the given location in the object array.
+ * This should be called when an object moved or transfered from the corresponding location.
+ * Uses objects size property to remove its references from all relevant cells.
+ *
+ * @private
+ * @method removeObjRefFromLocation
+ * @param obj {ObjectView} object to be bind to location
+ * @param obj.size {Object} the object that defines the size of the map-object
+ * @param obj.size.c {Number} number of tiles that map-object covers horizontally on the isometric map
+ * @param obj.size.r {Number} number of tiles that map-object covers vertically on the isometric map
+ * @param pos {Object} object including r and c coordinates
+ * @param pos.r {Number} the row index of the map location
+ * @param pos.c {Number} the column index of the map location
+ */
+TRAVISO.EngineView.prototype.removeObjRefFromLocation = function(obj, pos) 
+{
+	for (var k=pos.c; k &lt; pos.c + obj.size.c; k++)
+	{
+		for (var m=pos.r; m &gt; pos.r - obj.size.r; m--)
+		{
+			this.removeObjRefFromSingleLocation(obj, { c:k, r:m });
+		}
+	}
+};
+/**
+ * Removes a reference of the given map-object from the given location in the object array.
+ * Updates the cell as movable or not according to the other object refences in the same cell.
+ *
+ * @private
+ * @method removeObjRefFromSingleLocation
+ * @param obj {ObjectView} object to be bind to location
+ * @param pos {Object} object including r and c coordinates
+ * @param pos.r {Number} the row index of the map location
+ * @param pos.c {Number} the column index of the map location
+ */
+TRAVISO.EngineView.prototype.removeObjRefFromSingleLocation = function(obj, pos) 
+{
+    if (this.objArray[pos.r][pos.c])
+    {
+        var index = this.objArray[pos.r][pos.c].indexOf(obj);
+        if (index &gt; -1) { this.objArray[pos.r][pos.c].splice(index, 1); }
+        if (this.objArray[pos.r][pos.c].length === 0)
+        {
+        	this.pathFinding.setDynamicCell(pos.c,pos.r,1);
+        	this.objArray[pos.r][pos.c] = null;
+        }
+        else
+        {
+        	var a = this.objArray[pos.r][pos.c];
+		    var l = a.length;
+	        for (var i=0; i &lt; l; i++)
+	        {
+	            if (!a[i].isMovableTo)
+	    		{	
+		    		this.pathFinding.setDynamicCell(pos.c,pos.r,0);
+		    		break;
+		    	}
+		    	else if (i === l-1)
+		    	{
+		    		this.pathFinding.setDynamicCell(pos.c,pos.r,1);
+		    	}
+	        }
+        }
+    }
+};
+/**
+ * Removes all map-object references from the given location in the object array.
+ *
+ * @private
+ * @method removeAllObjectRefsFromLocation
+ * @param pos {Object} object including r and c coordinates
+ * @param pos.r {Number} the row index of the map location
+ * @param pos.c {Number} the column index of the map location
+ */
+TRAVISO.EngineView.prototype.removeAllObjectRefsFromLocation = function(pos) 
+{
+    if (this.objArray[pos.r][pos.c])
+    {
+    	this.pathFinding.setDynamicCell(pos.c,pos.r,1);
+        this.objArray[pos.r][pos.c] = null;
+    }
+};
+
+/**
+ * Sets alphas of the map-objects referenced to the given location.
+ *
+ * @method changeObjAlphasInLocation
+ * @param value {Number} alpha value, should be between 0 and 1
+ * @param pos {Object} object including r and c coordinates
+ * @param pos.r {Number} the row index of the map location
+ * @param pos.c {Number} the column index of the map location
+ */
+TRAVISO.EngineView.prototype.changeObjAlphasInLocation = function(value, pos) 
+{
+    var a = this.objArray[pos.r][pos.c];
+    if (a)
+    {
+        var l = a.length;
+        for (var i=0; i &lt; l; i++)
+        {
+            a[i].alpha = value;
+        }
+    }
+};
+
+/**
+ * Sets a map-abjects&#x27; location and logically moves it to the new location.
+ *
+ * @private
+ * @method arrangeObjLocation
+ * @param obj {ObjectView} map-object to be moved
+ * @param obj.mapPos {Object} object including r and c coordinates
+ * @param obj.mapPos.c {Number} the column index of the map location
+ * @param obj.mapPos.r {Number} the row index of the map location
+ * @param pos {Object} object including r and c coordinates
+ * @param pos.r {Number} the row index of the map location
+ * @param pos.c {Number} the column index of the map location
+ */
+TRAVISO.EngineView.prototype.arrangeObjLocation = function(obj, pos) 
+{
+	this.removeObjRefFromLocation(obj, obj.mapPos);
+	this.addObjRefToLocation(obj, pos);
+	
+	obj.mapPos = { c:pos.c, r:pos.r };
+};
+
+/**
+ * Sets occlusion transperancies according to given map-object&#x27;s location.
+ * This method only works for user-controllable object. 
+ *
+ * @private
+ * @method arrangeObjTransperancies
+ * @param obj {ObjectView} current controllable map-object
+ * @param prevPos {Object} previous location of the map-object
+ * @param prevPos.r {Number} the row index of the map location
+ * @param prevPos.c {Number} the column index of the map location
+ * @param pos {Object} new location of the map-object
+ * @param pos.r {Number} the row index of the map location
+ * @param pos.c {Number} the column index of the map location
+ */
+TRAVISO.EngineView.prototype.arrangeObjTransperancies = function(obj, prevPos, pos) 
+{
+    if (this.currentControllable === obj)
+    {
+    	if (prevPos.c &gt; 0) { this.changeObjAlphasInLocation(1, { c: prevPos.c-1, r: prevPos.r }); }
+        if (prevPos.c &gt; 0 &amp;&amp; prevPos.r &lt; this.mapSizeR-1) { this.changeObjAlphasInLocation(1, { c: prevPos.c-1, r: prevPos.r+1 }); }
+        if (prevPos.r &lt; this.mapSizeR-1) { this.changeObjAlphasInLocation(1, { c: prevPos.c, r: prevPos.r+1 }); }
+	
+    	if (pos.c &gt; 0) { this.changeObjAlphasInLocation(0.7, { c: pos.c-1, r: pos.r }); }
+        if (pos.c &gt; 0 &amp;&amp; pos.r &lt; this.mapSizeR-1) { this.changeObjAlphasInLocation(0.7, { c: pos.c-1, r: pos.r+1 }); }
+        if (pos.r &lt; this.mapSizeR-1) { this.changeObjAlphasInLocation(0.7, { c: pos.c, r: pos.r+1 }); }
+    }
+	
+	// TODO: check if there is a way not to update main character alpha each time
+	obj.alpha = 1;
+};
+
+/**
+ * Arranges depths (z-index) of the map-objects starting from the given location.  
+ *
+ * @private
+ * @method arrangeDepthsFromLocation
+ * @param pos {Object} location object including the map coordinates
+ * @param pos.r {Number} the row index of the map location
+ * @param pos.c {Number} the column index of the map location
+ */
+TRAVISO.EngineView.prototype.arrangeDepthsFromLocation = function(pos) 
+{
+    var a, i, j, k;
+	for (i = pos.r; i &lt; this.mapSizeR; i++)
+	{
+	    for (j = pos.c; j &gt;= 0; j--)
+	    {
+	        a = this.objArray[i][j];
+	    	if (a)
+	    	{
+	    	    for (k=0; k &lt; a.length; k++)
+	    	    {
+				    this.objContainer.addChild(a[k]);
+				}
+		    }
+		}
+	}
+};
+
+/**
+ * Clears the highlight for the old path and highlights the new path on map.
+ *
+ * @method arrangePathHighlight
+ * @private
+ * @param [currentPath] {Array(Object)} the old path to clear the highlight from
+ * @param newPath {Array(Object)} the new path to highlight
+ */
+TRAVISO.EngineView.prototype.arrangePathHighlight = function(currentPath, newPath) 
+{
+    var i, tile, pathItem;
+    if (currentPath)
+    {
+        for (i=0; i &lt; currentPath.length; i++)
+        {
+            pathItem = currentPath[i];
+            if (newPath.indexOf(pathItem) === -1)
+            {
+                tile = this.tileArray[pathItem.mapPos.r][pathItem.mapPos.c];
+                tile.setHighlighted(false, !this.config.tileHighlightAnimated);
+            }
+        }
+    }
+    
+	for (i=0; i &lt; newPath.length; i++)
+    {
+        pathItem = newPath[i];
+        if (!currentPath || currentPath.indexOf(pathItem) === -1)
+        {
+            tile = this.tileArray[pathItem.mapPos.r][pathItem.mapPos.c];
+            tile.setHighlighted(true, !this.config.tileHighlightAnimated);
+        }
+    }
+};
+
+/**
+ * Moves the specified map-object through a path.
+ *
+ * @method moveObjThrough
+ * @private
+ * @param obj {ObjectView} map-object to be moved on path
+ * @param obj.mapPos {Object} object including r and c coordinates of the map-object
+ * @param obj.mapPos.c {Number} the column index of the map location
+ * @param obj.mapPos.r {Number} the row index of the map location
+ * @param path {Array(Object)} path to move object on
+ * @param [speed=null] {Number} speed of the map-object to be used during movement, if not defined it uses previous speed or the MoveEngine&#x27;s default speed, default null 
+ */
+TRAVISO.EngineView.prototype.moveObjThrough = function(obj, path, speed) 
+{
+	if (this.config.instantObjectRelocation)
+	{
+		var tile = this.tileArray[path[0].mapPos.r][path[0].mapPos.c];
+		obj.position.x = tile.position.x;
+		obj.position.y = tile.position.y + this.TILE_HALF_H;
+		this.arrangeObjTransperancies(obj, obj.mapPos, tile.mapPos);
+		this.arrangeObjLocation(obj, tile.mapPos);
+		this.arrangeDepthsFromLocation(tile.mapPos);
+	}
+	else
+	{
+	    if (this.config.highlightPath &amp;&amp; this.currentControllable === obj)
+        {
+            this.arrangePathHighlight(obj.currentPath, path);
+		}
+		
+		if (obj.currentTarget)
+		{
+			// TRAVISO.trace(&quot;Object has a target, update the path with the new one&quot;);
+			this.moveEngine.addNewPathToObject(obj, path, speed);
+		}
+		else
+		{
+			this.moveEngine.prepareForMove(obj, path, speed);
+			this.onObjMoveStepBegin(obj, obj.currentPath[obj.currentPathStep].mapPos);
+		}
+	}
+};
+
+/**
+ * Sets up the engine at the begining of each tile change move for the specified object
+ *
+ * @method onObjMoveStepBegin
+ * @private
+ * @param obj {ObjectView} map-object that is being moved
+ * @param obj.mapPos {Object} object including r and c coordinates of the map-object
+ * @param obj.mapPos.c {Number} the column index of the map location
+ * @param obj.mapPos.r {Number} the row index of the map location
+ * @param [obj.currentDirection=&quot;idle&quot;] {Number} current direction id of the map-object
+ * @param pos {Object} object including r and c coordinates for the target location
+ * @param pos.r {Number} the row index of the map location
+ * @param pos.c {Number} the column index of the map location
+ * @return {Boolean} if the target tile was available and map-object has moved
+ */
+TRAVISO.EngineView.prototype.onObjMoveStepBegin = function(obj, pos) 
+{
+	// TRAVISO.trace(&quot;onObjMoveStepBegin&quot;);
+	// Note that mapPos is being updated prior to movement
+	
+	obj.currentDirection = TRAVISO.getDirBetween(obj.mapPos.r, obj.mapPos.c, pos.r, pos.c);
+    
+    obj.changeVisualToDirection(obj.currentDirection, true);
+    
+	// check if the next target pos is still empty
+	if (!this.pathFinding.isCellFilled(pos.c,pos.r))
+	{
+		// pos is movable
+	    this.arrangeObjTransperancies(obj, obj.mapPos, pos);
+    	this.arrangeObjLocation(obj, pos);
+    	this.arrangeDepthsFromLocation(obj.mapPos);
+    	
+    	// if there is other object(s) on the target tile, notify the game
+    	var objects = this.getObjectsAtLocation(pos);
+    	if (objects &amp;&amp; objects.length &gt; 1)
+    	{
+    		if (this.config.otherObjectsOnTheNextTileCallback) { this.config.otherObjectsOnTheNextTileCallback.call(this.config.callbackScope, obj, objects); }
+    	}
+    	
+    	this.moveEngine.setMoveParameters(obj, pos);
+    	
+    	this.moveEngine.addMovable(obj);
+    	
+    	return true;
+    }
+    else
+    {
+    	// pos is NOT movable
+        this.moveEngine.removeMovable(obj);
+    	this.checkAndMoveObjectToTile(obj, obj.currentPath[0]);
+    	
+        return false;
+    }
+};
+
+/**
+ * Sets up the engine at the end of each tile change move for the specified object
+ *
+ * @method onObjMoveStepEnd
+ * @private
+ * @param obj {ObjectView} map-object that is being moved
+ * @param obj.mapPos {Object} object including r and c coordinates of the map-object
+ * @param obj.mapPos.c {Number} the column index of the map location
+ * @param obj.mapPos.r {Number} the row index of the map location
+ * @param obj.currentPath {Array(Object)} current path assigned to the map-object
+ * @param obj.currentPathStep {Number} current step on the path
+ * @param [obj.currentDirection=&quot;idle&quot;] {String} current direction id of the map-object
+ */
+TRAVISO.EngineView.prototype.onObjMoveStepEnd = function(obj) 
+{
+	//TRAVISO.trace(&quot;onObjMoveStepEnd&quot;);
+	
+	obj.currentPathStep--;
+    obj.currentTarget = null;
+    var pathEnded = (0 &gt; obj.currentPathStep);
+    this.moveEngine.removeMovable(obj);
+    
+    if (!pathEnded)
+    {
+        // this.moveStep(o, o.currentPath[o.currentPathStep].mapPos);
+        this.checkAndMoveObjectToTile(obj, obj.currentPath[0]);
+    }
+    else
+    {
+        // reached to the end of the path
+        obj.changeVisualToDirection(obj.currentDirection, false);
+    }
+    
+    if (this.currentControllable === obj)
+	{
+    	var tile = this.tileArray[obj.mapPos.r][obj.mapPos.c];
+    	tile.setHighlighted(false, !this.config.tileHighlightAnimated);
+    	
+    	if (this.config.followCharacter) { this.centralizeToLocation(obj.mapPos.c, obj.mapPos.r); }
+    }
+	
+	if (pathEnded &amp;&amp; this.config.objectReachedDestinationCallback) { this.config.objectReachedDestinationCallback.call(this.config.callbackScope, obj); }
+};
+
+/**
+ * Searches and returns a path between two locations if there is one.
+ *
+ * @method getPath
+ * @param from {Object} object including r and c coordinates of the source location
+ * @param from.c {Number} the column index of the map location
+ * @param from.r {Number} the row index of the map location
+ * @param to {Object} object including r and c coordinates of the target location
+ * @param to.c {Number} the column index of the map location
+ * @param to.r {Number} the row index of the map location
+ * @return {Array(Object)} an array of path items defining the path
+ */
+TRAVISO.EngineView.prototype.getPath = function(from, to) 
+{
+	if (this.pathFinding) { return this.pathFinding.solve(from.c, from.r, to.c, to.r); }
+	else { throw new Error(&quot;Path finding hasn&#x27;t been initialized yet!&quot;); }
+};
+
+/**
+ * Checks for a path and moves the map-object on map if there is an available path
+ *
+ * @method checkAndMoveObjectToTile
+ * @param obj {ObjectView} map-object that is being moved
+ * @param obj.mapPos {Object} object including r and c coordinates of the map-object
+ * @param obj.mapPos.c {Number} the column index of the map location
+ * @param obj.mapPos.r {Number} the row index of the map location
+ * @param tile {TileView} target map-tile or any custom object that has &#x27;mapPos&#x27; and &#x27;isMovableTo&#x27; defined
+ * @param tile.isMovableTo {Boolean} if the target tile is movable onto
+ * @param tile.mapPos {Object} object including r and c coordinates of the map-tile
+ * @param tile.mapPos.c {Number} the column index of the map location
+ * @param tile.mapPos.r {Number} the row index of the map location
+ * @param [speed=null] {Number} speed of the map-object to be used during movement, if not defined it uses previous speed or the MoveEngine&#x27;s default speed, default null 
+ * @return {Boolean} if there is an available path to move to the target tile
+ */
+TRAVISO.EngineView.prototype.checkAndMoveObjectToTile = function(obj, tile, speed) 
+{
+	if (tile.isMovableTo)
+	{
+		return this.checkAndMoveObjectToLocation(obj, tile.mapPos, speed);
+	}
+	return false;
+};
+
+/**
+ * Checks for a path and moves the map-object on map if there is an available path
+ *
+ * @method checkAndMoveObjectToLocation
+ * @param obj {ObjectView} map-object that is being moved
+ * @param obj.mapPos {Object} object including r and c coordinates of the map-object
+ * @param obj.mapPos.c {Number} the column index of the map location
+ * @param obj.mapPos.r {Number} the row index of the map location
+ * @param pos {Object} object including r and c coordinates for the target location
+ * @param pos.r {Number} the row index of the map location
+ * @param pos.c {Number} the column index of the map location
+ * @param [speed=null] {Number} speed of the map-object to be used during movement, if not defined it uses previous speed or the MoveEngine&#x27;s default speed, default null 
+ * @return {Boolean} if there is an available path to move to the target tile
+ */
+TRAVISO.EngineView.prototype.checkAndMoveObjectToLocation = function(obj, pos, speed) 
+{
+	var path = this.getPath(obj.mapPos, pos);
+	if (path)
+	{
+		// begin moving process
+		this.moveObjThrough(obj, path, speed);
+		
+		return path.length;
+	}
+	return false;
+};
+
+/**
+ * Moves the current controllable map-object to a location if available. 
+ *
+ * @method moveCurrentControllableToLocation
+ * @param pos {Object} object including r and c coordinates for the target location
+ * @param pos.r {Number} the row index of the map location
+ * @param pos.c {Number} the column index of the map location
+ * @param [speed=null] {Number} speed of the map-object to be used during movement, if not defined it uses previous speed or the MoveEngine&#x27;s default speed, default null 
+ * @return {Boolean} if there is an available path to move to the target tile
+ */
+TRAVISO.EngineView.prototype.moveCurrentControllableToLocation = function(pos, speed) 
+{
+	if (!this.currentControllable)
+    {
+        throw new Error(&quot;TRAVISO: currentControllable is not defined!&quot;);
+    }
+    return this.checkAndMoveObjectToLocation(this.currentControllable, pos, speed);
+};
+
+/**
+ * Moves the current controllable map-object to one of the adjacent available tiles of the map-object specified. 
+ *
+ * @method moveCurrentControllableToObj
+ * @param obj {ObjectView} target map-object
+ * @param obj.mapPos {Object} object including r and c coordinates
+ * @param obj.mapPos.c {Number} the column index of the map location
+ * @param obj.mapPos.r {Number} the row index of the map location
+ * @param obj.size {Object} the object that defines the size of the target map-object
+ * @param obj.size.c {Number} number of tiles that map-object covers horizontally on the isometric map
+ * @param obj.size.r {Number} number of tiles that map-object covers vertically on the isometric map
+ * @param [speed=null] {Number} speed of the map-object to be used during movement, if not defined it uses previous speed or the MoveEngine&#x27;s default speed, default null 
+ * @return {Boolean} if there is an available path to move to the target map-object
+ */
+TRAVISO.EngineView.prototype.moveCurrentControllableToObj = function(obj, speed)
+{
+    if (!this.currentControllable)
+    {
+        throw new Error(&quot;TRAVISO: currentControllable is not defined!&quot;);
+    }
+	var cellArray = this.pathFinding.getAdjacentOpenCells(obj.mapPos.c, obj.mapPos.r, obj.size.c, obj.size.r);
+	var tile;
+	var minLength = 3000;
+	var path, minPath;
+	for (var i=0; i &lt; cellArray.length; i++)
+	{
+		tile = this.tileArray[cellArray[i].mapPos.r][cellArray[i].mapPos.c];
+		if (tile)
+		{
+			if(tile.mapPos.c === this.currentControllable.mapPos.c &amp;&amp; tile.mapPos.r === this.currentControllable.mapPos.r)
+			{
+				// already next to the object, do nothing
+				if (this.config.objectReachedDestinationCallback) { this.config.objectReachedDestinationCallback.call(this.config.callbackScope, this.currentControllable); }
+				return true;
+			}
+			path = this.getPath(this.currentControllable.mapPos, tile.mapPos);
+			if (path &amp;&amp; path.length &lt; minLength)
+			{
+				minLength = path.length;
+				minPath = path;
+			}
+		}
+	}
+	
+	if (minPath) 
+	{
+		this.moveObjThrough(this.currentControllable, minPath, speed);
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+};
+
+/**
+ * Finds the nearest tile to the point given in the map&#x27;s local scope. 
+ *
+ * @method getTileFromLocalPos
+ * @param lp {Object} point to check
+ * @param lp.x {Number} x component
+ * @param lp.y {Number} y component
+ * @return {TileView} the nearest map-tile if there is one
+ */
+TRAVISO.EngineView.prototype.getTileFromLocalPos = function(lp) 
+{
+	var closestTile = null;
+	if(TRAVISO.isInPolygon(lp, this.mapVertices))
+	{
+		// Using nearest point instead of checking polygon vertices for each tile. Should be faster...
+		// NOTE: there is an ignored bug (for better performance) that tile is not selected when u click on the far corner
+		var thresh = this.TILE_HALF_W / 2;
+		var tile, i, j, dist;
+		var closestDist = 3000;
+		for (i = 0; i &lt; this.mapSizeR; i++)
+		{
+		    for (j = 0; j &lt; this.mapSizeC; j++)
+		    {
+		    	tile = this.tileArray[i][j];
+		    	if (tile)
+		    	{
+		    	    dist = TRAVISO.getDist(lp, tile.position);
+			    	if (dist &lt; closestDist)
+			    	{
+			    		closestDist = dist;
+			    		closestTile = tile;
+			    		if (dist &lt; thresh) { break; }
+			    	}
+			    }
+		    }
+		}
+	}
+	return closestTile;
+};
+
+/**
+ * Checks if an interaction occurs using the interaction data coming from PIXI.
+ * If there is any interaction starts necessary movements or performs necessary callbacks.
+ *
+ * @method checkForTileClick
+ * @private
+ * @param mdata {Object} interaction data coming from PIXI
+ * @param mdata.global {Object} global interaction point
+ */
+TRAVISO.EngineView.prototype.checkForTileClick = function(mdata) 
+{
+	var lp = TRAVISO.globalToLocal(mdata.global, this.mapContainer);
+	lp = { x:lp.x / this.currentScale, y:lp.y / this.currentScale };
+	var closestTile = this.getTileFromLocalPos(lp);
+	if (closestTile)
+	{
+		var a = this.objArray[closestTile.mapPos.r][closestTile.mapPos.c];
+		if (a)
+        {
+            for (var k=0; k &lt; a.length; k++)
+            {
+                if(a[k].isInteractive) 
+                {
+                    if (this.config.objectSelectCallback) { this.config.objectSelectCallback.call(this.config.callbackScope, a[k]); }
+                    break;
+                }
+                // TODO CHECK: this might cause issues when there is one movable and one not movable object on the same tile
+                else if(a[k].isMovableTo)
+                {
+                    if (!this.currentControllable || this.checkAndMoveObjectToTile(this.currentControllable, closestTile))
+                    {
+                        if (this.config.highlightTargetTile) { closestTile.setHighlighted(true, !this.config.tileHighlightAnimated); }
+                        if (this.config.tileSelectCallback) { this.config.tileSelectCallback.call(this.config.callbackScope, closestTile.mapPos.r, closestTile.mapPos.c); }
+                        break;
+                    }
+                } 
+            }
+        }
+		else if (!this.currentControllable || this.checkAndMoveObjectToTile(this.currentControllable, closestTile))
+		{
+			if (this.config.highlightTargetTile) { closestTile.setHighlighted(true, !this.config.tileHighlightAnimated); }
+			if (this.config.tileSelectCallback) { this.config.tileSelectCallback.call(this.config.callbackScope, closestTile.mapPos.r, closestTile.mapPos.c); }
+		} 
+	}
+};
+
+/**
+ * Enables mouse/touch interactions.
+ *
+ * @method enableInteraction
+ */
+TRAVISO.EngineView.prototype.enableInteraction = function()
+{
+	var scope = this;
+	this.mousedown = this.touchstart = function(d) { scope.onMouseDown(d); };
+	this.mousemove = this.touchmove = function(d) { scope.onMouseMove(d); };
+	this.mouseup = this.mouseupout = this.touchend = function(d) { scope.onMouseUp(d); };
+	this.interactive = true;
+};
+/**
+ * Disables mouse/touch interactions.
+ *
+ * @method disableInteraction
+ */
+TRAVISO.EngineView.prototype.disableInteraction = function()
+{
+	this.mousedown = this.touchstart = null;
+	this.mousemove = this.touchmove = null;
+	this.mouseup = this.mouseupout = this.touchend = null;
+	this.interactive = true;
+	this.dragging = false;
+};
+
+/**
+ * Checks if the given point is inside the masked area if there is a mask defined.
+ *
+ * @method isInteractionInMask
+ * @private
+ * @param p {Object} point to check
+ * @param p.x {Number} x component
+ * @param p.y {Number} y component
+ * @return {Boolean} if the point is inside the masked area
+ */
+TRAVISO.EngineView.prototype.isInteractionInMask = function(p)
+{
+    if (this.config.useMask)
+    {
+        if (p.x &lt; this.posFrame.x ||
+            p.y &lt; this.posFrame.y ||
+            p.x &gt; this.posFrame.x + this.posFrame.w ||
+            p.y &gt; this.posFrame.y + this.posFrame.h)
+        {
+            return false;  
+        }
+    }
+    return true;
+};
+
+// ******************** START: MOUSE INTERACTIONS **************************** //
+TRAVISO.EngineView.prototype.onMouseDown = function(mdata) 
+{
+	if (!this.dragging &amp;&amp; this.isInteractionInMask(mdata.global))
+	{
+	    this.dragging = true;
+		//this.mouseDownTime = new Date();
+		this.dragInitStartingX = this.dragPrevStartingX = mdata.global.x;
+		this.dragInitStartingY = this.dragPrevStartingY = mdata.global.y;
+	}
+};
+TRAVISO.EngineView.prototype.onMouseMove = function(mdata) 
+{
+	if (this.dragging &amp;&amp; this.config.mapDraggable)
+	{
+		this.mapContainer.position.x += mdata.global.x - this.dragPrevStartingX;
+		this.mapContainer.position.y += mdata.global.y - this.dragPrevStartingY;
+		this.dragPrevStartingX = mdata.global.x;
+		this.dragPrevStartingY = mdata.global.y;
+	}
+};
+TRAVISO.EngineView.prototype.onMouseUp = function(mdata) 
+{
+	if (this.dragging)
+	{
+		this.dragging = false;
+		//var passedTime = (new Date()) - this.mouseDownTime;
+		var distX = mdata.global.x - this.dragInitStartingX;
+		var distY = mdata.global.y - this.dragInitStartingY;
+		
+		if (Math.abs(distX) &lt; 5 &amp;&amp; Math.abs(distY) &lt; 5)
+		{
+			// NOT DRAGGING IT IS A CLICK
+			this.checkForTileClick(mdata);
+		}
+	}
+};
+// ********************* END: MOUSE INTERACTIONS **************************** //
+
+
+/**
+ * Repositions the content according to user settings. Call this method 
+ * whenever you want to change the size or position of the engine.
+ *
+ * @method repositionContent
+ * @param [posFrame] {Object} frame to position the engine, default is { x : 0, y : 0, w : 800, h : 600 }
+ */
+TRAVISO.EngineView.prototype.repositionContent = function(posFrame)
+{
+    TRAVISO.trace(&quot;EngineView repositionContent&quot;);
+    
+    posFrame = posFrame || this.posFrame || { x : 0, y : 0, w : 800, h : 600 };
+    
+    this.position.x = posFrame.x;
+    this.position.y = posFrame.y;
+
+    this.externalCenter =
+    {
+        x : posFrame.w &gt;&gt; 1,
+        y : posFrame.h &gt;&gt; 1
+    };
+    this.centralizeToCurrentFocusLocation(true);
+
+    if (this.bg)
+    {
+        this.bg.clear();
+        // this.bg.lineStyle(2, 0x000000, 1);
+        this.bg.beginFill(this.config.backgroundColor, 1.0);
+        this.bg.drawRect(0, 0, posFrame.w, posFrame.h);
+        this.bg.endFill();
+    }
+    
+    if (this.mapMask &amp;&amp; this.mapContainer)
+    {
+        this.mapMask.clear();
+        this.mapMask.beginFill(&quot;#000000&quot;);
+        this.mapMask.drawRect(0, 0, posFrame.w, posFrame.h);
+        this.mapMask.endFill();
+
+        this.mapContainer.mask = this.mapMask;
+    }
+    
+    this.posFrame = posFrame;
+};
+
+/**
+ * Clears all references and stops all animations inside the engine.
+ * Call this method when you want to get rid of an engine instance.
+ *
+ * @method destroy
+ */
+TRAVISO.EngineView.prototype.destroy = function() 
+{
+	TRAVISO.trace(&quot;EngineView destroy&quot;);
+	
+	this.disableInteraction();
+	
+	this.moveEngine.destroy();
+    this.moveEngine = null;
+	
+	var item, i, j, k;
+    for (i = 0; i &lt; this.mapSizeR; i++)
+    {
+        for (j = this.mapSizeC-1; j &gt;= 0; j--)
+        {
+            item = this.tileArray[i][j];
+            if (item)
+            {
+                item.destroy();
+                // this.groundContainer.removeChild(item);
+            }
+            this.tileArray[i][j] = null;
+            
+            item = this.objArray[i][j];
+            if (item)
+            {
+                for (k=0; k &lt; item.length; k++)
+                {
+                    if (item[k])
+                    {
+                        item[k].destroy();
+                        // this.objContainer.removeChild(item[k]);
+                    }
+                    item[k] = null;
+                }
+            }
+            this.objArray[i][j] = null;
+        }
+    }
+    item = null;
+	
+	
+	this.pathFinding.destroy();
+	this.pathFinding = null;
+	
+	this.currentControllable = null;
+	this.tileArray = null;
+	this.objArray = null;
+	this.bg = null;
+	this.groundContainer = null;
+	this.objContainer = null;
+	
+	if (this.mapContainer)
+	{
+	    this.mapContainer.mask = null;
+	    this.removeChild(this.mapContainer);
+	    this.mapContainer = null;
+	}
+	if (this.mapMask)
+	{
+		this.removeChild(this.mapMask);
+	    this.mapMask = null;
+	}
+	
+	this.config = null;
+    this.mapData.groundMapData = null;
+    this.mapData.objectsMapData = null;
+    this.mapData.textures.tiles = null;
+    this.mapData.textures.objects = null;
+    this.mapData.textures = null;
+    this.mapData = null;
+};
+
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

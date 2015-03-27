@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Traviso.js - Example 6 - Single Ground Image</title>
+        <style>
+			body {
+				margin: 0;
+				padding: 0;
+				background-color: #000000;
+			}
+		</style>
+		
+		<script src="../js/com/greensock/easing/EasePack.js"></script>
+		<script src="../js/com/greensock/TweenLite.js"></script>
+		<script src="../js/pixi.dev.js"></script>
+		<script src="../js/traviso.dev.js"></script>
+    </head>
+    <body>
+    	<script>
+
+	////// Global on-frame renderer function
+	function update() 
+	{
+		renderer.render(stage);
+		requestAnimFrame(update); 
+	}
+	
+	////// Here, we initialize the pixi stage
+	
+	// create an new instance of a pixi stage
+	stage = new PIXI.Stage(0x6bacb6);
+
+	// create a renderer instance
+	renderer = PIXI.autoDetectRenderer();
+	
+	// add the renderer view element to the DOM
+	document.body.appendChild(renderer.view);
+	
+	requestAnimFrame(update);
+	
+	////// Here, we create our traviso instance and add on top of pixi
+	
+	// engine-instance configuration object
+	var instanceConfig =
+    {
+    	mapDataPath : "mapData.xml", // the path to the xml file that defines map data, required
+        assetsToLoad : ["../assets/assets_map.json", "../assets/assets_characters.json", "../assets/groundImage.jpg"], // array of paths to the assets that are desired to be loaded by traviso, no need to use if assets are already loaded to PIXI cache, default null
+        
+        initialZoomLevel : -1,
+        
+        callbackScope : this, // the scope to apply when calling callback functions, default null
+		engineInstanceReadyCallback : this.onEngineInstanceReady, // callback function that will be called once everything is loaded and engine instance is ready, needs "callbackScope" property, default null
+		tileSelectCallback : this.onTileSelect, // callback function that will be called when a tile is selected, needs "callbackScope" property, default null
+		objectSelectCallback : onObjectSelect, // callback function that will be called when a tile with an interactive map-object on it is selected, needs "callbackScope" property, default null
+		objectReachedDestinationCallback : this.onObjectReachedDestination, // callback function that will be called when any moving object reaches its destination, needs "callbackScope" property, default null
+		otherObjectsOnTheNextTileCallback : onOtherObjectsOnTheNextTile // callback function that will be called when any moving object is in move and there are other objects on the next tile, needs "callbackScope" property, default null
+    };
+
+    var engine = TRAVISO.getEngineInstance(instanceConfig);
+    
+    
+    // this method will be called when the engine is ready
+    function onEngineInstanceReady()
+    {
+    	stage.addChild(engine);
+    }
+    
+    // this method will be called everytime a tile is selected in the engine
+    function onTileSelect(r, c)
+    {
+    		
+    }
+    
+    // this method will be called when a tile with an interactive map-object on it is selected
+    function onObjectSelect(obj)
+    {
+    	engine.moveCurrentControllableToLocation(obj.mapPos);
+    }
+    
+    // this method will be called when any moving object reaches its destination
+    function onObjectReachedDestination(obj)
+    {
+    	var objectsOnDestination = engine.getObjectsAtLocation(obj.mapPos);
+    	for (var i=0; i < objectsOnDestination.length; i++)
+		{
+			// check if there is a flag on the destination tile
+			if(objectsOnDestination[i].type === 10)
+			{
+				obj.changeVisual("flip", false, true, flipAnimFinished);
+				break;
+			}
+		}
+    }
+    
+    // this method will be called when the custom flip anim finished
+    function flipAnimFinished (obj)
+	{
+		// change the visual of the object so that it will face its last direction
+	    obj.changeVisualToDirection(obj.currentDirection, false);
+	}
+    
+    // this method will be called when any moving object is in move and there are other objects on the next tile
+    function onOtherObjectsOnTheNextTile(movingObject, objectsOnNewTile)
+    {
+    	var boxAnim;
+		for (var i=0; i < objectsOnNewTile.length; i++)
+		{
+			// check if there are boxes on the next tile
+			if(objectsOnNewTile[i].type === 12)
+			{
+				boxAnim = createAndStartBoxAnim();
+				engine.addCustomObjectToLocation(boxAnim, objectsOnNewTile[i].mapPos);
+				engine.removeObjectFromLocation(objectsOnNewTile[i]);
+			}
+		}
+    }
+    
+    // creates 6 boxes and spreads them up throuh a simple tween animation
+    function createAndStartBoxAnim()
+    {
+    	// create six seperate boxes to spread
+    	var boxAnim = new PIXI.DisplayObjectContainer();
+    	var t = PIXI.Texture.fromFrame("box.png");
+	    var box;
+	    var boxes = [];
+	    for (var i=0; i < 6; i++)
+	    {
+	    	box = new PIXI.MovieClip([t]);
+	    	box.anchor.x = box.anchor.y = 0.5;
+	    	boxAnim.addChild(box);
+	    	boxes[boxes.length] = box;
+	    }
+	    
+	    // play a simple spread anim for the boxes
+	    var boxTargets = [[-75, -125], [-50, -100], [-25, -75], [25, -75], [50, -100], [75, -125]];
+		for (var i=0; i < boxes.length; i++)
+	    {
+	    	TweenLite.to( boxes[i].position, 0.5, { x: boxTargets[i][0], y: boxTargets[i][1], ease:"Back.easeOut" } );
+			TweenLite.to( boxes[i], 0.7, { alpha: 0 } );
+	    }
+	    
+	    return boxAnim;
+    }
+
+		</script>
+    </body>
+</html>

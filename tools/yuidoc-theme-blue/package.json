@@ -1,0 +1,29 @@
+{
+  "name": "yuidoc-theme-blue",
+  "version": "0.1.8",
+  "description": "A custom theme for yuidocs inspired by the blue color :)",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/royriojas/yuidoc-theme-blue.git"
+  },
+  "keywords": [
+    "yuidoc-theme",
+    "code documentation",
+    "documentation generator",
+    "themes",
+    "yuidoc themes"
+  ],
+  "author": "Roy Riojas",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/royriojas/yuidoc-theme-blue/issues"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-bump": "0.0.13",
+    "time-grunt": "~0.2.8",
+    "matchdep": "~0.3.0",
+    "grunt-jsbeautifier": "git://github.com/royriojas/grunt-jsbeautifier",
+    "yuidocjs": "git://github.com/royriojas/yuidoc"
+  }
+}

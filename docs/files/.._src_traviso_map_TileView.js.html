@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en" class="yui-overrride">
+<head>
+    <meta charset="utf-8">
+    <title>../src/traviso/map/TileView.js - traviso.js</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700' rel='stylesheet' type='text/css'>
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            <h1 class="blue-main-title">traviso.js</h1>
+        </div>
+        <div class="yui3-u-1-4 version project-version">
+            API Docs for: 0.0.1
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/EngineView.html">EngineView</a></li>
+            
+                <li><a href="../classes/MoveEngine.html">MoveEngine</a></li>
+            
+                <li><a href="../classes/ObjectView.html">ObjectView</a></li>
+            
+                <li><a href="../classes/PathFinding.html">PathFinding</a></li>
+            
+                <li><a href="../classes/TileView.html">TileView</a></li>
+            
+                <li><a href="../classes/TRAVISO.html">TRAVISO</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/TRAVISO.html">TRAVISO</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: ../src/traviso/map/TileView.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+/**
+ * @author Hakan Karlidag - @axaq
+ */
+
+/**
+ * Visual class for the map-tiles.
+ *
+ * @class TileView
+ * @extends DisplayObjectContainer
+ * @constructor
+ * @param engine {EngineView} the engine instance that the map-tile sits in
+ * @param [tileType=&quot;0&quot;] {String} type-id of the tile as defined in the XML file
+ */
+TRAVISO.TileView = function(engine, tileType)
+{
+    PIXI.DisplayObjectContainer.call(this);
+
+    /**
+     * A reference to the engine view that the map-tile sits in.
+     * @property {EngineView} engine
+     * @protected
+     */
+    /**
+     * Type-id of the map-tile as defined in the XML file.
+     * @property {Number} type
+     * @default 0
+     */
+    this.engine = engine;
+    this.type = tileType || &quot;0&quot;;
+
+    var halfHeight = this.engine.TILE_HALF_H;
+    var halfWidth = this.engine.TILE_HALF_W;
+
+    /**
+     * Defines the positions of the vertices of the tile in the local scope.
+     * @property {Array(Array(Number))} vertices
+     * @protected
+     */
+    // @formatter:off
+	this.vertices = [
+						[-halfWidth, 0],
+						[0, -halfHeight],
+						[halfWidth, 0],
+						[0, halfHeight]
+					];
+	// @formatter:on
+
+    /**
+     * Defines if the map-tile is movable onto by map-objects.
+     * @property {Boolean} isMovableTo
+     */
+    var tileInfo = TRAVISO.getTileInfo(this.engine, this.type);
+    this.isMovableTo = tileInfo.m;
+
+    if (tileInfo.t.length &gt; 0)
+    {
+        this.tileGraphics = new PIXI.MovieClip(tileInfo.t);
+        this.tileGraphics.anchor.x = 0.5;
+        this.tileGraphics.anchor.y = 0.5;
+        this.addChild(this.tileGraphics);
+        this.tileGraphics.gotoAndStop(this.type);
+    }
+
+    // var colorsArray = [0x0106ff, 0x3b6d14, 0x8789ff, 0xb32bf9, 0xeb36d0, 0xfe0000, 0xeb3647, 0xf27e31, 0xffea01, 0x00ff18, 0x3b6d14, 0xfa9bbb, 0xf9c7bc, 0x8d6729, 0x633e07];
+    // var c = colorsArray[ this.type &lt; 2 ? this.type : 0 ];
+
+    // this.tileGraphics = new PIXI.Graphics();
+    // this.tileGraphics.clear();
+    // this.tileGraphics.beginFill(c);
+    // this.tileGraphics.moveTo(this.vertices[0][0], this.vertices[0][1]);
+    // for (var i=1; i &lt; this.vertices.length; i++)
+    // {
+    // this.tileGraphics.lineTo(this.vertices[i][0], this.vertices[i][1]);
+    // };
+    // this.tileGraphics.endFill();
+
+    /**
+     * The visual that will be used to highlight the tile.
+     * @property {PIXI.DisplayObject} highlightedOverlay
+     * @protected
+     */
+    if (this.engine.mapData.textures.tileHighlight)
+    {
+        this.highlightedOverlay = new PIXI.Sprite.fromFrame(this.engine.mapData.textures.tileHighlight);
+        this.highlightedOverlay.anchor.x = 0.5;
+        this.highlightedOverlay.anchor.y = 0.5;
+        this.addChild(this.highlightedOverlay);
+    }
+    else
+    {
+        this.highlightedOverlay = new PIXI.Graphics();
+        this.highlightedOverlay.clear();
+        this.highlightedOverlay.lineStyle(2, 0xFFFFFF, 1);
+        this.highlightedOverlay.beginFill(0x80d7ff, 0.5);
+        this.highlightedOverlay.moveTo(this.vertices[0][0], this.vertices[0][1]);
+        for (var i = 1; i &lt; this.vertices.length; i++)
+        {
+            this.highlightedOverlay.lineTo(this.vertices[i][0], this.vertices[i][1]);
+        }
+        this.highlightedOverlay.lineTo(this.vertices[0][0], this.vertices[0][1]);
+        this.highlightedOverlay.endFill();
+        this.addChild(this.highlightedOverlay);
+    }
+
+    this.highlightedOverlay.scale.x = this.highlightedOverlay.scale.y = 0.1;
+    this.highlightedOverlay.visible = false;
+
+    this.highlightedOverlay.scale.scope = this.highlightedOverlay;
+    this.highlightedOverlay.scale.isHighlighted = this.isHighlighted = false;
+};
+
+// constructor
+TRAVISO.TileView.constructor = TRAVISO.TileView;
+TRAVISO.TileView.prototype = Object.create(PIXI.DisplayObjectContainer.prototype);
+
+/**
+ * Changes the highlight state of the map-tile.
+ *
+ * @method setHighlighted
+ * @param isHighlighted {Boolean} if the tile is being hightlighted or not
+ * @param [instant=false] {Boolean} if the change will be instant or animated
+ */
+TRAVISO.TileView.prototype.setHighlighted = function(isHighlighted, instant)
+{
+    /**
+     * The highlight state of the map-tile.
+     * @property {Boolean} isHighlighted
+     */
+    if (this.isHighlighted !== isHighlighted)
+    {
+        if (instant)
+        {
+            this.highlightedOverlay.scale.x = this.highlightedOverlay.scale.y = isHighlighted ? 1 : 0.1;
+            this.highlightedOverlay.visible = isHighlighted;
+            this.highlightedOverlay.scale.isHighlighted = this.isHighlighted = isHighlighted;
+            return;
+        }
+
+        if (isHighlighted)
+        {
+            this.highlightedOverlay.visible = isHighlighted;
+        }
+
+        this.highlightedOverlay.scale.isHighlighted = this.isHighlighted = isHighlighted;
+
+        var ts = isHighlighted ? 1 : 0.1;
+        if (this.highlightedOverlay.scale.x === ts)
+        {
+            this.highlightedOverlay.visible = isHighlighted;
+        }
+        else
+        {
+            this.highlightedOverlay.scale.x = this.highlightedOverlay.scale.y = isHighlighted ? 0.1 : 1;
+
+            // @formatter:off
+    	    this.engine.moveEngine.addTween(
+    	    	this.highlightedOverlay.scale,
+    	    	0.5, 
+    	    	{ x: ts, y: ts },
+    	    	0,
+    	    	&quot;linear&quot;, 
+    	    	true, 
+    	    	function()
+                {
+                    this.target.scope.visible = this.target.isHighlighted;
+                }
+            );
+            // @formatter:on
+        }
+    }
+};
+
+/**
+ * Clears all references.
+ *
+ * @method destroy
+ */
+TRAVISO.TileView.prototype.destroy = function()
+{
+    if (this.engine)
+    {
+        if (this.engine &amp;&amp; this.engine.moveEngine)
+        {
+            this.engine.moveEngine.killTweensOf(this.highlightedOverlay.scale);
+        }
+        this.engine = null;
+        this.highlightedOverlay.scale.scope = null;
+        this.highlightedOverlay = null;
+        this.tileGraphics = null;
+    }
+};
+
+
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

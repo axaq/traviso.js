@@ -1,0 +1,4539 @@
+<!DOCTYPE html>
+<html lang="en" class="yui-overrride">
+<head>
+    <meta charset="utf-8">
+    <title>TRAVISO - traviso.js</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700' rel='stylesheet' type='text/css'>
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            <h1 class="blue-main-title">traviso.js</h1>
+        </div>
+        <div class="yui3-u-1-4 version project-version">
+            API Docs for: 0.0.1
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/EngineView.html">EngineView</a></li>
+            
+                <li><a href="../classes/MoveEngine.html">MoveEngine</a></li>
+            
+                <li><a href="../classes/ObjectView.html">ObjectView</a></li>
+            
+                <li><a href="../classes/PathFinding.html">PathFinding</a></li>
+            
+                <li><a href="../classes/TileView.html">TileView</a></li>
+            
+                <li><a href="../classes/TRAVISO.html">TRAVISO</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/TRAVISO.html">TRAVISO</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1>TRAVISO</h1>
+<div class="meta">
+    
+
+    
+
+    
+        <div class="foundat">
+            Defined in: <a href="../files/.._src_traviso_Traviso.js.html#l11"><code>..&#x2F;src&#x2F;traviso&#x2F;Traviso.js:11</code></a>
+        </div>
+    
+
+    
+        
+            Module: <a href="../modules/TRAVISO.html">TRAVISO</a>
+        
+    
+
+    
+    
+        <p><span class="flag static">static</span></p>
+    
+</div>
+
+
+
+<h3>Summary</h3>
+<div class="intro">
+    <p>Namespace-class for <a href="http://www.travisojs.com/">traviso.js</a>.</p>
+<p>Contains all traviso related properties and enumerations.</p>
+
+</div>
+
+
+
+<div id="classdocs" class="tabview">
+    <ul class="api-class-tabs">
+        <li class="api-class-tab index"><a href="#index">Index</a></li>
+
+        
+            <li class="api-class-tab methods"><a href="#methods">Methods</a></li>
+        
+        
+            <li class="api-class-tab properties"><a href="#properties">Properties</a></li>
+        
+        
+        
+    </ul>
+
+    <div>
+        <div id="index" class="api-class-tabpanel index">
+            <h2 class="off-left">Item Index</h2>
+
+            
+                <div class="index-section methods">
+                    <h3>Methods</h3>
+
+                    <ul class="index-list methods">
+                        
+                            <li class="index-item method">
+                                <a href="#method_defineProperty">defineProperty</a>
+
+                                
+                                    <span class="flag static">static</span>
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_dotProduct">dotProduct</a>
+
+                                
+                                    <span class="flag static">static</span>
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_existy">existy</a>
+
+                                
+                                    <span class="flag static">static</span>
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method private">
+                                <a href="#method_getDirBetween">getDirBetween</a>
+
+                                
+                                    <span class="flag static">static</span>
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_getDist">getDist</a>
+
+                                
+                                    <span class="flag static">static</span>
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_getEngineInstance">getEngineInstance</a>
+
+                                
+                                    <span class="flag static">static</span>
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method private">
+                                <a href="#method_getMovingDirVisualId">getMovingDirVisualId</a>
+
+                                
+                                    <span class="flag static">static</span>
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method private">
+                                <a href="#method_getObjectInfo">getObjectInfo</a>
+
+                                
+                                    <span class="flag static">static</span>
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method private">
+                                <a href="#method_getObjectTextures">getObjectTextures</a>
+
+                                
+                                    <span class="flag static">static</span>
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method private">
+                                <a href="#method_getStationaryDirVisualId">getStationaryDirVisualId</a>
+
+                                
+                                    <span class="flag static">static</span>
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method private">
+                                <a href="#method_getTileInfo">getTileInfo</a>
+
+                                
+                                    <span class="flag static">static</span>
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_getUnit">getUnit</a>
+
+                                
+                                    <span class="flag static">static</span>
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_globalToLocal">globalToLocal</a>
+
+                                
+                                    <span class="flag static">static</span>
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_init">init</a>
+
+                                
+                                    <span class="flag static">static</span>
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_isInPolygon">isInPolygon</a>
+
+                                
+                                    <span class="flag static">static</span>
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method private">
+                                <a href="#method_loadAssetsAndData">loadAssetsAndData</a>
+
+                                
+                                    <span class="flag static">static</span>
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method private">
+                                <a href="#method_loadData">loadData</a>
+
+                                
+                                    <span class="flag static">static</span>
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_localToGlobal">localToGlobal</a>
+
+                                
+                                    <span class="flag static">static</span>
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_mathMap">mathMap</a>
+
+                                
+                                    <span class="flag static">static</span>
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_trace">trace</a>
+
+                                
+                                    <span class="flag static">static</span>
+                                
+                                
+                            </li>
+                        
+                    </ul>
+                </div>
+            
+
+            
+                <div class="index-section properties">
+                    <h3>Properties</h3>
+
+                    <ul class="index-list properties">
+                        
+                            <li class="index-item property protected">
+                                <a href="#property_config">config</a>
+
+                                
+                                    <span class="flag static">static</span>
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property protected">
+                                <a href="#property_directions">directions</a>
+
+                                
+                                    <span class="flag static">static</span>
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property protected">
+                                <a href="#property_isReady">isReady</a>
+
+                                
+                                    <span class="flag static">static</span>
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property protected">
+                                <a href="#property_pfAlgorithms">pfAlgorithms</a>
+
+                                
+                                    <span class="flag static">static</span>
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property protected">
+                                <a href="#property_RESERVED_TEXTURE_IDS">RESERVED_TEXTURE_IDS</a>
+
+                                
+                                    <span class="flag static">static</span>
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_VERSION">VERSION</a>
+
+                                
+                                    <span class="flag static">static</span>
+                                
+                                
+                            </li>
+                        
+                    </ul>
+                </div>
+            
+
+            
+
+            
+        </div>
+
+        
+            <div id="methods" class="api-class-tabpanel">
+                <h2 class="off-left">Methods</h2>
+
+                
+                    <div id="method_defineProperty" class="method item">
+  <h3 class="blue-method-name">defineProperty</h3>
+
+  <div class="meta method-meta">
+    
+      
+        
+      <p>
+        
+          Defined in
+        
+      
+    
+    
+      <a href="../files/.._src_traviso_Traviso.js.html#l218"><code>..&#x2F;src&#x2F;traviso&#x2F;Traviso.js:218</code></a>
+    
+  </p>
+
+
+    
+
+    
+  </div>
+
+  <h3>Syntax</h3>
+  <div class="blue-method-syntax">
+  <h3 class="name"><code>defineProperty</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>key</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    
+
+    
+
+  </div>
+    <div class="description">
+      <h3>Summary</h3>
+        <p>Helper method to define property for the EngineView</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">key</code>
+                        <span class="type">String</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>name of the property</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+
+    
+
+</div>
+
+                
+                    <div id="method_dotProduct" class="method item">
+  <h3 class="blue-method-name">dotProduct</h3>
+
+  <div class="meta method-meta">
+    
+      
+        
+      <p>
+        
+          Defined in
+        
+      
+    
+    
+      <a href="../files/.._src_traviso_Calculations.js.html#l29"><code>..&#x2F;src&#x2F;traviso&#x2F;Calculations.js:29</code></a>
+    
+  </p>
+
+
+    
+
+    
+  </div>
+
+  <h3>Syntax</h3>
+  <div class="blue-method-syntax">
+  <h3 class="name"><code>dotProduct</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>v1</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>v2</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Number</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    
+
+    
+
+  </div>
+    <div class="description">
+      <h3>Summary</h3>
+        <p>Produces dot product of two vectors.</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">v1</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>first vector</p>
+
+                    </div>
+
+                    
+                        <ul class="params-list">
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name">x</code>
+                                    <span class="type">Number</span>
+                                
+
+                                <div class="param-description">
+                                    <p>x component</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name">y</code>
+                                    <span class="type">Number</span>
+                                
+
+                                <div class="param-description">
+                                    <p>y component</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                        </ul>
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">v2</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>second vector</p>
+
+                    </div>
+
+                    
+                        <ul class="params-list">
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name">x</code>
+                                    <span class="type">Number</span>
+                                
+
+                                <div class="param-description">
+                                    <p>x component</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name">y</code>
+                                    <span class="type">Number</span>
+                                
+
+                                <div class="param-description">
+                                    <p>y component</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                        </ul>
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+              
+                <span class="type">Number</span>:
+              
+              
+                <div class="blue-return-desc">
+                    <p>dot product of two vectors</p>
+
+                </div>
+              
+
+
+            </div>
+        </div>
+    
+
+    
+
+    
+
+</div>
+
+                
+                    <div id="method_existy" class="method item">
+  <h3 class="blue-method-name">existy</h3>
+
+  <div class="meta method-meta">
+    
+      
+        
+      <p>
+        
+          Defined in
+        
+      
+    
+    
+      <a href="../files/.._src_traviso_Calculations.js.html#l175"><code>..&#x2F;src&#x2F;traviso&#x2F;Calculations.js:175</code></a>
+    
+  </p>
+
+
+    
+
+    
+  </div>
+
+  <h3>Syntax</h3>
+  <div class="blue-method-syntax">
+  <h3 class="name"><code>existy</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>value</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Boolean</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    
+
+    
+
+  </div>
+    <div class="description">
+      <h3>Summary</h3>
+        <p>Checks if the value existy.</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">value</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>value to check</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+              
+                <span class="type">Boolean</span>:
+              
+              
+                <div class="blue-return-desc">
+                    <p>if the value existy</p>
+
+                </div>
+              
+
+
+            </div>
+        </div>
+    
+
+    
+
+    
+
+</div>
+
+                
+                    <div id="method_getDirBetween" class="method item private">
+  <h3 class="blue-method-name">getDirBetween</h3>
+
+  <div class="meta method-meta">
+    
+      
+        
+      <p>
+        
+          Defined in
+        
+      
+    
+    
+      <a href="../files/.._src_traviso_MapMethods.js.html#l369"><code>..&#x2F;src&#x2F;traviso&#x2F;MapMethods.js:369</code></a>
+    
+  </p>
+
+
+    
+
+    
+  </div>
+
+  <h3>Syntax</h3>
+  <div class="blue-method-syntax">
+  <h3 class="name"><code>getDirBetween</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>r1</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>c1</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>r2</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>c2</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Number</span>
+        </span>
+    
+
+    
+
+    
+        <span class="flag private">private</span>
+    
+
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    
+
+    
+
+  </div>
+    <div class="description">
+      <h3>Summary</h3>
+        <p>Returns the direction (id) between two locations</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">r1</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>row index of the first location</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">c1</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>column index of the first location</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">r2</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>row index of the second location</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">c2</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>column index of the second location</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+              
+                <span class="type">Number</span>:
+              
+              
+                <div class="blue-return-desc">
+                    <p>direction id</p>
+
+                </div>
+              
+
+
+            </div>
+        </div>
+    
+
+    
+
+    
+
+</div>
+
+                
+                    <div id="method_getDist" class="method item">
+  <h3 class="blue-method-name">getDist</h3>
+
+  <div class="meta method-meta">
+    
+      
+        
+      <p>
+        
+          Defined in
+        
+      
+    
+    
+      <a href="../files/.._src_traviso_Calculations.js.html#l94"><code>..&#x2F;src&#x2F;traviso&#x2F;Calculations.js:94</code></a>
+    
+  </p>
+
+
+    
+
+    
+  </div>
+
+  <h3>Syntax</h3>
+  <div class="blue-method-syntax">
+  <h3 class="name"><code>getDist</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>p1</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>p2</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Boolean</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    
+
+    
+
+  </div>
+    <div class="description">
+      <h3>Summary</h3>
+        <p>Calculates the distance between two points.</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">p1</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>first point</p>
+
+                    </div>
+
+                    
+                        <ul class="params-list">
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name">x</code>
+                                    <span class="type">Number</span>
+                                
+
+                                <div class="param-description">
+                                    <p>x component</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name">y</code>
+                                    <span class="type">Number</span>
+                                
+
+                                <div class="param-description">
+                                    <p>y component</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                        </ul>
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">p2</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>second point</p>
+
+                    </div>
+
+                    
+                        <ul class="params-list">
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name">x</code>
+                                    <span class="type">Number</span>
+                                
+
+                                <div class="param-description">
+                                    <p>x component</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name">y</code>
+                                    <span class="type">Number</span>
+                                
+
+                                <div class="param-description">
+                                    <p>y component</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                        </ul>
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+              
+                <span class="type">Boolean</span>:
+              
+              
+                <div class="blue-return-desc">
+                    <p>the distance between two points</p>
+
+                </div>
+              
+
+
+            </div>
+        </div>
+    
+
+    
+
+    
+
+</div>
+
+                
+                    <div id="method_getEngineInstance" class="method item">
+  <h3 class="blue-method-name">getEngineInstance</h3>
+
+  <div class="meta method-meta">
+    
+      
+        
+      <p>
+        
+          Defined in
+        
+      
+    
+    
+      <a href="../files/.._src_traviso_Traviso.js.html#l70"><code>..&#x2F;src&#x2F;traviso&#x2F;Traviso.js:70</code></a>
+    
+  </p>
+
+
+    
+
+    
+  </div>
+
+  <h3>Syntax</h3>
+  <div class="blue-method-syntax">
+  <h3 class="name"><code>getEngineInstance</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>instanceConfig</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code class="optional">[globalConfig]</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type"><a href="../classes/EngineView.html" class="crosslink">EngineView</a></span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    
+
+    
+
+  </div>
+    <div class="description">
+      <h3>Summary</h3>
+        <p>Creates and returns an isometric engine instance with the provided configuration.
+Also initialises traviso global settings if it hasn&#39;t been already.</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">instanceConfig</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>configuration object for the isometric instance</p>
+
+                    </div>
+
+                    
+                        <ul class="params-list">
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name">mapDataPath</code>
+                                    <span class="type">String</span>
+                                
+
+                                <div class="param-description">
+                                    <p>the path to the xml file that defines map data, required</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[assetsToLoad=null]</code>
+                                    <span class="type">Array(String)</span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>array of paths to the assets that are desired to be loaded by traviso, no need to use if assets are already loaded to PIXI cache, default null</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[minScale=0.5]</code>
+                                    <span class="type">Number</span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>mimimum scale that the DisplayObjectContainer for the map can get, default 0.5</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[maxScale=1.5]</code>
+                                    <span class="type">Number</span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>maximum scale that the DisplayObjectContainer for the map can get, default 1.5</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[numberOfZoomLevels=5]</code>
+                                    <span class="type">Number</span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>used to calculate zoom increment, default 5</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[initialZoomLevel=0]</code>
+                                    <span class="type">Number</span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>initial zoom level of the map, should be between -1 and 1, default 0</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[instantCameraZoom=false]</code>
+                                    <span class="type">Number</span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>specifies wheather to zoom instantly or with a tween animation, default false</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[tileHeight=74]</code>
+                                    <span class="type">Number</span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>height of a single isometric tile, default 74</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[isoAngle=30]</code>
+                                    <span class="type">Number</span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>the angle between the topleft edge and the horizontal diagonal of a isometric quad, default 30</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[initialPositionFrame]</code>
+                                    <span class="type">Object</span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>frame to position the engine, default { x : 0, y : 0, w : 800, h : 600 }</p>
+
+                                </div>
+
+                                
+                                    <ul class="params-list">
+                                        
+                                        <li class="param">
+                                            
+                                                <code class="param-name">x</code>
+                                                <span class="type">Number</span>
+                                            
+
+                                            <div class="param-description">
+                                                x position of the engine, default 0
+                                            </div>
+                                        </li>
+                                        
+                                        <li class="param">
+                                            
+                                                <code class="param-name">y</code>
+                                                <span class="type">Number</span>
+                                            
+
+                                            <div class="param-description">
+                                                y position of the engine, default 0
+                                            </div>
+                                        </li>
+                                        
+                                        <li class="param">
+                                            
+                                                <code class="param-name">w</code>
+                                                <span class="type">Number</span>
+                                            
+
+                                            <div class="param-description">
+                                                width of the engine, default 800
+                                            </div>
+                                        </li>
+                                        
+                                        <li class="param">
+                                            
+                                                <code class="param-name">h</code>
+                                                <span class="type">Number</span>
+                                            
+
+                                            <div class="param-description">
+                                                height of the engine, default 600
+                                            </div>
+                                        </li>
+                                        
+                                    </ul>
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[pathFindingType=TRAVISO.pfAlgorithms.ASTAR_ORTHOGONAL]</code>
+                                    <span class="type">Number</span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>the type of path finding algorithm two use, default TRAVISO.pfAlgorithms.ASTAR_ORTHOGONAL</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[followCharacter=true]</code>
+                                    <span class="type">Boolean</span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>defines if the camera will follow the current controllable or not, default true</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[instantCameraRelocation=false]</code>
+                                    <span class="type">Boolean</span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>specifies wheather the camera moves instantly or with a tween animation to the target location, default false</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[instantObjectRelocation=false]</code>
+                                    <span class="type">Boolean</span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>specifies wheather the map-objects will be moved to target location instantly or with an animation, default false</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[highlightPath=true]</code>
+                                    <span class="type">Boolean</span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>highlight the path when the current controllable moves on the map, default true</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[highlightTargetTile=true]</code>
+                                    <span class="type">Boolean</span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>highlight the target tile when the current controllable moves on the map, default true</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[tileHighlightAnimated=true]</code>
+                                    <span class="type">Boolean</span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>animate the tile highlights, default true</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[mapDraggable=true]</code>
+                                    <span class="type">Boolean</span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>enable dragging the map with touch-and-touchmove or mousedown-and-mousemove on the map, default true</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[backgroundColor=null]</code>
+                                    <span class="type">Number(Hexadecimal)</span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>background color, if defined the engine will create a solid colored background for the map, default null</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[useMask=false]</code>
+                                    <span class="type">Boolean</span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>creates a mask using the position frame defined by &#39;initialPositionFrame&#39; property or the &#39;posFrame&#39; parameter that is passed to &#39;repositionContent&#39; method, default false</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[callbackScope=null]</code>
+                                    <span class="type">Object</span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>the scope to apply when calling callback functions, default null</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[engineInstanceReadyCallback=null]</code>
+                                    <span class="type">Function</span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>callback function that will be called once everything is loaded and engine instance is ready, needs &#39;callbackScope&#39; property, default null</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[tileSelectCallback=null]</code>
+                                    <span class="type">Function</span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>callback function that will be called when a tile is selected, needs &#39;callbackScope&#39; property, default null</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[objectSelectCallback=null]</code>
+                                    <span class="type">Function</span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>callback function that will be called when a tile with an interactive map-object on it is selected, needs &#39;callbackScope&#39; property, default null</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[objectReachedDestinationCallback=null]</code>
+                                    <span class="type">Function</span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>callback function that will be called when any moving object reaches its destination, needs &#39;callbackScope&#39; property, default null</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[otherObjectsOnTheNextTileCallback=null]</code>
+                                    <span class="type">Function</span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>callback function that will be called when any moving object is in move and there are other objects on the next tile, needs &#39;callbackScope&#39; property, default null</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                        </ul>
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[globalConfig]</code>
+                        <span class="type">Object</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>configuration object for the traviso engine</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+              
+                <span class="type"><a href="../classes/EngineView.html" class="crosslink">EngineView</a></span>:
+              
+              
+                <div class="blue-return-desc">
+                    <p>a new instance of the isometric engine</p>
+
+                </div>
+              
+
+
+            </div>
+        </div>
+    
+
+    
+
+    
+
+</div>
+
+                
+                    <div id="method_getMovingDirVisualId" class="method item private">
+  <h3 class="blue-method-name">getMovingDirVisualId</h3>
+
+  <div class="meta method-meta">
+    
+      
+        
+      <p>
+        
+          Defined in
+        
+      
+    
+    
+      <a href="../files/.._src_traviso_MapMethods.js.html#l354"><code>..&#x2F;src&#x2F;traviso&#x2F;MapMethods.js:354</code></a>
+    
+  </p>
+
+
+    
+
+    
+  </div>
+
+  <h3>Syntax</h3>
+  <div class="blue-method-syntax">
+  <h3 class="name"><code>getMovingDirVisualId</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>dir</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">String</span>
+        </span>
+    
+
+    
+
+    
+        <span class="flag private">private</span>
+    
+
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    
+
+    
+
+  </div>
+    <div class="description">
+      <h3>Summary</h3>
+        <p>Returns the predefined moving texture id for the given direction</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">dir</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>index of the direction</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+              
+                <span class="type">String</span>:
+              
+              
+                <div class="blue-return-desc">
+                    <p>texture id for the given direction</p>
+
+                </div>
+              
+
+
+            </div>
+        </div>
+    
+
+    
+
+    
+
+</div>
+
+                
+                    <div id="method_getObjectInfo" class="method item private">
+  <h3 class="blue-method-name">getObjectInfo</h3>
+
+  <div class="meta method-meta">
+    
+      
+        
+      <p>
+        
+          Defined in
+        
+      
+    
+    
+      <a href="../files/.._src_traviso_MapMethods.js.html#l232"><code>..&#x2F;src&#x2F;traviso&#x2F;MapMethods.js:232</code></a>
+    
+  </p>
+
+
+    
+
+    
+  </div>
+
+  <h3>Syntax</h3>
+  <div class="blue-method-syntax">
+  <h3 class="name"><code>getObjectInfo</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>engine</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>objectType</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+    
+
+    
+
+    
+        <span class="flag private">private</span>
+    
+
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    
+
+    
+
+  </div>
+    <div class="description">
+      <h3>Summary</h3>
+        <p>Returns an object with all properties of a map-object defined by object-type</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">engine</code>
+                        <span class="type"><a href="../classes/EngineView.html" class="crosslink">EngineView</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>engine instance</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">objectType</code>
+                        <span class="type">String</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>type/id of the related object tag defined in the xml file</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+              
+                <span class="type">Object</span>:
+              
+              
+                <div class="blue-return-desc">
+                    <p>an object with all properties of a map-object</p>
+
+                </div>
+              
+
+
+            </div>
+        </div>
+    
+
+    
+
+    
+
+</div>
+
+                
+                    <div id="method_getObjectTextures" class="method item private">
+  <h3 class="blue-method-name">getObjectTextures</h3>
+
+  <div class="meta method-meta">
+    
+      
+        
+      <p>
+        
+          Defined in
+        
+      
+    
+    
+      <a href="../files/.._src_traviso_MapMethods.js.html#l266"><code>..&#x2F;src&#x2F;traviso&#x2F;MapMethods.js:266</code></a>
+    
+  </p>
+
+
+    
+
+    
+  </div>
+
+  <h3>Syntax</h3>
+  <div class="blue-method-syntax">
+  <h3 class="name"><code>getObjectTextures</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>engine</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>objectType</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>visualId</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Array(PIXI.Texture)</span>
+        </span>
+    
+
+    
+
+    
+        <span class="flag private">private</span>
+    
+
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    
+
+    
+
+  </div>
+    <div class="description">
+      <h3>Summary</h3>
+        <p>Returns an array of textures {PIXI.Texture} belong to a map-object defined by object-type and sprite-id</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">engine</code>
+                        <span class="type"><a href="../classes/EngineView.html" class="crosslink">EngineView</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>engine instance</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">objectType</code>
+                        <span class="type">String</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>type/id of the related object tag defined in the xml file</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">visualId</code>
+                        <span class="type">String</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>id of the related v tag defined in the xml file</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+              
+                <span class="type">Array(PIXI.Texture)</span>:
+              
+              
+                <div class="blue-return-desc">
+                    <p>an array of textures</p>
+
+                </div>
+              
+
+
+            </div>
+        </div>
+    
+
+    
+
+    
+
+</div>
+
+                
+                    <div id="method_getStationaryDirVisualId" class="method item private">
+  <h3 class="blue-method-name">getStationaryDirVisualId</h3>
+
+  <div class="meta method-meta">
+    
+      
+        
+      <p>
+        
+          Defined in
+        
+      
+    
+    
+      <a href="../files/.._src_traviso_MapMethods.js.html#l339"><code>..&#x2F;src&#x2F;traviso&#x2F;MapMethods.js:339</code></a>
+    
+  </p>
+
+
+    
+
+    
+  </div>
+
+  <h3>Syntax</h3>
+  <div class="blue-method-syntax">
+  <h3 class="name"><code>getStationaryDirVisualId</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>dir</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">String</span>
+        </span>
+    
+
+    
+
+    
+        <span class="flag private">private</span>
+    
+
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    
+
+    
+
+  </div>
+    <div class="description">
+      <h3>Summary</h3>
+        <p>Returns the predefined stationary texture id for the given direction</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">dir</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>index of the direction</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+              
+                <span class="type">String</span>:
+              
+              
+                <div class="blue-return-desc">
+                    <p>texture id for the given direction</p>
+
+                </div>
+              
+
+
+            </div>
+        </div>
+    
+
+    
+
+    
+
+</div>
+
+                
+                    <div id="method_getTileInfo" class="method item private">
+  <h3 class="blue-method-name">getTileInfo</h3>
+
+  <div class="meta method-meta">
+    
+      
+        
+      <p>
+        
+          Defined in
+        
+      
+    
+    
+      <a href="../files/.._src_traviso_MapMethods.js.html#l305"><code>..&#x2F;src&#x2F;traviso&#x2F;MapMethods.js:305</code></a>
+    
+  </p>
+
+
+    
+
+    
+  </div>
+
+  <h3>Syntax</h3>
+  <div class="blue-method-syntax">
+  <h3 class="name"><code>getTileInfo</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>engine</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>tileType</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+    
+
+    
+
+    
+        <span class="flag private">private</span>
+    
+
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    
+
+    
+
+  </div>
+    <div class="description">
+      <h3>Summary</h3>
+        <p>Returns an object with all properties of a map-tile defined by tileType</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">engine</code>
+                        <span class="type"><a href="../classes/EngineView.html" class="crosslink">EngineView</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>engine instance</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">tileType</code>
+                        <span class="type">String</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>type/id of the related tile tag defined in the xml file</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+              
+                <span class="type">Object</span>:
+              
+              
+                <div class="blue-return-desc">
+                    <p>an object with all properties of a map-tile</p>
+
+                </div>
+              
+
+
+            </div>
+        </div>
+    
+
+    
+
+    
+
+</div>
+
+                
+                    <div id="method_getUnit" class="method item">
+  <h3 class="blue-method-name">getUnit</h3>
+
+  <div class="meta method-meta">
+    
+      
+        
+      <p>
+        
+          Defined in
+        
+      
+    
+    
+      <a href="../files/.._src_traviso_Calculations.js.html#l48"><code>..&#x2F;src&#x2F;traviso&#x2F;Calculations.js:48</code></a>
+    
+  </p>
+
+
+    
+
+    
+  </div>
+
+  <h3>Syntax</h3>
+  <div class="blue-method-syntax">
+  <h3 class="name"><code>getUnit</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>v</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    
+
+    
+
+  </div>
+    <div class="description">
+      <h3>Summary</h3>
+        <p>Produces unit vector of a given vector.</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">v</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>source vector</p>
+
+                    </div>
+
+                    
+                        <ul class="params-list">
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name">x</code>
+                                    <span class="type">Number</span>
+                                
+
+                                <div class="param-description">
+                                    <p>x component</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name">y</code>
+                                    <span class="type">Number</span>
+                                
+
+                                <div class="param-description">
+                                    <p>y component</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                        </ul>
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+              
+                <span class="type">Object</span>:
+              
+              
+                <div class="blue-return-desc">
+                    <p>unit vector</p>
+
+                </div>
+              
+
+
+            </div>
+        </div>
+    
+
+    
+
+    
+
+</div>
+
+                
+                    <div id="method_globalToLocal" class="method item">
+  <h3 class="blue-method-name">globalToLocal</h3>
+
+  <div class="meta method-meta">
+    
+      
+        
+      <p>
+        
+          Defined in
+        
+      
+    
+    
+      <a href="../files/.._src_traviso_Calculations.js.html#l144"><code>..&#x2F;src&#x2F;traviso&#x2F;Calculations.js:144</code></a>
+    
+  </p>
+
+
+    
+
+    
+  </div>
+
+  <h3>Syntax</h3>
+  <div class="blue-method-syntax">
+  <h3 class="name"><code>globalToLocal</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>gp</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>scope</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Boolean</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    
+
+    
+
+  </div>
+    <div class="description">
+      <h3>Summary</h3>
+        <p>Calculates the local point with respect to given global point and local scope.</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">gp</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>global point</p>
+
+                    </div>
+
+                    
+                        <ul class="params-list">
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name">x</code>
+                                    <span class="type">Number</span>
+                                
+
+                                <div class="param-description">
+                                    <p>x component</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name">y</code>
+                                    <span class="type">Number</span>
+                                
+
+                                <div class="param-description">
+                                    <p>y component</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                        </ul>
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">scope</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>local scope</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+              
+                <span class="type">Boolean</span>:
+              
+              
+                <div class="blue-return-desc">
+                    <p>local point</p>
+
+                </div>
+              
+
+
+            </div>
+        </div>
+    
+
+    
+
+    
+
+</div>
+
+                
+                    <div id="method_init" class="method item">
+  <h3 class="blue-method-name">init</h3>
+
+  <div class="meta method-meta">
+    
+      
+        
+      <p>
+        
+          Defined in
+        
+      
+    
+    
+      <a href="../files/.._src_traviso_Traviso.js.html#l128"><code>..&#x2F;src&#x2F;traviso&#x2F;Traviso.js:128</code></a>
+    
+  </p>
+
+
+    
+
+    
+  </div>
+
+  <h3>Syntax</h3>
+  <div class="blue-method-syntax">
+  <h3 class="name"><code>init</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code class="optional">[globalConfig]</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    
+
+    
+
+  </div>
+    <div class="description">
+      <h3>Summary</h3>
+        <p>Initialises traviso global settings if it hasn&#39;t been already.</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[globalConfig]</code>
+                        <span class="type">Object</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>configuration object for the traviso engine</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+
+    
+
+</div>
+
+                
+                    <div id="method_isInPolygon" class="method item">
+  <h3 class="blue-method-name">isInPolygon</h3>
+
+  <div class="meta method-meta">
+    
+      
+        
+      <p>
+        
+          Defined in
+        
+      
+    
+    
+      <a href="../files/.._src_traviso_Calculations.js.html#l65"><code>..&#x2F;src&#x2F;traviso&#x2F;Calculations.js:65</code></a>
+    
+  </p>
+
+
+    
+
+    
+  </div>
+
+  <h3>Syntax</h3>
+  <div class="blue-method-syntax">
+  <h3 class="name"><code>isInPolygon</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>gp</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>vertices</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Boolean</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    
+
+    
+
+  </div>
+    <div class="description">
+      <h3>Summary</h3>
+        <p>Checks if the given point is the polygon defined by the vertices.</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">gp</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>point to check</p>
+
+                    </div>
+
+                    
+                        <ul class="params-list">
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name">x</code>
+                                    <span class="type">Number</span>
+                                
+
+                                <div class="param-description">
+                                    <p>x component</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name">y</code>
+                                    <span class="type">Number</span>
+                                
+
+                                <div class="param-description">
+                                    <p>y component</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                        </ul>
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">vertices</code>
+                        <span class="type">Array(Array(Number))</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>array containing the vertices of the polygon</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+              
+                <span class="type">Boolean</span>:
+              
+              
+                <div class="blue-return-desc">
+                    <p>if the point is inside the polygon</p>
+
+                </div>
+              
+
+
+            </div>
+        </div>
+    
+
+    
+
+    
+
+</div>
+
+                
+                    <div id="method_loadAssetsAndData" class="method item private">
+  <h3 class="blue-method-name">loadAssetsAndData</h3>
+
+  <div class="meta method-meta">
+    
+      
+        
+      <p>
+        
+          Defined in
+        
+      
+    
+    
+      <a href="../files/.._src_traviso_MapMethods.js.html#l5"><code>..&#x2F;src&#x2F;traviso&#x2F;MapMethods.js:5</code></a>
+    
+  </p>
+
+
+    
+
+    
+  </div>
+
+  <h3>Syntax</h3>
+  <div class="blue-method-syntax">
+  <h3 class="name"><code>loadAssetsAndData</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>engine</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code class="optional">[loadedCallback=null]</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+        <span class="flag private">private</span>
+    
+
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    
+
+    
+
+  </div>
+    <div class="description">
+      <h3>Summary</h3>
+        <p>Handles loading of necessary assets and map data for the given engine instance</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">engine</code>
+                        <span class="type"><a href="../classes/EngineView.html" class="crosslink">EngineView</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>engine instance</p>
+
+                    </div>
+
+                    
+                        <ul class="params-list">
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name">config</code>
+                                    <span class="type">Object</span>
+                                
+
+                                <div class="param-description">
+                                    <p>configuration object for the engine instance</p>
+
+                                </div>
+
+                                
+                                    <ul class="params-list">
+                                        
+                                        <li class="param">
+                                            
+                                                <code class="param-name optional">[assetsToLoad=null]</code>
+                                                <span class="type">Array(String)</span>
+                                                <span class="flag optional" title="This parameter is optional.">optional</span>
+                                            
+
+                                            <div class="param-description">
+                                                array of paths to the assets that are desired to be loaded by traviso, no need to use if assets are already loaded to PIXI cache, default null
+                                            </div>
+                                        </li>
+                                        
+                                    </ul>
+                                
+                            </li>
+                            
+                        </ul>
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[loadedCallback=null]</code>
+                        <span class="type">Function</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Callback function</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+
+    
+
+</div>
+
+                
+                    <div id="method_loadData" class="method item private">
+  <h3 class="blue-method-name">loadData</h3>
+
+  <div class="meta method-meta">
+    
+      
+        
+      <p>
+        
+          Defined in
+        
+      
+    
+    
+      <a href="../files/.._src_traviso_MapMethods.js.html#l31"><code>..&#x2F;src&#x2F;traviso&#x2F;MapMethods.js:31</code></a>
+    
+  </p>
+
+
+    
+
+    
+  </div>
+
+  <h3>Syntax</h3>
+  <div class="blue-method-syntax">
+  <h3 class="name"><code>loadData</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>engine</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code class="optional">[loadedCallback=null]</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+        <span class="flag private">private</span>
+    
+
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    
+
+    
+
+  </div>
+    <div class="description">
+      <h3>Summary</h3>
+        <p>Handles loading of map data for the given engine instance</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">engine</code>
+                        <span class="type"><a href="../classes/EngineView.html" class="crosslink">EngineView</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>engine instance</p>
+
+                    </div>
+
+                    
+                        <ul class="params-list">
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name">config</code>
+                                    <span class="type">Object</span>
+                                
+
+                                <div class="param-description">
+                                    <p>configuration object for the engine instance</p>
+
+                                </div>
+
+                                
+                                    <ul class="params-list">
+                                        
+                                        <li class="param">
+                                            
+                                                <code class="param-name">mapDataPath</code>
+                                                <span class="type">String</span>
+                                            
+
+                                            <div class="param-description">
+                                                the path to the xml file that defines map data
+                                            </div>
+                                        </li>
+                                        
+                                    </ul>
+                                
+                            </li>
+                            
+                        </ul>
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[loadedCallback=null]</code>
+                        <span class="type">Function</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Callback function</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+
+    
+
+</div>
+
+                
+                    <div id="method_localToGlobal" class="method item">
+  <h3 class="blue-method-name">localToGlobal</h3>
+
+  <div class="meta method-meta">
+    
+      
+        
+      <p>
+        
+          Defined in
+        
+      
+    
+    
+      <a href="../files/.._src_traviso_Calculations.js.html#l113"><code>..&#x2F;src&#x2F;traviso&#x2F;Calculations.js:113</code></a>
+    
+  </p>
+
+
+    
+
+    
+  </div>
+
+  <h3>Syntax</h3>
+  <div class="blue-method-syntax">
+  <h3 class="name"><code>localToGlobal</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>lp</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>scope</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Boolean</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    
+
+    
+
+  </div>
+    <div class="description">
+      <h3>Summary</h3>
+        <p>Calculates the global point with respect to given local point and scope.</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">lp</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>local point</p>
+
+                    </div>
+
+                    
+                        <ul class="params-list">
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name">x</code>
+                                    <span class="type">Number</span>
+                                
+
+                                <div class="param-description">
+                                    <p>x component</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name">y</code>
+                                    <span class="type">Number</span>
+                                
+
+                                <div class="param-description">
+                                    <p>y component</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                        </ul>
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">scope</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>local scope</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+              
+                <span class="type">Boolean</span>:
+              
+              
+                <div class="blue-return-desc">
+                    <p>global point</p>
+
+                </div>
+              
+
+
+            </div>
+        </div>
+    
+
+    
+
+    
+
+</div>
+
+                
+                    <div id="method_mathMap" class="method item">
+  <h3 class="blue-method-name">mathMap</h3>
+
+  <div class="meta method-meta">
+    
+      
+        
+      <p>
+        
+          Defined in
+        
+      
+    
+    
+      <a href="../files/.._src_traviso_Calculations.js.html#l5"><code>..&#x2F;src&#x2F;traviso&#x2F;Calculations.js:5</code></a>
+    
+  </p>
+
+
+    
+
+    
+  </div>
+
+  <h3>Syntax</h3>
+  <div class="blue-method-syntax">
+  <h3 class="name"><code>mathMap</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>v</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>min1</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>max1</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>min2</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>max2</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code class="optional">[noOutliers=false]</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Number</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    
+
+    
+
+  </div>
+    <div class="description">
+      <h3>Summary</h3>
+        <p>Linear maps a given number in a source range to a target range</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">v</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>value to map</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">min1</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>minimum value of the source range</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">max1</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>maximum value of the source range</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">min2</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>minimum value of the target range</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">max2</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>maximum value of the target range</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[noOutliers=false]</code>
+                        <span class="type">Boolean</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>If the outlier values won&#39;t be processed, default false</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+              
+                <span class="type">Number</span>:
+              
+              
+                <div class="blue-return-desc">
+                    <p>mapped value according to target range</p>
+
+                </div>
+              
+
+
+            </div>
+        </div>
+    
+
+    
+
+    
+
+</div>
+
+                
+                    <div id="method_trace" class="method item">
+  <h3 class="blue-method-name">trace</h3>
+
+  <div class="meta method-meta">
+    
+      
+        
+      <p>
+        
+          Defined in
+        
+      
+    
+    
+      <a href="../files/.._src_traviso_Traviso.js.html#l54"><code>..&#x2F;src&#x2F;traviso&#x2F;Traviso.js:54</code></a>
+    
+  </p>
+
+
+    
+
+    
+  </div>
+
+  <h3>Syntax</h3>
+  <div class="blue-method-syntax">
+  <h3 class="name"><code>trace</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>s</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    
+
+    
+
+  </div>
+    <div class="description">
+      <h3>Summary</h3>
+        <p>Writes logs to the browser console</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">s</code>
+                        <span class="type">String</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>text to log</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+
+    
+
+</div>
+
+                
+            </div>
+        
+
+        
+            <div id="properties" class="api-class-tabpanel">
+                <h2 class="off-left">Properties</h2>
+
+                
+                    <div id="property_config" class="property item protected">
+
+  <h3 class="blue-method-name">config</h3>
+  <div class="meta method-meta">
+    
+      
+        
+      <p>
+        
+          Defined in
+        
+      
+    
+    
+      <a href="../files/.._src_traviso_Traviso.js.html#l42"><code>..&#x2F;src&#x2F;traviso&#x2F;Traviso.js:42</code></a>
+    
+  </p>
+
+    
+
+    
+  </div>
+
+  <h3>Syntax</h3>
+  <div class="blue-method-syntax">
+    <h3 class="name"><code>config</code></h3>
+    <span class="type">Object</span>
+
+    
+
+    
+        <span class="flag protected">protected</span>
+    
+
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    </div>
+
+    <div class="description">
+      <h3>Summary</h3>
+        <p>Global configuration settings for traviso</p>
+
+    </div>
+
+    
+
+    
+        <h4>Sub-properties:</h4>
+
+        <ul class="params-list">
+            
+            <li class="param">
+                
+                    <code class="param-name">logEnabled=false</code>
+                    <span class="type">Number</span>
+                
+
+                <div class="param-description">
+                    <p>enables logging to the browser console</p>
+
+                </div>
+
+                
+            </li>
+            
+        </ul>
+    
+
+  
+
+  
+
+</div>
+
+                
+                    <div id="property_directions" class="property item protected">
+
+  <h3 class="blue-method-name">directions</h3>
+  <div class="meta method-meta">
+    
+      
+        
+      <p>
+        
+          Defined in
+        
+      
+    
+    
+      <a href="../files/.._src_traviso_Traviso.js.html#l171"><code>..&#x2F;src&#x2F;traviso&#x2F;Traviso.js:171</code></a>
+    
+  </p>
+
+    
+
+    
+  </div>
+
+  <h3>Syntax</h3>
+  <div class="blue-method-syntax">
+    <h3 class="name"><code>directions</code></h3>
+    <span class="type">Object</span>
+
+    
+
+    
+        <span class="flag protected">protected</span>
+    
+
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    </div>
+
+    <div class="description">
+      <h3>Summary</h3>
+        <p>The direction IDs to be used in the engine</p>
+
+    </div>
+
+    
+
+    
+        <h4>Sub-properties:</h4>
+
+        <ul class="params-list">
+            
+            <li class="param">
+                
+                    <code class="param-name">O=0</code>
+                    <span class="type">Number</span>
+                
+
+                <div class="param-description">
+                    <p>idle no direction</p>
+
+                </div>
+
+                
+            </li>
+            
+            <li class="param">
+                
+                    <code class="param-name">S=1</code>
+                    <span class="type">Number</span>
+                
+
+                <div class="param-description">
+                    <p>south</p>
+
+                </div>
+
+                
+            </li>
+            
+            <li class="param">
+                
+                    <code class="param-name">SW=2</code>
+                    <span class="type">Number</span>
+                
+
+                <div class="param-description">
+                    <p>south west</p>
+
+                </div>
+
+                
+            </li>
+            
+            <li class="param">
+                
+                    <code class="param-name">W=3</code>
+                    <span class="type">Number</span>
+                
+
+                <div class="param-description">
+                    <p>west</p>
+
+                </div>
+
+                
+            </li>
+            
+            <li class="param">
+                
+                    <code class="param-name">NW=4</code>
+                    <span class="type">Number</span>
+                
+
+                <div class="param-description">
+                    <p>north west</p>
+
+                </div>
+
+                
+            </li>
+            
+            <li class="param">
+                
+                    <code class="param-name">N=5</code>
+                    <span class="type">Number</span>
+                
+
+                <div class="param-description">
+                    <p>north</p>
+
+                </div>
+
+                
+            </li>
+            
+            <li class="param">
+                
+                    <code class="param-name">NE=6</code>
+                    <span class="type">Number</span>
+                
+
+                <div class="param-description">
+                    <p>north east</p>
+
+                </div>
+
+                
+            </li>
+            
+            <li class="param">
+                
+                    <code class="param-name">E=7</code>
+                    <span class="type">Number</span>
+                
+
+                <div class="param-description">
+                    <p>east</p>
+
+                </div>
+
+                
+            </li>
+            
+            <li class="param">
+                
+                    <code class="param-name">SE=8</code>
+                    <span class="type">Number</span>
+                
+
+                <div class="param-description">
+                    <p>south east</p>
+
+                </div>
+
+                
+            </li>
+            
+        </ul>
+    
+
+  
+
+  
+
+</div>
+
+                
+                    <div id="property_isReady" class="property item protected">
+
+  <h3 class="blue-method-name">isReady</h3>
+  <div class="meta method-meta">
+    
+      
+        
+      <p>
+        
+          Defined in
+        
+      
+    
+    
+      <a href="../files/.._src_traviso_Traviso.js.html#l208"><code>..&#x2F;src&#x2F;traviso&#x2F;Traviso.js:208</code></a>
+    
+  </p>
+
+    
+
+    
+  </div>
+
+  <h3>Syntax</h3>
+  <div class="blue-method-syntax">
+    <h3 class="name"><code>isReady</code></h3>
+    <span class="type">Boolean</span>
+
+    
+
+    
+        <span class="flag protected">protected</span>
+    
+
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    </div>
+
+    <div class="description">
+      <h3>Summary</h3>
+        
+    </div>
+
+    
+
+    
+
+  
+
+  
+
+</div>
+
+                
+                    <div id="property_pfAlgorithms" class="property item protected">
+
+  <h3 class="blue-method-name">pfAlgorithms</h3>
+  <div class="meta method-meta">
+    
+      
+        
+      <p>
+        
+          Defined in
+        
+      
+    
+    
+      <a href="../files/.._src_traviso_Traviso.js.html#l28"><code>..&#x2F;src&#x2F;traviso&#x2F;Traviso.js:28</code></a>
+    
+  </p>
+
+    
+
+    
+  </div>
+
+  <h3>Syntax</h3>
+  <div class="blue-method-syntax">
+    <h3 class="name"><code>pfAlgorithms</code></h3>
+    <span class="type">Object</span>
+
+    
+
+    
+        <span class="flag protected">protected</span>
+    
+
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    </div>
+
+    <div class="description">
+      <h3>Summary</h3>
+        <p>The types of available path finding algorithms</p>
+
+    </div>
+
+    
+
+    
+        <h4>Sub-properties:</h4>
+
+        <ul class="params-list">
+            
+            <li class="param">
+                
+                    <code class="param-name">ASTAR_ORTHOGONAL=0</code>
+                    <span class="type">Number</span>
+                
+
+                <div class="param-description">
+                     
+                </div>
+
+                
+            </li>
+            
+            <li class="param">
+                
+                    <code class="param-name">ASTAR_DIAGONAL=1</code>
+                    <span class="type">Number</span>
+                
+
+                <div class="param-description">
+                     
+                </div>
+
+                
+            </li>
+            
+        </ul>
+    
+
+  
+
+  
+
+</div>
+
+                
+                    <div id="property_RESERVED_TEXTURE_IDS" class="property item protected">
+
+  <h3 class="blue-method-name">RESERVED_TEXTURE_IDS</h3>
+  <div class="meta method-meta">
+    
+      
+        
+      <p>
+        
+          Defined in
+        
+      
+    
+    
+      <a href="../files/.._src_traviso_Traviso.js.html#l201"><code>..&#x2F;src&#x2F;traviso&#x2F;Traviso.js:201</code></a>
+    
+  </p>
+
+    
+
+    
+  </div>
+
+  <h3>Syntax</h3>
+  <div class="blue-method-syntax">
+    <h3 class="name"><code>RESERVED_TEXTURE_IDS</code></h3>
+    <span class="type">Array</span>
+
+    
+
+    
+        <span class="flag protected">protected</span>
+    
+
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    </div>
+
+    <div class="description">
+      <h3>Summary</h3>
+        
+    </div>
+
+    
+
+    
+
+  
+
+  
+
+</div>
+
+                
+                    <div id="property_VERSION" class="property item">
+
+  <h3 class="blue-method-name">VERSION</h3>
+  <div class="meta method-meta">
+    
+      
+        
+      <p>
+        
+          Defined in
+        
+      
+    
+    
+      <a href="../files/.._src_traviso_Traviso.js.html#l21"><code>..&#x2F;src&#x2F;traviso&#x2F;Traviso.js:21</code></a>
+    
+  </p>
+
+    
+
+    
+  </div>
+
+  <h3>Syntax</h3>
+  <div class="blue-method-syntax">
+    <h3 class="name"><code>VERSION</code></h3>
+    <span class="type">String</span>
+
+    
+
+    
+
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    </div>
+
+    <div class="description">
+      <h3>Summary</h3>
+        <p>Version of traviso that is loaded.</p>
+
+    </div>
+
+    
+
+    
+
+  
+
+  
+
+</div>
+
+                
+            </div>
+        
+
+        
+
+        
+    </div>
+</div>
+
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

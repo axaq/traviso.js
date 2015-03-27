@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<map_data>
+	<tiles>
+	    <!--
+            A 'tile' tag should include the following attributes:
+               id:             (Numbers except 0) This is the key value that you will use to define the type of the tile. These will be used in the 
+                               ground_map below. DON'T use 0 as id since it represents empty tiles in the ground_map.
+               movable:        (0/1) This defines weather other characters can move onto this type of tile.
+            
+            A 'tile' tag should also include the image path/name as the tag value.
+        -->
+		<tile id="1" movable="1">t_1.png</tile>
+		<tile id="2" movable="1">t_2.png</tile>
+		
+		<tile id="11" movable="0">t_s_1.png</tile>
+		<tile id="12" movable="0">t_s_2.png</tile>
+		<tile id="13" movable="0">t_s_3.png</tile>
+		<tile id="14" movable="0">t_s_4.png</tile>
+		<tile id="15" movable="0">t_s_5.png</tile>
+		<tile id="16" movable="0">t_s_6.png</tile>
+	</tiles>
+	<objects>
+	    <!--
+            An 'object' tag should include the following attributes:
+               id:             (Numbers except 0) This is the key value that you will use to define the type of the object. These will be used in the 
+                               object_map below. DON'T use 0 as id since it represents no-objects in the object_map.
+               movable:        (0/1) This defines weather other characters can move onto a tile that this objects sits on.
+               interactive:    (0/1) This specifies weather the user can select/interact with the object. The engine will use the callbacks to inform 
+                               the developer once the object is selected by the user.
+               s:              This specifies the size of the object in the number of rows and colums (rows x colums).
+            
+            An 'object' tag should also include AT LEAST one v tag with id 'idle'.
+            
+            NOTE: You can define as many visuals (single images or animation sequences) as you want using v tags.
+        -->
+		<object id="1" movable="0" interactive="0" s="1x1">
+			<v id="idle">
+                <f>o_1.png</f>
+            </v>
+		</object>
+		<object id="2" movable="0" interactive="0" s="1x1">
+			<v id="idle">
+                <f>o_2.png</f>
+            </v>
+		</object>
+		<object id="3" movable="1" interactive="0" s="1x1">
+            <!--
+                You can create your textures/animations in two ways.
+                1. Either in a single v tag by providing filename/path prefix and extension.
+                2. Or using child f tags to specify each frame texture if your image names are not in a numeric order like walk1.png, walk2.png ...
+                  id:                 Id of the texture or animation. You will use this to change object texture/animation any time.
+                  path:               Image name/id as it is accessed throughout a cached spritesheet or with a path externally.
+                  ext:                Image file extension. i.e. png, jpg
+                  number_of_frames:   Number of frames in an animation. if it is not an animation but a single texture, set it to 1.
+                  start_number:       Starting number of the image name suffix. This is only used for animations where image names are in a numeric order like walk3.png, walk4.png ...
+                
+                !!! NOTE 1:   Following ids are reserved, so for additional animations use different ids:
+                              idle_s, idle_sw, idle_w, idle_nw, idle_n, idle_ne, idle_e, idle_se, move_s, move_sw, move_w, move_nw, move_n, move_ne, move_e, move_se
+                !!! NOTE 2:   'f' tags of a 'v' tag has priority over attributes defining animation sequences. So if you use both the engine will process only the 'f' tags.
+                !!! NOTE 3:   For an object, at minimum, one 'v' tag with the id "idle" is required. This will also be used as the initial visual (single texture or animation sequence)
+                              that will be applied to your object until you change it in your own logic.
+            -->
+            <v id="idle">
+                <f>hero_stand_se_0001.png</f>
+                <f>hero_stand_se_0002.png</f>
+                <f>hero_stand_se_0003.png</f>
+                <f>hero_stand_se_0004.png</f>
+                <f>hero_stand_se_0005.png</f>
+                <f>hero_stand_se_0006.png</f>
+            </v>
+            <v id="idle_s">
+                <f>hero_stand_se_0001.png</f>
+                <f>hero_stand_se_0002.png</f>
+                <f>hero_stand_se_0003.png</f>
+                <f>hero_stand_se_0004.png</f>
+                <f>hero_stand_se_0005.png</f>
+                <f>hero_stand_se_0006.png</f>
+            </v>
+            <v id="idle_sw" path="hero_stand_sw_000" ext="png" number_of_frames="6" start_number="1" />
+            <v id="idle_w" path="hero_stand_sw_000" ext="png" number_of_frames="6" start_number="1" />
+            <v id="idle_nw" path="hero_stand_nw_000" ext="png" number_of_frames="6" start_number="1" />
+            <v id="idle_n" path="hero_stand_ne_000" ext="png" number_of_frames="6" start_number="1" />
+            <v id="idle_ne" path="hero_stand_ne_000" ext="png" number_of_frames="6" start_number="1" />
+            <v id="idle_e" path="hero_stand_ne_000" ext="png" number_of_frames="6" start_number="1" />
+            <v id="idle_se" path="hero_stand_se_000" ext="png" number_of_frames="6" start_number="1" />
+            <v id="move_ne" path="hero_move_ne_000" ext="png" number_of_frames="6" start_number="1" />
+            <v id="move_nw" path="hero_move_nw_000" ext="png" number_of_frames="6" start_number="1" />
+            <v id="move_se">
+                <f>hero_move_se_0001.png</f> 
+                <f>hero_move_se_0002.png</f>
+                <f>hero_move_se_0003.png</f>
+                <f>hero_move_se_0004.png</f>
+                <f>hero_move_se_0005.png</f>
+                <f>hero_move_se_0006.png</f>
+            </v>
+            <v id="move_sw">
+                <f>hero_move_sw_0001.png</f> 
+                <f>hero_move_sw_0002.png</f>
+                <f>hero_move_sw_0003.png</f>
+                <f>hero_move_sw_0004.png</f>
+                <f>hero_move_sw_0005.png</f>
+                <f>hero_move_sw_0006.png</f>
+            </v>
+            <v id="flip">
+                <f>hero_stand_se_0001.png</f> 
+                <f>hero_stand_se_0001.png</f> 
+                <f>hero_stand_sw_0001.png</f> 
+                <f>hero_stand_sw_0001.png</f> 
+                <f>hero_stand_nw_0001.png</f> 
+                <f>hero_stand_nw_0001.png</f> 
+                <f>hero_stand_ne_0001.png</f>
+                <f>hero_stand_ne_0001.png</f>
+                <f>hero_stand_se_0001.png</f>
+                <f>hero_stand_se_0001.png</f>
+            </v>
+        </object>
+		<object id="5" movable="0" interactive="0" s="1x1">
+			<v id="idle">
+                <f>o_5.png</f>
+            </v>
+		</object>
+		<object id="6" movable="0" interactive="0" s="1x1">
+			<v id="idle">
+                <f>o_6.png</f>
+            </v>
+		</object>
+		<object id="7" movable="1" interactive="0" s="1x1">
+			<v id="idle">
+                <f>o_7.png</f>
+            </v>
+		</object>
+		<object id="8" movable="0" interactive="0" s="1x1">
+			<v id="idle">
+                <f>o_8.png</f>
+            </v>
+		</object>
+		<object id="9" movable="0" interactive="0" s="1x1">
+			<v id="idle">
+                <f>o_9.png</f>
+            </v>
+		</object>
+		<object id="10" movable="1" interactive="1" s="1x1">
+		    <v id="idle">
+                <f>o_flag_0.png</f>
+            </v>
+		</object>
+		<object id="11" movable="0" interactive="0" s="1x1">
+            <v id="idle">
+                <f>o_tree_0.png</f>
+            </v>
+        </object>
+        <object id="12" movable="1" interactive="0" s="1x1">
+            <v id="idle">
+                <f>o_boxes_0.png</f>
+            </v>
+        </object>
+	</objects>
+	<!-- 
+        initial_controllable_location:  Defines the location of the controllable object on the map when it is first initiated.
+                                        Uses 'c' and 'r' attributes to define row and column indexes.
+                                        You don't need to include this tag in your data file if you want to define your controllable later on manually.
+    -->
+	<initial_controllable_location c="5" r="10" />
+	
+	<!-- 
+        tile_highlight_image:   The image to be overlayed on the tile when highlighted.
+                                Either should be loaded before the engine starts or should be passed to the engine inside the 'assetsToLoad' property.
+                                Needs to be the same size with the single tile.
+    -->
+    <!--
+    <tile_highlight_image>tileHighlight.png</tile_highlight_image>
+    -->
+    <!-- 
+        single_ground_image:    Only use if you have a single ground image to layout underneath your map.
+                                path: Either should be loaded before the engine starts or should be passed to the engine inside the 'assetsToLoad' property.
+                                	scale: scale amount to apply to the single-ground-image so that you can use smaller images and scale them up for extra big maps, default 1. 
+    -->
+    <!--
+    <single_ground_image scale="2">
+        <path>assets/ground.jpg</path>
+    </single_ground_image>
+    -->
+    
+	<!--
+	    ground_map: Defines ground/terrain layer of the map. 0 means no tile image AND non-walkable area.
+	    
+        1) When used with 'single_ground_image' tag, you don't necesserily need 'tiles' tag. You can 
+           only include 0s and 1s to define which of the areas on the map are walkable. But you can also 
+           still put individual tile images on top of your global ground image by defining them in 'tiles' tag.
+        2) If there is no 'single_ground_image' defined then that means each tile has its own image
+           which should be defined under 'tiles' tag.
+    -->
+	<ground_map>
+		<row>0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,11,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2</row>
+		<row>0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,14,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,1 ,1 ,1 ,1 ,1 ,2</row>
+		<row>0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,14,2 ,2 ,2 ,13,2 ,15,15,15,13,2 ,15,13,2 ,1 ,1 ,1 ,1 ,1 ,2</row>
+		<row>0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,14,2 ,2 ,2 ,14,2 ,0 ,0 ,0 ,14,2 ,0 ,14,2 ,1 ,1 ,1 ,1 ,1 ,2</row>
+		<row>0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,14,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,1 ,1 ,1 ,1 ,1 ,2</row>
+		<row>0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,14,2 ,2 ,2 ,2 ,2 ,15,15,13,2 ,2 ,2 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,2</row>
+		<row>0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,14,2 ,2 ,2 ,2 ,2 ,0 ,0 ,14,2 ,2 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,2</row>
+		<row>0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,14,2 ,2 ,2 ,2 ,2 ,11,2 ,2 ,2 ,2 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,2</row>
+		<row>11,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,0 ,0 ,0 ,14,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,1 ,1 ,1 ,2 ,2 ,2 ,2 ,2 ,1 ,2</row>
+		<row>14,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,0 ,11,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,1 ,1 ,1 ,1 ,2 ,2 ,2 ,2 ,2 ,2 ,1 ,2</row>
+		<row>14,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,1 ,2</row>
+		<row>14,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,15,13,2 ,2 ,2 ,2 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,2 ,2 ,2 ,2 ,2 ,2 ,1 ,2</row>
+		<row>14,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,16,0 ,12,13,2 ,2 ,2 ,2 ,2 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,2 ,2 ,2 ,2 ,2 ,1 ,2</row>
+		<row>12,15,15,15,15,15,15,15,16,0 ,0 ,0 ,14,2 ,2 ,2 ,2 ,2 ,2 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,2</row>
+		<row>0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,14,2 ,2 ,2 ,2 ,2 ,2 ,1 ,1 ,2 ,2 ,2 ,2 ,2 ,1 ,1 ,2 ,1 ,1 ,2</row>
+		<row>0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,14,2 ,2 ,2 ,2 ,2 ,1 ,1 ,1 ,2 ,15,15,13,2 ,1 ,1 ,2 ,1 ,1 ,2</row>
+		<row>0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,14,2 ,2 ,2 ,2 ,2 ,1 ,1 ,1 ,2 ,14,1 ,14,2 ,1 ,1 ,2 ,1 ,1 ,2</row>
+		<row>0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,14,2 ,2 ,2 ,2 ,2 ,2 ,1 ,1 ,2 ,14,1 ,14,2 ,1 ,1 ,2 ,1 ,1 ,2</row>
+		<row>0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,14,2 ,2 ,2 ,2 ,2 ,2 ,2 ,1 ,2 ,14,1 ,14,2 ,1 ,1 ,2 ,1 ,1 ,2</row>
+		<row>0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,14,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,12,15,14,2 ,1 ,1 ,2 ,1 ,1 ,2</row>
+		<row>0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,14,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,11,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2</row>
+		<row>0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,12,15,15,15,15,15,15,15,15,15,16,12,15,15,15,15,15,15,15,16</row>
+	</ground_map>
+	<!--
+        object_map: Defines object layer of the map. 0 means no object for that location.
+    -->
+	<object_map>
+		<row>0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,1 ,2 ,5 ,2 ,5 ,2 ,5 ,2 ,5 ,2 ,5 ,2 ,5 ,2 ,5 ,2 ,5 ,2 ,1</row>
+		<row>0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,2 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,11,0 ,11,0 ,11,0 ,11,2</row>
+		<row>0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,5 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,11,0 ,11,0 ,11,0 ,5</row>
+		<row>0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,2 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,11,0 ,11,0 ,11,2</row>
+		<row>0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,5 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,11,0 ,11,0 ,11,0 ,11,0 ,5</row>
+		<row>0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,2 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,11,0 ,11,0 ,11,0 ,11,1</row>
+		<row>0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,5 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,11,0 ,11,0 ,11,0 ,5</row>
+		<row>0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,1 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,1</row>
+		<row>0 ,8 ,2 ,8 ,2 ,8 ,2 ,8 ,2 ,0 ,0 ,0 ,0 ,6 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,6</row>
+		<row>0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,8 ,0 ,0 ,8 ,7 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,8 ,0 ,2 ,2 ,2 ,0 ,0 ,6</row>
+		<row>0 ,0 ,0 ,0 ,0 ,3 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,7 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,10,2 ,0 ,0 ,6</row>
+		<row>0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,8 ,0 ,0 ,8 ,7 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,8 ,0 ,2 ,2 ,2 ,0 ,0 ,6</row>
+		<row>0 ,8 ,2 ,8 ,2 ,8 ,2 ,8 ,2 ,0 ,0 ,0 ,0 ,6 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,6</row>
+		<row>0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,1 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,1</row>
+		<row>0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,5 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,5</row>
+		<row>0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,2 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,11,0 ,0 ,1</row>
+		<row>0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,5 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,2 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,5</row>
+		<row>0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,2 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,11,0 ,0 ,2</row>
+		<row>0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,5 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,2 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,5</row>
+		<row>0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,2 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,11,0 ,0 ,2</row>
+		<row>0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,1 ,2 ,5 ,2 ,5 ,2 ,5 ,2 ,2 ,2 ,0 ,2 ,2 ,2 ,5 ,2 ,5 ,2 ,1</row>
+		<row>0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0</row>
+	</object_map>
+</map_data>

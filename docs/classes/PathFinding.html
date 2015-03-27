@@ -1,0 +1,2598 @@
+<!DOCTYPE html>
+<html lang="en" class="yui-overrride">
+<head>
+    <meta charset="utf-8">
+    <title>PathFinding - traviso.js</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700' rel='stylesheet' type='text/css'>
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            <h1 class="blue-main-title">traviso.js</h1>
+        </div>
+        <div class="yui3-u-1-4 version project-version">
+            API Docs for: 0.0.1
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/EngineView.html">EngineView</a></li>
+            
+                <li><a href="../classes/MoveEngine.html">MoveEngine</a></li>
+            
+                <li><a href="../classes/ObjectView.html">ObjectView</a></li>
+            
+                <li><a href="../classes/PathFinding.html">PathFinding</a></li>
+            
+                <li><a href="../classes/TileView.html">TileView</a></li>
+            
+                <li><a href="../classes/TRAVISO.html">TRAVISO</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/TRAVISO.html">TRAVISO</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1>PathFinding</h1>
+<div class="meta">
+    
+
+    
+
+    
+        <div class="foundat">
+            Defined in: <a href="../files/.._src_traviso_PathFinding.js.html#l6"><code>..&#x2F;src&#x2F;traviso&#x2F;PathFinding.js:6</code></a>
+        </div>
+    
+
+    
+        
+            Module: <a href="../modules/TRAVISO.html">TRAVISO</a>
+        
+    
+
+    
+    
+</div>
+
+
+
+<h3>Summary</h3>
+<div class="intro">
+    <p>Includes all path finding logic.</p>
+
+</div>
+
+
+    <div class="constructor">
+        <h2>Constructor</h2>
+        <div id="method_PathFinding" class="method item">
+  <h3 class="blue-method-name">PathFinding</h3>
+
+  <div class="meta method-meta">
+    
+      
+        
+      <p>
+        
+          Defined in
+        
+      
+    
+    
+      <a href="../files/.._src_traviso_PathFinding.js.html#l6"><code>..&#x2F;src&#x2F;traviso&#x2F;PathFinding.js:6</code></a>
+    
+  </p>
+
+
+    
+
+    
+  </div>
+
+  <h3>Syntax</h3>
+  <div class="blue-method-syntax">
+  <h3 class="name"><code>PathFinding</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>_groundMapData</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>_objectsMapData</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code class="optional">[algorithm=TRAVISO.pfAlgorithms.ASTAR_ORTHOGONAL]</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+  </div>
+    <div class="description">
+      <h3>Summary</h3>
+        
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">_groundMapData</code>
+                        <span class="type">Array(Array)</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>a two dimensinal array of tile IDs</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">_objectsMapData</code>
+                        <span class="type">Array(Array)</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>a two dimensinal array of object IDs</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[algorithm=TRAVISO.pfAlgorithms.ASTAR_ORTHOGONAL]</code>
+                        <span class="type">Number</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>type of the path finding algorithm to use</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+
+    
+
+</div>
+
+    </div>
+
+
+<div id="classdocs" class="tabview">
+    <ul class="api-class-tabs">
+        <li class="api-class-tab index"><a href="#index">Index</a></li>
+
+        
+            <li class="api-class-tab methods"><a href="#methods">Methods</a></li>
+        
+        
+            <li class="api-class-tab properties"><a href="#properties">Properties</a></li>
+        
+        
+        
+    </ul>
+
+    <div>
+        <div id="index" class="api-class-tabpanel index">
+            <h2 class="off-left">Item Index</h2>
+
+            
+                <div class="index-section methods">
+                    <h3>Methods</h3>
+
+                    <ul class="index-list methods">
+                        
+                            <li class="index-item method">
+                                <a href="#method_destroy">destroy</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_getAdjacentOpenCells">getAdjacentOpenCells</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_getAdjacentOpenCellsForSingle">getAdjacentOpenCellsForSingle</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_isCellFilled">isCellFilled</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method private">
+                                <a href="#method_reset">reset</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method private">
+                                <a href="#method_resetDynamicMap">resetDynamicMap</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_setCell">setCell</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_setDynamicCell">setDynamicCell</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method private">
+                                <a href="#method_solve">solve</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method private">
+                                <a href="#method_stepPathfinder">stepPathfinder</a>
+
+                                
+                                
+                            </li>
+                        
+                    </ul>
+                </div>
+            
+
+            
+                <div class="index-section properties">
+                    <h3>Properties</h3>
+
+                    <ul class="index-list properties">
+                        
+                            <li class="index-item property protected">
+                                <a href="#property_closedList">closedList</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property protected">
+                                <a href="#property_currentCell">currentCell</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property protected">
+                                <a href="#property_destinationCell">destinationCell</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property protected">
+                                <a href="#property_FINISH_CODE_ILLEGAL_DEST=1">FINISH_CODE_ILLEGAL_DEST=1</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property protected">
+                                <a href="#property_FINISH_CODE_NO_PATH=2">FINISH_CODE_NO_PATH=2</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property protected">
+                                <a href="#property_FINISH_CODE_SUCCESS=0">FINISH_CODE_SUCCESS=0</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property protected">
+                                <a href="#property_FINISH_CODE_TOO_LONG=3">FINISH_CODE_TOO_LONG=3</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property protected">
+                                <a href="#property_finishCode">finishCode</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property protected">
+                                <a href="#property_mapArray">mapArray</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property protected">
+                                <a href="#property_mapDynamicArray">mapDynamicArray</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property protected">
+                                <a href="#property_mapSizeC">mapSizeC</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property protected">
+                                <a href="#property_mapSizeR">mapSizeR</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_MAX_ITERATIONS">MAX_ITERATIONS</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property protected">
+                                <a href="#property_openList">openList</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property protected">
+                                <a href="#property_originCell">originCell</a>
+
+                                
+                                
+                            </li>
+                        
+                    </ul>
+                </div>
+            
+
+            
+
+            
+        </div>
+
+        
+            <div id="methods" class="api-class-tabpanel">
+                <h2 class="off-left">Methods</h2>
+
+                
+                    <div id="method_destroy" class="method item">
+  <h3 class="blue-method-name">destroy</h3>
+
+  <div class="meta method-meta">
+    
+      
+        
+      <p>
+        
+          Defined in
+        
+      
+    
+    
+      <a href="../files/.._src_traviso_PathFinding.js.html#l526"><code>..&#x2F;src&#x2F;traviso&#x2F;PathFinding.js:526</code></a>
+    
+  </p>
+
+
+    
+
+    
+  </div>
+
+  <h3>Syntax</h3>
+  <div class="blue-method-syntax">
+  <h3 class="name"><code>destroy</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+  </div>
+    <div class="description">
+      <h3>Summary</h3>
+        <p>Clears all references.</p>
+
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+</div>
+
+                
+                    <div id="method_getAdjacentOpenCells" class="method item">
+  <h3 class="blue-method-name">getAdjacentOpenCells</h3>
+
+  <div class="meta method-meta">
+    
+      
+        
+      <p>
+        
+          Defined in
+        
+      
+    
+    
+      <a href="../files/.._src_traviso_PathFinding.js.html#l365"><code>..&#x2F;src&#x2F;traviso&#x2F;PathFinding.js:365</code></a>
+    
+  </p>
+
+
+    
+
+    
+  </div>
+
+  <h3>Syntax</h3>
+  <div class="blue-method-syntax">
+  <h3 class="name"><code>getAdjacentOpenCells</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>cellC</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>cellR</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>sizeC</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>sizeR</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Array(Object)</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+  </div>
+    <div class="description">
+      <h3>Summary</h3>
+        <p>Finds available adjacent cells of an area defined by location and size.</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">cellC</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>column index of the location</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">cellR</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>row index of the location</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">sizeC</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>column size of the area</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">sizeR</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>row size of the area</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+              
+                <span class="type">Array(Object)</span>:
+              
+              
+                <div class="blue-return-desc">
+                    <p>an array of available cells</p>
+
+                </div>
+              
+
+
+            </div>
+        </div>
+    
+
+    
+
+    
+
+</div>
+
+                
+                    <div id="method_getAdjacentOpenCellsForSingle" class="method item">
+  <h3 class="blue-method-name">getAdjacentOpenCellsForSingle</h3>
+
+  <div class="meta method-meta">
+    
+      
+        
+      <p>
+        
+          Defined in
+        
+      
+    
+    
+      <a href="../files/.._src_traviso_PathFinding.js.html#l391"><code>..&#x2F;src&#x2F;traviso&#x2F;PathFinding.js:391</code></a>
+    
+  </p>
+
+
+    
+
+    
+  </div>
+
+  <h3>Syntax</h3>
+  <div class="blue-method-syntax">
+  <h3 class="name"><code>getAdjacentOpenCellsForSingle</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>cellC</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>cellR</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Array(Object)</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+  </div>
+    <div class="description">
+      <h3>Summary</h3>
+        <p>Finds available adjacent cells of a single location.</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">cellC</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>column index of the location</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">cellR</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>row index of the location</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+              
+                <span class="type">Array(Object)</span>:
+              
+              
+                <div class="blue-return-desc">
+                    <p>an array of available cells</p>
+
+                </div>
+              
+
+
+            </div>
+        </div>
+    
+
+    
+
+    
+
+</div>
+
+                
+                    <div id="method_isCellFilled" class="method item">
+  <h3 class="blue-method-name">isCellFilled</h3>
+
+  <div class="meta method-meta">
+    
+      
+        
+      <p>
+        
+          Defined in
+        
+      
+    
+    
+      <a href="../files/.._src_traviso_PathFinding.js.html#l442"><code>..&#x2F;src&#x2F;traviso&#x2F;PathFinding.js:442</code></a>
+    
+  </p>
+
+
+    
+
+    
+  </div>
+
+  <h3>Syntax</h3>
+  <div class="blue-method-syntax">
+  <h3 class="name"><code>isCellFilled</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>c</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>r</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Array(Object)</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+  </div>
+    <div class="description">
+      <h3>Summary</h3>
+        <p>Checks if the location is occupied/available or not.</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">c</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>column index of the location</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">r</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>row index of the location</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+              
+                <span class="type">Array(Object)</span>:
+              
+              
+                <div class="blue-return-desc">
+                    <p>if the location is not available</p>
+
+                </div>
+              
+
+
+            </div>
+        </div>
+    
+
+    
+
+    
+
+</div>
+
+                
+                    <div id="method_reset" class="method item private">
+  <h3 class="blue-method-name">reset</h3>
+
+  <div class="meta method-meta">
+    
+      
+        
+      <p>
+        
+          Defined in
+        
+      
+    
+    
+      <a href="../files/.._src_traviso_PathFinding.js.html#l484"><code>..&#x2F;src&#x2F;traviso&#x2F;PathFinding.js:484</code></a>
+    
+  </p>
+
+
+    
+
+    
+  </div>
+
+  <h3>Syntax</h3>
+  <div class="blue-method-syntax">
+  <h3 class="name"><code>reset</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+        <span class="flag private">private</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+  </div>
+    <div class="description">
+      <h3>Summary</h3>
+        <p>Resets algorithm without clearing cells.</p>
+
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+</div>
+
+                
+                    <div id="method_resetDynamicMap" class="method item private">
+  <h3 class="blue-method-name">resetDynamicMap</h3>
+
+  <div class="meta method-meta">
+    
+      
+        
+      <p>
+        
+          Defined in
+        
+      
+    
+    
+      <a href="../files/.._src_traviso_PathFinding.js.html#l506"><code>..&#x2F;src&#x2F;traviso&#x2F;PathFinding.js:506</code></a>
+    
+  </p>
+
+
+    
+
+    
+  </div>
+
+  <h3>Syntax</h3>
+  <div class="blue-method-syntax">
+  <h3 class="name"><code>resetDynamicMap</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+        <span class="flag private">private</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+  </div>
+    <div class="description">
+      <h3>Summary</h3>
+        <p>Resets the dynamic (mobile unit tracking) map.</p>
+
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+</div>
+
+                
+                    <div id="method_setCell" class="method item">
+  <h3 class="blue-method-name">setCell</h3>
+
+  <div class="meta method-meta">
+    
+      
+        
+      <p>
+        
+          Defined in
+        
+      
+    
+    
+      <a href="../files/.._src_traviso_PathFinding.js.html#l458"><code>..&#x2F;src&#x2F;traviso&#x2F;PathFinding.js:458</code></a>
+    
+  </p>
+
+
+    
+
+    
+  </div>
+
+  <h3>Syntax</h3>
+  <div class="blue-method-syntax">
+  <h3 class="name"><code>setCell</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>c</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>r</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>movable</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+  </div>
+    <div class="description">
+      <h3>Summary</h3>
+        <p>Sets individual cell state for ground layer.</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">c</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>column index of the location</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">r</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>row index of the location</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">movable</code>
+                        <span class="type">Boolean</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>free to move or not</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+
+    
+
+</div>
+
+                
+                    <div id="method_setDynamicCell" class="method item">
+  <h3 class="blue-method-name">setDynamicCell</h3>
+
+  <div class="meta method-meta">
+    
+      
+        
+      <p>
+        
+          Defined in
+        
+      
+    
+    
+      <a href="../files/.._src_traviso_PathFinding.js.html#l471"><code>..&#x2F;src&#x2F;traviso&#x2F;PathFinding.js:471</code></a>
+    
+  </p>
+
+
+    
+
+    
+  </div>
+
+  <h3>Syntax</h3>
+  <div class="blue-method-syntax">
+  <h3 class="name"><code>setDynamicCell</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>c</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>r</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>movable</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+  </div>
+    <div class="description">
+      <h3>Summary</h3>
+        <p>Sets individual cell state for objects layer.</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">c</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>column index of the location</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">r</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>row index of the location</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">movable</code>
+                        <span class="type">Boolean</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>free to move or not</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+
+    
+
+</div>
+
+                
+                    <div id="method_solve" class="method item private">
+  <h3 class="blue-method-name">solve</h3>
+
+  <div class="meta method-meta">
+    
+      
+        
+      <p>
+        
+          Defined in
+        
+      
+    
+    
+      <a href="../files/.._src_traviso_PathFinding.js.html#l141"><code>..&#x2F;src&#x2F;traviso&#x2F;PathFinding.js:141</code></a>
+    
+  </p>
+
+
+    
+
+    
+  </div>
+
+  <h3>Syntax</h3>
+  <div class="blue-method-syntax">
+  <h3 class="name"><code>solve</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>originC</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>originR</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>destC</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>destR</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Array(Object)</span>
+        </span>
+    
+
+    
+
+    
+        <span class="flag private">private</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+  </div>
+    <div class="description">
+      <h3>Summary</h3>
+        <p>Solves path finding for the given source and destination locations.</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">originC</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>column index of the source location</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">originR</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>row index of the source location</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">destC</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>column index of the destination location</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">destR</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>row index of the destination location</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+              
+                <span class="type">Array(Object)</span>:
+              
+              
+                <div class="blue-return-desc">
+                    <p>solution path</p>
+
+                </div>
+              
+
+
+            </div>
+        </div>
+    
+
+    
+
+    
+
+</div>
+
+                
+                    <div id="method_stepPathfinder" class="method item private">
+  <h3 class="blue-method-name">stepPathfinder</h3>
+
+  <div class="meta method-meta">
+    
+      
+        
+      <p>
+        
+          Defined in
+        
+      
+    
+    
+      <a href="../files/.._src_traviso_PathFinding.js.html#l218"><code>..&#x2F;src&#x2F;traviso&#x2F;PathFinding.js:218</code></a>
+    
+  </p>
+
+
+    
+
+    
+  </div>
+
+  <h3>Syntax</h3>
+  <div class="blue-method-syntax">
+  <h3 class="name"><code>stepPathfinder</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Boolean</span>
+        </span>
+    
+
+    
+
+    
+        <span class="flag private">private</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+  </div>
+    <div class="description">
+      <h3>Summary</h3>
+        <p>Step function for the path finder.</p>
+
+    </div>
+
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+              
+                <span class="type">Boolean</span>:
+              
+              
+                <div class="blue-return-desc">
+                    <p>if the search is ended with success or not</p>
+
+                </div>
+              
+
+
+            </div>
+        </div>
+    
+
+    
+
+    
+
+</div>
+
+                
+            </div>
+        
+
+        
+            <div id="properties" class="api-class-tabpanel">
+                <h2 class="off-left">Properties</h2>
+
+                
+                    <div id="property_closedList" class="property item protected">
+
+  <h3 class="blue-method-name">closedList</h3>
+  <div class="meta method-meta">
+    
+      
+        
+      <p>
+        
+          Defined in
+        
+      
+    
+    
+      <a href="../files/.._src_traviso_PathFinding.js.html#l129"><code>..&#x2F;src&#x2F;traviso&#x2F;PathFinding.js:129</code></a>
+    
+  </p>
+
+    
+
+    
+  </div>
+
+  <h3>Syntax</h3>
+  <div class="blue-method-syntax">
+    <h3 class="name"><code>closedList</code></h3>
+    <span class="type">Array</span>
+
+    
+
+    
+        <span class="flag protected">protected</span>
+    
+
+    
+
+    
+
+    </div>
+
+    <div class="description">
+      <h3>Summary</h3>
+        
+    </div>
+
+    
+
+    
+
+  
+
+  
+
+</div>
+
+                
+                    <div id="property_currentCell" class="property item protected">
+
+  <h3 class="blue-method-name">currentCell</h3>
+  <div class="meta method-meta">
+    
+      
+        
+      <p>
+        
+          Defined in
+        
+      
+    
+    
+      <a href="../files/.._src_traviso_PathFinding.js.html#l27"><code>..&#x2F;src&#x2F;traviso&#x2F;PathFinding.js:27</code></a>
+    
+  </p>
+
+    
+
+    
+  </div>
+
+  <h3>Syntax</h3>
+  <div class="blue-method-syntax">
+    <h3 class="name"><code>currentCell</code></h3>
+    <span class="type">Object</span>
+
+    
+
+    
+        <span class="flag protected">protected</span>
+    
+
+    
+
+    
+
+    </div>
+
+    <div class="description">
+      <h3>Summary</h3>
+        
+    </div>
+
+    
+
+    
+
+  
+
+  
+
+</div>
+
+                
+                    <div id="property_destinationCell" class="property item protected">
+
+  <h3 class="blue-method-name">destinationCell</h3>
+  <div class="meta method-meta">
+    
+      
+        
+      <p>
+        
+          Defined in
+        
+      
+    
+    
+      <a href="../files/.._src_traviso_PathFinding.js.html#l23"><code>..&#x2F;src&#x2F;traviso&#x2F;PathFinding.js:23</code></a>
+    
+  </p>
+
+    
+
+    
+  </div>
+
+  <h3>Syntax</h3>
+  <div class="blue-method-syntax">
+    <h3 class="name"><code>destinationCell</code></h3>
+    <span class="type">Object</span>
+
+    
+
+    
+        <span class="flag protected">protected</span>
+    
+
+    
+
+    
+
+    </div>
+
+    <div class="description">
+      <h3>Summary</h3>
+        
+    </div>
+
+    
+
+    
+
+  
+
+  
+
+</div>
+
+                
+                    <div id="property_FINISH_CODE_ILLEGAL_DEST=1" class="property item protected">
+
+  <h3 class="blue-method-name">FINISH_CODE_ILLEGAL_DEST=1</h3>
+  <div class="meta method-meta">
+    
+      
+        
+      <p>
+        
+          Defined in
+        
+      
+    
+    
+      <a href="../files/.._src_traviso_PathFinding.js.html#l46"><code>..&#x2F;src&#x2F;traviso&#x2F;PathFinding.js:46</code></a>
+    
+  </p>
+
+    
+
+    
+  </div>
+
+  <h3>Syntax</h3>
+  <div class="blue-method-syntax">
+    <h3 class="name"><code>FINISH_CODE_ILLEGAL_DEST=1</code></h3>
+    <span class="type">Number</span>
+
+    
+
+    
+        <span class="flag protected">protected</span>
+    
+
+    
+
+    
+
+    </div>
+
+    <div class="description">
+      <h3>Summary</h3>
+        
+    </div>
+
+    
+
+    
+
+  
+
+  
+
+</div>
+
+                
+                    <div id="property_FINISH_CODE_NO_PATH=2" class="property item protected">
+
+  <h3 class="blue-method-name">FINISH_CODE_NO_PATH=2</h3>
+  <div class="meta method-meta">
+    
+      
+        
+      <p>
+        
+          Defined in
+        
+      
+    
+    
+      <a href="../files/.._src_traviso_PathFinding.js.html#l50"><code>..&#x2F;src&#x2F;traviso&#x2F;PathFinding.js:50</code></a>
+    
+  </p>
+
+    
+
+    
+  </div>
+
+  <h3>Syntax</h3>
+  <div class="blue-method-syntax">
+    <h3 class="name"><code>FINISH_CODE_NO_PATH=2</code></h3>
+    <span class="type">Number</span>
+
+    
+
+    
+        <span class="flag protected">protected</span>
+    
+
+    
+
+    
+
+    </div>
+
+    <div class="description">
+      <h3>Summary</h3>
+        
+    </div>
+
+    
+
+    
+
+  
+
+  
+
+</div>
+
+                
+                    <div id="property_FINISH_CODE_SUCCESS=0" class="property item protected">
+
+  <h3 class="blue-method-name">FINISH_CODE_SUCCESS=0</h3>
+  <div class="meta method-meta">
+    
+      
+        
+      <p>
+        
+          Defined in
+        
+      
+    
+    
+      <a href="../files/.._src_traviso_PathFinding.js.html#l42"><code>..&#x2F;src&#x2F;traviso&#x2F;PathFinding.js:42</code></a>
+    
+  </p>
+
+    
+
+    
+  </div>
+
+  <h3>Syntax</h3>
+  <div class="blue-method-syntax">
+    <h3 class="name"><code>FINISH_CODE_SUCCESS=0</code></h3>
+    <span class="type">Number</span>
+
+    
+
+    
+        <span class="flag protected">protected</span>
+    
+
+    
+
+    
+
+    </div>
+
+    <div class="description">
+      <h3>Summary</h3>
+        
+    </div>
+
+    
+
+    
+
+  
+
+  
+
+</div>
+
+                
+                    <div id="property_FINISH_CODE_TOO_LONG=3" class="property item protected">
+
+  <h3 class="blue-method-name">FINISH_CODE_TOO_LONG=3</h3>
+  <div class="meta method-meta">
+    
+      
+        
+      <p>
+        
+          Defined in
+        
+      
+    
+    
+      <a href="../files/.._src_traviso_PathFinding.js.html#l54"><code>..&#x2F;src&#x2F;traviso&#x2F;PathFinding.js:54</code></a>
+    
+  </p>
+
+    
+
+    
+  </div>
+
+  <h3>Syntax</h3>
+  <div class="blue-method-syntax">
+    <h3 class="name"><code>FINISH_CODE_TOO_LONG=3</code></h3>
+    <span class="type">Number</span>
+
+    
+
+    
+        <span class="flag protected">protected</span>
+    
+
+    
+
+    
+
+    </div>
+
+    <div class="description">
+      <h3>Summary</h3>
+        
+    </div>
+
+    
+
+    
+
+  
+
+  
+
+</div>
+
+                
+                    <div id="property_finishCode" class="property item protected">
+
+  <h3 class="blue-method-name">finishCode</h3>
+  <div class="meta method-meta">
+    
+      
+        
+      <p>
+        
+          Defined in
+        
+      
+    
+    
+      <a href="../files/.._src_traviso_PathFinding.js.html#l31"><code>..&#x2F;src&#x2F;traviso&#x2F;PathFinding.js:31</code></a>
+    
+  </p>
+
+    
+
+    
+  </div>
+
+  <h3>Syntax</h3>
+  <div class="blue-method-syntax">
+    <h3 class="name"><code>finishCode</code></h3>
+    <span class="type">Object</span>
+
+    
+
+    
+        <span class="flag protected">protected</span>
+    
+
+    
+
+    
+
+    </div>
+
+    <div class="description">
+      <h3>Summary</h3>
+        
+    </div>
+
+    
+
+    
+
+  
+
+  
+
+</div>
+
+                
+                    <div id="property_mapArray" class="property item protected">
+
+  <h3 class="blue-method-name">mapArray</h3>
+  <div class="meta method-meta">
+    
+      
+        
+      <p>
+        
+          Defined in
+        
+      
+    
+    
+      <a href="../files/.._src_traviso_PathFinding.js.html#l65"><code>..&#x2F;src&#x2F;traviso&#x2F;PathFinding.js:65</code></a>
+    
+  </p>
+
+    
+
+    
+  </div>
+
+  <h3>Syntax</h3>
+  <div class="blue-method-syntax">
+    <h3 class="name"><code>mapArray</code></h3>
+    <span class="type">Array(Array(Object))</span>
+
+    
+
+    
+        <span class="flag protected">protected</span>
+    
+
+    
+
+    
+
+    </div>
+
+    <div class="description">
+      <h3>Summary</h3>
+        
+    </div>
+
+    
+
+    
+
+  
+
+  
+
+</div>
+
+                
+                    <div id="property_mapDynamicArray" class="property item protected">
+
+  <h3 class="blue-method-name">mapDynamicArray</h3>
+  <div class="meta method-meta">
+    
+      
+        
+      <p>
+        
+          Defined in
+        
+      
+    
+    
+      <a href="../files/.._src_traviso_PathFinding.js.html#l69"><code>..&#x2F;src&#x2F;traviso&#x2F;PathFinding.js:69</code></a>
+    
+  </p>
+
+    
+
+    
+  </div>
+
+  <h3>Syntax</h3>
+  <div class="blue-method-syntax">
+    <h3 class="name"><code>mapDynamicArray</code></h3>
+    <span class="type">Array(Array(Object))</span>
+
+    
+
+    
+        <span class="flag protected">protected</span>
+    
+
+    
+
+    
+
+    </div>
+
+    <div class="description">
+      <h3>Summary</h3>
+        
+    </div>
+
+    
+
+    
+
+  
+
+  
+
+</div>
+
+                
+                    <div id="property_mapSizeC" class="property item protected">
+
+  <h3 class="blue-method-name">mapSizeC</h3>
+  <div class="meta method-meta">
+    
+      
+        
+      <p>
+        
+          Defined in
+        
+      
+    
+    
+      <a href="../files/.._src_traviso_PathFinding.js.html#l81"><code>..&#x2F;src&#x2F;traviso&#x2F;PathFinding.js:81</code></a>
+    
+  </p>
+
+    
+
+    
+  </div>
+
+  <h3>Syntax</h3>
+  <div class="blue-method-syntax">
+    <h3 class="name"><code>mapSizeC</code></h3>
+    <span class="type">Number</span>
+
+    
+
+    
+        <span class="flag protected">protected</span>
+    
+
+    
+
+    
+
+    </div>
+
+    <div class="description">
+      <h3>Summary</h3>
+        
+    </div>
+
+    
+
+    
+
+  
+
+  
+
+</div>
+
+                
+                    <div id="property_mapSizeR" class="property item protected">
+
+  <h3 class="blue-method-name">mapSizeR</h3>
+  <div class="meta method-meta">
+    
+      
+        
+      <p>
+        
+          Defined in
+        
+      
+    
+    
+      <a href="../files/.._src_traviso_PathFinding.js.html#l77"><code>..&#x2F;src&#x2F;traviso&#x2F;PathFinding.js:77</code></a>
+    
+  </p>
+
+    
+
+    
+  </div>
+
+  <h3>Syntax</h3>
+  <div class="blue-method-syntax">
+    <h3 class="name"><code>mapSizeR</code></h3>
+    <span class="type">Number</span>
+
+    
+
+    
+        <span class="flag protected">protected</span>
+    
+
+    
+
+    
+
+    </div>
+
+    <div class="description">
+      <h3>Summary</h3>
+        
+    </div>
+
+    
+
+    
+
+  
+
+  
+
+</div>
+
+                
+                    <div id="property_MAX_ITERATIONS" class="property item">
+
+  <h3 class="blue-method-name">MAX_ITERATIONS</h3>
+  <div class="meta method-meta">
+    
+      
+        
+      <p>
+        
+          Defined in
+        
+      
+    
+    
+      <a href="../files/.._src_traviso_PathFinding.js.html#l36"><code>..&#x2F;src&#x2F;traviso&#x2F;PathFinding.js:36</code></a>
+    
+  </p>
+
+    
+
+    
+  </div>
+
+  <h3>Syntax</h3>
+  <div class="blue-method-syntax">
+    <h3 class="name"><code>MAX_ITERATIONS</code></h3>
+    <span class="type">Number</span>
+
+    
+
+    
+
+    
+
+    
+
+    </div>
+
+    <div class="description">
+      <h3>Summary</h3>
+        
+    </div>
+
+    
+        <p><strong>Default:</strong> 2000</p>
+    
+
+    
+
+  
+
+  
+
+</div>
+
+                
+                    <div id="property_openList" class="property item protected">
+
+  <h3 class="blue-method-name">openList</h3>
+  <div class="meta method-meta">
+    
+      
+        
+      <p>
+        
+          Defined in
+        
+      
+    
+    
+      <a href="../files/.._src_traviso_PathFinding.js.html#l125"><code>..&#x2F;src&#x2F;traviso&#x2F;PathFinding.js:125</code></a>
+    
+  </p>
+
+    
+
+    
+  </div>
+
+  <h3>Syntax</h3>
+  <div class="blue-method-syntax">
+    <h3 class="name"><code>openList</code></h3>
+    <span class="type">Array</span>
+
+    
+
+    
+        <span class="flag protected">protected</span>
+    
+
+    
+
+    
+
+    </div>
+
+    <div class="description">
+      <h3>Summary</h3>
+        
+    </div>
+
+    
+
+    
+
+  
+
+  
+
+</div>
+
+                
+                    <div id="property_originCell" class="property item protected">
+
+  <h3 class="blue-method-name">originCell</h3>
+  <div class="meta method-meta">
+    
+      
+        
+      <p>
+        
+          Defined in
+        
+      
+    
+    
+      <a href="../files/.._src_traviso_PathFinding.js.html#l19"><code>..&#x2F;src&#x2F;traviso&#x2F;PathFinding.js:19</code></a>
+    
+  </p>
+
+    
+
+    
+  </div>
+
+  <h3>Syntax</h3>
+  <div class="blue-method-syntax">
+    <h3 class="name"><code>originCell</code></h3>
+    <span class="type">Object</span>
+
+    
+
+    
+        <span class="flag protected">protected</span>
+    
+
+    
+
+    
+
+    </div>
+
+    <div class="description">
+      <h3>Summary</h3>
+        
+    </div>
+
+    
+
+    
+
+  
+
+  
+
+</div>
+
+                
+            </div>
+        
+
+        
+
+        
+    </div>
+</div>
+
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

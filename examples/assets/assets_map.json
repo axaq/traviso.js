@@ -1,0 +1,172 @@
+{"frames": {
+
+"box.png":
+{
+	"frame": {"x":130,"y":164,"w":32,"h":34},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":32,"h":34},
+	"sourceSize": {"w":32,"h":34}
+},
+"o_1.png":
+{
+	"frame": {"x":313,"y":262,"w":128,"h":222},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":128,"h":222},
+	"sourceSize": {"w":128,"h":222}
+},
+"o_2.png":
+{
+	"frame": {"x":260,"y":486,"w":128,"h":110},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":128,"h":110},
+	"sourceSize": {"w":128,"h":110}
+},
+"o_5.png":
+{
+	"frame": {"x":0,"y":462,"w":128,"h":148},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":128,"h":148},
+	"sourceSize": {"w":128,"h":148}
+},
+"o_6.png":
+{
+	"frame": {"x":0,"y":164,"w":128,"h":296},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":128,"h":296},
+	"sourceSize": {"w":128,"h":296}
+},
+"o_7.png":
+{
+	"frame": {"x":183,"y":0,"w":128,"h":296},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":128,"h":296},
+	"sourceSize": {"w":128,"h":296}
+},
+"o_8.png":
+{
+	"frame": {"x":130,"y":484,"w":128,"h":110},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":128,"h":110},
+	"sourceSize": {"w":128,"h":110}
+},
+"o_9.png":
+{
+	"frame": {"x":313,"y":0,"w":128,"h":260},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":128,"h":260},
+	"sourceSize": {"w":128,"h":260}
+},
+"o_boxes_0.png":
+{
+	"frame": {"x":130,"y":596,"w":128,"h":77},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":128,"h":77},
+	"sourceSize": {"w":128,"h":77}
+},
+"o_flag_0.png":
+{
+	"frame": {"x":130,"y":298,"w":128,"h":184},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":128,"h":184},
+	"sourceSize": {"w":128,"h":184}
+},
+"o_tree_0.png":
+{
+	"frame": {"x":0,"y":0,"w":181,"h":162},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":181,"h":162},
+	"sourceSize": {"w":181,"h":162}
+},
+"t_1.png":
+{
+	"frame": {"x":0,"y":840,"w":128,"h":74},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":128,"h":74},
+	"sourceSize": {"w":128,"h":74}
+},
+"t_2.png":
+{
+	"frame": {"x":0,"y":764,"w":128,"h":74},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":128,"h":74},
+	"sourceSize": {"w":128,"h":74}
+},
+"t_s_1.png":
+{
+	"frame": {"x":130,"y":751,"w":128,"h":74},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":128,"h":74},
+	"sourceSize": {"w":128,"h":74}
+},
+"t_s_2.png":
+{
+	"frame": {"x":260,"y":750,"w":128,"h":74},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":128,"h":74},
+	"sourceSize": {"w":128,"h":74}
+},
+"t_s_3.png":
+{
+	"frame": {"x":0,"y":688,"w":128,"h":74},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":128,"h":74},
+	"sourceSize": {"w":128,"h":74}
+},
+"t_s_4.png":
+{
+	"frame": {"x":130,"y":675,"w":128,"h":74},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":128,"h":74},
+	"sourceSize": {"w":128,"h":74}
+},
+"t_s_5.png":
+{
+	"frame": {"x":260,"y":674,"w":128,"h":74},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":128,"h":74},
+	"sourceSize": {"w":128,"h":74}
+},
+"t_s_6.png":
+{
+	"frame": {"x":260,"y":598,"w":128,"h":74},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":128,"h":74},
+	"sourceSize": {"w":128,"h":74}
+},
+"tileHighlight.png":
+{
+	"frame": {"x":0,"y":612,"w":128,"h":74},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":128,"h":74},
+	"sourceSize": {"w":128,"h":74}
+}},
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker ",
+	"version": "1.0",
+	"image": "assets_map.png",
+	"format": "RGBA8888",
+	"size": {"w":512,"h":1024},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:b8d28ff2972c6fe4eb4dd66825a99508$"
+}
+}

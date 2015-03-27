@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en" class="yui-overrride">
+<head>
+    <meta charset="utf-8">
+    <title>../src/traviso/map/ObjectView.js - traviso.js</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700' rel='stylesheet' type='text/css'>
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            <h1 class="blue-main-title">traviso.js</h1>
+        </div>
+        <div class="yui3-u-1-4 version project-version">
+            API Docs for: 0.0.1
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/EngineView.html">EngineView</a></li>
+            
+                <li><a href="../classes/MoveEngine.html">MoveEngine</a></li>
+            
+                <li><a href="../classes/ObjectView.html">ObjectView</a></li>
+            
+                <li><a href="../classes/PathFinding.html">PathFinding</a></li>
+            
+                <li><a href="../classes/TileView.html">TileView</a></li>
+            
+                <li><a href="../classes/TRAVISO.html">TRAVISO</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/TRAVISO.html">TRAVISO</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: ../src/traviso/map/ObjectView.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+/**
+ * @author Hakan Karlidag - @axaq
+ */
+
+/**
+ * Visual class for the map-objects.
+ *
+ * @class ObjectView
+ * @extends DisplayObjectContainer
+ * @constructor
+ * @param engine {EngineView} the engine instance that the map-object sits in
+ * @param [objectType=0] {Number} type-id of the object as defined in the XML file
+ * @param [animSpeed=0.5] {Number} animation speed for the movieclips
+ */
+TRAVISO.ObjectView = function(engine, objectType, animSpeed)
+{
+    PIXI.DisplayObjectContainer.call(this);
+    
+    /**
+	 * A reference to the engine view that the map-object sits in.
+	 * @property {EngineView} engine
+	 * @protected
+	 */
+	/**
+	 * Type-id of the map-object as defined in the XML file.
+	 * @property {Number} type
+	 * @default 0
+	 */
+	this.engine = engine;
+    this.type = objectType || 0;
+    
+    
+    /**
+	 * Defines if the map-object is movable onto by other map-objects.
+	 * @property {Boolean} isMovableTo
+	 */
+	/**
+	 * Defines if the map-object is interactive/selectable.
+	 * @property {Boolean} isInteractive
+	 */
+	/**
+	 * The size of the map-object in terms of rows and columns.
+	 * @property {Object} size
+	 * @property {Number} size.r
+	 * @property {Number} size.c
+	 */
+    var info = TRAVISO.getObjectInfo(this.engine, this.type);
+    this.isMovableTo = info.m;
+    this.isInteractive = info.i;
+    var arr = info.s.split(&quot;x&quot;);
+    this.size =
+    {
+        r : parseInt(arr[0], 10),
+        c : parseInt(arr[1], 10)
+    };
+    var xAnchor = this.size.r / (this.size.c + this.size.r);
+	
+	/**
+	 * A dictionary for all the textures defined for the map-object.
+	 * @property {Object} textures
+	 * @protected
+	 */
+    this.textures = info.t;
+	
+    this.container = new PIXI.MovieClip(this.textures.idle);
+    this.container.anchor.x = xAnchor;
+    this.container.anchor.y = 1;
+    this.addChild(this.container);
+    this.animSpeed = animSpeed;
+    this.container.gotoAndStop(0);
+	
+	/**
+	 * The height of the object in the first frame of its idle textures.
+	 * @property {Number} firstTextureHeight
+	 * @protected
+	 */
+    this.firstTextureHeight = this.container.textures[0].height;
+};
+
+// constructor
+TRAVISO.ObjectView.constructor = TRAVISO.ObjectView;
+TRAVISO.ObjectView.prototype = Object.create(PIXI.DisplayObjectContainer.prototype);
+
+/**
+ * Animation speed for the movieclips included in the map-object visuals.
+ * @property {Number} animSpeed
+ * @default 0.5
+ */
+Object.defineProperty(TRAVISO.ObjectView.prototype, &quot;animSpeed&quot;, {
+    get: function() {
+        return  this.container.animationSpeed;
+    },
+    set: function(value) {
+        this.container.animationSpeed = TRAVISO.existy(value) &amp;&amp; value &gt; 0 ? value : 0.5;
+    }
+});
+
+/**
+ * Changes the map-objects&#x27;s texture(s) according to the specified direction-id and the state of the map-object (moving or stationary).
+ *
+ * @method changeVisualToDirection
+ * @param direction {Number} direction-id as defined in &#x27;TRAVISO.directions&#x27;
+ * @param [moving=false] {Boolean} if the requested visuals are for moving or stationary state  
+ * @param [stopOnFirstFrame=false] {Boolean} if true stops on the first frame after changing the visuals
+ * @param [noLoop=false] {Boolean} if true the movieclip animation will not loop after the first animation 
+ * @param [onAnimComplete=null] {Function} Callback function to call if &#x27;noLoop&#x27; is true after the first run of the animation, uses the engine&#x27;s &#x27;callbackScope&#x27;
+ * @param [animSpeed=0.5] {Number} animation speed for the movieclips
+ */
+TRAVISO.ObjectView.prototype.changeVisualToDirection = function(direction, moving, stopOnFirstFrame, noLoop, onAnimComplete, animSpeed)
+{
+	if (!this.changeVisual((moving ? TRAVISO.getMovingDirVisualId(direction) : TRAVISO.getStationaryDirVisualId(direction)), stopOnFirstFrame, noLoop, onAnimComplete, animSpeed))
+	{
+        if (!this.changeVisual(&quot;idle&quot;, stopOnFirstFrame, noLoop, onAnimComplete, animSpeed))
+        {
+            throw new Error(&quot;no &#x27;idle&#x27; visual defined as backup for object type &quot; + this.type);
+        }
+	}
+};
+/**
+ * Changes the map-objects&#x27;s texture(s) according to the specified visual-id.
+ *
+ * @method changeVisual
+ * @private
+ * @param vId {String} visual-id
+ * @param [stopOnFirstFrame=false] {Boolean} if true stops on the first frame after changing the visuals
+ * @param [noLoop=false] {Boolean} if true the movieclip animation will not loop after the first animation 
+ * @param [onAnimComplete=null] {Function} Callback function to call if &#x27;noLoop&#x27; is true after the first run of the animation, uses the engine&#x27;s &#x27;callbackScope&#x27;
+ * @param [animSpeed=null] {Number} animation speed for the movieclips, stays the same if not defined
+ */
+TRAVISO.ObjectView.prototype.changeVisual = function(vId, stopOnFirstFrame, noLoop, onAnimComplete, animSpeed)
+{
+    if (!this.textures[vId])
+    {
+        // TRAVISO.trace(&quot;!!! No textures defined for vId: &quot; + vId);
+        return false;
+    }
+    this.container.textures = this.textures[vId];
+    
+    if (!stopOnFirstFrame &amp;&amp; this.textures[vId].length &gt; 1)
+    {
+        this.container.loop = !noLoop;
+        if (noLoop &amp;&amp; onAnimComplete) 
+        {
+            var scope = this;
+            this.container.onComplete = function () { setTimeout(function () { onAnimComplete.call( scope.engine.config.callbackScope, scope); }, 100); };
+        }
+        if (TRAVISO.existy(animSpeed) &amp;&amp; animSpeed &gt; 0) { this.animSpeed = animSpeed; }
+        this.container.gotoAndPlay(0);
+    }
+    else
+    {
+        this.container.gotoAndStop(0);
+    }
+    return true;
+};
+
+/**
+ * Clears all references.
+ *
+ * @method destroy
+ */
+TRAVISO.ObjectView.prototype.destroy = function()
+{
+	if (this.container)
+	{
+	    this.engine = null;
+	    this.size = null;
+	    this.textures = null;
+	    // this.removeChild(this.container);
+	    // this.container.textures = null;
+	    this.container.onComplete = null;
+	    this.container = null;
+	}
+};
+
+
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

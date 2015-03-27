@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Traviso.js - Example 1 - Basic World</title>
+        <style>
+			body {
+				margin: 0;
+				padding: 0;
+				background-color: #000000;
+			}
+		</style>
+		
+		<script src="../js/pixi.dev.js"></script>
+		<script src="../js/traviso.dev.js"></script>
+    </head>
+    <body>
+    	<script>
+
+	////// Global on-frame renderer function
+	function update() 
+	{
+		renderer.render(stage);
+		requestAnimFrame(update); 
+	}
+	
+	////// Here, we initialize the pixi stage
+	
+	// create an new instance of a pixi stage
+	stage = new PIXI.Stage(0x6BACDE);
+
+	// create a renderer instance
+	renderer = PIXI.autoDetectRenderer();
+	
+	// add the renderer view element to the DOM
+	document.body.appendChild(renderer.view);
+	
+	requestAnimFrame(update);
+	
+	////// Here, we create our traviso instance and add on top of pixi
+	
+	// engine-instance configuration object
+	var instanceConfig =
+    {
+    	mapDataPath : "mapData.xml", // the path to the xml file that defines map data, required
+        assetsToLoad : ["../assets/assets_map.json", "../assets/assets_characters.json"] // array of paths to the assets that are desired to be loaded by traviso, no need to use if assets are already loaded to PIXI cache, default null
+    };
+
+    var engine = TRAVISO.getEngineInstance(instanceConfig);
+    stage.addChild(engine);
+
+		</script>
+    </body>
+</html>
