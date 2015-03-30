@@ -4,7 +4,7 @@
         "description": "Traviso.js - Isometric Javascript Engine",
         "version": "0.0.1",
         "url": "www.travisojs.com",
-        "logo": "http://www.travisojs.com/img/logo_small.png"
+        "logo": "http://www.travisojs.com/img/logo_small.jpg"
     },
     "files": {
         "../src/traviso/map/ObjectView.js": {

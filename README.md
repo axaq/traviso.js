@@ -1,7 +1,7 @@
 Traviso Isometric JS Engine 
 =============
 
-![traviso.js logo](http://www.travisojs.com/img/logo_small.png) 
+![traviso.js logo](http://www.travisojs.com/img/logo_small.jpg) 
 
 #### JavaScript Isometric World Engine ####
 
