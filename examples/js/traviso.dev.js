@@ -1,10 +1,10 @@
 /**
  * @license
- * traviso.js - v0.0.1
+ * traviso.js - v0.0.2
  * Copyright (c) 2015, Hakan Karlidag - @axaq
  * www.travisojs.com
  *
- * Compiled: 2015-03-30
+ * Compiled: 2015-04-13
  *
  * traviso.js is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license.php
@@ -1380,7 +1380,7 @@ TRAVISO.MoveEngine.prototype.run = function()
     	        o.position.y += o.speedMagnitude * o.speedUnit.y;
     	        
     	        // check for tile change
-    	        
+    	        this.engine.checkForTileChange(o);
     	        
     	        // check for direction change
     	        
@@ -3564,6 +3564,9 @@ TRAVISO.EngineView.prototype.moveObjThrough = function(obj, path, speed)
 		else
 		{
 			this.moveEngine.prepareForMove(obj, path, speed);
+			
+			obj.currentTargetTile = obj.currentPath[obj.currentPathStep];
+			
 			this.onObjMoveStepBegin(obj, obj.currentPath[obj.currentPathStep].mapPos);
 		}
 	}
@@ -3597,16 +3600,16 @@ TRAVISO.EngineView.prototype.onObjMoveStepBegin = function(obj, pos)
 	if (!this.pathFinding.isCellFilled(pos.c,pos.r))
 	{
 		// pos is movable
-	    this.arrangeObjTransperancies(obj, obj.mapPos, pos);
-    	this.arrangeObjLocation(obj, pos);
-    	this.arrangeDepthsFromLocation(obj.mapPos);
+	    // this.arrangeObjTransperancies(obj, obj.mapPos, pos);
+	    // this.arrangeObjLocation(obj, pos);
+    	// this.arrangeDepthsFromLocation(obj.mapPos);
     	
     	// if there is other object(s) on the target tile, notify the game
-    	var objects = this.getObjectsAtLocation(pos);
-    	if (objects && objects.length > 1)
-    	{
-    		if (this.config.otherObjectsOnTheNextTileCallback) { this.config.otherObjectsOnTheNextTileCallback.call(this.config.callbackScope, obj, objects); }
-    	}
+    	// var objects = this.getObjectsAtLocation(pos);
+    	// if (objects && objects.length > 1)
+    	// {
+    		// if (this.config.otherObjectsOnTheNextTileCallback) { this.config.otherObjectsOnTheNextTileCallback.call(this.config.callbackScope, obj, objects); }
+    	// }
     	
     	this.moveEngine.setMoveParameters(obj, pos);
     	
@@ -3643,6 +3646,7 @@ TRAVISO.EngineView.prototype.onObjMoveStepEnd = function(obj)
 	
 	obj.currentPathStep--;
     obj.currentTarget = null;
+    obj.currentTargetTile = null;
     var pathEnded = (0 > obj.currentPathStep);
     this.moveEngine.removeMovable(obj);
     
@@ -3666,6 +3670,36 @@ TRAVISO.EngineView.prototype.onObjMoveStepEnd = function(obj)
     }
 	
 	if (pathEnded && this.config.objectReachedDestinationCallback) { this.config.objectReachedDestinationCallback.call(this.config.callbackScope, obj); }
+};
+
+TRAVISO.EngineView.prototype.checkForTileChange = function(obj) 
+{
+	var pos = { x: obj.position.x, y: obj.position.y - this.TILE_HALF_H };
+	// var tile = this.tileArray[obj.mapPos.r][obj.mapPos.c];
+	var tile = this.tileArray[obj.currentTargetTile.mapPos.r][obj.currentTargetTile.mapPos.c];
+	// move positions to parent scale
+	var vertices = [];
+	for (var i=0; i < tile.vertices.length; i++)
+	{
+		vertices[i] = [tile.vertices[i][0] + tile.position.x, tile.vertices[i][1] + tile.position.y];
+	}
+	
+	if (obj.currentTargetTile.mapPos.r !== obj.mapPos.r || obj.currentTargetTile.mapPos.c !== obj.mapPos.c)
+	{
+		if (TRAVISO.isInPolygon(pos, vertices))
+		{
+			this.arrangeObjTransperancies(obj, obj.mapPos, obj.currentTargetTile.mapPos);
+		    this.arrangeObjLocation(obj, obj.currentTargetTile.mapPos);
+	    	this.arrangeDepthsFromLocation(obj.mapPos);
+	    	
+	    	// if there is other object(s) on the target tile, notify the game
+	    	var objects = this.getObjectsAtLocation(obj.currentTargetTile.mapPos);
+	    	if (objects && objects.length > 1)
+	    	{
+	    		if (this.config.otherObjectsOnTheNextTileCallback) { this.config.otherObjectsOnTheNextTileCallback.call(this.config.callbackScope, obj, objects); }
+	    	}
+		}
+	}	
 };
 
 /**

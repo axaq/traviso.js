@@ -531,7 +531,7 @@ TRAVISO.MoveEngine.prototype.run = function()
     	        o.position.y += o.speedMagnitude * o.speedUnit.y;
     	        
     	        // check for tile change
-    	        
+    	        this.engine.checkForTileChange(o);
     	        
     	        // check for direction change
     	        
