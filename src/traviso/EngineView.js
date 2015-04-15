@@ -383,7 +383,9 @@ TRAVISO.EngineView.prototype.createMap = function()
      * @property {PathFinding} pathFinding
      * @private
      */
-	this.pathFinding = new TRAVISO.PathFinding(groundMapData, objectsMapData, this.config.pathFinding);
+	this.pathFinding = new TRAVISO.PathFinding(this.mapSizeC, this.mapSizeR, { diagonal: this.config.pathFinding === TRAVISO.pfAlgorithms.ASTAR_DIAGONAL });
+	
+   
 	
 	var tile;
 	for (i = 0; i < this.mapSizeR; i++)
@@ -391,9 +393,9 @@ TRAVISO.EngineView.prototype.createMap = function()
 	    for (j = this.mapSizeC-1; j >= 0; j--)
 	    {
 	    	this.tileArray[i][j] = null;
-	    	if (groundMapData[i][j].type)
+	    	if (groundMapData[i][j])
 	    	{
-		    	tile = new TRAVISO.TileView(this, groundMapData[i][j].type);
+		    	tile = new TRAVISO.TileView(this, groundMapData[i][j]);
 		    	tile.position.x = this.getTilePosXFor(i,j);
 		    	tile.position.y = this.getTilePosYFor(i,j);
 		    	tile.mapPos = { c:j, r:i };
@@ -425,9 +427,9 @@ TRAVISO.EngineView.prototype.createMap = function()
 	    for (j = this.mapSizeC-1; j >= 0; j--)
 	    {
 	    	this.objArray[i][j] = null;
-	    	if (objectsMapData[i][j].type)
+	    	if (objectsMapData[i][j])
 	    	{
-		    	obj = new TRAVISO.ObjectView(this, objectsMapData[i][j].type);
+		    	obj = new TRAVISO.ObjectView(this, objectsMapData[i][j]);
 		    	obj.position.x = this.getTilePosXFor(i,j);
 		    	obj.position.y = this.getTilePosYFor(i,j) + this.TILE_HALF_H;
 		    	obj.mapPos = { c:j, r:i };
@@ -1261,7 +1263,8 @@ TRAVISO.EngineView.prototype.onObjMoveStepBegin = function(obj, pos)
     {
     	// pos is NOT movable
         this.moveEngine.removeMovable(obj);
-    	this.checkAndMoveObjectToTile(obj, obj.currentPath[0]);
+    	// this.checkAndMoveObjectToTile(obj, obj.currentPath[0]);
+    	this.checkAndMoveObjectToLocation(obj, obj.currentPath[0].mapPos);
     	
         return false;
     }
@@ -1293,7 +1296,8 @@ TRAVISO.EngineView.prototype.onObjMoveStepEnd = function(obj)
     if (!pathEnded)
     {
         // this.moveStep(o, o.currentPath[o.currentPathStep].mapPos);
-        this.checkAndMoveObjectToTile(obj, obj.currentPath[0]);
+        // this.checkAndMoveObjectToTile(obj, obj.currentPath[0]);
+        this.checkAndMoveObjectToLocation(obj, obj.currentPath[0].mapPos);
     }
     else
     {

@@ -4,7 +4,7 @@
  * Copyright (c) 2015, Hakan Karlidag - @axaq
  * www.travisojs.com
  *
- * Compiled: 2015-04-13
+ * Compiled: 2015-04-15
  *
  * traviso.js is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license.php
@@ -1453,141 +1453,200 @@ TRAVISO.MoveEngine.prototype.destroy = function()
  * @author Hakan Karlidag - @axaq
  */
 
+// Based on http://github.com/bgrins/javascript-astar v0.4.0
 
 /**
  * Includes all path finding logic.
  *
  * @class PathFinding
  * @constructor
- * @param _groundMapData {Array(Array)} a two dimensinal array of tile IDs
- * @param _objectsMapData {Array(Array)} a two dimensinal array of object IDs
- * @param [algorithm=TRAVISO.pfAlgorithms.ASTAR_ORTHOGONAL] {Number} type of the path finding algorithm to use
+ * @param mapSizeC {Number} number of columns
+ * @param mapSizeR {Number} number of rows
+ * @param {Object} [options] settings for the search algorithm
+ * @param {Boolean} [options.diagonal] Specifies whether to use diagonal tiles
  */
-TRAVISO.PathFinding = function(_groundMapData, _objectsMapData, algorithm)
+TRAVISO.PathFinding = function(mapSizeC, mapSizeR, options)
 {
-	this.algorithm = algorithm || TRAVISO.pfAlgorithms.ASTAR_ORTHOGONAL;
-	
 	/**
-	 * @property {Object} originCell
-	 * @protected
-	 */
-	/**
-	 * @property {Object} destinationCell
-	 * @protected
-	 */
-	/**
-	 * @property {Object} currentCell
-	 * @protected
-	 */
-	/**
-	 * @property {Object} finishCode
-	 * @protected
-	 */
-	
-	/**
-     * @property {Number} MAX_ITERATIONS
-     * @default 2000
-     */
-	this.MAX_ITERATIONS = 2000;
-	
-	/**
-	 * @property {Number} FINISH_CODE_SUCCESS=0
-	 * @protected
-	 */
-	/**
-	 * @property {Number} FINISH_CODE_ILLEGAL_DEST=1
-	 * @protected
-	 */
-	/**
-	 * @property {Number} FINISH_CODE_NO_PATH=2
-	 * @protected
-	 */
-	/**
-	 * @property {Number} FINISH_CODE_TOO_LONG=3
-	 * @protected
-	 */
-
-    // finishCode will be set to one of these after solve() is called.
-    this.FINISH_CODE_SUCCESS = 0;
-    this.FINISH_CODE_ILLEGAL_DEST = 1;
-    this.FINISH_CODE_NO_PATH = 2;     
-    this.FINISH_CODE_TOO_LONG = 3;
-    
-    /**
-	 * @property {Array(Array(Object))} mapArray
-	 * @protected
-	 */
-	/**
-	 * @property {Array(Array(Object))} mapDynamicArray
-	 * @protected
-	 */
-	
-	this.mapArray = _groundMapData;
-    this.mapDynamicArray = _objectsMapData;
-    
-    /**
-	 * @property {Number} mapSizeR
+	 * @property {Array(Array(TRAVISO.PathFinding.GridNode))} grid
 	 * @protected
 	 */
     /**
-	 * @property {Number} mapSizeC
+	 * @property {Boolean} diagonal
 	 * @protected
 	 */
-    this.mapSizeR = this.mapArray.length;
-    this.mapSizeC = this.mapArray[0].length;
-
-	var c = 0;
+	/**
+	 * @property {Function} heuristic
+	 * @protected
+	 */
+	
+    var c = 0;
 	var r = 0;
 	
-	var cellObj;
-	
-	//define maps
-	for(r = 0; r < this.mapSizeR; r++)
-	{
-		for(c = 0; c < this.mapSizeC; c++)
-		{
-		    cellObj = {};
-			cellObj.type = this.mapArray[r][c];
-			cellObj.isMovableTo = 1;
-			cellObj.parentCell = null;
-			cellObj.g = 0;
-			cellObj.f = 0;
-			cellObj.mapPos = {};
-			cellObj.mapPos.c = c;
-			cellObj.mapPos.r = r;
-			this.mapArray[r][c] = cellObj;
-		}				
-	}
-	
-	for(r = 0; r < this.mapSizeR; r++)
-	{
-	    for(c = 0; c < this.mapSizeC; c++)
-	    {
-	        cellObj = {};
-			cellObj.type = this.mapDynamicArray[r][c];
-			cellObj.isMovableTo = 1;
-			cellObj.mapPos = {};					
-			cellObj.mapPos.c = c;
-			cellObj.mapPos.r = r;
-            this.mapDynamicArray[r][c] = cellObj;
-		}				
-	}
-	
-	/**
-	 * @property {Array} openList
-	 * @protected
-	 */
-    /**
-	 * @property {Array} closedList
-	 * @protected
-	 */
-	
-	this.openList = [];
-	this.closedList = [];
+	//define map
+	options = options || {};
+    this.nodes = [];
+    this.diagonal = !!options.diagonal;
+    this.heuristic = this.diagonal ? this.heuristics.diagonal : this.heuristics.manhattan;
+    this.grid = [];
+    for (c = 0; c < mapSizeC; c++)
+    {
+        this.grid[c] = [];
+
+        for (r = 0; r < mapSizeR; r++)
+        {
+            var node = new TRAVISO.PathFinding.GridNode(c, r, 1);
+            this.grid[c][r] = node;
+            this.nodes.push(node);
+        }
+    }
+    this.init();
 };
 
 // constructor
 TRAVISO.PathFinding.constructor = TRAVISO.PathFinding;
+
+/**
+ * Cleans/resets all nodes.
+ *
+ * @method init
+ * @private
+ */
+TRAVISO.PathFinding.prototype.init = function()
+{
+    this.dirtyNodes = [];
+    for (var i = 0; i < this.nodes.length; i++)
+    {
+        this.cleanNode(this.nodes[i]);
+    }
+};
+
+/**
+ * Cleans only dirty nodes.
+ *
+ * @method cleanDirty
+ * @private
+ */
+TRAVISO.PathFinding.prototype.cleanDirty = function()
+{
+    for (var i = 0; i < this.dirtyNodes.length; i++)
+    {
+    	this.cleanNode(this.dirtyNodes[i]);
+    }
+    this.dirtyNodes = [];
+};
+
+/**
+ * Marks a node as dirty.
+ *
+ * @method cleanDirty
+ * @private
+ * @param node {TRAVISO.PathFinding.GridNode} node to be marked
+ */
+TRAVISO.PathFinding.prototype.markDirty = function(node)
+{
+    this.dirtyNodes.push(node);
+};
+
+TRAVISO.PathFinding.prototype.neighbors = function(node)
+{
+    var ret = [],
+        x = node.x,
+        y = node.y,
+        grid = this.grid;
+
+    // West
+    if(grid[x-1] && grid[x-1][y]) {
+        ret.push(grid[x-1][y]);
+    }
+
+    // East
+    if(grid[x+1] && grid[x+1][y]) {
+        ret.push(grid[x+1][y]);
+    }
+
+    // South
+    if(grid[x] && grid[x][y-1]) {
+        ret.push(grid[x][y-1]);
+    }
+
+    // North
+    if(grid[x] && grid[x][y+1]) {
+        ret.push(grid[x][y+1]);
+    }
+
+    if (this.diagonal) {
+        // Southwest
+        if(grid[x-1] && grid[x-1][y-1]) {
+            ret.push(grid[x-1][y-1]);
+        }
+
+        // Southeast
+        if(grid[x+1] && grid[x+1][y-1]) {
+            ret.push(grid[x+1][y-1]);
+        }
+
+        // Northwest
+        if(grid[x-1] && grid[x-1][y+1]) {
+            ret.push(grid[x-1][y+1]);
+        }
+
+        // Northeast
+        if(grid[x+1] && grid[x+1][y+1]) {
+            ret.push(grid[x+1][y+1]);
+        }
+    }
+
+    return ret;
+};
+
+TRAVISO.PathFinding.prototype.toString = function()
+{
+    var graphString = [],
+        nodes = this.grid, // when using grid
+        rowDebug, row, y, l;
+    for (var x = 0, len = nodes.length; x < len; x++)
+    {
+        rowDebug = [];
+        row = nodes[x];
+        for (y = 0, l = row.length; y < l; y++) {
+            rowDebug.push(row[y].weight);
+        }
+        graphString.push(rowDebug.join(' '));
+    }
+    return graphString.join('\n');
+};
+
+TRAVISO.PathFinding.GridNode = function(c, r, weight)
+{
+    this.x = c;
+    this.y = r;
+    this.weight = weight;
+    this.mapPos = { c: c, r: r };
+};
+
+// constructor
+TRAVISO.PathFinding.GridNode.constructor = TRAVISO.PathFinding.GridNode;
+
+TRAVISO.PathFinding.GridNode.prototype.toString = function()
+{
+    return '[' + this.x + ' ' + this.y + ']';
+};
+
+TRAVISO.PathFinding.GridNode.prototype.getCost = function(fromNeighbor)
+{
+    // Take diagonal weight into consideration.
+    if (fromNeighbor && fromNeighbor.x !== this.x && fromNeighbor.y !== this.y)
+    {
+        return this.weight * 1.41421;
+    }
+    return this.weight;
+};
+
+TRAVISO.PathFinding.GridNode.prototype.isWall = function()
+{
+    return this.weight === 0;
+};
 
 /**
  * Solves path finding for the given source and destination locations.
@@ -1602,215 +1661,10 @@ TRAVISO.PathFinding.constructor = TRAVISO.PathFinding;
  */
 TRAVISO.PathFinding.prototype.solve = function(originC, originR, destC, destR)
 {
-	this.originCell = this.mapArray[originR][originC];
-	this.destinationCell = this.mapArray[destR][destC];
-	
-	if (!this.originCell || !this.destinationCell)
-	{
-		this.finishCode = this.FINISH_CODE_ILLEGAL_DEST;
-		return null;
-	}
-	
-	if(!this.destinationCell.isMovableTo) {
-		this.finishCode = this.FINISH_CODE_ILLEGAL_DEST;
-		return null;
-	}			
-	
-	if(this.destinationCell.mapPos.c === this.originCell.mapPos.c && this.destinationCell.mapPos.r === this.originCell.mapPos.r) {
-		this.finishCode = this.FINISH_CODE_ILLEGAL_DEST;
-		return null;
-	}
-
-	this.currentCell = this.originCell;
-
-	this.reset();
-	
-	var isSolved = false;
-	var iter = 0;
-
-	do {
-		 isSolved = this.stepPathfinder();
-		if(iter++ < this.MAX_ITERATIONS)
-		{
-			isSolved = this.stepPathfinder();
-		} else
-		{
-			isSolved = true;
-			this.finishCode = this.FINISH_CODE_TOO_LONG;
-			return null;
-		}
-	} while(!isSolved);
-	
-	if(this.finishCode !== this.FINISH_CODE_SUCCESS)
-	{
-		return null;
-	}			
-
-	var solutionPath = [];
-	
-	//set pointer to last cell on list
-	var cellPointer = this.closedList[this.closedList.length - 1];
-	
-	//"trace the ancestry" to get the solution path
-	while(cellPointer !== this.originCell)
-	{
-		solutionPath.push(cellPointer);	
-		cellPointer = cellPointer.parentCell;					
-	}
-	
-	if(this.finishCode !== this.FINISH_CODE_SUCCESS)
-	{
-		return null;
-	}
-	
-	return solutionPath;
-};
-
-/**
- * Step function for the path finder.
- *
- * @method stepPathfinder
- * @private
- * @return {Boolean} if the search is ended with success or not
- */
-TRAVISO.PathFinding.prototype.stepPathfinder = function()
-{
-	if(this.currentCell === this.destinationCell) {
-		this.finishCode = this.FINISH_CODE_SUCCESS;
-		this.closedList.push(this.destinationCell);
-		return true;
-	}
-
-	//place current cell into openList
-	this.openList.push(this.currentCell);
-
-	//place all legal adjacent squares into a temporary array
-	var adjacentCells = [];
-	var arryPtrDynMap;
-	var arryPtr;				
-	
-	var c = this.currentCell.mapPos.c;
-	var r = this.currentCell.mapPos.r;
-	
-	//four if-blocks handle each orthogonal group
-	if(c - 1 >= 0) {
-		arryPtr = this.mapArray[r + 0][c - 1];
-		arryPtrDynMap = this.mapDynamicArray[r + 0][c - 1];
-		if(arryPtr.isMovableTo && arryPtrDynMap.isMovableTo && this.closedList.indexOf(arryPtr) === -1) {
-			adjacentCells.push(arryPtr);
-		}
-	}
-	
-	if(r - 1 >= 0) {
-		arryPtr = this.mapArray[r - 1][c + 0];
-		arryPtrDynMap = this.mapDynamicArray[r - 1][c + 0];
-		if(arryPtr.isMovableTo && arryPtrDynMap.isMovableTo && this.closedList.indexOf(arryPtr) === -1) {
-			adjacentCells.push(arryPtr);
-		}
-	}
-	
-	if(c + 1 < this.mapSizeC) {
-		arryPtr = this.mapArray[r + 0][c + 1];
-		arryPtrDynMap = this.mapDynamicArray[r + 0][c + 1];
-		if(arryPtr.isMovableTo && arryPtrDynMap.isMovableTo && this.closedList.indexOf(arryPtr) === -1) {
-			adjacentCells.push(arryPtr);
-		}
-	}
-	
-	if(r + 1 < this.mapSizeR) {
-		arryPtr = this.mapArray[r + 1][c + 0];
-		arryPtrDynMap = this.mapDynamicArray[r + 1][c + 0];
-		if(arryPtr.isMovableTo && arryPtrDynMap.isMovableTo && this.closedList.indexOf(arryPtr) === -1) {
-			adjacentCells.push(arryPtr);
-		}
-	}
-	
-	if (this.algorithm === TRAVISO.pfAlgorithms.ASTAR_DIAGONAL)
-	{
-		if(c - 1 >= 0 && r - 1 >= 0) {
-			arryPtr = this.mapArray[r - 1][c - 1];
-			arryPtrDynMap = this.mapDynamicArray[r - 1][c - 1];
-			if(arryPtr.isMovableTo && arryPtrDynMap.isMovableTo && this.closedList.indexOf(arryPtr) === -1) {
-				adjacentCells.push(arryPtr);
-			}
-		}
-		
-		if(c + 1 >= 0 && r - 1 >= 0) {
-			arryPtr = this.mapArray[r - 1][c + 1];
-			arryPtrDynMap = this.mapDynamicArray[r - 1][c + 1];
-			if(arryPtr.isMovableTo && arryPtrDynMap.isMovableTo && this.closedList.indexOf(arryPtr) === -1) {
-				adjacentCells.push(arryPtr);
-			}
-		}
-		
-		if(c + 1 >= 0 && r + 1 >= 0) {
-			arryPtr = this.mapArray[r + 1][c + 1];
-			arryPtrDynMap = this.mapDynamicArray[r + 1][c + 1];
-			if(arryPtr.isMovableTo && arryPtrDynMap.isMovableTo && this.closedList.indexOf(arryPtr) === -1) {
-				adjacentCells.push(arryPtr);
-			}
-		}
-		
-		if(c - 1 >= 0 && r + 1 >= 0) {
-			arryPtr = this.mapArray[r + 1][c - 1];
-			arryPtrDynMap = this.mapDynamicArray[r + 1][c - 1];
-			if(arryPtr.isMovableTo && arryPtrDynMap.isMovableTo && this.closedList.indexOf(arryPtr) === -1) {
-				adjacentCells.push(arryPtr);
-			}
-		}
-	}
-
-
-	var g;
-	var h;
-	var l = adjacentCells.length;
-	for(var ii = 0; ii < l; ii++) {
-		
-		//this.currentCell is the "parent" of all cells in adjacentCells; add 1 unit of distance to G sum. 
-		//there is no handling of diagonal distance in this "ortho" implementation
-		g = this.currentCell.g + 1;
-		
-		//H calc'd per "Manhattan" method
-		h = Math.abs(adjacentCells[ii].mapPos.c - this.destinationCell.mapPos.c) + Math.abs(adjacentCells[ii].mapPos.r - this.destinationCell.mapPos.r);
-			
-		if(this.openList.indexOf(adjacentCells[ii]) === -1) { //is cell already on the open list? - no									
-
-			adjacentCells[ii].f = g + h;
-			adjacentCells[ii].parentCell = this.currentCell;
-			adjacentCells[ii].g = g;					
-			this.openList.push(adjacentCells[ii]);
-
-		} else { //is cell already on the open list? - yes
-			
-			if(adjacentCells[ii].g < this.currentCell.parentCell.g) {
-				
-				this.currentCell.parentCell = adjacentCells[ii];
-				this.currentCell.g = adjacentCells[ii].g + 1;
-				this.currentCell.f = adjacentCells[ii].g + h;
-				
-			}
-		}
-	}
-	
-	//Remove current cell from this.openList and add to this.closedList.
-	var indexOfCurrent = this.openList.indexOf(this.currentCell);
-	this.closedList.push(this.currentCell);
-	this.openList.splice(indexOfCurrent, 1);			
-	
-	if(this.openList.length === 0) {
-		this.finishCode = this.FINISH_CODE_NO_PATH;
-		return true;
-	}
-	
-	//Take the lowest scoring this.openList cell and make it the current cell.
-	this.openList.sort(function (a, b) {
-        return b.f > a.f;
-    });
-	//this.openList.sortOn("f", Array.NUMERIC | Array.DESCENDING);
-	this.currentCell = this.openList.pop();	
-	
-	//returning false continues algo
-	return false;
+	var start = this.grid[originC][originR];
+	var end = this.grid[destC][destR];
+	var result = this.search(start, end, { heuristic: this.heuristic });
+	return result && result.length > 0 ? result : null;
 };
 
 /**
@@ -1832,62 +1686,266 @@ TRAVISO.PathFinding.prototype.getAdjacentOpenCells = function(cellC, cellR, size
     	for (c = cellC; c < cellC + sizeC; c++)
     	{
 			// NOTE: concat is browser dependent. It is fastest for Chrome. Might be a good idea to use for loop or "a.push.apply(a, b);" for other browsers
-			cellArray = cellArray.concat(this.getAdjacentOpenCellsForSingle(c, r));
+			cellArray = cellArray.concat(this.neighbors(this.grid[c][r]));
 		}
 	}
 	
 	return cellArray;
 };
 
-/**
- * Finds available adjacent cells of a single location.
- *
- * @method getAdjacentOpenCellsForSingle
- * @param cellC {Number} column index of the location
- * @param cellR {Number} row index of the location
- * @return {Array(Object)} an array of available cells
- */
-TRAVISO.PathFinding.prototype.getAdjacentOpenCellsForSingle = function(cellC, cellR)
+TRAVISO.PathFinding.prototype.pathTo = function(node)
 {
-	var cellArray = [];
-	var tmpPtr, tmpPtrDynMap;
-	
-	tmpPtr = this.mapArray[cellR][cellC+1];
-	tmpPtrDynMap = this.mapDynamicArray[cellR][cellC+1];
-	if(tmpPtr.isMovableTo && tmpPtrDynMap.isMovableTo) { cellArray.push(tmpPtr); }
-	
-	tmpPtr = this.mapArray[cellR+1][cellC];
-	tmpPtrDynMap = this.mapDynamicArray[cellR+1][cellC];
-	if(tmpPtr.isMovableTo && tmpPtrDynMap.isMovableTo) { cellArray.push(tmpPtr); }
-	
-	tmpPtr = this.mapArray[cellR][cellC-1];
-	tmpPtrDynMap = this.mapDynamicArray[cellR][cellC-1];
-	if(tmpPtr.isMovableTo && tmpPtrDynMap.isMovableTo) { cellArray.push(tmpPtr); }
-	
-	tmpPtr = this.mapArray[cellR-1][cellC];
-	tmpPtrDynMap = this.mapDynamicArray[cellR-1][cellC];
-	if(tmpPtr.isMovableTo && tmpPtrDynMap.isMovableTo) { cellArray.push(tmpPtr); }
-	
-	if (this.algorithm === TRAVISO.pfAlgorithms.ASTAR_DIAGONAL)
-	{
-		tmpPtr = this.mapArray[cellR+1][cellC+1];
-		tmpPtrDynMap = this.mapDynamicArray[cellR+1][cellC+1];
-		if(tmpPtr.isMovableTo && tmpPtrDynMap.isMovableTo) { cellArray.push(tmpPtr); }
-		
-		tmpPtr = this.mapArray[cellR+1][cellC-1];
-		tmpPtrDynMap = this.mapDynamicArray[cellR+1][cellC-1];
-		if(tmpPtr.isMovableTo && tmpPtrDynMap.isMovableTo) { cellArray.push(tmpPtr); }
-		
-		tmpPtr = this.mapArray[cellR-1][cellC-1];
-		tmpPtrDynMap = this.mapDynamicArray[cellR-1][cellC-1];
-		if(tmpPtr.isMovableTo && tmpPtrDynMap.isMovableTo) { cellArray.push(tmpPtr); }
-		
-		tmpPtr = this.mapArray[cellR-1][cellC+1];
-		tmpPtrDynMap = this.mapDynamicArray[cellR-1][cellC+1];
-		if(tmpPtr.isMovableTo && tmpPtrDynMap.isMovableTo) { cellArray.push(tmpPtr); }
-	}
-	
-	return cellArray;
+    var curr = node,
+        path = [];
+    while(curr.parent) {
+        path.push(curr);
+        curr = curr.parent;
+    }
+    // return path.reverse();
+    return path;
+};
+
+TRAVISO.PathFinding.prototype.getHeap = function()
+{
+    return new TRAVISO.PathFinding.BinaryHeap(function(node) {
+        return node.f;
+    });
+};
+
+/**
+ * Perform an A* Search on a graph given a start and end node.
+ * @param {GridNode} start
+ * @param {GridNode} end
+ * @param {Object} [options]
+ * @param {bool} [options.closest] Specifies whether to return the
+            path to the closest node if the target is unreachable.
+ * @param {Function} [options.heuristic] Heuristic function.
+ */
+TRAVISO.PathFinding.prototype.search = function(start, end, options)
+{
+	this.init();
+    options = options || {};
+    var heuristic = options.heuristic || this.heuristics.manhattan,
+        closest = options.closest || false;
+
+    var openHeap = this.getHeap(),
+        closestNode = start; // set the start node to be the closest if required
+
+    start.h = heuristic(start, end);
+
+    openHeap.push(start);
+    
+    while(openHeap.size() > 0) {
+
+        // Grab the lowest f(x) to process next.  Heap keeps this sorted for us.
+        var currentNode = openHeap.pop();
+
+        // End case -- result has been found, return the traced path.
+        if(currentNode === end) {
+            return this.pathTo(currentNode);
+        }
+
+        // Normal case -- move currentNode from open to closed, process each of its neighbors.
+        currentNode.closed = true;
+
+        // Find all neighbors for the current node.
+        var neighbors = this.neighbors(currentNode);
+
+        for (var i = 0, il = neighbors.length; i < il; ++i) {
+            var neighbor = neighbors[i];
+
+            if (neighbor.closed || neighbor.isWall()) {
+                // Not a valid node to process, skip to next neighbor.
+                continue;
+            }
+
+            // The g score is the shortest distance from start to current node.
+            // We need to check if the path we have arrived at this neighbor is the shortest one we have seen yet.
+            var gScore = currentNode.g + neighbor.getCost(currentNode),
+                beenVisited = neighbor.visited;
+
+            if (!beenVisited || gScore < neighbor.g) {
+
+                // Found an optimal (so far) path to this node.  Take score for node to see how good it is.
+                neighbor.visited = true;
+                neighbor.parent = currentNode;
+                neighbor.h = neighbor.h || heuristic(neighbor, end);
+                neighbor.g = gScore;
+                neighbor.f = neighbor.g + neighbor.h;
+                this.markDirty(neighbor);
+                if (closest) {
+                    // If the neighbour is closer than the current closestNode or if it's equally close but has
+                    // a cheaper path than the current closest node then it becomes the closest node
+                    if (neighbor.h < closestNode.h || (neighbor.h === closestNode.h && neighbor.g < closestNode.g)) {
+                        closestNode = neighbor;
+                    }
+                }
+
+                if (!beenVisited) {
+                    // Pushing to heap will put it in proper place based on the 'f' value.
+                    openHeap.push(neighbor);
+                }
+                else {
+                    // Already seen the node, but since it has been rescored we need to reorder it in the heap
+                    openHeap.rescoreElement(neighbor);
+                }
+            }
+        }
+    }
+
+    if (closest) {
+        return this.pathTo(closestNode);
+    }
+
+    // No result was found - empty array signifies failure to find path.
+	return [];
+};
+
+// See list of heuristics: http://theory.stanford.edu/~amitp/GameProgramming/Heuristics.html
+TRAVISO.PathFinding.prototype.heuristics = {
+    manhattan: function(pos0, pos1) {
+        var d1 = Math.abs(pos1.x - pos0.x);
+        var d2 = Math.abs(pos1.y - pos0.y);
+        return d1 + d2;
+    },
+    diagonal: function(pos0, pos1) {
+        var D = 1;
+        var D2 = Math.sqrt(2);
+        var d1 = Math.abs(pos1.x - pos0.x);
+        var d2 = Math.abs(pos1.y - pos0.y);
+        return (D * (d1 + d2)) + ((D2 - (2 * D)) * Math.min(d1, d2));
+    }
+};
+
+TRAVISO.PathFinding.prototype.cleanNode = function(node) {
+        node.f = 0;
+        node.g = 0;
+        node.h = 0;
+        node.visited = false;
+        node.closed = false;
+        node.parent = null;
+};
+
+TRAVISO.PathFinding.BinaryHeap = function(scoreFunction)
+{
+	this.content = [];
+    this.scoreFunction = scoreFunction;
+};
+
+TRAVISO.PathFinding.BinaryHeap.prototype = {
+    push: function(element) {
+        // Add the new element to the end of the array.
+        this.content.push(element);
+
+        // Allow it to sink down.
+        this.sinkDown(this.content.length - 1);
+    },
+    pop: function() {
+        // Store the first element so we can return it later.
+        var result = this.content[0];
+        // Get the element at the end of the array.
+        var end = this.content.pop();
+        // If there are any elements left, put the end element at the
+        // start, and let it bubble up.
+        if (this.content.length > 0) {
+            this.content[0] = end;
+            this.bubbleUp(0);
+        }
+        return result;
+    },
+    remove: function(node) {
+        var i = this.content.indexOf(node);
+
+        // When it is found, the process seen in 'pop' is repeated
+        // to fill up the hole.
+        var end = this.content.pop();
+
+        if (i !== this.content.length - 1) {
+            this.content[i] = end;
+
+            if (this.scoreFunction(end) < this.scoreFunction(node)) {
+                this.sinkDown(i);
+            }
+            else {
+                this.bubbleUp(i);
+            }
+        }
+    },
+    size: function() {
+        return this.content.length;
+    },
+    rescoreElement: function(node) {
+        this.sinkDown(this.content.indexOf(node));
+    },
+    sinkDown: function(n) {
+        // Fetch the element that has to be sunk.
+        var element = this.content[n];
+
+        // When at 0, an element can not sink any further.
+        while (n > 0) {
+
+            // Compute the parent element's index, and fetch it.
+            var parentN = ((n + 1) >> 1) - 1,
+                parent = this.content[parentN];
+            // Swap the elements if the parent is greater.
+            if (this.scoreFunction(element) < this.scoreFunction(parent)) {
+                this.content[parentN] = element;
+                this.content[n] = parent;
+                // Update 'n' to continue at the new position.
+                n = parentN;
+            }
+            // Found a parent that is less, no need to sink any further.
+            else {
+                break;
+            }
+        }
+    },
+    bubbleUp: function(n) {
+        // Look up the target element and its score.
+        var length = this.content.length,
+            element = this.content[n],
+            elemScore = this.scoreFunction(element);
+
+        while(true) {
+            // Compute the indices of the child elements.
+            var child2N = (n + 1) << 1,
+                child1N = child2N - 1;
+            // This is used to store the new position of the element, if any.
+            var swap = null,
+                child1Score;
+            // If the first child exists (is inside the array)...
+            if (child1N < length) {
+                // Look it up and compute its score.
+                var child1 = this.content[child1N];
+                child1Score = this.scoreFunction(child1);
+
+                // If the score is less than our element's, we need to swap.
+                if (child1Score < elemScore){
+                    swap = child1N;
+                }
+            }
+
+            // Do the same checks for the other child.
+            if (child2N < length) {
+                var child2 = this.content[child2N],
+                    child2Score = this.scoreFunction(child2);
+                if (child2Score < (swap === null ? elemScore : child1Score)) {
+                    swap = child2N;
+                }
+            }
+
+            // If the element needs to be moved, swap it, and continue.
+            if (swap !== null) {
+                this.content[n] = this.content[swap];
+                this.content[swap] = element;
+                n = swap;
+            }
+            // Otherwise, we are done.
+            else {
+                break;
+            }
+        }
+    }
 };
 
 /**
@@ -1900,8 +1958,7 @@ TRAVISO.PathFinding.prototype.getAdjacentOpenCellsForSingle = function(cellC, ce
  */
 TRAVISO.PathFinding.prototype.isCellFilled = function(c, r)
 {
-	if(!this.mapArray[r][c].isMovableTo) { return true; }
-	if(!this.mapDynamicArray[r][c].isMovableTo) { return true; }
+	if (this.grid[c][r].weight === 0) { return true; }
 	
 	return false;
 };
@@ -1916,7 +1973,7 @@ TRAVISO.PathFinding.prototype.isCellFilled = function(c, r)
  */
 TRAVISO.PathFinding.prototype.setCell = function(c, r, movable)
 {
-	this.mapArray[r][c].isMovableTo = movable;			
+	this.grid[c][r].staticWeight = this.grid[c][r].weight = movable;
 };
 
 /**
@@ -1929,50 +1986,14 @@ TRAVISO.PathFinding.prototype.setCell = function(c, r, movable)
  */
 TRAVISO.PathFinding.prototype.setDynamicCell = function(c, r, movable)
 {
-    this.mapDynamicArray[r][c].isMovableTo = movable;
-};
-
-/**
- * Resets algorithm without clearing cells.
- *
- * @method reset
- * @private
- */
-TRAVISO.PathFinding.prototype.reset = function()
-{	
-    for(var r = 0; r < this.mapSizeR; r++)
-    {
-	   for(var c = 0; c < this.mapSizeC; c++)
-	   {								
-			this.mapArray[r][c].parentCell = null;
-			this.mapArray[r][c].g = 0;
-			this.mapArray[r][c].f = 0;
-		}				
-	}
-	
-	this.openList = [];
-	this.closedList = [];
-};
-
-/**
- * Resets the dynamic (mobile unit tracking) map.
- *
- * @method resetDynamicMap
- * @private
- */
-TRAVISO.PathFinding.prototype.resetDynamicMap = function()
-{
-    for(var r = 0; r < this.mapSizeR; r++)
-    {
-	   for(var c = 0; c < this.mapSizeC; c++)
-	   {
-			this.mapDynamicArray[r][c].mapPos.c = c;
-			this.mapDynamicArray[r][c].mapPos.r = r;
-			this.mapDynamicArray[r][c].type = 0;
-			this.mapDynamicArray[r][c].isMovableTo = 1;
-		}				
+	// if it is movable by static tile property
+	if (this.grid[c][r].staticWeight !== 0)
+	{
+		this.grid[c][r].weight = movable;
 	}
 };
+
+
 
 /**
  * Clears all references.
@@ -1981,12 +2002,11 @@ TRAVISO.PathFinding.prototype.resetDynamicMap = function()
  */
 TRAVISO.PathFinding.prototype.destroy = function() 
 {
-    TRAVISO.trace("PathFinding destroy");
+    TRAVISO.trace('PathFinding destroy');
     
-	this.mapArray = null;
-	this.mapDynamicArray = null;
-	this.openList = null;
-    this.closedList = null;
+    this.grid = null;
+    this.nodes = null;
+    this.dirtyNodes = null;
 };
 
 /**
@@ -2743,7 +2763,9 @@ TRAVISO.EngineView.prototype.createMap = function()
      * @property {PathFinding} pathFinding
      * @private
      */
-	this.pathFinding = new TRAVISO.PathFinding(groundMapData, objectsMapData, this.config.pathFinding);
+	this.pathFinding = new TRAVISO.PathFinding(this.mapSizeC, this.mapSizeR, { diagonal: this.config.pathFinding === TRAVISO.pfAlgorithms.ASTAR_DIAGONAL });
+	
+   
 	
 	var tile;
 	for (i = 0; i < this.mapSizeR; i++)
@@ -2751,9 +2773,9 @@ TRAVISO.EngineView.prototype.createMap = function()
 	    for (j = this.mapSizeC-1; j >= 0; j--)
 	    {
 	    	this.tileArray[i][j] = null;
-	    	if (groundMapData[i][j].type)
+	    	if (groundMapData[i][j])
 	    	{
-		    	tile = new TRAVISO.TileView(this, groundMapData[i][j].type);
+		    	tile = new TRAVISO.TileView(this, groundMapData[i][j]);
 		    	tile.position.x = this.getTilePosXFor(i,j);
 		    	tile.position.y = this.getTilePosYFor(i,j);
 		    	tile.mapPos = { c:j, r:i };
@@ -2785,9 +2807,9 @@ TRAVISO.EngineView.prototype.createMap = function()
 	    for (j = this.mapSizeC-1; j >= 0; j--)
 	    {
 	    	this.objArray[i][j] = null;
-	    	if (objectsMapData[i][j].type)
+	    	if (objectsMapData[i][j])
 	    	{
-		    	obj = new TRAVISO.ObjectView(this, objectsMapData[i][j].type);
+		    	obj = new TRAVISO.ObjectView(this, objectsMapData[i][j]);
 		    	obj.position.x = this.getTilePosXFor(i,j);
 		    	obj.position.y = this.getTilePosYFor(i,j) + this.TILE_HALF_H;
 		    	obj.mapPos = { c:j, r:i };
@@ -3621,7 +3643,8 @@ TRAVISO.EngineView.prototype.onObjMoveStepBegin = function(obj, pos)
     {
     	// pos is NOT movable
         this.moveEngine.removeMovable(obj);
-    	this.checkAndMoveObjectToTile(obj, obj.currentPath[0]);
+    	// this.checkAndMoveObjectToTile(obj, obj.currentPath[0]);
+    	this.checkAndMoveObjectToLocation(obj, obj.currentPath[0].mapPos);
     	
         return false;
     }
@@ -3653,7 +3676,8 @@ TRAVISO.EngineView.prototype.onObjMoveStepEnd = function(obj)
     if (!pathEnded)
     {
         // this.moveStep(o, o.currentPath[o.currentPathStep].mapPos);
-        this.checkAndMoveObjectToTile(obj, obj.currentPath[0]);
+        // this.checkAndMoveObjectToTile(obj, obj.currentPath[0]);
+        this.checkAndMoveObjectToLocation(obj, obj.currentPath[0].mapPos);
     }
     else
     {

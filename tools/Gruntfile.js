@@ -86,7 +86,7 @@ module.exports = function(grunt) {
         source: {
             src: srcFiles.concat('Gruntfile.js'),
             options: {
-                ignores: '<%= dirs.src %>/**/{header,footer,traviso}.js'
+                ignores: '<%= dirs.src %>/**/{Header,Footer,Traviso}.js'
             }
         },
         test: {
