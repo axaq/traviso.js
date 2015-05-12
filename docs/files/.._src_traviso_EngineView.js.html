@@ -147,6 +147,7 @@ TRAVISO.EngineView = function(config)
      * @property {Boolean} config.highlightPath=true highlight the path when the current controllable moves on the map, default true
      * @property {Boolean} config.highlightTargetTile=true highlight the target tile when the current controllable moves on the map, default true
      * @property {Boolean} config.tileHighlightAnimated=true animate the tile highlights, default true
+     * @property {Boolean} config.dontAutoMoveToTile=false when a tile selected don&#x27;t move the controllable immediately but still call &#x27;tileSelectCallback&#x27;, default false
      * 
      * @property {Boolean} config.mapDraggable=true enable dragging the map with touch-and-touchmove or mousedown-and-mousemove on the map, default true
      * 
@@ -173,6 +174,7 @@ TRAVISO.EngineView = function(config)
     this.config.highlightPath = TRAVISO.existy(this.config.highlightPath) ? this.config.highlightPath : true;
     this.config.highlightTargetTile = TRAVISO.existy(this.config.highlightTargetTile) ? this.config.highlightTargetTile : true;
     this.config.tileHighlightAnimated = TRAVISO.existy(this.config.tileHighlightAnimated) ? this.config.tileHighlightAnimated : true;
+    this.config.dontAutoMoveToTile = TRAVISO.existy(this.config.dontAutoMoveToTile) ? this.config.dontAutoMoveToTile : false;
     this.config.mapDraggable = TRAVISO.existy(this.config.mapDraggable) ? this.config.mapDraggable : true;
     
     this.setZoomParameters(this.config.minScale, this.config.maxScale, this.config.numberOfZoomLevels, this.config.initialZoomLevel, this.config.instantCameraZoom);
@@ -255,6 +257,11 @@ TRAVISO.EngineView = function(config)
      * animate the tile highlights
      * @property {Boolean} tileHighlightAnimated 
      * @default true
+     */
+    /** 
+     * when a tile selected don&#x27;t move the controllable immediately but still call &#x27;tileSelectCallback&#x27;
+     * @property {Boolean} dontAutoMoveToTile 
+     * @default false
      */
     /** 
      * enable dragging the map with touch-and-touchmove or mousedown-and-mousemove on the map
@@ -1248,23 +1255,41 @@ TRAVISO.EngineView.prototype.arrangePathHighlight = function(currentPath, newPat
         for (i=0; i &lt; currentPath.length; i++)
         {
             pathItem = currentPath[i];
-            if (newPath.indexOf(pathItem) === -1)
+            if (!newPath || newPath.indexOf(pathItem) === -1)
             {
                 tile = this.tileArray[pathItem.mapPos.r][pathItem.mapPos.c];
                 tile.setHighlighted(false, !this.config.tileHighlightAnimated);
             }
         }
     }
-    
-	for (i=0; i &lt; newPath.length; i++)
+    if (newPath)
     {
-        pathItem = newPath[i];
-        if (!currentPath || currentPath.indexOf(pathItem) === -1)
+    	for (i=0; i &lt; newPath.length; i++)
         {
-            tile = this.tileArray[pathItem.mapPos.r][pathItem.mapPos.c];
-            tile.setHighlighted(true, !this.config.tileHighlightAnimated);
+            pathItem = newPath[i];
+            if (!currentPath || currentPath.indexOf(pathItem) === -1)
+            {
+                tile = this.tileArray[pathItem.mapPos.r][pathItem.mapPos.c];
+                tile.setHighlighted(true, !this.config.tileHighlightAnimated);
+            }
         }
     }
+};
+
+/**
+ * Stops a moving object.
+ *
+ * @method stopObject
+ * @private
+ * @param obj {ObjectView} map-object to be moved on path
+ */
+TRAVISO.EngineView.prototype.stopObject = function(obj) 
+{
+    this.arrangePathHighlight(obj.currentPath);
+    obj.currentPath = null;
+    obj.currentTarget = null;
+    obj.currentTargetTile = null;
+    this.moveEngine.removeMovable(obj);
 };
 
 /**
@@ -1557,7 +1582,7 @@ TRAVISO.EngineView.prototype.moveCurrentControllableToObj = function(obj, speed)
 	var cellArray = this.pathFinding.getAdjacentOpenCells(obj.mapPos.c, obj.mapPos.r, obj.size.c, obj.size.r);
 	var tile;
 	var minLength = 3000;
-	var path, minPath;
+	var path, minPath, tempFlagHolder;
 	for (var i=0; i &lt; cellArray.length; i++)
 	{
 		tile = this.tileArray[cellArray[i].mapPos.r][cellArray[i].mapPos.c];
@@ -1566,6 +1591,12 @@ TRAVISO.EngineView.prototype.moveCurrentControllableToObj = function(obj, speed)
 			if(tile.mapPos.c === this.currentControllable.mapPos.c &amp;&amp; tile.mapPos.r === this.currentControllable.mapPos.r)
 			{
 				// already next to the object, do nothing
+                this.stopObject(this.currentControllable);
+                tempFlagHolder = this.config.instantObjectRelocation;
+                this.config.instantObjectRelocation = true;
+                this.moveObjThrough(this.currentControllable, [tile]);
+                this.config.instantObjectRelocation = tempFlagHolder;
+                this.currentControllable.changeVisualToDirection(this.currentControllable.currentDirection, false);
 				if (this.config.objectReachedDestinationCallback) { this.config.objectReachedDestinationCallback.call(this.config.callbackScope, this.currentControllable); }
 				return true;
 			}
@@ -1658,7 +1689,7 @@ TRAVISO.EngineView.prototype.checkForTileClick = function(mdata)
                 // TODO CHECK: this might cause issues when there is one movable and one not movable object on the same tile
                 else if(a[k].isMovableTo)
                 {
-                    if (!this.currentControllable || this.checkAndMoveObjectToTile(this.currentControllable, closestTile))
+                    if (this.config.dontAutoMoveToTile || !this.currentControllable || this.checkAndMoveObjectToTile(this.currentControllable, closestTile))
                     {
                         if (this.config.highlightTargetTile) { closestTile.setHighlighted(true, !this.config.tileHighlightAnimated); }
                         if (this.config.tileSelectCallback) { this.config.tileSelectCallback.call(this.config.callbackScope, closestTile.mapPos.r, closestTile.mapPos.c); }
@@ -1667,7 +1698,7 @@ TRAVISO.EngineView.prototype.checkForTileClick = function(mdata)
                 } 
             }
         }
-		else if (!this.currentControllable || this.checkAndMoveObjectToTile(this.currentControllable, closestTile))
+		else if (this.config.dontAutoMoveToTile || !this.currentControllable || this.checkAndMoveObjectToTile(this.currentControllable, closestTile))
 		{
 			if (this.config.highlightTargetTile) { closestTile.setHighlighted(true, !this.config.tileHighlightAnimated); }
 			if (this.config.tileSelectCallback) { this.config.tileSelectCallback.call(this.config.callbackScope, closestTile.mapPos.r, closestTile.mapPos.c); }
