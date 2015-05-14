@@ -494,7 +494,7 @@
         },
         {
             "file": "../src/traviso/map/ObjectView.js",
-            "line": 157,
+            "line": 165,
             "description": "Clears all references.",
             "itemtype": "method",
             "name": "destroy",

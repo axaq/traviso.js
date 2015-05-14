@@ -233,6 +233,14 @@ TRAVISO.ObjectView.prototype.changeVisual = function(vId, stopOnFirstFrame, noLo
         // TRAVISO.trace(&quot;!!! No textures defined for vId: &quot; + vId);
         return false;
     }
+    
+    if (this.container.textures === this.textures[vId] &amp;&amp; !noLoop)
+    {
+        this.container.loop = !noLoop;
+        if (TRAVISO.existy(animSpeed) &amp;&amp; animSpeed &gt; 0) { this.animSpeed = animSpeed; }
+        return true;
+    }
+    
     this.container.textures = this.textures[vId];
     
     if (!stopOnFirstFrame &amp;&amp; this.textures[vId].length &gt; 1)

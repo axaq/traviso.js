@@ -4,7 +4,7 @@
  * Copyright (c) 2015, Hakan Karlidag - @axaq
  * www.travisojs.com
  *
- * Compiled: 2015-05-05
+ * Compiled: 2015-05-12
  *
  * traviso.js is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license.php
@@ -2155,6 +2155,14 @@ TRAVISO.ObjectView.prototype.changeVisual = function(vId, stopOnFirstFrame, noLo
         // TRAVISO.trace("!!! No textures defined for vId: " + vId);
         return false;
     }
+    
+    if (this.container.textures === this.textures[vId] && !noLoop)
+    {
+        this.container.loop = !noLoop;
+        if (TRAVISO.existy(animSpeed) && animSpeed > 0) { this.animSpeed = animSpeed; }
+        return true;
+    }
+    
     this.container.textures = this.textures[vId];
     
     if (!stopOnFirstFrame && this.textures[vId].length > 1)
