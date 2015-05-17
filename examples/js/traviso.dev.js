@@ -4,7 +4,7 @@
  * Copyright (c) 2015, Hakan Karlidag - @axaq
  * www.travisojs.com
  *
- * Compiled: 2015-05-12
+ * Compiled: 2015-05-17
  *
  * traviso.js is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license.php
@@ -400,10 +400,11 @@ TRAVISO.loadData = function(engine, loadedCallback)
                     // set object properties
                     arr = this.responseXML.getElementsByTagName("object");
                     
-                    var oTextures;
+                    var oTextures, interactionOffsets, temp;
                     for (i = 0; i < arr.length; i++)
                     {
                         oTextures = { };
+                        interactionOffsets = { };
 
                         ///////////////////////////////////////////////////////////////////////////
 
@@ -415,17 +416,28 @@ TRAVISO.loadData = function(engine, loadedCallback)
                         }
                         else
                         {
-                        	var m, k;
+                        	var m, k, v, vId, vIpor, vIpoc, vFrames;
                             for (k = 0; k < objectVisuals.length; k++)
                             {
-                                var v = objectVisuals[k];
-                                var vId = v.attributes.getNamedItem("id").nodeValue;
+                                v = objectVisuals[k];
+                                temp = v.attributes.getNamedItem("id");
+                                vId = temp ? temp.nodeValue : null;
                                 if (!vId || vId === "" || vId.length < 1)
                                 {
                                     throw new Error("TRAVISO: A v tag without an id is detected in the XML file.");
                                 }
+                                
+                                temp = v.attributes.getNamedItem("ipor");
+                                vIpor = temp ? temp.nodeValue : null;
+                                temp = v.attributes.getNamedItem("ipoc");
+                                vIpoc = temp ? temp.nodeValue : null;
+                                interactionOffsets[vId] = null;
+                                if (vIpor && vIpor !== "" && vIpor.length > 0 && vIpoc && vIpoc !== "" && vIpoc.length > 0)
+                                {
+                                    interactionOffsets[vId] = { c: parseInt(vIpoc), r: parseInt(vIpor) };
+                                }
 
-                                var vFrames = v.getElementsByTagName("f");
+                                vFrames = v.getElementsByTagName("f");
                                 if (vFrames && vFrames.length > 0)
                                 {
                                     oTextures[vId] = [];
@@ -467,6 +479,7 @@ TRAVISO.loadData = function(engine, loadedCallback)
                         engine.mapData.textures.objects[arr[i].attributes.getNamedItem("id").nodeValue] =
                         {
                             t : oTextures,
+                            io : interactionOffsets,
                             s : arr[i].attributes.getNamedItem("s").nodeValue,
                             m : parseInt(arr[i].attributes.getNamedItem("movable").nodeValue, 10),
                             i : parseInt(arr[i].attributes.getNamedItem("interactive").nodeValue, 10)
@@ -512,6 +525,7 @@ TRAVISO.getObjectInfo = function(engine, objectType)
             m : objInfo.m,
             i : objInfo.i,
             t : textures,
+            io : objInfo.io,
             s : objInfo.s
         };
     }
@@ -2082,6 +2096,14 @@ TRAVISO.ObjectView = function(engine, objectType, animSpeed)
 	 * @protected
 	 */
     this.textures = info.t;
+    /**
+	 * A dictionary for interaction offset points for each visual if defined in the map data file.
+	 * @property {Object} interactionOffsets
+	 * @protected
+	 */
+    this.interactionOffsets = info.io;
+    
+    this.currentInteractionOffset = this.interactionOffsets.idle;
 	
     this.container = new PIXI.MovieClip(this.textures.idle);
     this.container.anchor.x = xAnchor;
@@ -2155,6 +2177,8 @@ TRAVISO.ObjectView.prototype.changeVisual = function(vId, stopOnFirstFrame, noLo
         // TRAVISO.trace("!!! No textures defined for vId: " + vId);
         return false;
     }
+    
+    this.currentInteractionOffset = this.interactionOffsets[vId];
     
     if (this.container.textures === this.textures[vId] && !noLoop)
     {
@@ -3878,6 +3902,15 @@ TRAVISO.EngineView.prototype.moveCurrentControllableToObj = function(obj, speed)
     {
         throw new Error("TRAVISO: currentControllable is not defined!");
     }
+    // check if there is a preferred interaction point
+    if (obj.currentInteractionOffset)
+    {
+        var targetPos = { c: obj.mapPos.c + obj.currentInteractionOffset.c, r: obj.mapPos.r + obj.currentInteractionOffset.r };
+        if (this.checkAndMoveObjectToLocation(this.currentControllable, targetPos, speed))
+        {
+            return true;
+        }
+    } 
 	var cellArray = this.pathFinding.getAdjacentOpenCells(obj.mapPos.c, obj.mapPos.r, obj.size.c, obj.size.r);
 	var tile;
 	var minLength = 3000;

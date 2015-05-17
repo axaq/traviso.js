@@ -241,10 +241,11 @@ TRAVISO.loadData = function(engine, loadedCallback)
                     // set object properties
                     arr = this.responseXML.getElementsByTagName(&quot;object&quot;);
                     
-                    var oTextures;
+                    var oTextures, interactionOffsets, temp;
                     for (i = 0; i &lt; arr.length; i++)
                     {
                         oTextures = { };
+                        interactionOffsets = { };
 
                         ///////////////////////////////////////////////////////////////////////////
 
@@ -256,17 +257,28 @@ TRAVISO.loadData = function(engine, loadedCallback)
                         }
                         else
                         {
-                        	var m, k;
+                        	var m, k, v, vId, vIpor, vIpoc, vFrames;
                             for (k = 0; k &lt; objectVisuals.length; k++)
                             {
-                                var v = objectVisuals[k];
-                                var vId = v.attributes.getNamedItem(&quot;id&quot;).nodeValue;
+                                v = objectVisuals[k];
+                                temp = v.attributes.getNamedItem(&quot;id&quot;);
+                                vId = temp ? temp.nodeValue : null;
                                 if (!vId || vId === &quot;&quot; || vId.length &lt; 1)
                                 {
                                     throw new Error(&quot;TRAVISO: A v tag without an id is detected in the XML file.&quot;);
                                 }
+                                
+                                temp = v.attributes.getNamedItem(&quot;ipor&quot;);
+                                vIpor = temp ? temp.nodeValue : null;
+                                temp = v.attributes.getNamedItem(&quot;ipoc&quot;);
+                                vIpoc = temp ? temp.nodeValue : null;
+                                interactionOffsets[vId] = null;
+                                if (vIpor &amp;&amp; vIpor !== &quot;&quot; &amp;&amp; vIpor.length &gt; 0 &amp;&amp; vIpoc &amp;&amp; vIpoc !== &quot;&quot; &amp;&amp; vIpoc.length &gt; 0)
+                                {
+                                    interactionOffsets[vId] = { c: parseInt(vIpoc), r: parseInt(vIpor) };
+                                }
 
-                                var vFrames = v.getElementsByTagName(&quot;f&quot;);
+                                vFrames = v.getElementsByTagName(&quot;f&quot;);
                                 if (vFrames &amp;&amp; vFrames.length &gt; 0)
                                 {
                                     oTextures[vId] = [];
@@ -308,6 +320,7 @@ TRAVISO.loadData = function(engine, loadedCallback)
                         engine.mapData.textures.objects[arr[i].attributes.getNamedItem(&quot;id&quot;).nodeValue] =
                         {
                             t : oTextures,
+                            io : interactionOffsets,
                             s : arr[i].attributes.getNamedItem(&quot;s&quot;).nodeValue,
                             m : parseInt(arr[i].attributes.getNamedItem(&quot;movable&quot;).nodeValue, 10),
                             i : parseInt(arr[i].attributes.getNamedItem(&quot;interactive&quot;).nodeValue, 10)
@@ -353,6 +366,7 @@ TRAVISO.getObjectInfo = function(engine, objectType)
             m : objInfo.m,
             i : objInfo.i,
             t : textures,
+            io : objInfo.io,
             s : objInfo.s
         };
     }

@@ -61,6 +61,14 @@ TRAVISO.ObjectView = function(engine, objectType, animSpeed)
 	 * @protected
 	 */
     this.textures = info.t;
+    /**
+	 * A dictionary for interaction offset points for each visual if defined in the map data file.
+	 * @property {Object} interactionOffsets
+	 * @protected
+	 */
+    this.interactionOffsets = info.io;
+    
+    this.currentInteractionOffset = this.interactionOffsets.idle;
 	
     this.container = new PIXI.MovieClip(this.textures.idle);
     this.container.anchor.x = xAnchor;
@@ -134,6 +142,8 @@ TRAVISO.ObjectView.prototype.changeVisual = function(vId, stopOnFirstFrame, noLo
         // TRAVISO.trace("!!! No textures defined for vId: " + vId);
         return false;
     }
+    
+    this.currentInteractionOffset = this.interactionOffsets[vId];
     
     if (this.container.textures === this.textures[vId] && !noLoop)
     {

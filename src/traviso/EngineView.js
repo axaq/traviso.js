@@ -1480,6 +1480,15 @@ TRAVISO.EngineView.prototype.moveCurrentControllableToObj = function(obj, speed)
     {
         throw new Error("TRAVISO: currentControllable is not defined!");
     }
+    // check if there is a preferred interaction point
+    if (obj.currentInteractionOffset)
+    {
+        var targetPos = { c: obj.mapPos.c + obj.currentInteractionOffset.c, r: obj.mapPos.r + obj.currentInteractionOffset.r };
+        if (this.checkAndMoveObjectToLocation(this.currentControllable, targetPos, speed))
+        {
+            return true;
+        }
+    } 
 	var cellArray = this.pathFinding.getAdjacentOpenCells(obj.mapPos.c, obj.mapPos.r, obj.size.c, obj.size.r);
 	var tile;
 	var minLength = 3000;

@@ -142,10 +142,11 @@ TRAVISO.loadData = function(engine, loadedCallback)
                     // set object properties
                     arr = this.responseXML.getElementsByTagName("object");
                     
-                    var oTextures;
+                    var oTextures, interactionOffsets, temp;
                     for (i = 0; i < arr.length; i++)
                     {
                         oTextures = { };
+                        interactionOffsets = { };
 
                         ///////////////////////////////////////////////////////////////////////////
 
@@ -157,17 +158,28 @@ TRAVISO.loadData = function(engine, loadedCallback)
                         }
                         else
                         {
-                        	var m, k;
+                        	var m, k, v, vId, vIpor, vIpoc, vFrames;
                             for (k = 0; k < objectVisuals.length; k++)
                             {
-                                var v = objectVisuals[k];
-                                var vId = v.attributes.getNamedItem("id").nodeValue;
+                                v = objectVisuals[k];
+                                temp = v.attributes.getNamedItem("id");
+                                vId = temp ? temp.nodeValue : null;
                                 if (!vId || vId === "" || vId.length < 1)
                                 {
                                     throw new Error("TRAVISO: A v tag without an id is detected in the XML file.");
                                 }
+                                
+                                temp = v.attributes.getNamedItem("ipor");
+                                vIpor = temp ? temp.nodeValue : null;
+                                temp = v.attributes.getNamedItem("ipoc");
+                                vIpoc = temp ? temp.nodeValue : null;
+                                interactionOffsets[vId] = null;
+                                if (vIpor && vIpor !== "" && vIpor.length > 0 && vIpoc && vIpoc !== "" && vIpoc.length > 0)
+                                {
+                                    interactionOffsets[vId] = { c: parseInt(vIpoc), r: parseInt(vIpor) };
+                                }
 
-                                var vFrames = v.getElementsByTagName("f");
+                                vFrames = v.getElementsByTagName("f");
                                 if (vFrames && vFrames.length > 0)
                                 {
                                     oTextures[vId] = [];
@@ -209,6 +221,7 @@ TRAVISO.loadData = function(engine, loadedCallback)
                         engine.mapData.textures.objects[arr[i].attributes.getNamedItem("id").nodeValue] =
                         {
                             t : oTextures,
+                            io : interactionOffsets,
                             s : arr[i].attributes.getNamedItem("s").nodeValue,
                             m : parseInt(arr[i].attributes.getNamedItem("movable").nodeValue, 10),
                             i : parseInt(arr[i].attributes.getNamedItem("interactive").nodeValue, 10)
@@ -254,6 +267,7 @@ TRAVISO.getObjectInfo = function(engine, objectType)
             m : objInfo.m,
             i : objInfo.i,
             t : textures,
+            io : objInfo.io,
             s : objInfo.s
         };
     }

@@ -378,7 +378,18 @@
         },
         {
             "file": "../src/traviso/map/ObjectView.js",
-            "line": 72,
+            "line": 64,
+            "description": "A dictionary for interaction offset points for each visual if defined in the map data file.",
+            "itemtype": "property",
+            "name": "interactionOffsets",
+            "type": "Object",
+            "access": "protected",
+            "tagname": "",
+            "class": "ObjectView"
+        },
+        {
+            "file": "../src/traviso/map/ObjectView.js",
+            "line": 80,
             "description": "The height of the object in the first frame of its idle textures.",
             "itemtype": "property",
             "name": "firstTextureHeight",
@@ -389,7 +400,7 @@
         },
         {
             "file": "../src/traviso/map/ObjectView.js",
-            "line": 84,
+            "line": 92,
             "description": "Animation speed for the movieclips included in the map-object visuals.",
             "itemtype": "property",
             "name": "animSpeed",
@@ -399,7 +410,7 @@
         },
         {
             "file": "../src/traviso/map/ObjectView.js",
-            "line": 98,
+            "line": 106,
             "description": "Changes the map-objects's texture(s) according to the specified direction-id and the state of the map-object (moving or stationary).",
             "itemtype": "method",
             "name": "changeVisualToDirection",
@@ -449,7 +460,7 @@
         },
         {
             "file": "../src/traviso/map/ObjectView.js",
-            "line": 119,
+            "line": 127,
             "description": "Changes the map-objects's texture(s) according to the specified visual-id.",
             "itemtype": "method",
             "name": "changeVisual",
@@ -494,7 +505,7 @@
         },
         {
             "file": "../src/traviso/map/ObjectView.js",
-            "line": 165,
+            "line": 175,
             "description": "Clears all references.",
             "itemtype": "method",
             "name": "destroy",
@@ -3116,7 +3127,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1524,
+            "line": 1533,
             "description": "Finds the nearest tile to the point given in the map's local scope.",
             "itemtype": "method",
             "name": "getTileFromLocalPos",
@@ -3147,7 +3158,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1564,
+            "line": 1573,
             "description": "Checks if an interaction occurs using the interaction data coming from PIXI.\nIf there is any interaction starts necessary movements or performs necessary callbacks.",
             "itemtype": "method",
             "name": "checkForTileClick",
@@ -3171,7 +3182,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1610,
+            "line": 1619,
             "description": "Enables mouse/touch interactions.",
             "itemtype": "method",
             "name": "enableInteraction",
@@ -3179,7 +3190,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1623,
+            "line": 1632,
             "description": "Disables mouse/touch interactions.",
             "itemtype": "method",
             "name": "disableInteraction",
@@ -3187,7 +3198,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1637,
+            "line": 1646,
             "description": "Checks if the given point is inside the masked area if there is a mask defined.",
             "itemtype": "method",
             "name": "isInteractionInMask",
@@ -3220,7 +3231,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1702,
+            "line": 1711,
             "description": "Repositions the content according to user settings. Call this method \nwhenever you want to change the size or position of the engine.",
             "itemtype": "method",
             "name": "repositionContent",
@@ -3236,7 +3247,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1747,
+            "line": 1756,
             "description": "Clears all references and stops all animations inside the engine.\nCall this method when you want to get rid of an engine instance.",
             "itemtype": "method",
             "name": "destroy",
@@ -3342,7 +3353,7 @@
         },
         {
             "file": "../src/traviso/MapMethods.js",
-            "line": 232,
+            "line": 245,
             "description": "Returns an object with all properties of a map-object defined by object-type",
             "itemtype": "method",
             "name": "getObjectInfo",
@@ -3369,7 +3380,7 @@
         },
         {
             "file": "../src/traviso/MapMethods.js",
-            "line": 266,
+            "line": 280,
             "description": "Returns an array of textures {PIXI.Texture} belong to a map-object defined by object-type and sprite-id",
             "itemtype": "method",
             "name": "getObjectTextures",
@@ -3401,7 +3412,7 @@
         },
         {
             "file": "../src/traviso/MapMethods.js",
-            "line": 305,
+            "line": 319,
             "description": "Returns an object with all properties of a map-tile defined by tileType",
             "itemtype": "method",
             "name": "getTileInfo",
@@ -3428,7 +3439,7 @@
         },
         {
             "file": "../src/traviso/MapMethods.js",
-            "line": 339,
+            "line": 353,
             "description": "Returns the predefined stationary texture id for the given direction",
             "itemtype": "method",
             "name": "getStationaryDirVisualId",
@@ -3450,7 +3461,7 @@
         },
         {
             "file": "../src/traviso/MapMethods.js",
-            "line": 354,
+            "line": 368,
             "description": "Returns the predefined moving texture id for the given direction",
             "itemtype": "method",
             "name": "getMovingDirVisualId",
@@ -3472,7 +3483,7 @@
         },
         {
             "file": "../src/traviso/MapMethods.js",
-            "line": 369,
+            "line": 383,
             "description": "Returns the direction (id) between two locations",
             "itemtype": "method",
             "name": "getDirBetween",
