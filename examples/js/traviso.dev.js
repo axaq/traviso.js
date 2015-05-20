@@ -4,7 +4,7 @@
  * Copyright (c) 2015, Hakan Karlidag - @axaq
  * www.travisojs.com
  *
- * Compiled: 2015-05-17
+ * Compiled: 2015-05-20
  *
  * traviso.js is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license.php
@@ -4003,8 +4003,7 @@ TRAVISO.EngineView.prototype.getTileFromLocalPos = function(lp)
  */
 TRAVISO.EngineView.prototype.checkForTileClick = function(mdata) 
 {
-	var lp = TRAVISO.globalToLocal(mdata.global, this.mapContainer);
-	lp = { x:lp.x / this.currentScale, y:lp.y / this.currentScale };
+	var lp = this.mapContainer.toLocal(mdata.global);
 	var closestTile = this.getTileFromLocalPos(lp);
 	if (closestTile)
 	{

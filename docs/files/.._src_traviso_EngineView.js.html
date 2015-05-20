@@ -1680,8 +1680,7 @@ TRAVISO.EngineView.prototype.getTileFromLocalPos = function(lp)
  */
 TRAVISO.EngineView.prototype.checkForTileClick = function(mdata) 
 {
-	var lp = TRAVISO.globalToLocal(mdata.global, this.mapContainer);
-	lp = { x:lp.x / this.currentScale, y:lp.y / this.currentScale };
+	var lp = this.mapContainer.toLocal(mdata.global);
 	var closestTile = this.getTileFromLocalPos(lp);
 	if (closestTile)
 	{

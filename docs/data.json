@@ -3182,7 +3182,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1619,
+            "line": 1618,
             "description": "Enables mouse/touch interactions.",
             "itemtype": "method",
             "name": "enableInteraction",
@@ -3190,7 +3190,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1632,
+            "line": 1631,
             "description": "Disables mouse/touch interactions.",
             "itemtype": "method",
             "name": "disableInteraction",
@@ -3198,7 +3198,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1646,
+            "line": 1645,
             "description": "Checks if the given point is inside the masked area if there is a mask defined.",
             "itemtype": "method",
             "name": "isInteractionInMask",
@@ -3231,7 +3231,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1711,
+            "line": 1710,
             "description": "Repositions the content according to user settings. Call this method \nwhenever you want to change the size or position of the engine.",
             "itemtype": "method",
             "name": "repositionContent",
@@ -3247,7 +3247,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1756,
+            "line": 1755,
             "description": "Clears all references and stops all animations inside the engine.\nCall this method when you want to get rid of an engine instance.",
             "itemtype": "method",
             "name": "destroy",
