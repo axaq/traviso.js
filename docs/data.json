@@ -2,7 +2,7 @@
     "project": {
         "name": "traviso.js",
         "description": "Traviso.js - Isometric Javascript Engine",
-        "version": "0.0.2",
+        "version": "0.0.3",
         "url": "www.travisojs.com",
         "logo": "http://www.travisojs.com/img/logo_small.jpg"
     },
@@ -1056,7 +1056,7 @@
                 },
                 {
                     "name": "checkPathOnEachTile=true",
-                    "description": "engine looks for a path everytime an object moves to a new tile on the path (set to false if you don't have moving objects other then your controllable on your map), default true",
+                    "description": "looks for a path everytime an object moves to a new tile (set to false if you don't have other moving objects on your map), default true",
                     "type": "Boolean"
                 },
                 {
@@ -2693,7 +2693,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1204,
+            "line": 1203,
             "description": "Moves the specified map-object through a path.",
             "itemtype": "method",
             "name": "moveObjThrough",
@@ -2741,7 +2741,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1249,
+            "line": 1248,
             "description": "Sets up the engine at the begining of each tile change move for the specified object",
             "itemtype": "method",
             "name": "onObjMoveStepBegin",
@@ -2805,7 +2805,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1304,
+            "line": 1303,
             "description": "Sets up the engine at the end of each tile change move for the specified object",
             "itemtype": "method",
             "name": "onObjMoveStepEnd",
@@ -2858,7 +2858,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1383,
+            "line": 1382,
             "description": "Searches and returns a path between two locations if there is one.",
             "itemtype": "method",
             "name": "getPath",
@@ -2906,7 +2906,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1401,
+            "line": 1400,
             "description": "Checks for a path and moves the map-object on map if there is an available path",
             "itemtype": "method",
             "name": "checkAndMoveObjectToTile",
@@ -2980,7 +2980,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1426,
+            "line": 1425,
             "description": "Checks for a path and moves the map-object on map if there is an available path",
             "itemtype": "method",
             "name": "checkAndMoveObjectToLocation",
@@ -3042,7 +3042,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1453,
+            "line": 1452,
             "description": "Moves the current controllable map-object to a location if available.",
             "itemtype": "method",
             "name": "moveCurrentControllableToLocation",
@@ -3080,7 +3080,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1472,
+            "line": 1471,
             "description": "Moves the current controllable map-object to one of the adjacent available tiles of the map-object specified.",
             "itemtype": "method",
             "name": "moveCurrentControllableToObj",
