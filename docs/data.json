@@ -133,7 +133,7 @@
             "file": "../src/traviso/map/ObjectView.js",
             "line": 5,
             "description": "Visual class for the map-objects.",
-            "extends": "DisplayObjectContainer",
+            "extends": "PIXI.Container",
             "is_constructor": 1,
             "params": [
                 {
@@ -169,7 +169,7 @@
             "file": "../src/traviso/map/TileView.js",
             "line": 5,
             "description": "Visual class for the map-tiles.",
-            "extends": "DisplayObjectContainer",
+            "extends": "PIXI.Container",
             "is_constructor": 1,
             "params": [
                 {
@@ -212,7 +212,7 @@
             "file": "../src/traviso/EngineView.js",
             "line": 6,
             "description": "Main display object container class to hold all views\nwithin the engine and all map related logic",
-            "extends": "DisplayObjectContainer",
+            "extends": "PIXI.Container",
             "is_constructor": 1,
             "params": [
                 {
@@ -941,12 +941,12 @@
             "subprops": [
                 {
                     "name": "minScale=0.5",
-                    "description": "mimimum scale that the DisplayObjectContainer for the map can get, default 0.5",
+                    "description": "mimimum scale that the PIXI.Container for the map can get, default 0.5",
                     "type": "Number"
                 },
                 {
                     "name": "maxScale=1.5",
-                    "description": "maximum scale that the DisplayObjectContainer for the map can get, default 1.5",
+                    "description": "maximum scale that the PIXI.Container for the map can get, default 1.5",
                     "type": "Number"
                 },
                 {
@@ -1414,7 +1414,7 @@
             "description": "Display object for the map visuals",
             "itemtype": "property",
             "name": "mapContainer",
-            "type": "PIXI.DisplayObjectContainer",
+            "type": "PIXI.Container",
             "access": "private",
             "tagname": "",
             "class": "EngineView"
@@ -1425,7 +1425,7 @@
             "description": "Display object for the ground/terrain visuals",
             "itemtype": "property",
             "name": "groundContainer",
-            "type": "PIXI.DisplayObjectContainer",
+            "type": "PIXI.Container",
             "access": "private",
             "tagname": "",
             "class": "EngineView"
@@ -1436,7 +1436,7 @@
             "description": "Display object for the map-object visuals",
             "itemtype": "property",
             "name": "objContainer",
-            "type": "PIXI.DisplayObjectContainer",
+            "type": "PIXI.Container",
             "access": "private",
             "tagname": "",
             "class": "EngineView"
@@ -2099,14 +2099,14 @@
             "params": [
                 {
                     "name": "minScale",
-                    "description": "mimimum scale that the DisplayObjectContainer for the map can get, default 0.5",
+                    "description": "mimimum scale that the PIXI.Container for the map can get, default 0.5",
                     "type": "Number",
                     "optional": true,
                     "optdefault": "0.5"
                 },
                 {
                     "name": "maxScale",
-                    "description": "maximum scale that the DisplayObjectContainer for the map can get, default 1.5",
+                    "description": "maximum scale that the PIXI.Container for the map can get, default 1.5",
                     "type": "Number",
                     "optional": true,
                     "optdefault": "1.5"
@@ -3231,7 +3231,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1710,
+            "line": 1712,
             "description": "Repositions the content according to user settings. Call this method \nwhenever you want to change the size or position of the engine.",
             "itemtype": "method",
             "name": "repositionContent",
@@ -3247,7 +3247,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1755,
+            "line": 1757,
             "description": "Clears all references and stops all animations inside the engine.\nCall this method when you want to get rid of an engine instance.",
             "itemtype": "method",
             "name": "destroy",
@@ -3314,7 +3314,7 @@
         },
         {
             "file": "../src/traviso/MapMethods.js",
-            "line": 31,
+            "line": 29,
             "description": "Handles loading of map data for the given engine instance",
             "itemtype": "method",
             "name": "loadData",
@@ -3353,7 +3353,7 @@
         },
         {
             "file": "../src/traviso/MapMethods.js",
-            "line": 245,
+            "line": 243,
             "description": "Returns an object with all properties of a map-object defined by object-type",
             "itemtype": "method",
             "name": "getObjectInfo",
@@ -3380,7 +3380,7 @@
         },
         {
             "file": "../src/traviso/MapMethods.js",
-            "line": 280,
+            "line": 278,
             "description": "Returns an array of textures {PIXI.Texture} belong to a map-object defined by object-type and sprite-id",
             "itemtype": "method",
             "name": "getObjectTextures",
@@ -3412,7 +3412,7 @@
         },
         {
             "file": "../src/traviso/MapMethods.js",
-            "line": 319,
+            "line": 317,
             "description": "Returns an object with all properties of a map-tile defined by tileType",
             "itemtype": "method",
             "name": "getTileInfo",
@@ -3439,7 +3439,7 @@
         },
         {
             "file": "../src/traviso/MapMethods.js",
-            "line": 353,
+            "line": 351,
             "description": "Returns the predefined stationary texture id for the given direction",
             "itemtype": "method",
             "name": "getStationaryDirVisualId",
@@ -3461,7 +3461,7 @@
         },
         {
             "file": "../src/traviso/MapMethods.js",
-            "line": 368,
+            "line": 366,
             "description": "Returns the predefined moving texture id for the given direction",
             "itemtype": "method",
             "name": "getMovingDirVisualId",
@@ -3483,7 +3483,7 @@
         },
         {
             "file": "../src/traviso/MapMethods.js",
-            "line": 383,
+            "line": 381,
             "description": "Returns the direction (id) between two locations",
             "itemtype": "method",
             "name": "getDirBetween",
@@ -4416,14 +4416,14 @@
                         },
                         {
                             "name": "minScale",
-                            "description": "mimimum scale that the DisplayObjectContainer for the map can get, default 0.5",
+                            "description": "mimimum scale that the PIXI.Container for the map can get, default 0.5",
                             "type": "Number",
                             "optional": true,
                             "optdefault": "0.5"
                         },
                         {
                             "name": "maxScale",
-                            "description": "maximum scale that the DisplayObjectContainer for the map can get, default 1.5",
+                            "description": "maximum scale that the PIXI.Container for the map can get, default 1.5",
                             "type": "Number",
                             "optional": true,
                             "optdefault": "1.5"

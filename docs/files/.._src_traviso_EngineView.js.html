@@ -107,21 +107,21 @@
  * within the engine and all map related logic
  *
  * @class EngineView
- * @extends DisplayObjectContainer
+ * @extends PIXI.Container
  * @constructor
  * @param config {Object} configuration object for the isometric engine instance
  * @param config.mapDataPath {String} the path to the xml file that defines map data, required
  */
 TRAVISO.EngineView = function(config)
 {
-    PIXI.DisplayObjectContainer.call(this);
+    PIXI.Container.call(this);
     
     /**
      * Configuration object for the isometric engine instance
      * 
      * @property {Object} config
-     * @property {Number} config.minScale=0.5 mimimum scale that the DisplayObjectContainer for the map can get, default 0.5
-     * @property {Number} config.maxScale=1.5 maximum scale that the DisplayObjectContainer for the map can get, default 1.5
+     * @property {Number} config.minScale=0.5 mimimum scale that the PIXI.Container for the map can get, default 0.5
+     * @property {Number} config.maxScale=1.5 maximum scale that the PIXI.Container for the map can get, default 1.5
      * @property {Number} config.minZoom=-1 minimum zoom level, engine defined
      * @property {Number} config.maxZoom=1 maximum zoom level, engine defined
      * @property {Number} config.zoomIncrement=0.5 zoom increment amount calculated by the engine according to user settings, default 0.5
@@ -308,7 +308,7 @@ TRAVISO.EngineView = function(config)
 
 // constructor
 TRAVISO.EngineView.constructor = TRAVISO.EngineView;
-TRAVISO.EngineView.prototype = Object.create(PIXI.DisplayObjectContainer.prototype);
+TRAVISO.EngineView.prototype = Object.create(PIXI.Container.prototype);
 
 TRAVISO.EngineView.prototype.config = this.config;
 
@@ -399,31 +399,31 @@ TRAVISO.EngineView.prototype.createMap = function()
     
     /**
      * Display object for the map visuals
-     * @property {PIXI.DisplayObjectContainer} mapContainer
+     * @property {PIXI.Container} mapContainer
      * @private
      */
     /**
      * Display object for the ground/terrain visuals
-     * @property {PIXI.DisplayObjectContainer} groundContainer
+     * @property {PIXI.Container} groundContainer
      * @private
      */
     /**
      * Display object for the map-object visuals
-     * @property {PIXI.DisplayObjectContainer} objContainer
+     * @property {PIXI.Container} objContainer
      * @private
      */
     // create containers for visual map elements
-    this.mapContainer = new PIXI.DisplayObjectContainer();
+    this.mapContainer = new PIXI.Container();
 	this.addChild(this.mapContainer);
     
     // Define two layers of maps
 	// One for the world and one for the objects (static/dynamic) over it
 	// This enables us not to update the whole world in every move but instead just update the object depths over it 
 	
-	this.groundContainer = new PIXI.DisplayObjectContainer();
+	this.groundContainer = new PIXI.Container();
 	this.mapContainer.addChild(this.groundContainer);
 	
-	this.objContainer = new PIXI.DisplayObjectContainer();
+	this.objContainer = new PIXI.Container();
 	this.mapContainer.addChild(this.objContainer);
 	
 	var groundMapData = this.mapData.groundMapData;
@@ -886,8 +886,8 @@ TRAVISO.EngineView.prototype.centralizeToPoint = function(px, py, instantRelocat
  * Sets all the parameters related to zooming in and out.
  *
  * @method setZoomParameters
- * @param [minScale=0.5] {Number} mimimum scale that the DisplayObjectContainer for the map can get, default 0.5
- * @param [maxScale=1.5] {Number} maximum scale that the DisplayObjectContainer for the map can get, default 1.5
+ * @param [minScale=0.5] {Number} mimimum scale that the PIXI.Container for the map can get, default 0.5
+ * @param [maxScale=1.5] {Number} maximum scale that the PIXI.Container for the map can get, default 1.5
  * @param [numberOfZoomLevels=5] {Number} used to calculate zoom increment, defined by user, default 5
  * @param [initialZoomLevel=0] {Number} initial zoom level of the map, default 0
  * @param [instantCameraZoom=false] {Boolean} specifies wheather to zoom instantly or with a tween animation, default false
@@ -1767,39 +1767,41 @@ TRAVISO.EngineView.prototype.isInteractionInMask = function(p)
 };
 
 // ******************** START: MOUSE INTERACTIONS **************************** //
-TRAVISO.EngineView.prototype.onMouseDown = function(mdata) 
+TRAVISO.EngineView.prototype.onMouseDown = function(event) 
 {
-	if (!this.dragging &amp;&amp; this.isInteractionInMask(mdata.global))
+    var globalPos = event.data.global;
+	if (!this.dragging &amp;&amp; this.isInteractionInMask(globalPos))
 	{
 	    this.dragging = true;
 		//this.mouseDownTime = new Date();
-		this.dragInitStartingX = this.dragPrevStartingX = mdata.global.x;
-		this.dragInitStartingY = this.dragPrevStartingY = mdata.global.y;
+		this.dragInitStartingX = this.dragPrevStartingX = globalPos.x;
+		this.dragInitStartingY = this.dragPrevStartingY = globalPos.y;
 	}
 };
-TRAVISO.EngineView.prototype.onMouseMove = function(mdata) 
+TRAVISO.EngineView.prototype.onMouseMove = function(event) 
 {
 	if (this.dragging &amp;&amp; this.config.mapDraggable)
 	{
-		this.mapContainer.position.x += mdata.global.x - this.dragPrevStartingX;
-		this.mapContainer.position.y += mdata.global.y - this.dragPrevStartingY;
-		this.dragPrevStartingX = mdata.global.x;
-		this.dragPrevStartingY = mdata.global.y;
+        var globalPos = event.data.global;
+		this.mapContainer.position.x += globalPos.x - this.dragPrevStartingX;
+		this.mapContainer.position.y += globalPos.y - this.dragPrevStartingY;
+		this.dragPrevStartingX = globalPos.x;
+		this.dragPrevStartingY = globalPos.y;
 	}
 };
-TRAVISO.EngineView.prototype.onMouseUp = function(mdata) 
+TRAVISO.EngineView.prototype.onMouseUp = function(event) 
 {
 	if (this.dragging)
 	{
 		this.dragging = false;
 		//var passedTime = (new Date()) - this.mouseDownTime;
-		var distX = mdata.global.x - this.dragInitStartingX;
-		var distY = mdata.global.y - this.dragInitStartingY;
+		var distX = event.data.global.x - this.dragInitStartingX;
+		var distY = event.data.global.y - this.dragInitStartingY;
 		
 		if (Math.abs(distX) &lt; 5 &amp;&amp; Math.abs(distY) &lt; 5)
 		{
 			// NOT DRAGGING IT IS A CLICK
-			this.checkForTileClick(mdata);
+			this.checkForTileClick(event.data);
 		}
 	}
 };
