@@ -1055,6 +1055,11 @@
                     "type": "Boolean"
                 },
                 {
+                    "name": "checkPathOnEachTile=true",
+                    "description": "engine looks for a path everytime an object moves to a new tile on the path (set to false if you don't have moving objects other then your controllable on your map), default true",
+                    "type": "Boolean"
+                },
+                {
                     "name": "mapDraggable=true",
                     "description": "enable dragging the map with touch-and-touchmove or mousedown-and-mousemove on the map, default true",
                     "type": "Boolean"
@@ -1113,7 +1118,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 83,
+            "line": 85,
             "description": "height of a single isometric tile",
             "itemtype": "property",
             "name": "TILE_H",
@@ -1125,7 +1130,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 89,
+            "line": 91,
             "description": "width of a single isometric tile",
             "itemtype": "property",
             "name": "TILE_W",
@@ -1137,7 +1142,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 95,
+            "line": 97,
             "description": "the angle between the topleft edge and the horizontal diagonal of a isometric quad",
             "itemtype": "property",
             "name": "ISO_ANGLE",
@@ -1149,7 +1154,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 101,
+            "line": 103,
             "description": "half-height of a single isometric tile",
             "itemtype": "property",
             "name": "TILE_HALF_H",
@@ -1161,7 +1166,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 107,
+            "line": 109,
             "description": "half-width of a single isometric tile",
             "itemtype": "property",
             "name": "TILE_HALF_W",
@@ -1173,7 +1178,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 113,
+            "line": 115,
             "description": "length of a single isometric tile's edge",
             "itemtype": "property",
             "name": "TILE_ISO_EDGE_L",
@@ -1185,7 +1190,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 127,
+            "line": 129,
             "description": "specifies wheather to zoom instantly or with a tween animation",
             "itemtype": "property",
             "name": "instantCameraZoom",
@@ -1195,7 +1200,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 132,
+            "line": 134,
             "description": "defines if the camera will follow the current controllable or not",
             "itemtype": "property",
             "name": "followCharacter",
@@ -1205,7 +1210,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 137,
+            "line": 139,
             "description": "specifies wheather the camera moves instantly or with a tween animation to the target location",
             "itemtype": "property",
             "name": "instantCameraRelocation",
@@ -1215,7 +1220,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 142,
+            "line": 144,
             "description": "specifies wheather the map-objects will be moved to target location instantly or with an animation",
             "itemtype": "property",
             "name": "instantObjectRelocation",
@@ -1225,7 +1230,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 147,
+            "line": 149,
             "description": "highlight the path when the current controllable moves on the map",
             "itemtype": "property",
             "name": "highlightPath",
@@ -1235,7 +1240,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 152,
+            "line": 154,
             "description": "highlight the target tile when the current controllable moves on the map",
             "itemtype": "property",
             "name": "highlightTargetTile",
@@ -1245,7 +1250,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 157,
+            "line": 159,
             "description": "animate the tile highlights",
             "itemtype": "property",
             "name": "tileHighlightAnimated",
@@ -1255,7 +1260,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 162,
+            "line": 164,
             "description": "when a tile selected don't move the controllable immediately but still call 'tileSelectCallback'",
             "itemtype": "property",
             "name": "dontAutoMoveToTile",
@@ -1265,7 +1270,17 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 167,
+            "line": 169,
+            "description": "engine looks for a path everytime an object moves to a new tile on the path\n(set to false if you don't have moving objects other then your controllable on your map)",
+            "itemtype": "property",
+            "name": "checkPathOnEachTile",
+            "type": "Boolean",
+            "default": "true",
+            "class": "EngineView"
+        },
+        {
+            "file": "../src/traviso/EngineView.js",
+            "line": 175,
             "description": "enable dragging the map with touch-and-touchmove or mousedown-and-mousemove on the map",
             "itemtype": "property",
             "name": "mapDraggable",
@@ -1275,7 +1290,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 172,
+            "line": 180,
             "description": "the scope to apply when calling callback functions",
             "itemtype": "property",
             "name": "callbackScope",
@@ -1285,7 +1300,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 177,
+            "line": 185,
             "description": "callback function that will be called once everything is loaded and engine instance is ready",
             "itemtype": "property",
             "name": "engineInstanceReadyCallback",
@@ -1295,7 +1310,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 182,
+            "line": 190,
             "description": "callback function that will be called when a tile is selected",
             "itemtype": "property",
             "name": "tileSelectCallback",
@@ -1305,7 +1320,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 187,
+            "line": 195,
             "description": "callback function that will be called when a tile with an interactive map-object on it is selected",
             "itemtype": "property",
             "name": "objectSelectCallback",
@@ -1315,7 +1330,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 192,
+            "line": 200,
             "description": "callback function that will be called when any moving object reaches its destination",
             "itemtype": "property",
             "name": "objectReachedDestinationCallback",
@@ -1325,7 +1340,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 197,
+            "line": 205,
             "description": "callback function that will be called when any moving object is in move and there are other objects on the next tile",
             "itemtype": "property",
             "name": "otherObjectsOnTheNextTileCallback",
@@ -1335,7 +1350,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 218,
+            "line": 226,
             "description": "This method is being called whenever all the assets are\nloaded and engine is ready to initialize",
             "itemtype": "method",
             "name": "onAllAssetsLoaded",
@@ -1345,7 +1360,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 229,
+            "line": 237,
             "description": "MoveEngine instance to handle all animations and tweens",
             "itemtype": "property",
             "name": "moveEngine",
@@ -1356,7 +1371,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 237,
+            "line": 245,
             "description": "Current scale of the map's display object",
             "itemtype": "property",
             "name": "currentScale",
@@ -1367,7 +1382,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 242,
+            "line": 250,
             "description": "Current zoom amount of the map",
             "itemtype": "property",
             "name": "currentZoom",
@@ -1378,7 +1393,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 269,
+            "line": 277,
             "description": "Creates the map and setups necessary parameters for future map calculations",
             "itemtype": "method",
             "name": "createMap",
@@ -1388,7 +1403,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 280,
+            "line": 288,
             "description": "Solid colored background",
             "itemtype": "property",
             "name": "bg",
@@ -1399,7 +1414,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 292,
+            "line": 300,
             "description": "Mask graphics for the mask",
             "itemtype": "property",
             "name": "mapMask",
@@ -1410,7 +1425,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 301,
+            "line": 309,
             "description": "Display object for the map visuals",
             "itemtype": "property",
             "name": "mapContainer",
@@ -1421,7 +1436,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 306,
+            "line": 314,
             "description": "Display object for the ground/terrain visuals",
             "itemtype": "property",
             "name": "groundContainer",
@@ -1432,7 +1447,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 311,
+            "line": 319,
             "description": "Display object for the map-object visuals",
             "itemtype": "property",
             "name": "objContainer",
@@ -1443,7 +1458,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 337,
+            "line": 345,
             "description": "Number of rows in the isometric map",
             "itemtype": "property",
             "name": "mapSizeR",
@@ -1452,7 +1467,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 342,
+            "line": 350,
             "description": "Number of columns in the isometric map",
             "itemtype": "property",
             "name": "mapSizeC",
@@ -1461,7 +1476,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 359,
+            "line": 367,
             "description": "Array to hold map-tiles",
             "itemtype": "property",
             "name": "tileArray",
@@ -1472,7 +1487,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 365,
+            "line": 373,
             "description": "Array to hold map-objects",
             "itemtype": "property",
             "name": "objArray",
@@ -1483,7 +1498,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 388,
+            "line": 396,
             "description": "PathFinding instance to handle all path finding logic",
             "itemtype": "property",
             "name": "pathFinding",
@@ -1494,7 +1509,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 425,
+            "line": 433,
             "description": "Current controllable map-object that will be the default object to move in user interactions",
             "itemtype": "property",
             "name": "currentControllable",
@@ -1505,7 +1520,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 459,
+            "line": 467,
             "description": "Vertice points of the map",
             "itemtype": "property",
             "name": "mapVertices",
@@ -1516,7 +1531,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 471,
+            "line": 479,
             "description": "Total width of all ground tiles",
             "itemtype": "property",
             "name": "mapVisualWidthReal",
@@ -1527,7 +1542,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 476,
+            "line": 484,
             "description": "Total height of all ground tiles",
             "itemtype": "property",
             "name": "mapVisualHeightReal",
@@ -1538,7 +1553,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 502,
+            "line": 510,
             "description": "Calculates 2d x position of a tile",
             "itemtype": "method",
             "name": "getTilePosXFor",
@@ -1562,7 +1577,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 514,
+            "line": 522,
             "description": "Calculates 2d y position of a tile",
             "itemtype": "method",
             "name": "getTilePosYFor",
@@ -1586,7 +1601,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 527,
+            "line": 535,
             "description": "Shows or hides the display object that includes the objects-layer",
             "itemtype": "method",
             "name": "showHideObjectLayer",
@@ -1601,7 +1616,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 537,
+            "line": 545,
             "description": "Shows or hides the display object that includes the ground/terrain layer",
             "itemtype": "method",
             "name": "showHideGroundLayer",
@@ -1616,7 +1631,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 548,
+            "line": 556,
             "description": "Returns the TileView instance that sits in the location given",
             "itemtype": "method",
             "name": "getTileAtRowAndColumn",
@@ -1640,7 +1655,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 560,
+            "line": 568,
             "description": "Returns all the ObjectView instances referenced to the given location with the specified row and column indexes.",
             "itemtype": "method",
             "name": "getObjectsAtRowAndColumn",
@@ -1664,7 +1679,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 572,
+            "line": 580,
             "description": "Returns all the ObjectView instances referenced to the given location.",
             "itemtype": "method",
             "name": "getObjectsAtLocation",
@@ -1695,7 +1710,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 586,
+            "line": 594,
             "description": "Creates and adds a predefined (in XML file) map-object to the map using the specified object type-id.",
             "itemtype": "method",
             "name": "createAndAddObjectToLocation",
@@ -1731,7 +1746,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 601,
+            "line": 609,
             "description": "Adds an already-created object to the map.",
             "itemtype": "method",
             "name": "addObjectToLocation",
@@ -1791,7 +1806,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 629,
+            "line": 637,
             "description": "Enables adding external custom display objects to the specified location.\nThis method should be used for the objects that are not already defined in XML file and don't have a type-id.\nThe resulting object will be independent of engine mechanics apart from depth controls.",
             "itemtype": "method",
             "name": "addCustomObjectToLocation",
@@ -1858,7 +1873,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 655,
+            "line": 663,
             "description": "Removes the object and its references from the map.",
             "itemtype": "method",
             "name": "removeObjectFromLocation",
@@ -1894,7 +1909,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 671,
+            "line": 679,
             "description": "Centralizes and zooms the EngineView instance to the object specified.",
             "itemtype": "method",
             "name": "focusMapToObject",
@@ -1945,7 +1960,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 688,
+            "line": 696,
             "description": "Centralizes and zooms the EngineView instance to the map location specified by row and column index.",
             "itemtype": "method",
             "name": "focusMapToLocation",
@@ -1970,7 +1985,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 703,
+            "line": 711,
             "description": "Centralizes the EngineView instance to the object specified.",
             "itemtype": "method",
             "name": "centralizeToObject",
@@ -2004,7 +2019,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 717,
+            "line": 725,
             "description": "Centralizes the EngineView instance to the map location specified by row and column index.",
             "itemtype": "method",
             "name": "centralizeToLocation",
@@ -2031,7 +2046,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 733,
+            "line": 741,
             "description": "Centralizes the EngineView instance to the current location of the attention/focus.",
             "itemtype": "method",
             "name": "centralizeToCurrentFocusLocation",
@@ -2048,7 +2063,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 745,
+            "line": 753,
             "description": "External center is the central point of the frame defined by the user to be used as the visual size of the engine.\nThis method centralizes the EngineView instance with respect to this external center-point.",
             "itemtype": "method",
             "name": "centralizeToCurrentExternalCenter",
@@ -2065,7 +2080,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 761,
+            "line": 769,
             "description": "Centralizes the EngineView instance to the points specified.",
             "itemtype": "method",
             "name": "centralizeToPoint",
@@ -2092,7 +2107,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 786,
+            "line": 794,
             "description": "Sets all the parameters related to zooming in and out.",
             "itemtype": "method",
             "name": "setZoomParameters",
@@ -2137,7 +2152,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 808,
+            "line": 816,
             "description": "Sets map's scale.",
             "itemtype": "method",
             "name": "setScale",
@@ -2161,7 +2176,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 834,
+            "line": 842,
             "description": "Zooms camera by to the amount given.",
             "itemtype": "method",
             "name": "zoomTo",
@@ -2183,7 +2198,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 862,
+            "line": 870,
             "description": "Zooms the camera one level out.",
             "itemtype": "method",
             "name": "zoomOut",
@@ -2200,7 +2215,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 873,
+            "line": 881,
             "description": "Zooms the camera one level in.",
             "itemtype": "method",
             "name": "zoomIn",
@@ -2217,7 +2232,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 884,
+            "line": 892,
             "description": "Returns the current controllable map-object.",
             "itemtype": "method",
             "name": "getCurrentControllable",
@@ -2229,7 +2244,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 895,
+            "line": 903,
             "description": "Sets a map-object as the current controllable. This object will be moving in further relevant user interactions.",
             "itemtype": "method",
             "name": "setCurrentControllable",
@@ -2263,7 +2278,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 909,
+            "line": 917,
             "description": "Adds a reference of the given map-object to the given location in the object array.\nThis should be called when an object moved or transfered to the corresponding location.\nUses objects size property to add its reference to all relevant cells.",
             "access": "private",
             "tagname": "",
@@ -2316,7 +2331,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 934,
+            "line": 942,
             "description": "Adds a reference of the given map-object to the given location in the object array.\nUpdates the cell as movable or not according to the object being movable onto or not.",
             "access": "private",
             "tagname": "",
@@ -2357,7 +2372,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 957,
+            "line": 965,
             "description": "Removes references of the given map-object from the given location in the object array.\nThis should be called when an object moved or transfered from the corresponding location.\nUses objects size property to remove its references from all relevant cells.",
             "access": "private",
             "tagname": "",
@@ -2410,7 +2425,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 982,
+            "line": 990,
             "description": "Removes a reference of the given map-object from the given location in the object array.\nUpdates the cell as movable or not according to the other object refences in the same cell.",
             "access": "private",
             "tagname": "",
@@ -2444,7 +2459,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1023,
+            "line": 1031,
             "description": "Removes all map-object references from the given location in the object array.",
             "access": "private",
             "tagname": "",
@@ -2473,7 +2488,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1041,
+            "line": 1049,
             "description": "Sets alphas of the map-objects referenced to the given location.",
             "itemtype": "method",
             "name": "changeObjAlphasInLocation",
@@ -2505,7 +2520,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1063,
+            "line": 1071,
             "description": "Sets a map-abjects' location and logically moves it to the new location.",
             "access": "private",
             "tagname": "",
@@ -2558,7 +2573,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1084,
+            "line": 1092,
             "description": "Sets occlusion transperancies according to given map-object's location.\nThis method only works for user-controllable object.",
             "access": "private",
             "tagname": "",
@@ -2609,7 +2624,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1115,
+            "line": 1123,
             "description": "Arranges depths (z-index) of the map-objects starting from the given location.",
             "access": "private",
             "tagname": "",
@@ -2638,7 +2653,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1143,
+            "line": 1151,
             "description": "Clears the highlight for the old path and highlights the new path on map.",
             "itemtype": "method",
             "name": "arrangePathHighlight",
@@ -2661,7 +2676,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1180,
+            "line": 1188,
             "description": "Stops a moving object.",
             "itemtype": "method",
             "name": "stopObject",
@@ -2678,7 +2693,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1196,
+            "line": 1204,
             "description": "Moves the specified map-object through a path.",
             "itemtype": "method",
             "name": "moveObjThrough",
@@ -2726,7 +2741,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1242,
+            "line": 1249,
             "description": "Sets up the engine at the begining of each tile change move for the specified object",
             "itemtype": "method",
             "name": "onObjMoveStepBegin",
@@ -2790,7 +2805,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1298,
+            "line": 1304,
             "description": "Sets up the engine at the end of each tile change move for the specified object",
             "itemtype": "method",
             "name": "onObjMoveStepEnd",
@@ -2843,7 +2858,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1374,
+            "line": 1383,
             "description": "Searches and returns a path between two locations if there is one.",
             "itemtype": "method",
             "name": "getPath",
@@ -2891,7 +2906,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1392,
+            "line": 1401,
             "description": "Checks for a path and moves the map-object on map if there is an available path",
             "itemtype": "method",
             "name": "checkAndMoveObjectToTile",
@@ -2965,7 +2980,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1417,
+            "line": 1426,
             "description": "Checks for a path and moves the map-object on map if there is an available path",
             "itemtype": "method",
             "name": "checkAndMoveObjectToLocation",
@@ -3027,7 +3042,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1444,
+            "line": 1453,
             "description": "Moves the current controllable map-object to a location if available.",
             "itemtype": "method",
             "name": "moveCurrentControllableToLocation",
@@ -3065,7 +3080,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1463,
+            "line": 1472,
             "description": "Moves the current controllable map-object to one of the adjacent available tiles of the map-object specified.",
             "itemtype": "method",
             "name": "moveCurrentControllableToObj",
@@ -3127,7 +3142,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1533,
+            "line": 1542,
             "description": "Finds the nearest tile to the point given in the map's local scope.",
             "itemtype": "method",
             "name": "getTileFromLocalPos",
@@ -3158,7 +3173,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1573,
+            "line": 1582,
             "description": "Checks if an interaction occurs using the interaction data coming from PIXI.\nIf there is any interaction starts necessary movements or performs necessary callbacks.",
             "itemtype": "method",
             "name": "checkForTileClick",
@@ -3182,7 +3197,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1618,
+            "line": 1627,
             "description": "Enables mouse/touch interactions.",
             "itemtype": "method",
             "name": "enableInteraction",
@@ -3190,7 +3205,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1631,
+            "line": 1640,
             "description": "Disables mouse/touch interactions.",
             "itemtype": "method",
             "name": "disableInteraction",
@@ -3198,7 +3213,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1645,
+            "line": 1654,
             "description": "Checks if the given point is inside the masked area if there is a mask defined.",
             "itemtype": "method",
             "name": "isInteractionInMask",
@@ -3231,7 +3246,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1712,
+            "line": 1721,
             "description": "Repositions the content according to user settings. Call this method \nwhenever you want to change the size or position of the engine.",
             "itemtype": "method",
             "name": "repositionContent",
@@ -3247,7 +3262,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1757,
+            "line": 1766,
             "description": "Clears all references and stops all animations inside the engine.\nCall this method when you want to get rid of an engine instance.",
             "itemtype": "method",
             "name": "destroy",
@@ -4548,6 +4563,13 @@
                             "optdefault": "false"
                         },
                         {
+                            "name": "checkPathOnEachTile",
+                            "description": "engine looks for a path everytime an object moves to a new tile on the path (set to false if you don't have moving objects other then your controllable on your map), default true",
+                            "type": "Boolean",
+                            "optional": true,
+                            "optdefault": "true"
+                        },
+                        {
                             "name": "mapDraggable",
                             "description": "enable dragging the map with touch-and-touchmove or mousedown-and-mousemove on the map, default true",
                             "type": "Boolean",
@@ -4628,7 +4650,7 @@
         },
         {
             "file": "../src/traviso/Traviso.js",
-            "line": 129,
+            "line": 130,
             "description": "Initialises traviso global settings if it hasn't been already.",
             "itemtype": "method",
             "name": "init",
@@ -4646,7 +4668,7 @@
         },
         {
             "file": "../src/traviso/Traviso.js",
-            "line": 173,
+            "line": 175,
             "description": "The direction IDs to be used in the engine",
             "itemtype": "property",
             "name": "directions",
@@ -4706,7 +4728,7 @@
         },
         {
             "file": "../src/traviso/Traviso.js",
-            "line": 203,
+            "line": 205,
             "itemtype": "property",
             "name": "RESERVED_TEXTURE_IDS",
             "type": "Array",
@@ -4718,7 +4740,7 @@
         },
         {
             "file": "../src/traviso/Traviso.js",
-            "line": 210,
+            "line": 212,
             "itemtype": "property",
             "name": "isReady",
             "type": "Boolean",
@@ -4730,7 +4752,7 @@
         },
         {
             "file": "../src/traviso/Traviso.js",
-            "line": 220,
+            "line": 222,
             "description": "Helper method to define property for the EngineView",
             "itemtype": "method",
             "name": "defineProperty",

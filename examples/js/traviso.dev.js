@@ -123,6 +123,7 @@ TRAVISO.trace = function(s)
  * @param {Boolean} [instanceConfig.highlightTargetTile=true] highlight the target tile when the current controllable moves on the map, default true
  * @param {Boolean} [instanceConfig.tileHighlightAnimated=true] animate the tile highlights, default true
  * @param {Boolean} [instanceConfig.dontAutoMoveToTile=false] when a tile selected don't move the controllable immediately but still call 'tileSelectCallback', default false
+ * @param {Boolean} [instanceConfig.checkPathOnEachTile=true] engine looks for a path everytime an object moves to a new tile on the path (set to false if you don't have moving objects other then your controllable on your map), default true
  * 
  * @param {Boolean} [instanceConfig.mapDraggable=true] enable dragging the map with touch-and-touchmove or mousedown-and-mousemove on the map, default true
  * 
@@ -175,6 +176,7 @@ TRAVISO.init = function(globalConfig)
 						"highlightTargetTile", 
 						"tileHighlightAnimated", 
 						"dontAutoMoveToTile", 
+						"checkPathOnEachTile", 
 						"mapDraggable", 
 						"callbackScope", 
 						"engineInstanceReadyCallback", 
@@ -2469,6 +2471,7 @@ TRAVISO.EngineView = function(config)
      * @property {Boolean} config.highlightTargetTile=true highlight the target tile when the current controllable moves on the map, default true
      * @property {Boolean} config.tileHighlightAnimated=true animate the tile highlights, default true
      * @property {Boolean} config.dontAutoMoveToTile=false when a tile selected don't move the controllable immediately but still call 'tileSelectCallback', default false
+     * @property {Boolean} config.checkPathOnEachTile=true looks for a path everytime an object moves to a new tile (set to false if you don't have other moving objects on your map), default true
      * 
      * @property {Boolean} config.mapDraggable=true enable dragging the map with touch-and-touchmove or mousedown-and-mousemove on the map, default true
      * 
@@ -2496,6 +2499,7 @@ TRAVISO.EngineView = function(config)
     this.config.highlightTargetTile = TRAVISO.existy(this.config.highlightTargetTile) ? this.config.highlightTargetTile : true;
     this.config.tileHighlightAnimated = TRAVISO.existy(this.config.tileHighlightAnimated) ? this.config.tileHighlightAnimated : true;
     this.config.dontAutoMoveToTile = TRAVISO.existy(this.config.dontAutoMoveToTile) ? this.config.dontAutoMoveToTile : false;
+    this.config.checkPathOnEachTile = TRAVISO.existy(this.config.checkPathOnEachTile) ? this.config.checkPathOnEachTile : true;
     this.config.mapDraggable = TRAVISO.existy(this.config.mapDraggable) ? this.config.mapDraggable : true;
     
     this.setZoomParameters(this.config.minScale, this.config.maxScale, this.config.numberOfZoomLevels, this.config.initialZoomLevel, this.config.instantCameraZoom);
@@ -2583,6 +2587,12 @@ TRAVISO.EngineView = function(config)
      * when a tile selected don't move the controllable immediately but still call 'tileSelectCallback'
      * @property {Boolean} dontAutoMoveToTile 
      * @default false
+     */
+    /** 
+     * engine looks for a path everytime an object moves to a new tile on the path
+     * (set to false if you don't have moving objects other then your controllable on your map)
+     * @property {Boolean} checkPathOnEachTile 
+     * @default true
      */
     /** 
      * enable dragging the map with touch-and-touchmove or mousedown-and-mousemove on the map
@@ -3606,7 +3616,6 @@ TRAVISO.EngineView.prototype.arrangePathHighlight = function(currentPath, newPat
  */
 TRAVISO.EngineView.prototype.stopObject = function(obj) 
 {
-    this.arrangePathHighlight(obj.currentPath);
     obj.currentPath = null;
     obj.currentTarget = null;
     obj.currentTargetTile = null;
@@ -3627,7 +3636,7 @@ TRAVISO.EngineView.prototype.stopObject = function(obj)
  */
 TRAVISO.EngineView.prototype.moveObjThrough = function(obj, path, speed) 
 {
-	if (this.config.instantObjectRelocation)
+    if (this.config.instantObjectRelocation)
 	{
 		var tile = this.tileArray[path[0].mapPos.r][path[0].mapPos.c];
 		obj.position.x = tile.position.x;
@@ -3638,24 +3647,23 @@ TRAVISO.EngineView.prototype.moveObjThrough = function(obj, path, speed)
 	}
 	else
 	{
-	    if (this.config.highlightPath && this.currentControllable === obj)
+        if (this.config.highlightPath && this.currentControllable === obj)
         {
             this.arrangePathHighlight(obj.currentPath, path);
 		}
-		
-		if (obj.currentTarget)
+        
+        if (obj.currentTarget)
 		{
 			// TRAVISO.trace("Object has a target, update the path with the new one");
-			this.moveEngine.addNewPathToObject(obj, path, speed);
+            // this.moveEngine.addNewPathToObject(obj, path, speed);
+            this.stopObject(obj);
 		}
-		else
-		{
-			this.moveEngine.prepareForMove(obj, path, speed);
-			
-			obj.currentTargetTile = obj.currentPath[obj.currentPathStep];
-			
-			this.onObjMoveStepBegin(obj, obj.currentPath[obj.currentPathStep].mapPos);
-		}
+
+		this.moveEngine.prepareForMove(obj, path, speed);
+		
+		obj.currentTargetTile = obj.currentPath[obj.currentPathStep];
+		
+		this.onObjMoveStepBegin(obj, obj.currentPath[obj.currentPathStep].mapPos);
 	}
 };
 
@@ -3708,7 +3716,6 @@ TRAVISO.EngineView.prototype.onObjMoveStepBegin = function(obj, pos)
     {
     	// pos is NOT movable
         this.moveEngine.removeMovable(obj);
-    	// this.checkAndMoveObjectToTile(obj, obj.currentPath[0]);
     	this.checkAndMoveObjectToLocation(obj, obj.currentPath[0].mapPos);
     	
         return false;
@@ -3740,9 +3747,12 @@ TRAVISO.EngineView.prototype.onObjMoveStepEnd = function(obj)
     
     if (!pathEnded)
     {
-        // this.moveStep(o, o.currentPath[o.currentPathStep].mapPos);
-        // this.checkAndMoveObjectToTile(obj, obj.currentPath[0]);
-        this.checkAndMoveObjectToLocation(obj, obj.currentPath[0].mapPos);
+        if (this.config.checkPathOnEachTile) { this.checkAndMoveObjectToLocation(obj, obj.currentPath[0].mapPos); }
+        else
+        {
+            obj.currentPath.splice(obj.currentPath.length-1, 1);
+            this.moveObjThrough(obj, obj.currentPath);
+        }
     }
     else
     {
@@ -3921,6 +3931,7 @@ TRAVISO.EngineView.prototype.moveCurrentControllableToObj = function(obj, speed)
 			if(tile.mapPos.c === this.currentControllable.mapPos.c && tile.mapPos.r === this.currentControllable.mapPos.r)
 			{
 				// already next to the object, do nothing
+                this.arrangePathHighlight(this.currentControllable.currentPath);
                 this.stopObject(this.currentControllable);
                 tempFlagHolder = this.config.instantObjectRelocation;
                 this.config.instantObjectRelocation = true;

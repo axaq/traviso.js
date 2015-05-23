@@ -104,6 +104,7 @@ TRAVISO.trace = function(s)
  * @param {Boolean} [instanceConfig.highlightTargetTile=true] highlight the target tile when the current controllable moves on the map, default true
  * @param {Boolean} [instanceConfig.tileHighlightAnimated=true] animate the tile highlights, default true
  * @param {Boolean} [instanceConfig.dontAutoMoveToTile=false] when a tile selected don't move the controllable immediately but still call 'tileSelectCallback', default false
+ * @param {Boolean} [instanceConfig.checkPathOnEachTile=true] engine looks for a path everytime an object moves to a new tile on the path (set to false if you don't have moving objects other then your controllable on your map), default true
  * 
  * @param {Boolean} [instanceConfig.mapDraggable=true] enable dragging the map with touch-and-touchmove or mousedown-and-mousemove on the map, default true
  * 
@@ -156,6 +157,7 @@ TRAVISO.init = function(globalConfig)
 						"highlightTargetTile", 
 						"tileHighlightAnimated", 
 						"dontAutoMoveToTile", 
+						"checkPathOnEachTile", 
 						"mapDraggable", 
 						"callbackScope", 
 						"engineInstanceReadyCallback", 

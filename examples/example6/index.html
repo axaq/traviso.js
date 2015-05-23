@@ -47,6 +47,8 @@
         assetsToLoad : ["../assets/assets_map.json", "../assets/assets_characters.json", "../assets/groundImage.jpg"], // array of paths to the assets that are desired to be loaded by traviso, no need to use if assets are already loaded to PIXI cache, default null
         
         initialZoomLevel : -1,
+		
+		checkPathOnEachTile : false,
         
         callbackScope : this, // the scope to apply when calling callback functions, default null
 		engineInstanceReadyCallback : this.onEngineInstanceReady, // callback function that will be called once everything is loaded and engine instance is ready, needs "callbackScope" property, default null
@@ -56,7 +58,7 @@
 		otherObjectsOnTheNextTileCallback : onOtherObjectsOnTheNextTile // callback function that will be called when any moving object is in move and there are other objects on the next tile, needs "callbackScope" property, default null
     };
 
-    var engine = TRAVISO.getEngineInstance(instanceConfig);
+    var engine = TRAVISO.getEngineInstance(instanceConfig, { logEnabled: true });
     
     
     // this method will be called when the engine is ready
