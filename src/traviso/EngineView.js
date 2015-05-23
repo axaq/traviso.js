@@ -1343,10 +1343,21 @@ TRAVISO.EngineView.prototype.onObjMoveStepEnd = function(obj)
     	var tile = this.tileArray[obj.mapPos.r][obj.mapPos.c];
     	tile.setHighlighted(false, !this.config.tileHighlightAnimated);
     	
-    	if (this.config.followCharacter) { this.centralizeToLocation(obj.mapPos.c, obj.mapPos.r); }
+//    	if (this.config.followCharacter) { this.centralizeToLocation(obj.mapPos.c, obj.mapPos.r); }
     }
 	
 	if (pathEnded && this.config.objectReachedDestinationCallback) { this.config.objectReachedDestinationCallback.call(this.config.callbackScope, obj); }
+};
+
+TRAVISO.EngineView.prototype.checkForFollowCharacter = function(obj) 
+{
+    if (this.config.followCharacter && this.currentControllable === obj)
+	{
+        this.currentFocusLocation = { c: obj.mapPos.c, r: obj.mapPos.r };
+    	var px = this.externalCenter.x + (this.mapVisualWidthScaled >> 1) - obj.position.x * this.currentScale;
+    	var py = this.externalCenter.y - obj.position.y * this.currentScale;
+    	this.centralizeToPoint(px, py, true);
+    }
 };
 
 TRAVISO.EngineView.prototype.checkForTileChange = function(obj) 
