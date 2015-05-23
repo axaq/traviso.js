@@ -18,9 +18,7 @@ TRAVISO.loadAssetsAndData = function(engine, loadedCallback)
 {
     if (engine.config.assetsToLoad && engine.config.assetsToLoad !== "" && engine.config.assetsToLoad.length > 0)
     {
-        var loader = new PIXI.AssetLoader(engine.config.assetsToLoad, false);
-        loader.onComplete = function () { TRAVISO.loadData(engine, loadedCallback); };
-        loader.load();
+        PIXI.loader.add(engine.config.assetsToLoad).load(function () { TRAVISO.loadData(engine, loadedCallback); });
     }
     else
     {

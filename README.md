@@ -80,21 +80,21 @@ This will create a minified version at bin/traviso.js and a non-minified version
 
 ```javascript
 
-	// create an new pixi stage
-	var stage = new PIXI.Stage(0xFFFFFF);
+	// create an new instance of a pixi container
+	stage = new PIXI.Container();
 
 	// create a renderer instance
-	var renderer = PIXI.autoDetectRenderer();
+	renderer = PIXI.autoDetectRenderer(800, 600, { backgroundColor : 0xFFFFFF });
 
 	// add the renderer view element to the DOM
 	document.body.appendChild(renderer.view);
 	
-	requestAnimFrame(onFrame);
+	onFrame();
 	
 	// Global on-frame renderer function
 	function onFrame() {
 		renderer.render(stage);
-		requestAnimFrame(onFrame); 
+		requestAnimationFrame(onFrame); 
 	}
 	
 	// engine-instance configuration object

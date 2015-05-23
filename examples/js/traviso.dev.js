@@ -4,7 +4,7 @@
  * Copyright (c) 2015, Hakan Karlidag - @axaq
  * www.travisojs.com
  *
- * Compiled: 2015-05-20
+ * Compiled: 2015-05-23
  *
  * traviso.js is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license.php
@@ -98,8 +98,8 @@ TRAVISO.trace = function(s)
  * @param {String} instanceConfig.mapDataPath the path to the xml file that defines map data, required
  * @param {Array(String)} [instanceConfig.assetsToLoad=null] array of paths to the assets that are desired to be loaded by traviso, no need to use if assets are already loaded to PIXI cache, default null
  * 
- * @param {Number} [instanceConfig.minScale=0.5] mimimum scale that the DisplayObjectContainer for the map can get, default 0.5
- * @param {Number} [instanceConfig.maxScale=1.5] maximum scale that the DisplayObjectContainer for the map can get, default 1.5
+ * @param {Number} [instanceConfig.minScale=0.5] mimimum scale that the PIXI.Container for the map can get, default 0.5
+ * @param {Number} [instanceConfig.maxScale=1.5] maximum scale that the PIXI.Container for the map can get, default 1.5
  * @param {Number} [instanceConfig.numberOfZoomLevels=5] used to calculate zoom increment, default 5
  * @param {Number} [instanceConfig.initialZoomLevel=0] initial zoom level of the map, should be between -1 and 1, default 0
  * @param {Number} [instanceConfig.instantCameraZoom=false] specifies wheather to zoom instantly or with a tween animation, default false
@@ -276,9 +276,7 @@ TRAVISO.loadAssetsAndData = function(engine, loadedCallback)
 {
     if (engine.config.assetsToLoad && engine.config.assetsToLoad !== "" && engine.config.assetsToLoad.length > 0)
     {
-        var loader = new PIXI.AssetLoader(engine.config.assetsToLoad, false);
-        loader.onComplete = function () { TRAVISO.loadData(engine, loadedCallback); };
-        loader.load();
+        PIXI.loader.add(engine.config.assetsToLoad).load(function () { TRAVISO.loadData(engine, loadedCallback); });
     }
     else
     {
@@ -933,7 +931,7 @@ TRAVISO.MoveEngine = function(engine, defaultSpeed)
     this.fps = 60;
     
     var scope = this;
-	requestAnimFrame(function() { scope.run(); });
+	requestAnimationFrame(function() { scope.run(); });
 };
 
 // constructor
@@ -1443,7 +1441,7 @@ TRAVISO.MoveEngine.prototype.run = function()
         }
         
         var scope = this;
-        requestAnimFrame(function() { scope.run(); });
+        requestAnimationFrame(function() { scope.run(); });
     }
 };
 
@@ -2041,7 +2039,7 @@ TRAVISO.PathFinding.prototype.destroy = function()
  * Visual class for the map-objects.
  *
  * @class ObjectView
- * @extends DisplayObjectContainer
+ * @extends PIXI.Container
  * @constructor
  * @param engine {EngineView} the engine instance that the map-object sits in
  * @param [objectType=0] {Number} type-id of the object as defined in the XML file
@@ -2049,7 +2047,7 @@ TRAVISO.PathFinding.prototype.destroy = function()
  */
 TRAVISO.ObjectView = function(engine, objectType, animSpeed)
 {
-    PIXI.DisplayObjectContainer.call(this);
+    PIXI.Container.call(this);
     
     /**
 	 * A reference to the engine view that the map-object sits in.
@@ -2105,7 +2103,7 @@ TRAVISO.ObjectView = function(engine, objectType, animSpeed)
     
     this.currentInteractionOffset = this.interactionOffsets.idle;
 	
-    this.container = new PIXI.MovieClip(this.textures.idle);
+    this.container = new PIXI.extras.MovieClip(this.textures.idle);
     this.container.anchor.x = xAnchor;
     this.container.anchor.y = 1;
     this.addChild(this.container);
@@ -2122,7 +2120,7 @@ TRAVISO.ObjectView = function(engine, objectType, animSpeed)
 
 // constructor
 TRAVISO.ObjectView.constructor = TRAVISO.ObjectView;
-TRAVISO.ObjectView.prototype = Object.create(PIXI.DisplayObjectContainer.prototype);
+TRAVISO.ObjectView.prototype = Object.create(PIXI.Container.prototype);
 
 /**
  * Animation speed for the movieclips included in the map-object visuals.
@@ -2235,14 +2233,14 @@ TRAVISO.ObjectView.prototype.destroy = function()
  * Visual class for the map-tiles.
  *
  * @class TileView
- * @extends DisplayObjectContainer
+ * @extends PIXI.Container
  * @constructor
  * @param engine {EngineView} the engine instance that the map-tile sits in
  * @param [tileType="0"] {String} type-id of the tile as defined in the XML file
  */
 TRAVISO.TileView = function(engine, tileType)
 {
-    PIXI.DisplayObjectContainer.call(this);
+    PIXI.Container.call(this);
 
     /**
      * A reference to the engine view that the map-tile sits in.
@@ -2283,7 +2281,7 @@ TRAVISO.TileView = function(engine, tileType)
 
     if (tileInfo.t.length > 0)
     {
-        this.tileGraphics = new PIXI.MovieClip(tileInfo.t);
+        this.tileGraphics = new PIXI.extras.MovieClip(tileInfo.t);
         this.tileGraphics.anchor.x = 0.5;
         this.tileGraphics.anchor.y = 0.5;
         this.addChild(this.tileGraphics);
@@ -2340,7 +2338,7 @@ TRAVISO.TileView = function(engine, tileType)
 
 // constructor
 TRAVISO.TileView.constructor = TRAVISO.TileView;
-TRAVISO.TileView.prototype = Object.create(PIXI.DisplayObjectContainer.prototype);
+TRAVISO.TileView.prototype = Object.create(PIXI.Container.prototype);
 
 /**
  * Changes the highlight state of the map-tile.
@@ -2430,21 +2428,21 @@ TRAVISO.TileView.prototype.destroy = function()
  * within the engine and all map related logic
  *
  * @class EngineView
- * @extends DisplayObjectContainer
+ * @extends PIXI.Container
  * @constructor
  * @param config {Object} configuration object for the isometric engine instance
  * @param config.mapDataPath {String} the path to the xml file that defines map data, required
  */
 TRAVISO.EngineView = function(config)
 {
-    PIXI.DisplayObjectContainer.call(this);
+    PIXI.Container.call(this);
     
     /**
      * Configuration object for the isometric engine instance
      * 
      * @property {Object} config
-     * @property {Number} config.minScale=0.5 mimimum scale that the DisplayObjectContainer for the map can get, default 0.5
-     * @property {Number} config.maxScale=1.5 maximum scale that the DisplayObjectContainer for the map can get, default 1.5
+     * @property {Number} config.minScale=0.5 mimimum scale that the PIXI.Container for the map can get, default 0.5
+     * @property {Number} config.maxScale=1.5 maximum scale that the PIXI.Container for the map can get, default 1.5
      * @property {Number} config.minZoom=-1 minimum zoom level, engine defined
      * @property {Number} config.maxZoom=1 maximum zoom level, engine defined
      * @property {Number} config.zoomIncrement=0.5 zoom increment amount calculated by the engine according to user settings, default 0.5
@@ -2631,7 +2629,7 @@ TRAVISO.EngineView = function(config)
 
 // constructor
 TRAVISO.EngineView.constructor = TRAVISO.EngineView;
-TRAVISO.EngineView.prototype = Object.create(PIXI.DisplayObjectContainer.prototype);
+TRAVISO.EngineView.prototype = Object.create(PIXI.Container.prototype);
 
 TRAVISO.EngineView.prototype.config = this.config;
 
@@ -2722,31 +2720,31 @@ TRAVISO.EngineView.prototype.createMap = function()
     
     /**
      * Display object for the map visuals
-     * @property {PIXI.DisplayObjectContainer} mapContainer
+     * @property {PIXI.Container} mapContainer
      * @private
      */
     /**
      * Display object for the ground/terrain visuals
-     * @property {PIXI.DisplayObjectContainer} groundContainer
+     * @property {PIXI.Container} groundContainer
      * @private
      */
     /**
      * Display object for the map-object visuals
-     * @property {PIXI.DisplayObjectContainer} objContainer
+     * @property {PIXI.Container} objContainer
      * @private
      */
     // create containers for visual map elements
-    this.mapContainer = new PIXI.DisplayObjectContainer();
+    this.mapContainer = new PIXI.Container();
 	this.addChild(this.mapContainer);
     
     // Define two layers of maps
 	// One for the world and one for the objects (static/dynamic) over it
 	// This enables us not to update the whole world in every move but instead just update the object depths over it 
 	
-	this.groundContainer = new PIXI.DisplayObjectContainer();
+	this.groundContainer = new PIXI.Container();
 	this.mapContainer.addChild(this.groundContainer);
 	
-	this.objContainer = new PIXI.DisplayObjectContainer();
+	this.objContainer = new PIXI.Container();
 	this.mapContainer.addChild(this.objContainer);
 	
 	var groundMapData = this.mapData.groundMapData;
@@ -3209,8 +3207,8 @@ TRAVISO.EngineView.prototype.centralizeToPoint = function(px, py, instantRelocat
  * Sets all the parameters related to zooming in and out.
  *
  * @method setZoomParameters
- * @param [minScale=0.5] {Number} mimimum scale that the DisplayObjectContainer for the map can get, default 0.5
- * @param [maxScale=1.5] {Number} maximum scale that the DisplayObjectContainer for the map can get, default 1.5
+ * @param [minScale=0.5] {Number} mimimum scale that the PIXI.Container for the map can get, default 0.5
+ * @param [maxScale=1.5] {Number} maximum scale that the PIXI.Container for the map can get, default 1.5
  * @param [numberOfZoomLevels=5] {Number} used to calculate zoom increment, defined by user, default 5
  * @param [initialZoomLevel=0] {Number} initial zoom level of the map, default 0
  * @param [instantCameraZoom=false] {Boolean} specifies wheather to zoom instantly or with a tween animation, default false
@@ -4090,39 +4088,41 @@ TRAVISO.EngineView.prototype.isInteractionInMask = function(p)
 };
 
 // ******************** START: MOUSE INTERACTIONS **************************** //
-TRAVISO.EngineView.prototype.onMouseDown = function(mdata) 
+TRAVISO.EngineView.prototype.onMouseDown = function(event) 
 {
-	if (!this.dragging && this.isInteractionInMask(mdata.global))
+    var globalPos = event.data.global;
+	if (!this.dragging && this.isInteractionInMask(globalPos))
 	{
 	    this.dragging = true;
 		//this.mouseDownTime = new Date();
-		this.dragInitStartingX = this.dragPrevStartingX = mdata.global.x;
-		this.dragInitStartingY = this.dragPrevStartingY = mdata.global.y;
+		this.dragInitStartingX = this.dragPrevStartingX = globalPos.x;
+		this.dragInitStartingY = this.dragPrevStartingY = globalPos.y;
 	}
 };
-TRAVISO.EngineView.prototype.onMouseMove = function(mdata) 
+TRAVISO.EngineView.prototype.onMouseMove = function(event) 
 {
 	if (this.dragging && this.config.mapDraggable)
 	{
-		this.mapContainer.position.x += mdata.global.x - this.dragPrevStartingX;
-		this.mapContainer.position.y += mdata.global.y - this.dragPrevStartingY;
-		this.dragPrevStartingX = mdata.global.x;
-		this.dragPrevStartingY = mdata.global.y;
+        var globalPos = event.data.global;
+		this.mapContainer.position.x += globalPos.x - this.dragPrevStartingX;
+		this.mapContainer.position.y += globalPos.y - this.dragPrevStartingY;
+		this.dragPrevStartingX = globalPos.x;
+		this.dragPrevStartingY = globalPos.y;
 	}
 };
-TRAVISO.EngineView.prototype.onMouseUp = function(mdata) 
+TRAVISO.EngineView.prototype.onMouseUp = function(event) 
 {
 	if (this.dragging)
 	{
 		this.dragging = false;
 		//var passedTime = (new Date()) - this.mouseDownTime;
-		var distX = mdata.global.x - this.dragInitStartingX;
-		var distY = mdata.global.y - this.dragInitStartingY;
+		var distX = event.data.global.x - this.dragInitStartingX;
+		var distY = event.data.global.y - this.dragInitStartingY;
 		
 		if (Math.abs(distX) < 5 && Math.abs(distY) < 5)
 		{
 			// NOT DRAGGING IT IS A CLICK
-			this.checkForTileClick(mdata);
+			this.checkForTileClick(event.data);
 		}
 	}
 };

@@ -12,7 +12,7 @@
 		
 		<script src="../js/com/greensock/easing/EasePack.js"></script>
 		<script src="../js/com/greensock/TweenLite.js"></script>
-		<script src="../js/pixi.dev.js"></script>
+		<script src="../js/pixi.js"></script>
 		<script src="../js/traviso.dev.js"></script>
     </head>
     <body>
@@ -22,21 +22,21 @@
 	function update() 
 	{
 		renderer.render(stage);
-		requestAnimFrame(update); 
+		requestAnimationFrame(update); 
 	}
 	
 	////// Here, we initialize the pixi stage
 	
-	// create an new instance of a pixi stage
-	stage = new PIXI.Stage(0x6bacb6);
+	// create an new instance of a pixi container
+	stage = new PIXI.Container();
 
 	// create a renderer instance
-	renderer = PIXI.autoDetectRenderer();
+	renderer = PIXI.autoDetectRenderer(800, 600, { backgroundColor : 0x6bacb6 });
 	
 	// add the renderer view element to the DOM
 	document.body.appendChild(renderer.view);
 	
-	requestAnimFrame(update);
+	update();
 	
 	////// Here, we create our traviso instance and add on top of pixi
 	
@@ -119,13 +119,13 @@
     function createAndStartBoxAnim()
     {
     	// create six seperate boxes to spread
-    	var boxAnim = new PIXI.DisplayObjectContainer();
+    	var boxAnim = new PIXI.Container();
     	var t = PIXI.Texture.fromFrame("box.png");
 	    var box;
 	    var boxes = [];
 	    for (var i=0; i < 6; i++)
 	    {
-	    	box = new PIXI.MovieClip([t]);
+	    	box = new PIXI.extras.MovieClip([t]);
 	    	box.anchor.x = box.anchor.y = 0.5;
 	    	boxAnim.addChild(box);
 	    	boxes[boxes.length] = box;

@@ -10,7 +10,7 @@
 			}
 		</style>
 		
-		<script src="../js/pixi.dev.js"></script>
+		<script src="../js/pixi.js"></script>
 		<script src="../js/traviso.dev.js"></script>
     </head>
     <body>
@@ -20,21 +20,21 @@
 	function update() 
 	{
 		renderer.render(stage);
-		requestAnimFrame(update); 
+		requestAnimationFrame(update); 
 	}
 	
 	////// Here, we initialize the pixi stage
 	
-	// create an new instance of a pixi stage
-	stage = new PIXI.Stage(0x6BACDE);
+	// create an new instance of a pixi container
+	stage = new PIXI.Container();
 
 	// create a renderer instance
-	renderer = PIXI.autoDetectRenderer();
+	renderer = PIXI.autoDetectRenderer(800, 600, { backgroundColor : 0x6BACDE });
 	
 	// add the renderer view element to the DOM
 	document.body.appendChild(renderer.view);
 	
-	requestAnimFrame(update);
+	update();
 	
 	////// Here, we create our traviso instance and add on top of pixi
 	

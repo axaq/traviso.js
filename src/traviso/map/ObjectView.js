@@ -6,7 +6,7 @@
  * Visual class for the map-objects.
  *
  * @class ObjectView
- * @extends DisplayObjectContainer
+ * @extends PIXI.Container
  * @constructor
  * @param engine {EngineView} the engine instance that the map-object sits in
  * @param [objectType=0] {Number} type-id of the object as defined in the XML file
@@ -14,7 +14,7 @@
  */
 TRAVISO.ObjectView = function(engine, objectType, animSpeed)
 {
-    PIXI.DisplayObjectContainer.call(this);
+    PIXI.Container.call(this);
     
     /**
 	 * A reference to the engine view that the map-object sits in.
@@ -70,7 +70,7 @@ TRAVISO.ObjectView = function(engine, objectType, animSpeed)
     
     this.currentInteractionOffset = this.interactionOffsets.idle;
 	
-    this.container = new PIXI.MovieClip(this.textures.idle);
+    this.container = new PIXI.extras.MovieClip(this.textures.idle);
     this.container.anchor.x = xAnchor;
     this.container.anchor.y = 1;
     this.addChild(this.container);
@@ -87,7 +87,7 @@ TRAVISO.ObjectView = function(engine, objectType, animSpeed)
 
 // constructor
 TRAVISO.ObjectView.constructor = TRAVISO.ObjectView;
-TRAVISO.ObjectView.prototype = Object.create(PIXI.DisplayObjectContainer.prototype);
+TRAVISO.ObjectView.prototype = Object.create(PIXI.Container.prototype);
 
 /**
  * Animation speed for the movieclips included in the map-object visuals.

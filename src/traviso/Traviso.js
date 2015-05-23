@@ -79,8 +79,8 @@ TRAVISO.trace = function(s)
  * @param {String} instanceConfig.mapDataPath the path to the xml file that defines map data, required
  * @param {Array(String)} [instanceConfig.assetsToLoad=null] array of paths to the assets that are desired to be loaded by traviso, no need to use if assets are already loaded to PIXI cache, default null
  * 
- * @param {Number} [instanceConfig.minScale=0.5] mimimum scale that the DisplayObjectContainer for the map can get, default 0.5
- * @param {Number} [instanceConfig.maxScale=1.5] maximum scale that the DisplayObjectContainer for the map can get, default 1.5
+ * @param {Number} [instanceConfig.minScale=0.5] mimimum scale that the PIXI.Container for the map can get, default 0.5
+ * @param {Number} [instanceConfig.maxScale=1.5] maximum scale that the PIXI.Container for the map can get, default 1.5
  * @param {Number} [instanceConfig.numberOfZoomLevels=5] used to calculate zoom increment, default 5
  * @param {Number} [instanceConfig.initialZoomLevel=0] initial zoom level of the map, should be between -1 and 1, default 0
  * @param {Number} [instanceConfig.instantCameraZoom=false] specifies wheather to zoom instantly or with a tween animation, default false

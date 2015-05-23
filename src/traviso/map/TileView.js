@@ -6,14 +6,14 @@
  * Visual class for the map-tiles.
  *
  * @class TileView
- * @extends DisplayObjectContainer
+ * @extends PIXI.Container
  * @constructor
  * @param engine {EngineView} the engine instance that the map-tile sits in
  * @param [tileType="0"] {String} type-id of the tile as defined in the XML file
  */
 TRAVISO.TileView = function(engine, tileType)
 {
-    PIXI.DisplayObjectContainer.call(this);
+    PIXI.Container.call(this);
 
     /**
      * A reference to the engine view that the map-tile sits in.
@@ -54,7 +54,7 @@ TRAVISO.TileView = function(engine, tileType)
 
     if (tileInfo.t.length > 0)
     {
-        this.tileGraphics = new PIXI.MovieClip(tileInfo.t);
+        this.tileGraphics = new PIXI.extras.MovieClip(tileInfo.t);
         this.tileGraphics.anchor.x = 0.5;
         this.tileGraphics.anchor.y = 0.5;
         this.addChild(this.tileGraphics);
@@ -111,7 +111,7 @@ TRAVISO.TileView = function(engine, tileType)
 
 // constructor
 TRAVISO.TileView.constructor = TRAVISO.TileView;
-TRAVISO.TileView.prototype = Object.create(PIXI.DisplayObjectContainer.prototype);
+TRAVISO.TileView.prototype = Object.create(PIXI.Container.prototype);
 
 /**
  * Changes the highlight state of the map-tile.

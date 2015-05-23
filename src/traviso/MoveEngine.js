@@ -68,7 +68,7 @@ TRAVISO.MoveEngine = function(engine, defaultSpeed)
     this.fps = 60;
     
     var scope = this;
-	requestAnimFrame(function() { scope.run(); });
+	requestAnimationFrame(function() { scope.run(); });
 };
 
 // constructor
@@ -578,7 +578,7 @@ TRAVISO.MoveEngine.prototype.run = function()
         }
         
         var scope = this;
-        requestAnimFrame(function() { scope.run(); });
+        requestAnimationFrame(function() { scope.run(); });
     }
 };
 
