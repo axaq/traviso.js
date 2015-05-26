@@ -2858,7 +2858,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1393,
+            "line": 1394,
             "description": "Searches and returns a path between two locations if there is one.",
             "itemtype": "method",
             "name": "getPath",
@@ -2906,7 +2906,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1411,
+            "line": 1412,
             "description": "Checks for a path and moves the map-object on map if there is an available path",
             "itemtype": "method",
             "name": "checkAndMoveObjectToTile",
@@ -2980,7 +2980,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1436,
+            "line": 1437,
             "description": "Checks for a path and moves the map-object on map if there is an available path",
             "itemtype": "method",
             "name": "checkAndMoveObjectToLocation",
@@ -3042,7 +3042,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1463,
+            "line": 1464,
             "description": "Moves the current controllable map-object to a location if available.",
             "itemtype": "method",
             "name": "moveCurrentControllableToLocation",
@@ -3080,7 +3080,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1482,
+            "line": 1483,
             "description": "Moves the current controllable map-object to one of the adjacent available tiles of the map-object specified.",
             "itemtype": "method",
             "name": "moveCurrentControllableToObj",
@@ -3142,7 +3142,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1553,
+            "line": 1554,
             "description": "Finds the nearest tile to the point given in the map's local scope.",
             "itemtype": "method",
             "name": "getTileFromLocalPos",
@@ -3173,7 +3173,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1593,
+            "line": 1594,
             "description": "Checks if an interaction occurs using the interaction data coming from PIXI.\nIf there is any interaction starts necessary movements or performs necessary callbacks.",
             "itemtype": "method",
             "name": "checkForTileClick",
@@ -3197,7 +3197,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1638,
+            "line": 1639,
             "description": "Enables mouse/touch interactions.",
             "itemtype": "method",
             "name": "enableInteraction",
@@ -3205,7 +3205,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1651,
+            "line": 1652,
             "description": "Disables mouse/touch interactions.",
             "itemtype": "method",
             "name": "disableInteraction",
@@ -3213,7 +3213,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1665,
+            "line": 1666,
             "description": "Checks if the given point is inside the masked area if there is a mask defined.",
             "itemtype": "method",
             "name": "isInteractionInMask",
@@ -3246,7 +3246,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1732,
+            "line": 1733,
             "description": "Repositions the content according to user settings. Call this method \nwhenever you want to change the size or position of the engine.",
             "itemtype": "method",
             "name": "repositionContent",
@@ -3262,7 +3262,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1777,
+            "line": 1778,
             "description": "Clears all references and stops all animations inside the engine.\nCall this method when you want to get rid of an engine instance.",
             "itemtype": "method",
             "name": "destroy",

@@ -4,7 +4,7 @@
  * Copyright (c) 2015, Hakan Karlidag - @axaq
  * www.travisojs.com
  *
- * Compiled: 2015-05-23
+ * Compiled: 2015-05-26
  *
  * traviso.js is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license.php
@@ -3777,9 +3777,10 @@ TRAVISO.EngineView.prototype.checkForFollowCharacter = function(obj)
     if (this.config.followCharacter && this.currentControllable === obj)
 	{
         this.currentFocusLocation = { c: obj.mapPos.c, r: obj.mapPos.r };
-    	var px = this.externalCenter.x + (this.mapVisualWidthScaled >> 1) - obj.position.x * this.currentScale;
+    	var px = this.externalCenter.x - obj.position.x * this.currentScale;
     	var py = this.externalCenter.y - obj.position.y * this.currentScale;
-    	this.centralizeToPoint(px, py, true);
+        // this.centralizeToPoint(px, py, true);
+        this.moveEngine.addTween(this.mapContainer.position, 0.1, { x: px, y: py }, 0, "easeOut", true );
     }
 };
 
