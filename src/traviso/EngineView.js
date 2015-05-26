@@ -1354,9 +1354,10 @@ TRAVISO.EngineView.prototype.checkForFollowCharacter = function(obj)
     if (this.config.followCharacter && this.currentControllable === obj)
 	{
         this.currentFocusLocation = { c: obj.mapPos.c, r: obj.mapPos.r };
-    	var px = this.externalCenter.x + (this.mapVisualWidthScaled >> 1) - obj.position.x * this.currentScale;
+    	var px = this.externalCenter.x - obj.position.x * this.currentScale;
     	var py = this.externalCenter.y - obj.position.y * this.currentScale;
-    	this.centralizeToPoint(px, py, true);
+        // this.centralizeToPoint(px, py, true);
+        this.moveEngine.addTween(this.mapContainer.position, 0.1, { x: px, y: py }, 0, "easeOut", true );
     }
 };
 
