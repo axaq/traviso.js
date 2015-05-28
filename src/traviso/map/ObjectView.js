@@ -47,6 +47,7 @@ TRAVISO.ObjectView = function(engine, objectType, animSpeed)
     var info = TRAVISO.getObjectInfo(this.engine, this.type);
     this.isMovableTo = info.m;
     this.isInteractive = info.i;
+    this.interactive = this.interactiveChildren = false;
     var arr = info.s.split("x");
     this.size =
     {
@@ -71,6 +72,7 @@ TRAVISO.ObjectView = function(engine, objectType, animSpeed)
     this.currentInteractionOffset = this.interactionOffsets.idle;
 	
     this.container = new PIXI.extras.MovieClip(this.textures.idle);
+    this.container.interactive = this.container.interactiveChildren = false;
     this.container.anchor.x = xAnchor;
     this.container.anchor.y = 1;
     this.addChild(this.container);

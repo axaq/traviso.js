@@ -2,7 +2,7 @@
     "project": {
         "name": "traviso.js",
         "description": "Traviso.js - Isometric Javascript Engine",
-        "version": "0.0.3",
+        "version": "0.0.4",
         "url": "www.travisojs.com",
         "logo": "http://www.travisojs.com/img/logo_small.jpg"
     },
@@ -367,7 +367,7 @@
         },
         {
             "file": "../src/traviso/map/ObjectView.js",
-            "line": 58,
+            "line": 59,
             "description": "A dictionary for all the textures defined for the map-object.",
             "itemtype": "property",
             "name": "textures",
@@ -378,7 +378,7 @@
         },
         {
             "file": "../src/traviso/map/ObjectView.js",
-            "line": 64,
+            "line": 65,
             "description": "A dictionary for interaction offset points for each visual if defined in the map data file.",
             "itemtype": "property",
             "name": "interactionOffsets",
@@ -389,7 +389,7 @@
         },
         {
             "file": "../src/traviso/map/ObjectView.js",
-            "line": 80,
+            "line": 82,
             "description": "The height of the object in the first frame of its idle textures.",
             "itemtype": "property",
             "name": "firstTextureHeight",
@@ -400,7 +400,7 @@
         },
         {
             "file": "../src/traviso/map/ObjectView.js",
-            "line": 92,
+            "line": 94,
             "description": "Animation speed for the movieclips included in the map-object visuals.",
             "itemtype": "property",
             "name": "animSpeed",
@@ -410,7 +410,7 @@
         },
         {
             "file": "../src/traviso/map/ObjectView.js",
-            "line": 106,
+            "line": 108,
             "description": "Changes the map-objects's texture(s) according to the specified direction-id and the state of the map-object (moving or stationary).",
             "itemtype": "method",
             "name": "changeVisualToDirection",
@@ -460,7 +460,7 @@
         },
         {
             "file": "../src/traviso/map/ObjectView.js",
-            "line": 127,
+            "line": 129,
             "description": "Changes the map-objects's texture(s) according to the specified visual-id.",
             "itemtype": "method",
             "name": "changeVisual",
@@ -505,7 +505,7 @@
         },
         {
             "file": "../src/traviso/map/ObjectView.js",
-            "line": 175,
+            "line": 177,
             "description": "Clears all references.",
             "itemtype": "method",
             "name": "destroy",

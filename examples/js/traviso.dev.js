@@ -1,10 +1,10 @@
 /**
  * @license
- * traviso.js - v0.0.3
+ * traviso.js - v0.0.4
  * Copyright (c) 2015, Hakan Karlidag - @axaq
  * www.travisojs.com
  *
- * Compiled: 2015-05-26
+ * Compiled: 2015-05-28
  *
  * traviso.js is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license.php
@@ -42,7 +42,7 @@ var TRAVISO = TRAVISO || {};
  * @property {String} VERSION
  * @static
  */
-TRAVISO.VERSION = "v0.0.3";
+TRAVISO.VERSION = "v0.0.4";
 
 /**
  * The types of available path finding algorithms
@@ -2083,6 +2083,7 @@ TRAVISO.ObjectView = function(engine, objectType, animSpeed)
     var info = TRAVISO.getObjectInfo(this.engine, this.type);
     this.isMovableTo = info.m;
     this.isInteractive = info.i;
+    this.interactive = this.interactiveChildren = false;
     var arr = info.s.split("x");
     this.size =
     {
@@ -2107,6 +2108,7 @@ TRAVISO.ObjectView = function(engine, objectType, animSpeed)
     this.currentInteractionOffset = this.interactionOffsets.idle;
 	
     this.container = new PIXI.extras.MovieClip(this.textures.idle);
+    this.container.interactive = this.container.interactiveChildren = false;
     this.container.anchor.x = xAnchor;
     this.container.anchor.y = 1;
     this.addChild(this.container);
