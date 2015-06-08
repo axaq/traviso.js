@@ -23,7 +23,7 @@ var TRAVISO = TRAVISO || {};
  * @property {String} VERSION
  * @static
  */
-TRAVISO.VERSION = "v0.0.4";
+TRAVISO.VERSION = "v0.0.5";
 
 /**
  * The types of available path finding algorithms
@@ -103,6 +103,9 @@ TRAVISO.trace = function(s)
  * @param {Boolean} [instanceConfig.highlightPath=true] highlight the path when the current controllable moves on the map, default true
  * @param {Boolean} [instanceConfig.highlightTargetTile=true] highlight the target tile when the current controllable moves on the map, default true
  * @param {Boolean} [instanceConfig.tileHighlightAnimated=true] animate the tile highlights, default true
+ * @param {Number(Hexadecimal)} [instanceConfig.tileHighlightFillColor=0x80d7ff] color code for the tile highlight fill (this will be overridden if there is a highlight-image defined in the map data file), default 0x80d7ff
+ * @param {Number} [instanceConfig.tileHighlightFillAlpha=0.5] apha value for the tile highlight fill (this will be overridden if there is a highlight-image defined in the map data file), default 0.5
+ * @param {Number(Hexadecimal)} [instanceConfig.tileHighlightStrokeColor=0xFFFFFF] color code for the tile highlight stroke (this will be overridden if there is a highlight-image defined in the map data file), default 0xFFFFFF
  * @param {Boolean} [instanceConfig.dontAutoMoveToTile=false] when a tile selected don't move the controllable immediately but still call 'tileSelectCallback', default false
  * @param {Boolean} [instanceConfig.checkPathOnEachTile=true] engine looks for a path everytime an object moves to a new tile on the path (set to false if you don't have moving objects other then your controllable on your map), default true
  * 

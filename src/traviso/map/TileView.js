@@ -90,8 +90,8 @@ TRAVISO.TileView = function(engine, tileType)
     {
         this.highlightedOverlay = new PIXI.Graphics();
         this.highlightedOverlay.clear();
-        this.highlightedOverlay.lineStyle(2, 0xFFFFFF, 1);
-        this.highlightedOverlay.beginFill(0x80d7ff, 0.5);
+        this.highlightedOverlay.lineStyle(2, this.engine.config.tileHighlightStrokeColor, 1);
+        this.highlightedOverlay.beginFill(this.engine.config.tileHighlightFillColor, this.engine.config.tileHighlightFillAlpha);
         this.highlightedOverlay.moveTo(this.vertices[0][0], this.vertices[0][1]);
         for (var i = 1; i < this.vertices.length; i++)
         {
