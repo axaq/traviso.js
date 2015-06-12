@@ -442,7 +442,8 @@ TRAVISO.EngineView.prototype.createMap = function()
      * @private
      */
     
-	var obj;
+	var obj,
+        floorObjectFound = false;
 	for (i = 0; i < this.mapSizeR; i++)
 	{
 	    for (j = this.mapSizeC-1; j >= 0; j--)
@@ -454,6 +455,8 @@ TRAVISO.EngineView.prototype.createMap = function()
 		    	obj.position.x = this.getTilePosXFor(i,j);
 		    	obj.position.y = this.getTilePosYFor(i,j) + this.TILE_HALF_H;
 		    	obj.mapPos = { c:j, r:i };
+                
+                if (!floorObjectFound && obj.isFloorObject) { floorObjectFound = true; }
 		    	
 		    	this.objContainer.addChild(obj);
 		    	
@@ -466,7 +469,25 @@ TRAVISO.EngineView.prototype.createMap = function()
 		    }
 		}
 	}
-	
+    if (floorObjectFound)
+    {
+        // run the loop again to bring the other objects on top of the floor objects
+        var a, k;
+        for (i = 0; i < this.mapSizeR; i++)
+    	{
+    	    for (j = this.mapSizeC-1; j >= 0; j--)
+    	    {
+    	    	a = this.objArray[i][j];
+    	    	if (a)
+    	    	{
+    	    	    for (k=0; k < a.length; k++)
+    	    	    {
+    				    if (!a[k].isFloorObject) { this.objContainer.addChild(a[k]); }
+    				}
+    		    }
+    		}
+    	}
+	}
 	// cacheAsBitmap: for now this creates problem with tile highlights
 	// this.groundContainer.cacheAsBitmap = true;
 	
@@ -1069,7 +1090,7 @@ TRAVISO.EngineView.prototype.changeObjAlphasInLocation = function(value, pos)
         var l = a.length;
         for (var i=0; i < l; i++)
         {
-            a[i].alpha = value;
+            if (!a[i].isFloorObject) { a[i].alpha = value; }
         }
     }
 };
@@ -1147,7 +1168,7 @@ TRAVISO.EngineView.prototype.arrangeDepthsFromLocation = function(pos)
 	    	{
 	    	    for (k=0; k < a.length; k++)
 	    	    {
-				    this.objContainer.addChild(a[k]);
+				    if (!a[k].isFloorObject) { this.objContainer.addChild(a[k]); }
 				}
 		    }
 		}

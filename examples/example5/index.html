@@ -54,7 +54,7 @@
 		otherObjectsOnTheNextTileCallback : onOtherObjectsOnTheNextTile // callback function that will be called when any moving object is in move and there are other objects on the next tile, needs "callbackScope" property, default null
     };
 
-    var engine = TRAVISO.getEngineInstance(instanceConfig);
+    var engine = TRAVISO.getEngineInstance(instanceConfig, { logEnabled: true });
     
     
     // this method will be called when the engine is ready

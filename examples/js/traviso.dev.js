@@ -4,7 +4,7 @@
  * Copyright (c) 2015, Hakan Karlidag - @axaq
  * www.travisojs.com
  *
- * Compiled: 2015-06-08
+ * Compiled: 2015-06-12
  *
  * traviso.js is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license.php
@@ -403,7 +403,7 @@ TRAVISO.loadData = function(engine, loadedCallback)
                     // set object properties
                     arr = this.responseXML.getElementsByTagName("object");
                     
-                    var oTextures, interactionOffsets, temp;
+                    var oTextures, interactionOffsets, temp, isFloorObject;
                     for (i = 0; i < arr.length; i++)
                     {
                         oTextures = { };
@@ -478,12 +478,15 @@ TRAVISO.loadData = function(engine, loadedCallback)
 
                             }
                         }
-
+                        
+                        isFloorObject = arr[i].attributes.getNamedItem("floor") ? parseInt(arr[i].attributes.getNamedItem("floor").nodeValue, 10) : false;
+                        
                         engine.mapData.textures.objects[arr[i].attributes.getNamedItem("id").nodeValue] =
                         {
                             t : oTextures,
                             io : interactionOffsets,
                             s : arr[i].attributes.getNamedItem("s").nodeValue,
+                            f : isFloorObject,
                             m : parseInt(arr[i].attributes.getNamedItem("movable").nodeValue, 10),
                             i : parseInt(arr[i].attributes.getNamedItem("interactive").nodeValue, 10)
                         };
@@ -527,6 +530,7 @@ TRAVISO.getObjectInfo = function(engine, objectType)
         return {
             m : objInfo.m,
             i : objInfo.i,
+            f : objInfo.f,
             t : textures,
             io : objInfo.io,
             s : objInfo.s
@@ -2087,6 +2091,7 @@ TRAVISO.ObjectView = function(engine, objectType, animSpeed)
     this.isMovableTo = info.m;
     this.isInteractive = info.i;
     this.interactive = this.interactiveChildren = false;
+    this.isFloorObject = info.f;
     var arr = info.s.split("x");
     this.size =
     {
@@ -2870,7 +2875,8 @@ TRAVISO.EngineView.prototype.createMap = function()
      * @private
      */
     
-	var obj;
+	var obj,
+        floorObjectFound = false;
 	for (i = 0; i < this.mapSizeR; i++)
 	{
 	    for (j = this.mapSizeC-1; j >= 0; j--)
@@ -2882,6 +2888,8 @@ TRAVISO.EngineView.prototype.createMap = function()
 		    	obj.position.x = this.getTilePosXFor(i,j);
 		    	obj.position.y = this.getTilePosYFor(i,j) + this.TILE_HALF_H;
 		    	obj.mapPos = { c:j, r:i };
+                
+                if (!floorObjectFound && obj.isFloorObject) { floorObjectFound = true; }
 		    	
 		    	this.objContainer.addChild(obj);
 		    	
@@ -2894,7 +2902,25 @@ TRAVISO.EngineView.prototype.createMap = function()
 		    }
 		}
 	}
-	
+    if (floorObjectFound)
+    {
+        // run the loop again to bring the other objects on top of the floor objects
+        var a, k;
+        for (i = 0; i < this.mapSizeR; i++)
+    	{
+    	    for (j = this.mapSizeC-1; j >= 0; j--)
+    	    {
+    	    	a = this.objArray[i][j];
+    	    	if (a)
+    	    	{
+    	    	    for (k=0; k < a.length; k++)
+    	    	    {
+    				    if (!a[k].isFloorObject) { this.objContainer.addChild(a[k]); }
+    				}
+    		    }
+    		}
+    	}
+	}
 	// cacheAsBitmap: for now this creates problem with tile highlights
 	// this.groundContainer.cacheAsBitmap = true;
 	
@@ -3497,7 +3523,7 @@ TRAVISO.EngineView.prototype.changeObjAlphasInLocation = function(value, pos)
         var l = a.length;
         for (var i=0; i < l; i++)
         {
-            a[i].alpha = value;
+            if (!a[i].isFloorObject) { a[i].alpha = value; }
         }
     }
 };
@@ -3575,7 +3601,7 @@ TRAVISO.EngineView.prototype.arrangeDepthsFromLocation = function(pos)
 	    	{
 	    	    for (k=0; k < a.length; k++)
 	    	    {
-				    this.objContainer.addChild(a[k]);
+				    if (!a[k].isFloorObject) { this.objContainer.addChild(a[k]); }
 				}
 		    }
 		}

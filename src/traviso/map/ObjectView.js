@@ -48,6 +48,7 @@ TRAVISO.ObjectView = function(engine, objectType, animSpeed)
     this.isMovableTo = info.m;
     this.isInteractive = info.i;
     this.interactive = this.interactiveChildren = false;
+    this.isFloorObject = info.f;
     var arr = info.s.split("x");
     this.size =
     {
