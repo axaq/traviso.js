@@ -656,7 +656,7 @@ TRAVISO.EngineView.prototype.addObjectToLocation = function(obj, pos)
 	this.objContainer.addChild(obj);
 	
 	this.addObjRefToLocation(obj, obj.mapPos);
-	this.arrangeDepthsFromLocation(obj.mapPos);
+	this.arrangeDepthsFromLocation(obj.isFloorObject ? { c: this.mapSizeC-1, r: 0 } : obj.mapPos);
 	
 	return obj;
 };

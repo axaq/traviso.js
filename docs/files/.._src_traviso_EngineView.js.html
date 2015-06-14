@@ -18,7 +18,7 @@
             <h1 class="blue-main-title">traviso.js</h1>
         </div>
         <div class="yui3-u-1-4 version project-version">
-            API Docs for: 0.0.5
+            API Docs for: 0.0.6
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -755,7 +755,7 @@ TRAVISO.EngineView.prototype.addObjectToLocation = function(obj, pos)
 	this.objContainer.addChild(obj);
 	
 	this.addObjRefToLocation(obj, obj.mapPos);
-	this.arrangeDepthsFromLocation(obj.mapPos);
+	this.arrangeDepthsFromLocation(obj.isFloorObject ? { c: this.mapSizeC-1, r: 0 } : obj.mapPos);
 	
 	return obj;
 };

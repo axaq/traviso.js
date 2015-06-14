@@ -564,4 +564,5 @@ TRAVISO.PathFinding.prototype.destroy = function()
     this.grid = null;
     this.nodes = null;
     this.dirtyNodes = null;
+    this.heuristic = null;
 };
