@@ -28,6 +28,8 @@
                interactive:    (0/1) This specifies weather the user can select/interact with the object. The engine will use the callbacks to inform 
                                the developer once the object is selected by the user.
                s:              This specifies the size of the object in the number of rows and colums (rows x colums).
+               noTransparency: (0/1) This specifies if the engine will make the object transperent or not when the main controller is behind it.
+               floor:          (0/1) This specifies if the object is a floor-object (like a rug) or not.
             
             An 'object' tag should also include AT LEAST one v tag with id 'idle'.
             

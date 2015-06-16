@@ -45,6 +45,8 @@ TRAVISO.EngineView = function(config)
      * @property {Boolean} config.instantCameraRelocation=false specifies wheather the camera moves instantly or with a tween animation to the target location, default false
      * @property {Boolean} config.instantObjectRelocation=false specifies wheather the map-objects will be moved to target location instantly or with an animation, default false
      * 
+     * @property {Boolean} config.changeTransperancies=true make objects transparent when the cotrollable is behind them, default true
+     * 
      * @property {Boolean} config.highlightPath=true highlight the path when the current controllable moves on the map, default true
      * @property {Boolean} config.highlightTargetTile=true highlight the target tile when the current controllable moves on the map, default true
      * @property {Boolean} config.tileHighlightAnimated=true animate the tile highlights, default true
@@ -76,6 +78,7 @@ TRAVISO.EngineView = function(config)
     
     // set the properties that are set by default when not defined by the user
     this.config.followCharacter = TRAVISO.existy(this.config.followCharacter) ? this.config.followCharacter : true;
+    this.config.changeTransperancies = TRAVISO.existy(this.config.changeTransperancies) ? this.config.changeTransperancies : true;
     this.config.highlightPath = TRAVISO.existy(this.config.highlightPath) ? this.config.highlightPath : true;
     this.config.highlightTargetTile = TRAVISO.existy(this.config.highlightTargetTile) ? this.config.highlightTargetTile : true;
     this.config.tileHighlightAnimated = TRAVISO.existy(this.config.tileHighlightAnimated) ? this.config.tileHighlightAnimated : true;
@@ -152,6 +155,11 @@ TRAVISO.EngineView = function(config)
      * @property {Boolean} instantObjectRelocation 
      * @default false
      */
+    /** 
+     * make objects transparent when the cotrollable is behind them
+     * @property {Boolean} changeTransperancies 
+     * @default true
+     */ 
     /** 
      * highlight the path when the current controllable moves on the map
      * @property {Boolean} highlightPath 
@@ -367,6 +375,8 @@ TRAVISO.EngineView.prototype.createMap = function()
 	    this.groundContainer.addChild(groundImageSprite);
 	    
 	    groundImageSprite.scale.set(this.mapData.singleGroundImageScale);
+        
+        this.groundImageSprite = groundImageSprite;
 	}
 	
 	// create arrays to hold tiles and objects
@@ -1090,7 +1100,7 @@ TRAVISO.EngineView.prototype.changeObjAlphasInLocation = function(value, pos)
         var l = a.length;
         for (var i=0; i < l; i++)
         {
-            if (!a[i].isFloorObject) { a[i].alpha = value; }
+            if (!a[i].isFloorObject && !a[i].noTransparency) { a[i].alpha = value; }
         }
     }
 };
@@ -1132,19 +1142,22 @@ TRAVISO.EngineView.prototype.arrangeObjLocation = function(obj, pos)
  */
 TRAVISO.EngineView.prototype.arrangeObjTransperancies = function(obj, prevPos, pos) 
 {
-    if (this.currentControllable === obj)
+    if (this.config.changeTransperancies)
     {
-    	if (prevPos.c > 0) { this.changeObjAlphasInLocation(1, { c: prevPos.c-1, r: prevPos.r }); }
-        if (prevPos.c > 0 && prevPos.r < this.mapSizeR-1) { this.changeObjAlphasInLocation(1, { c: prevPos.c-1, r: prevPos.r+1 }); }
-        if (prevPos.r < this.mapSizeR-1) { this.changeObjAlphasInLocation(1, { c: prevPos.c, r: prevPos.r+1 }); }
-	
-    	if (pos.c > 0) { this.changeObjAlphasInLocation(0.7, { c: pos.c-1, r: pos.r }); }
-        if (pos.c > 0 && pos.r < this.mapSizeR-1) { this.changeObjAlphasInLocation(0.7, { c: pos.c-1, r: pos.r+1 }); }
-        if (pos.r < this.mapSizeR-1) { this.changeObjAlphasInLocation(0.7, { c: pos.c, r: pos.r+1 }); }
+        if (this.currentControllable === obj)
+        {
+        	if (prevPos.c > 0) { this.changeObjAlphasInLocation(1, { c: prevPos.c-1, r: prevPos.r }); }
+            if (prevPos.c > 0 && prevPos.r < this.mapSizeR-1) { this.changeObjAlphasInLocation(1, { c: prevPos.c-1, r: prevPos.r+1 }); }
+            if (prevPos.r < this.mapSizeR-1) { this.changeObjAlphasInLocation(1, { c: prevPos.c, r: prevPos.r+1 }); }
+    	
+        	if (pos.c > 0) { this.changeObjAlphasInLocation(0.7, { c: pos.c-1, r: pos.r }); }
+            if (pos.c > 0 && pos.r < this.mapSizeR-1) { this.changeObjAlphasInLocation(0.7, { c: pos.c-1, r: pos.r+1 }); }
+            if (pos.r < this.mapSizeR-1) { this.changeObjAlphasInLocation(0.7, { c: pos.c, r: pos.r+1 }); }
+        }
+    	
+    	// TODO: check if there is a way not to update main character alpha each time
+    	obj.alpha = 1;
     }
-	
-	// TODO: check if there is a way not to update main character alpha each time
-	obj.alpha = 1;
 };
 
 /**

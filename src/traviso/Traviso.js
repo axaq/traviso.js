@@ -100,6 +100,8 @@ TRAVISO.trace = function(s)
  * @param {Boolean} [instanceConfig.instantCameraRelocation=false] specifies wheather the camera moves instantly or with a tween animation to the target location, default false
  * @param {Boolean} [instanceConfig.instantObjectRelocation=false] specifies wheather the map-objects will be moved to target location instantly or with an animation, default false
  * 
+ * @param {Boolean} [instanceConfig.changeTransperancies=true] make objects transparent when the cotrollable is behind them, default true
+ * 
  * @param {Boolean} [instanceConfig.highlightPath=true] highlight the path when the current controllable moves on the map, default true
  * @param {Boolean} [instanceConfig.highlightTargetTile=true] highlight the target tile when the current controllable moves on the map, default true
  * @param {Boolean} [instanceConfig.tileHighlightAnimated=true] animate the tile highlights, default true
@@ -156,6 +158,7 @@ TRAVISO.init = function(globalConfig)
 						"followCharacter", 
 						"instantCameraRelocation", 
 						"instantObjectRelocation", 
+						"changeTransperancies", 
 						"highlightPath", 
 						"highlightTargetTile", 
 						"tileHighlightAnimated", 

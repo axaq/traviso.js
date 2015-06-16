@@ -140,7 +140,7 @@ TRAVISO.loadData = function(engine, loadedCallback)
                     // set object properties
                     arr = this.responseXML.getElementsByTagName("object");
                     
-                    var oTextures, interactionOffsets, temp, isFloorObject;
+                    var oTextures, interactionOffsets, temp, isFloorObject, noTransparency;
                     for (i = 0; i < arr.length; i++)
                     {
                         oTextures = { };
@@ -217,6 +217,7 @@ TRAVISO.loadData = function(engine, loadedCallback)
                         }
                         
                         isFloorObject = arr[i].attributes.getNamedItem("floor") ? parseInt(arr[i].attributes.getNamedItem("floor").nodeValue, 10) : false;
+                        noTransparency = arr[i].attributes.getNamedItem("noTransparency") ? parseInt(arr[i].attributes.getNamedItem("noTransparency").nodeValue, 10) : false;
                         
                         engine.mapData.textures.objects[arr[i].attributes.getNamedItem("id").nodeValue] =
                         {
@@ -224,6 +225,7 @@ TRAVISO.loadData = function(engine, loadedCallback)
                             io : interactionOffsets,
                             s : arr[i].attributes.getNamedItem("s").nodeValue,
                             f : isFloorObject,
+                            nt : noTransparency,
                             m : parseInt(arr[i].attributes.getNamedItem("movable").nodeValue, 10),
                             i : parseInt(arr[i].attributes.getNamedItem("interactive").nodeValue, 10)
                         };
@@ -268,6 +270,7 @@ TRAVISO.getObjectInfo = function(engine, objectType)
             m : objInfo.m,
             i : objInfo.i,
             f : objInfo.f,
+            nt : objInfo.nt,
             t : textures,
             io : objInfo.io,
             s : objInfo.s
