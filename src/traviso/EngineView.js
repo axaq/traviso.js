@@ -53,6 +53,7 @@ TRAVISO.EngineView = function(config)
      * @property {Number(Hexadecimal)} [config.tileHighlightFillColor=0x80d7ff] color code for the tile highlight fill (this will be overridden if a highlight-image is defined), default 0x80d7ff
      * @property {Number} [config.tileHighlightFillAlpha=0.5] apha value for the tile highlight fill (this will be overridden if a highlight-image is defined), default 0.5
      * @property {Number(Hexadecimal)} [config.tileHighlightStrokeColor=0xFFFFFF] color code for the tile highlight stroke (this will be overridden if a highlight-image is defined), default 0xFFFFFF
+     * @property {Number} [config.tileHighlightStrokeAlpha=1.0] apha value for the tile highlight stroke (this will be overridden if a highlight-image is defined), default 1.0
      * @property {Boolean} config.dontAutoMoveToTile=false when a tile selected don't move the controllable immediately but still call 'tileSelectCallback', default false
      * @property {Boolean} config.checkPathOnEachTile=true looks for a path everytime an object moves to a new tile (set to false if you don't have other moving objects on your map), default true
      * 
@@ -85,6 +86,7 @@ TRAVISO.EngineView = function(config)
     this.config.tileHighlightFillColor = TRAVISO.existy(this.config.tileHighlightFillColor) ? this.config.tileHighlightFillColor : 0x80d7ff;
     this.config.tileHighlightFillAlpha = TRAVISO.existy(this.config.tileHighlightFillAlpha) ? this.config.tileHighlightFillAlpha : 0.5;
     this.config.tileHighlightStrokeColor = TRAVISO.existy(this.config.tileHighlightStrokeColor) ? this.config.tileHighlightStrokeColor : 0xFFFFFF;
+    this.config.tileHighlightStrokeAlpha = TRAVISO.existy(this.config.tileHighlightStrokeAlpha) ? this.config.tileHighlightStrokeAlpha : 1.0;
     this.config.dontAutoMoveToTile = TRAVISO.existy(this.config.dontAutoMoveToTile) ? this.config.dontAutoMoveToTile : false;
     this.config.checkPathOnEachTile = TRAVISO.existy(this.config.checkPathOnEachTile) ? this.config.checkPathOnEachTile : true;
     this.config.mapDraggable = TRAVISO.existy(this.config.mapDraggable) ? this.config.mapDraggable : true;

@@ -108,6 +108,7 @@ TRAVISO.trace = function(s)
  * @param {Number(Hexadecimal)} [instanceConfig.tileHighlightFillColor=0x80d7ff] color code for the tile highlight fill (this will be overridden if there is a highlight-image defined in the map data file), default 0x80d7ff
  * @param {Number} [instanceConfig.tileHighlightFillAlpha=0.5] apha value for the tile highlight fill (this will be overridden if there is a highlight-image defined in the map data file), default 0.5
  * @param {Number(Hexadecimal)} [instanceConfig.tileHighlightStrokeColor=0xFFFFFF] color code for the tile highlight stroke (this will be overridden if there is a highlight-image defined in the map data file), default 0xFFFFFF
+ * @param {Number} [instanceConfig.tileHighlightStrokeAlpha=1.0] apha value for the tile highlight stroke (this will be overridden if a highlight-image is defined), default 1.0
  * @param {Boolean} [instanceConfig.dontAutoMoveToTile=false] when a tile selected don't move the controllable immediately but still call 'tileSelectCallback', default false
  * @param {Boolean} [instanceConfig.checkPathOnEachTile=true] engine looks for a path everytime an object moves to a new tile on the path (set to false if you don't have moving objects other then your controllable on your map), default true
  * 
