@@ -123,6 +123,7 @@ TRAVISO.trace = function(s)
  * @param {Function} [instanceConfig.objectSelectCallback=null] callback function that will be called when a tile with an interactive map-object on it is selected, needs 'callbackScope' property, default null
  * @param {Function} [instanceConfig.objectReachedDestinationCallback=null] callback function that will be called when any moving object reaches its destination, needs 'callbackScope' property, default null
  * @param {Function} [instanceConfig.otherObjectsOnTheNextTileCallback=null] callback function that will be called when any moving object is in move and there are other objects on the next tile, needs 'callbackScope' property, default null
+ * @param {Function} [instanceConfig.objectUpdateCallback=null] callback function that will be called everytime an objects direction or position changed, default null
  * 
  * @param [globalConfig] {Object} configuration object for the traviso engine
  * @return {EngineView} a new instance of the isometric engine 
@@ -171,7 +172,8 @@ TRAVISO.init = function(globalConfig)
 						"tileSelectCallback", 
 						"objectSelectCallback", 
 						"objectReachedDestinationCallback", 
-						"otherObjectsOnTheNextTileCallback"
+						"otherObjectsOnTheNextTileCallback",
+						"objectUpdateCallback"
 					  ];
 	
 	for (var i=0; i < modifiables.length; i++)

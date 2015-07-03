@@ -71,6 +71,7 @@ TRAVISO.EngineView = function(config)
      * @property {Function} config.objectSelectCallback=null callback function that will be called when a tile with an interactive map-object on it is selected, default null
      * @property {Function} config.objectReachedDestinationCallback=null callback function that will be called when any moving object reaches its destination, default null
      * @property {Function} config.otherObjectsOnTheNextTileCallback=null callback function that will be called when any moving object is in move and there are other objects on the next tile, default null
+     * @property {Function} config.objectUpdateCallback=null callback function that will be called everytime an objects direction or position changed, default null
      * 
      * @private
      */
@@ -221,6 +222,11 @@ TRAVISO.EngineView = function(config)
     /** 
      * callback function that will be called when any moving object is in move and there are other objects on the next tile
      * @property {Function} otherObjectsOnTheNextTileCallback 
+     * @default null
+     */
+    /** 
+     * callback function that will be called everytime an objects direction or position changed
+     * @property {Function} objectUpdateCallback 
      * @default null
      */
     
@@ -1405,6 +1411,8 @@ TRAVISO.EngineView.prototype.checkForFollowCharacter = function(obj)
 
 TRAVISO.EngineView.prototype.checkForTileChange = function(obj) 
 {
+    if (this.config.objectUpdateCallback) { this.config.objectUpdateCallback.call(this.config.callbackScope, obj); }
+    
 	var pos = { x: obj.position.x, y: obj.position.y - this.TILE_HALF_H };
 	// var tile = this.tileArray[obj.mapPos.r][obj.mapPos.c];
 	var tile = this.tileArray[obj.currentTargetTile.mapPos.r][obj.currentTargetTile.mapPos.c];

@@ -4,7 +4,7 @@
  * Copyright (c) 2015, Hakan Karlidag - @axaq
  * www.travisojs.com
  *
- * Compiled: 2015-06-16
+ * Compiled: 2015-07-02
  *
  * traviso.js is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license.php
@@ -142,6 +142,7 @@ TRAVISO.trace = function(s)
  * @param {Function} [instanceConfig.objectSelectCallback=null] callback function that will be called when a tile with an interactive map-object on it is selected, needs 'callbackScope' property, default null
  * @param {Function} [instanceConfig.objectReachedDestinationCallback=null] callback function that will be called when any moving object reaches its destination, needs 'callbackScope' property, default null
  * @param {Function} [instanceConfig.otherObjectsOnTheNextTileCallback=null] callback function that will be called when any moving object is in move and there are other objects on the next tile, needs 'callbackScope' property, default null
+ * @param {Function} [instanceConfig.objectUpdateCallback=null] callback function that will be called everytime an objects direction or position changed, default null
  * 
  * @param [globalConfig] {Object} configuration object for the traviso engine
  * @return {EngineView} a new instance of the isometric engine 
@@ -190,7 +191,8 @@ TRAVISO.init = function(globalConfig)
 						"tileSelectCallback", 
 						"objectSelectCallback", 
 						"objectReachedDestinationCallback", 
-						"otherObjectsOnTheNextTileCallback"
+						"otherObjectsOnTheNextTileCallback",
+						"objectUpdateCallback"
 					  ];
 	
 	for (var i=0; i < modifiables.length; i++)
@@ -2177,7 +2179,15 @@ TRAVISO.ObjectView.prototype.changeVisualToDirection = function(direction, movin
         {
             throw new Error("no 'idle' visual defined as backup for object type " + this.type);
         }
+        else
+        {
+            this.currentDirection = TRAVISO.directions.O;
+        }
 	}
+    else
+    {
+        this.currentDirection = direction;
+    }
 };
 /**
  * Changes the map-objects's texture(s) according to the specified visual-id.
@@ -2224,6 +2234,9 @@ TRAVISO.ObjectView.prototype.changeVisual = function(vId, stopOnFirstFrame, noLo
     {
         this.container.gotoAndStop(0);
     }
+    
+    if (this.engine.config.objectUpdateCallback) { this.engine.config.objectUpdateCallback.call(this.engine.config.callbackScope, this); }
+    
     return true;
 };
 
@@ -2513,6 +2526,7 @@ TRAVISO.EngineView = function(config)
      * @property {Function} config.objectSelectCallback=null callback function that will be called when a tile with an interactive map-object on it is selected, default null
      * @property {Function} config.objectReachedDestinationCallback=null callback function that will be called when any moving object reaches its destination, default null
      * @property {Function} config.otherObjectsOnTheNextTileCallback=null callback function that will be called when any moving object is in move and there are other objects on the next tile, default null
+     * @property {Function} config.objectUpdateCallback=null callback function that will be called everytime an objects direction or position changed, default null
      * 
      * @private
      */
@@ -2663,6 +2677,11 @@ TRAVISO.EngineView = function(config)
     /** 
      * callback function that will be called when any moving object is in move and there are other objects on the next tile
      * @property {Function} otherObjectsOnTheNextTileCallback 
+     * @default null
+     */
+    /** 
+     * callback function that will be called everytime an objects direction or position changed
+     * @property {Function} objectUpdateCallback 
      * @default null
      */
     
@@ -3847,6 +3866,8 @@ TRAVISO.EngineView.prototype.checkForFollowCharacter = function(obj)
 
 TRAVISO.EngineView.prototype.checkForTileChange = function(obj) 
 {
+    if (this.config.objectUpdateCallback) { this.config.objectUpdateCallback.call(this.config.callbackScope, obj); }
+    
 	var pos = { x: obj.position.x, y: obj.position.y - this.TILE_HALF_H };
 	// var tile = this.tileArray[obj.mapPos.r][obj.mapPos.c];
 	var tile = this.tileArray[obj.currentTargetTile.mapPos.r][obj.currentTargetTile.mapPos.c];

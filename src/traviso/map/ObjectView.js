@@ -126,7 +126,15 @@ TRAVISO.ObjectView.prototype.changeVisualToDirection = function(direction, movin
         {
             throw new Error("no 'idle' visual defined as backup for object type " + this.type);
         }
+        else
+        {
+            this.currentDirection = TRAVISO.directions.O;
+        }
 	}
+    else
+    {
+        this.currentDirection = direction;
+    }
 };
 /**
  * Changes the map-objects's texture(s) according to the specified visual-id.
@@ -173,6 +181,9 @@ TRAVISO.ObjectView.prototype.changeVisual = function(vId, stopOnFirstFrame, noLo
     {
         this.container.gotoAndStop(0);
     }
+    
+    if (this.engine.config.objectUpdateCallback) { this.engine.config.objectUpdateCallback.call(this.engine.config.callbackScope, this); }
+    
     return true;
 };
 
