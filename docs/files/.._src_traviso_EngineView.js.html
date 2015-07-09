@@ -139,6 +139,7 @@ TRAVISO.EngineView = function(config)
      * @property {Number} config.initialPositionFrame.h height of the engine, default 600
      * 
      * @property {Number} config.pathFindingType=TRAVISO.pfAlgorithms.ASTAR_ORTHOGONAL the type of path finding algorithm two use, default TRAVISO.pfAlgorithms.ASTAR_ORTHOGONAL
+     * @property {Boolean} config.pathFindingClosest=false whether to return the path to the closest node if the target is unreachable, default false
      * 
      * @property {Boolean} config.followCharacter=true defines if the camera will follow the current controllable or not, default true
      * @property {Boolean} config.instantCameraRelocation=false specifies wheather the camera moves instantly or with a tween animation to the target location, default false
@@ -521,7 +522,14 @@ TRAVISO.EngineView.prototype.createMap = function()
      * @property {PathFinding} pathFinding
      * @private
      */
-	this.pathFinding = new TRAVISO.PathFinding(this.mapSizeC, this.mapSizeR, { diagonal: this.config.pathFinding === TRAVISO.pfAlgorithms.ASTAR_DIAGONAL });
+	this.pathFinding = new TRAVISO.PathFinding(
+        this.mapSizeC, 
+        this.mapSizeR,
+        {
+            diagonal: this.config.pathFindingType === TRAVISO.pfAlgorithms.ASTAR_DIAGONAL,
+            closest: this.config.pathFindingClosest
+        }
+    );
 	
    
 	

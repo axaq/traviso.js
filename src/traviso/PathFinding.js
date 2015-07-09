@@ -37,6 +37,7 @@ TRAVISO.PathFinding = function(mapSizeC, mapSizeR, options)
     this.nodes = [];
     this.diagonal = !!options.diagonal;
     this.heuristic = this.diagonal ? this.heuristics.diagonal : this.heuristics.manhattan;
+    this.closest = !!options.closest;
     this.grid = [];
     for (c = 0; c < mapSizeC; c++)
     {
@@ -220,7 +221,7 @@ TRAVISO.PathFinding.prototype.solve = function(originC, originR, destC, destR)
 {
 	var start = this.grid[originC][originR];
 	var end = this.grid[destC][destR];
-	var result = this.search(start, end, { heuristic: this.heuristic });
+	var result = this.search(start, end, { heuristic: this.heuristic, closest: this.closest });
 	return result && result.length > 0 ? result : null;
 };
 

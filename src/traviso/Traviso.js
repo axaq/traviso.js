@@ -95,6 +95,7 @@ TRAVISO.trace = function(s)
  * @param {Number} instanceConfig.initialPositionFrame.h height of the engine, default 600
  * 
  * @param {Number} [instanceConfig.pathFindingType=TRAVISO.pfAlgorithms.ASTAR_ORTHOGONAL] the type of path finding algorithm two use, default TRAVISO.pfAlgorithms.ASTAR_ORTHOGONAL
+ * @param {Boolean} [instanceConfig.pathFindingClosest=false] whether to return the path to the closest node if the target is unreachable, default false
  * 
  * @param {Boolean} [instanceConfig.followCharacter=true] defines if the camera will follow the current controllable or not, default true
  * @param {Boolean} [instanceConfig.instantCameraRelocation=false] specifies wheather the camera moves instantly or with a tween animation to the target location, default false

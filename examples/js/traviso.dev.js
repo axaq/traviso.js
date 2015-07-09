@@ -4,7 +4,7 @@
  * Copyright (c) 2015, Hakan Karlidag - @axaq
  * www.travisojs.com
  *
- * Compiled: 2015-07-02
+ * Compiled: 2015-07-08
  *
  * traviso.js is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license.php
@@ -114,6 +114,7 @@ TRAVISO.trace = function(s)
  * @param {Number} instanceConfig.initialPositionFrame.h height of the engine, default 600
  * 
  * @param {Number} [instanceConfig.pathFindingType=TRAVISO.pfAlgorithms.ASTAR_ORTHOGONAL] the type of path finding algorithm two use, default TRAVISO.pfAlgorithms.ASTAR_ORTHOGONAL
+ * @param {Boolean} [instanceConfig.pathFindingClosest=false] whether to return the path to the closest node if the target is unreachable, default false
  * 
  * @param {Boolean} [instanceConfig.followCharacter=true] defines if the camera will follow the current controllable or not, default true
  * @param {Boolean} [instanceConfig.instantCameraRelocation=false] specifies wheather the camera moves instantly or with a tween animation to the target location, default false
@@ -1521,6 +1522,7 @@ TRAVISO.PathFinding = function(mapSizeC, mapSizeR, options)
     this.nodes = [];
     this.diagonal = !!options.diagonal;
     this.heuristic = this.diagonal ? this.heuristics.diagonal : this.heuristics.manhattan;
+    this.closest = !!options.closest;
     this.grid = [];
     for (c = 0; c < mapSizeC; c++)
     {
@@ -1704,7 +1706,7 @@ TRAVISO.PathFinding.prototype.solve = function(originC, originR, destC, destR)
 {
 	var start = this.grid[originC][originR];
 	var end = this.grid[destC][destR];
-	var result = this.search(start, end, { heuristic: this.heuristic });
+	var result = this.search(start, end, { heuristic: this.heuristic, closest: this.closest });
 	return result && result.length > 0 ? result : null;
 };
 
@@ -2495,6 +2497,7 @@ TRAVISO.EngineView = function(config)
      * @property {Number} config.initialPositionFrame.h height of the engine, default 600
      * 
      * @property {Number} config.pathFindingType=TRAVISO.pfAlgorithms.ASTAR_ORTHOGONAL the type of path finding algorithm two use, default TRAVISO.pfAlgorithms.ASTAR_ORTHOGONAL
+     * @property {Boolean} config.pathFindingClosest=false whether to return the path to the closest node if the target is unreachable, default false
      * 
      * @property {Boolean} config.followCharacter=true defines if the camera will follow the current controllable or not, default true
      * @property {Boolean} config.instantCameraRelocation=false specifies wheather the camera moves instantly or with a tween animation to the target location, default false
@@ -2877,7 +2880,14 @@ TRAVISO.EngineView.prototype.createMap = function()
      * @property {PathFinding} pathFinding
      * @private
      */
-	this.pathFinding = new TRAVISO.PathFinding(this.mapSizeC, this.mapSizeR, { diagonal: this.config.pathFinding === TRAVISO.pfAlgorithms.ASTAR_DIAGONAL });
+	this.pathFinding = new TRAVISO.PathFinding(
+        this.mapSizeC, 
+        this.mapSizeR,
+        {
+            diagonal: this.config.pathFindingType === TRAVISO.pfAlgorithms.ASTAR_DIAGONAL,
+            closest: this.config.pathFindingClosest
+        }
+    );
 	
    
 	
