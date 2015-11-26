@@ -2,7 +2,7 @@
     "project": {
         "name": "traviso.js",
         "description": "Traviso.js - Isometric Javascript Engine",
-        "version": "0.0.6",
+        "version": "0.0.8",
         "url": "www.travisojs.com",
         "logo": "http://www.travisojs.com/img/logo_small.jpg"
     },
