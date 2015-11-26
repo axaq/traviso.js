@@ -37,12 +37,19 @@
                   ext:                Image file extension. i.e. png, jpg
                   number_of_frames:   Number of frames in an animation. if it is not an animation but a single texture, set it to 1.
                   start_number:       Starting number of the image name suffix. This is only used for animations where image names are in a numeric order like walk3.png, walk4.png ...
+                  ipoc:               Interaction-point column-offset for the visual.
+                  ipor:               Interaction-point row-offset for the visual.
+                
+                If you want to create an interaction point for a visual you can set interaction-point-offset by defining 'ipor' and 'ipoc' as row and column. This 
+                means when the you use methods like 'moveControllableToObj' the engine will move the controllable to this interaction points instead of just the nearest 
+                neighbouring tile. For instance, you can have characters interacting and you can allow your controllable character to interact with other characters 
+                depending on which way they are looking. 
                 
                 !!! NOTE 1:   Following ids are reserved, so for additional animations use different ids:
                               idle_s, idle_sw, idle_w, idle_nw, idle_n, idle_ne, idle_e, idle_se, move_s, move_sw, move_w, move_nw, move_n, move_ne, move_e, move_se
                 !!! NOTE 2:   'f' tags of a 'v' tag has priority over attributes defining animation sequences. So if you use both the engine will process only the 'f' tags.
                 !!! NOTE 3:   For an object, at minimum, one 'v' tag with the id "idle" is required. This will also be used as the initial visual (single texture or animation sequence)
-                              that will be applied to your object until you change it in your own logic.
+                              that will be applied to your object until you change it in your own logic. 
             -->
             <v id="idle">
                 <f>hero_stand_se_0001.png</f>
