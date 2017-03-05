@@ -73,7 +73,7 @@ TRAVISO.ObjectView = function(engine, objectType, animSpeed)
     
     this.currentInteractionOffset = this.interactionOffsets.idle;
 	
-    this.container = new PIXI.extras.MovieClip(this.textures.idle);
+    this.container = new PIXI.extras.AnimatedSprite(this.textures.idle);
     this.container.interactive = this.container.interactiveChildren = false;
     this.container.anchor.x = xAnchor;
     this.container.anchor.y = 1;

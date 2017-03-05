@@ -4,7 +4,7 @@
  * Copyright (c) 2015, Hakan Karlidag - @axaq
  * www.travisojs.com
  *
- * Compiled: 2015-11-26
+ * Compiled: 2017-03-05
  *
  * traviso.js is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license.php
@@ -42,7 +42,7 @@ var TRAVISO = TRAVISO || {};
  * @property {String} VERSION
  * @static
  */
-TRAVISO.VERSION = "v0.0.8";
+TRAVISO.VERSION = "v0.0.9";
 
 /**
  * The types of available path finding algorithms
@@ -895,62 +895,67 @@ TRAVISO.existy = function(value)
  */
 TRAVISO.MoveEngine = function(engine, defaultSpeed)
 {
-	/**
-	 * A reference to the engine view that uses this move engine.
-	 * @property {EngineView} engine
-	 * @protected
-	 */
+    /**
+     * A reference to the engine view that uses this move engine.
+     * @property {EngineView} engine
+     * @protected
+     */
     this.engine = engine;
     
     /**
-	 * The speed value to be used for object movements if not defined specifically.
-	 * @property {Number} DEFAULT_SPEED
-	 * @protected
-	 * @default 3
-	 */
+     * The speed value to be used for object movements if not defined specifically.
+     * @property {Number} DEFAULT_SPEED
+     * @protected
+     * @default 3
+     */
     this.DEFAULT_SPEED = defaultSpeed || 3;
     
     /**
-	 * Specifies if the move-engine will process the object movements.
-	 * @property {Boolean} activeForMovables
-	 * @protected
-	 */
+     * Specifies if the move-engine will process the object movements.
+     * @property {Boolean} activeForMovables
+     * @protected
+     */
     /**
-	 * Specifies if the move-engine will process the tweens.
-	 * @property {Boolean} activeForTweens
-	 * @protected
-	 */
-	/**
-	 * Specifies if the move-engine will process the tweens and object movements.
-	 * @property {Boolean} processFrame
-	 * @protected
-	 */
+     * Specifies if the move-engine will process the tweens.
+     * @property {Boolean} activeForTweens
+     * @protected
+     */
+    /**
+     * Specifies if the move-engine will process the tweens and object movements.
+     * @property {Boolean} processFrame
+     * @protected
+     */
     this.activeForMovables = false;
     this.activeForTweens = false;
     this.processFrame = true;
     
     /**
-	 * The list to store current map-objects in move.
-	 * @property {Array(ObjectView)} movables
-	 * @protected
-	 */
-	/**
-	 * The list to store targets for the current tweens.
-	 * @property {Array(Object)} tweenTargets
-	 * @protected
-	 */
+     * The list to store current map-objects in move.
+     * @property {Array(ObjectView)} movables
+     * @protected
+     */
+    /**
+     * The list to store targets for the current tweens.
+     * @property {Array(Object)} tweenTargets
+     * @protected
+     */
     this.movables = [];
     this.tweenTargets = [];
     
     /**
-	 * Used to calculate how many frames a tween will take to process.
-	 * @property {Number} fps
-	 * @protected
-	 */
+     * Used to calculate how many frames a tween will take to process.
+     * @property {Number} fps
+     * @protected
+     */
     this.fps = 60;
     
-    var scope = this;
-	requestAnimationFrame(function() { scope.run(); });
+    this.processFunc = this.run.bind(this);
+    this.ticker = new PIXI.ticker.Ticker();
+    this.ticker.add(this.processFunc);
+    this.ticker.start();
+
+    // var scope = this;
+    // requestAnimationFrame(function() { scope.run(); });
 };
 
 // constructor
@@ -970,60 +975,60 @@ TRAVISO.MoveEngine.constructor = TRAVISO.MoveEngine;
  */
 TRAVISO.MoveEngine.prototype.addTween = function(o, duration, vars, delay, easing, overwrite, onComplete)
 {
-	var v = null;
-	for (var prop in vars)
-	{
-		if (o[prop] !== vars[prop])
-		{
-			if (!v) { v = {}; }
-			v[prop] = { b: o[prop], c: vars[prop] - o[prop] };
-		}
-	}
-	
-	if (v)
-	{
-		var t = {
-			target : 		o,
-			duration : 		duration,
-			delay : 		Number(delay) || 0,
-			easingFunc : 	this.getEasingFunc(easing),
-			overwrite : 	overwrite || false,
-			onComplete : 	onComplete || null,
-			totalFrames : 	duration * this.fps,
-			currentFrame : 	0,
-			vars : 			v
-		};
-				
-	    var idx = this.tweenTargets.indexOf(o); 
-	    if (idx >= 0)
-	    {
-	    	var tweens = o.tweens;
-	    	if (!tweens)
-	    	{
-	    		tweens = [];
-	    	}
-	        if (t.overwrite)
-	        {
-	        	for (var i=0; i < tweens.length; i++)
-	        	{
-					tweens[i] = null;
-				}
-				tweens = [];
-	        }
-	        
-	        tweens[tweens.length] = t;
-	        o.tweens = tweens;
-	    }
-	    else
-	    {
-	    	o.tweens = [t];
-	    	this.tweenTargets[this.tweenTargets.length] = o;
-	    }
-	    
-	    if (this.tweenTargets.length > 0 && !this.activeForTweens)
-	    {
-	        this.activeForTweens = true;
-	    }
+    var v = null;
+    for (var prop in vars)
+    {
+        if (o[prop] !== vars[prop])
+        {
+            if (!v) { v = {}; }
+            v[prop] = { b: o[prop], c: vars[prop] - o[prop] };
+        }
+    }
+    
+    if (v)
+    {
+        var t = {
+            target : 		o,
+            duration : 		duration,
+            delay : 		Number(delay) || 0,
+            easingFunc : 	this.getEasingFunc(easing),
+            overwrite : 	overwrite || false,
+            onComplete : 	onComplete || null,
+            totalFrames : 	duration * this.fps,
+            currentFrame : 	0,
+            vars : 			v
+        };
+                
+        var idx = this.tweenTargets.indexOf(o); 
+        if (idx >= 0)
+        {
+            var tweens = o.tweens;
+            if (!tweens)
+            {
+                tweens = [];
+            }
+            if (t.overwrite)
+            {
+                for (var i=0; i < tweens.length; i++)
+                {
+                    tweens[i] = null;
+                }
+                tweens = [];
+            }
+            
+            tweens[tweens.length] = t;
+            o.tweens = tweens;
+        }
+        else
+        {
+            o.tweens = [t];
+            this.tweenTargets[this.tweenTargets.length] = o;
+        }
+        
+        if (this.tweenTargets.length > 0 && !this.activeForTweens)
+        {
+            this.activeForTweens = true;
+        }
     }
 };
 
@@ -1037,52 +1042,52 @@ TRAVISO.MoveEngine.prototype.addTween = function(o, duration, vars, delay, easin
  */
 TRAVISO.MoveEngine.prototype.removeTween = function(o, t)
 {
-	var targetRemoved = false;
-	
-	if (o && t)
-	{
-	    var idx = this.tweenTargets.indexOf(o); 
-	    if (idx >= 0)
-	    {
-	    	if (this.tweenTargets[idx].tweens && this.tweenTargets[idx].tweens.length > 0)
-	    	{
-	    		var tweens = this.tweenTargets[idx].tweens;
-	    		var idx2 = tweens.indexOf(t);
-	    		if (idx2 >= 0)
-	    		{
-			    	t.onComplete = null;
-					t.easingFunc = null;
-					t.target = null;
-					
-	    			tweens.splice(idx2, 1);
-	    			if (tweens.length === 0)
-				    {
-				        this.tweenTargets.splice(idx, 1);
-				        targetRemoved = true;
-				    }
-	    		}
-	    		else
-	    		{
-	    			throw new Error("No tween defined for this object");
-	    		}
-	    	}
-	    	else
-	    	{
-	    		throw new Error("No tween defined for this object");
-	    	}
-	    }
-	    else
-	    {
-	    	throw new Error("No tween target defined for this object");
-	    }
-	    
-	    if (this.tweenTargets.length === 0)
-	    {
-	        this.activeForTweens = false;
-	    }
-	}
-	
-	return targetRemoved;
+    var targetRemoved = false;
+    
+    if (o && t)
+    {
+        var idx = this.tweenTargets.indexOf(o); 
+        if (idx >= 0)
+        {
+            if (this.tweenTargets[idx].tweens && this.tweenTargets[idx].tweens.length > 0)
+            {
+                var tweens = this.tweenTargets[idx].tweens;
+                var idx2 = tweens.indexOf(t);
+                if (idx2 >= 0)
+                {
+                    t.onComplete = null;
+                    t.easingFunc = null;
+                    t.target = null;
+                    
+                    tweens.splice(idx2, 1);
+                    if (tweens.length === 0)
+                    {
+                        this.tweenTargets.splice(idx, 1);
+                        targetRemoved = true;
+                    }
+                }
+                else
+                {
+                    throw new Error("No tween defined for this object");
+                }
+            }
+            else
+            {
+                throw new Error("No tween defined for this object");
+            }
+        }
+        else
+        {
+            throw new Error("No tween target defined for this object");
+        }
+        
+        if (this.tweenTargets.length === 0)
+        {
+            this.activeForTweens = false;
+        }
+    }
+    
+    return targetRemoved;
 };
 
 /**
@@ -1094,27 +1099,27 @@ TRAVISO.MoveEngine.prototype.removeTween = function(o, t)
  */
 TRAVISO.MoveEngine.prototype.killTweensOf = function(o)
 {
-	var targetRemoved = false;
-	
-	var idx = this.tweenTargets.indexOf(o); 
+    var targetRemoved = false;
+    
+    var idx = this.tweenTargets.indexOf(o); 
     if (idx >= 0)
     {
-    	if (this.tweenTargets[idx].tweens && this.tweenTargets[idx].tweens.length > 0)
-    	{
-    		var tweens = this.tweenTargets[idx].tweens;
-    		for (var j=0; j < tweens.length; j++)
-	    	{
-				tweens[j].onComplete = null;
-				tweens[j].easingFunc = null;
-				tweens[j].target = null;
-				tweens[j] = null;
-			}
-	    	this.tweenTargets[idx].tweens = null;
-	    }
-    	
-    	this.tweenTargets.splice(idx, 1);
-    	
-    	targetRemoved = true;
+        if (this.tweenTargets[idx].tweens && this.tweenTargets[idx].tweens.length > 0)
+        {
+            var tweens = this.tweenTargets[idx].tweens;
+            for (var j=0; j < tweens.length; j++)
+            {
+                tweens[j].onComplete = null;
+                tweens[j].easingFunc = null;
+                tweens[j].target = null;
+                tweens[j] = null;
+            }
+            this.tweenTargets[idx].tweens = null;
+        }
+        
+        this.tweenTargets.splice(idx, 1);
+        
+        targetRemoved = true;
     }
     
     if (this.tweenTargets.length === 0)
@@ -1132,21 +1137,21 @@ TRAVISO.MoveEngine.prototype.killTweensOf = function(o)
  */
 TRAVISO.MoveEngine.prototype.removeAllTweens = function()
 {
-	this.activeForTweens = false;
-	
+    this.activeForTweens = false;
+    
     var tweens, i, j, len = this.tweenTargets.length; 
     for (i=0; i < len; i++)
     {
-    	tweens = this.tweenTargets[i].tweens;
-    	for (j=0; j < tweens.length; j++)
-    	{
-			tweens[j].onComplete = null;
-			tweens[j].easingFunc = null;
-			tweens[j].target = null;
-			tweens[j] = null;
-		}
-    	this.tweenTargets[i].tweens = null;
-    	this.tweenTargets[i] = null;
+        tweens = this.tweenTargets[i].tweens;
+        for (j=0; j < tweens.length; j++)
+        {
+            tweens[j].onComplete = null;
+            tweens[j].easingFunc = null;
+            tweens[j].target = null;
+            tweens[j] = null;
+        }
+        this.tweenTargets[i].tweens = null;
+        this.tweenTargets[i] = null;
     }
     
     this.tweenTargets = [];
@@ -1160,7 +1165,7 @@ TRAVISO.MoveEngine.prototype.removeAllTweens = function()
  */
 TRAVISO.MoveEngine.prototype.addMovable = function(o)
 {
-	if (this.movables.indexOf(o) >= 0)
+    if (this.movables.indexOf(o) >= 0)
     {
         return;
     }
@@ -1187,7 +1192,7 @@ TRAVISO.MoveEngine.prototype.addMovable = function(o)
  */
 TRAVISO.MoveEngine.prototype.removeMovable = function(o)
 {
-	var idx = this.movables.indexOf(o); 
+    var idx = this.movables.indexOf(o); 
     if (idx !== -1)
     {
         o.speedUnit = { x: 0, y: 0 };
@@ -1211,12 +1216,12 @@ TRAVISO.MoveEngine.prototype.removeMovable = function(o)
  */
 TRAVISO.MoveEngine.prototype.removeAllMovables = function()
 {
-	this.activeForMovables = false;
-	
+    this.activeForMovables = false;
+    
     var len = this.movables.length; 
     for (var i=0; i < len; i++)
     {
-    	this.movables[i] = null;
+        this.movables[i] = null;
     }
     
     this.movables = [];
@@ -1232,11 +1237,11 @@ TRAVISO.MoveEngine.prototype.removeAllMovables = function()
  */
 TRAVISO.MoveEngine.prototype.addNewPathToObject = function(o, path, speed)
 {
-	if (o.currentPath && o.currentTarget)
-	{
-		path[path.length] = o.currentPath[o.currentPathStep];
-	}
-	o.currentPath = path;
+    if (o.currentPath && o.currentTarget)
+    {
+        path[path.length] = o.currentPath[o.currentPathStep];
+    }
+    o.currentPath = path;
     o.currentPathStep = o.currentPath.length - 1;
     o.speedMagnitude = speed || o.speedMagnitude || this.DEFAULT_SPEED;
 };
@@ -1286,22 +1291,22 @@ TRAVISO.MoveEngine.prototype.setMoveParameters = function(o, pos)
  */
 TRAVISO.MoveEngine.prototype.getEasingFunc = function (e)
 {
-	if (e === "easeInOut" || e === "easeInOutQuad" || e === "Quad.easeInOut")
-	{
-		return this.easeInOutQuad;
-	}
-	else if (e === "easeIn" || e === "easeInQuad" || e === "Quad.easeIn")
-	{
-		return this.easeInQuad;
-	}
-	else if (e === "easeOut" || e === "easeOutQuad" || e === "Quad.easeOut")
-	{
-		return this.easeOutQuad;
-	}
-	else
-	{
-		return this.linearTween;
-	}
+    if (e === "easeInOut" || e === "easeInOutQuad" || e === "Quad.easeInOut")
+    {
+        return this.easeInOutQuad;
+    }
+    else if (e === "easeIn" || e === "easeInQuad" || e === "Quad.easeIn")
+    {
+        return this.easeInQuad;
+    }
+    else if (e === "easeOut" || e === "easeOutQuad" || e === "Quad.easeOut")
+    {
+        return this.easeOutQuad;
+    }
+    else
+    {
+        return this.linearTween;
+    }
 };
 /**
  * Linear tween calculation.
@@ -1315,7 +1320,7 @@ TRAVISO.MoveEngine.prototype.getEasingFunc = function (e)
  * @return {Number} result of the calculation
  */
 TRAVISO.MoveEngine.prototype.linearTween = function (t, b, c, d) {
-	return c*t/d + b;
+    return c*t/d + b;
 };
 /**
  * Quadratic ease-in tween calculation.
@@ -1329,8 +1334,8 @@ TRAVISO.MoveEngine.prototype.linearTween = function (t, b, c, d) {
  * @return {Number} result of the calculation
  */
 TRAVISO.MoveEngine.prototype.easeInQuad = function (t, b, c, d) {
-	t /= d;
-	return c*t*t + b;
+    t /= d;
+    return c*t*t + b;
 };
 /**
  * Quadratic ease-out tween calculation.
@@ -1344,8 +1349,8 @@ TRAVISO.MoveEngine.prototype.easeInQuad = function (t, b, c, d) {
  * @return {Number} result of the calculation
  */
 TRAVISO.MoveEngine.prototype.easeOutQuad = function (t, b, c, d) {
-	t /= d;
-	return -c * t*(t-2) + b;
+    t /= d;
+    return -c * t*(t-2) + b;
 };
 /**
  * Quadratic ease-in-out tween calculation.
@@ -1359,10 +1364,10 @@ TRAVISO.MoveEngine.prototype.easeOutQuad = function (t, b, c, d) {
  * @return {Number} result of the calculation
  */
 TRAVISO.MoveEngine.prototype.easeInOutQuad = function (t, b, c, d) {
-	t /= d/2;
-	if (t < 1) { return c/2*t*t + b; }
-	t--;
-	return -c/2 * (t*(t-2) - 1) + b;
+    t /= d/2;
+    if (t < 1) { return c/2*t*t + b; }
+    t--;
+    return -c/2 * (t*(t-2) - 1) + b;
 };
 
 /**
@@ -1377,91 +1382,91 @@ TRAVISO.MoveEngine.prototype.run = function()
     
     if (this.processFrame)
     {
-    	var len, o, i;
+        var len, o, i;
         if (this.activeForMovables)
         {
             len = this.movables.length;
-    	    
-    	    var dist; 
-    	    for (i=0; i < len; i++)
-    	    {
-    	        o = this.movables[i];
-    	        
-    	        // move object
-    	        
-    	        // speed vector (magnitude and direction)
-    	        
-    	        o.prevPosition = { x: o.position.x, y: o.position.y };
-    	        
-    	        // check for target reach
-    	        if (o.currentTarget)
-    	        {
-    	            dist = TRAVISO.getDist(o.position, o.currentTarget);
-    	            if (dist <= o.currentReachThresh)
-    	            {
-    	                // reached to the target
-    	                o.position.x = o.currentTarget.x;
-    	                o.position.y = o.currentTarget.y;
-    	                
-    	                this.engine.onObjMoveStepEnd(o);
-    	                i--; len--;
-    	                continue; 
-    	            }
-    	        }
-    	        
-    	        o.position.x += o.speedMagnitude * o.speedUnit.x;
-    	        o.position.y += o.speedMagnitude * o.speedUnit.y;
-    	        
-    	        // check for tile change
-    	        this.engine.checkForTileChange(o);
-				this.engine.checkForFollowCharacter(o);
-    	        
-    	        // check for direction change
-    	        
-    	    }
-    	    
-    	    // will need a different loop to process crashes 
-    	    // for (i=0; i < len; i++)
-    	    // {
-    	        // o = this.movables[i];
-    	    // }
-    	}
-    	
-    	if (this.activeForTweens)
-        {   
-        	// and a loop for tween animations
-    	    len = this.tweenTargets.length;
-    	    var t, tweens, j, vars;
-    	    for (i=0; i < len; i++)
-    	    {
-    	        o = this.tweenTargets[i];
-    	        tweens = o.tweens;
-    	        for (j=0; j < tweens.length; j++)
-    	        {
-					t = tweens[j];
-					t.currentFrame++;
-					vars = t.vars;
-					for (var prop in vars)
-					{
-					    o[prop] = t.easingFunc(t.currentFrame, vars[prop].b, vars[prop].c, t.totalFrames);
-					}
-					
-					if (t.currentFrame >= t.totalFrames)
-					{
-						if (t.onComplete) { t.onComplete(); }
-						if (this.removeTween(o, t)) 
-						{
-							i--; len--;
-						}
-						j--;
-					}
-				}
-    	        
-    	    }
+            
+            var dist; 
+            for (i=0; i < len; i++)
+            {
+                o = this.movables[i];
+                
+                // move object
+                
+                // speed vector (magnitude and direction)
+                
+                o.prevPosition = { x: o.position.x, y: o.position.y };
+                
+                // check for target reach
+                if (o.currentTarget)
+                {
+                    dist = TRAVISO.getDist(o.position, o.currentTarget);
+                    if (dist <= o.currentReachThresh)
+                    {
+                        // reached to the target
+                        o.position.x = o.currentTarget.x;
+                        o.position.y = o.currentTarget.y;
+                        
+                        this.engine.onObjMoveStepEnd(o);
+                        i--; len--;
+                        continue; 
+                    }
+                }
+                
+                o.position.x += o.speedMagnitude * o.speedUnit.x;
+                o.position.y += o.speedMagnitude * o.speedUnit.y;
+                
+                // check for tile change
+                this.engine.checkForTileChange(o);
+                this.engine.checkForFollowCharacter(o);
+                
+                // check for direction change
+                
+            }
+            
+            // will need a different loop to process crashes 
+            // for (i=0; i < len; i++)
+            // {
+                // o = this.movables[i];
+            // }
         }
         
-        var scope = this;
-        requestAnimationFrame(function() { scope.run(); });
+        if (this.activeForTweens)
+        {   
+            // and a loop for tween animations
+            len = this.tweenTargets.length;
+            var t, tweens, j, vars;
+            for (i=0; i < len; i++)
+            {
+                o = this.tweenTargets[i];
+                tweens = o.tweens;
+                for (j=0; j < tweens.length; j++)
+                {
+                    t = tweens[j];
+                    t.currentFrame++;
+                    vars = t.vars;
+                    for (var prop in vars)
+                    {
+                        o[prop] = t.easingFunc(t.currentFrame, vars[prop].b, vars[prop].c, t.totalFrames);
+                    }
+                    
+                    if (t.currentFrame >= t.totalFrames)
+                    {
+                        if (t.onComplete) { t.onComplete(); }
+                        if (this.removeTween(o, t)) 
+                        {
+                            i--; len--;
+                        }
+                        j--;
+                    }
+                }
+                
+            }
+        }
+        
+        // var scope = this;
+        // requestAnimationFrame(function() { scope.run(); });
     }
 };
 
@@ -1475,12 +1480,15 @@ TRAVISO.MoveEngine.prototype.destroy = function()
     TRAVISO.trace("MoveEngine destroy");
     
     this.processFrame = false;
+
+    if (this.ticker) { this.ticker.stop(); }
     
-	this.removeAllMovables();
-	this.removeAllTweens();
-	this.movables = null;
-	this.tweenTargets = null;
-	this.engine = null;
+    this.removeAllMovables();
+    this.removeAllTweens();
+    this.movables = null;
+    this.tweenTargets = null;
+    this.engine = null;
+    this.ticker = null;
 };
 
 /**
@@ -2128,7 +2136,7 @@ TRAVISO.ObjectView = function(engine, objectType, animSpeed)
     
     this.currentInteractionOffset = this.interactionOffsets.idle;
 	
-    this.container = new PIXI.extras.MovieClip(this.textures.idle);
+    this.container = new PIXI.extras.AnimatedSprite(this.textures.idle);
     this.container.interactive = this.container.interactiveChildren = false;
     this.container.anchor.x = xAnchor;
     this.container.anchor.y = 1;
@@ -2318,7 +2326,7 @@ TRAVISO.TileView = function(engine, tileType)
 
     if (tileInfo.t.length > 0)
     {
-        this.tileGraphics = new PIXI.extras.MovieClip(tileInfo.t);
+        this.tileGraphics = new PIXI.extras.AnimatedSprite(tileInfo.t);
         this.tileGraphics.anchor.x = 0.5;
         this.tileGraphics.anchor.y = 0.5;
         this.addChild(this.tileGraphics);
@@ -2369,7 +2377,7 @@ TRAVISO.TileView = function(engine, tileType)
     this.highlightedOverlay.scale.x = this.highlightedOverlay.scale.y = 0.1;
     this.highlightedOverlay.visible = false;
 
-    this.highlightedOverlay.scale.scope = this.highlightedOverlay;
+    this.highlightedOverlay.scale.tweenScope = this.highlightedOverlay;
     this.highlightedOverlay.scale.isHighlighted = this.isHighlighted = false;
 };
 
@@ -2426,7 +2434,7 @@ TRAVISO.TileView.prototype.setHighlighted = function(isHighlighted, instant)
     	    	true, 
     	    	function()
                 {
-                    this.target.scope.visible = this.target.isHighlighted;
+                    this.target.tweenScope.visible = this.target.isHighlighted;
                 }
             );
             // @formatter:on
@@ -2448,7 +2456,7 @@ TRAVISO.TileView.prototype.destroy = function()
             this.engine.moveEngine.killTweensOf(this.highlightedOverlay.scale);
         }
         this.engine = null;
-        this.highlightedOverlay.scale.scope = null;
+        this.highlightedOverlay.scale.tweenScope = null;
         this.highlightedOverlay = null;
         this.tileGraphics = null;
     }

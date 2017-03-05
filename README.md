@@ -80,32 +80,21 @@ This will create a minified version at bin/traviso.js and a non-minified version
 
 ```javascript
 
-	// create an new instance of a pixi container
-	stage = new PIXI.Container();
+    // Here, we initialize the pixi application
+    var pixiRoot = new PIXI.Application(800, 600, { backgroundColor : 0xFFFFFF });
 
-	// create a renderer instance
-	renderer = PIXI.autoDetectRenderer(800, 600, { backgroundColor : 0xFFFFFF });
-
-	// add the renderer view element to the DOM
-	document.body.appendChild(renderer.view);
-	
-	onFrame();
-	
-	// Global on-frame renderer function
-	function onFrame() {
-		renderer.render(stage);
-		requestAnimationFrame(onFrame); 
-	}
-	
-	// engine-instance configuration object
-	var instanceConfig = {
-    	mapDataPath : "mapData.xml", // the path to the xml file that defines map data, required
+    // add the renderer view element to the DOM
+    document.body.appendChild(pixiRoot.view);
+    
+    // engine-instance configuration object
+    var instanceConfig = {
+        mapDataPath : "mapData.xml", // the path to the xml file that defines map data, required
         assetsToLoad : ["../assets/spritesheet.json", "../assets/house.png"], // array of paths to the assets that are desired to be loaded by traviso, no need to use if assets are already loaded to PIXI cache, default null
     };
     
     // initialize traviso instance and add it to the stage
     var engine = TRAVISO.getEngineInstance(instanceConfig);
-    stage.addChild(engine);
+    pixiRoot.stage.addChild(engine);
 
 ```
 

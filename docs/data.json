@@ -3693,7 +3693,7 @@
         },
         {
             "file": "../src/traviso/MoveEngine.js",
-            "line": 77,
+            "line": 82,
             "description": "Adds a single tween for the given object.",
             "itemtype": "method",
             "name": "addTween",
@@ -3746,7 +3746,7 @@
         },
         {
             "file": "../src/traviso/MoveEngine.js",
-            "line": 148,
+            "line": 153,
             "description": "Removes a single tween from the given object.",
             "itemtype": "method",
             "name": "removeTween",
@@ -3770,7 +3770,7 @@
         },
         {
             "file": "../src/traviso/MoveEngine.js",
-            "line": 206,
+            "line": 211,
             "description": "Removes and kills all tweens assigned to the given object.",
             "itemtype": "method",
             "name": "killTweensOf",
@@ -3789,7 +3789,7 @@
         },
         {
             "file": "../src/traviso/MoveEngine.js",
-            "line": 246,
+            "line": 251,
             "description": "Removes and kills all the tweens in operation currently.",
             "itemtype": "method",
             "name": "removeAllTweens",
@@ -3797,7 +3797,7 @@
         },
         {
             "file": "../src/traviso/MoveEngine.js",
-            "line": 273,
+            "line": 278,
             "description": "Adds a map-object as movable to the engine.",
             "itemtype": "method",
             "name": "addMovable",
@@ -3812,7 +3812,7 @@
         },
         {
             "file": "../src/traviso/MoveEngine.js",
-            "line": 299,
+            "line": 304,
             "description": "Removes a map-object from the current movables list.",
             "itemtype": "method",
             "name": "removeMovable",
@@ -3831,7 +3831,7 @@
         },
         {
             "file": "../src/traviso/MoveEngine.js",
-            "line": 325,
+            "line": 330,
             "description": "Removes all movables.",
             "itemtype": "method",
             "name": "removeAllMovables",
@@ -3839,7 +3839,7 @@
         },
         {
             "file": "../src/traviso/MoveEngine.js",
-            "line": 343,
+            "line": 348,
             "description": "Changes the current path of a map-object.",
             "itemtype": "method",
             "name": "addNewPathToObject",
@@ -3866,7 +3866,7 @@
         },
         {
             "file": "../src/traviso/MoveEngine.js",
-            "line": 362,
+            "line": 367,
             "description": "Prepares a map-object for movement.",
             "itemtype": "method",
             "name": "prepareForMove",
@@ -3893,7 +3893,7 @@
         },
         {
             "file": "../src/traviso/MoveEngine.js",
-            "line": 377,
+            "line": 382,
             "description": "Sets movement specific parameters for the map-object according to target location.",
             "itemtype": "method",
             "name": "setMoveParameters",
@@ -3925,7 +3925,7 @@
         },
         {
             "file": "../src/traviso/MoveEngine.js",
-            "line": 397,
+            "line": 402,
             "description": "Returns the proper easing method to use depending on the easing id specified.",
             "itemtype": "method",
             "name": "getEasingFunc",
@@ -3946,7 +3946,7 @@
         },
         {
             "file": "../src/traviso/MoveEngine.js",
-            "line": 424,
+            "line": 429,
             "description": "Linear tween calculation.",
             "itemtype": "method",
             "name": "linearTween",
@@ -3982,7 +3982,7 @@
         },
         {
             "file": "../src/traviso/MoveEngine.js",
-            "line": 438,
+            "line": 443,
             "description": "Quadratic ease-in tween calculation.",
             "itemtype": "method",
             "name": "easeInQuad",
@@ -4018,7 +4018,7 @@
         },
         {
             "file": "../src/traviso/MoveEngine.js",
-            "line": 453,
+            "line": 458,
             "description": "Quadratic ease-out tween calculation.",
             "itemtype": "method",
             "name": "easeOutQuad",
@@ -4054,7 +4054,7 @@
         },
         {
             "file": "../src/traviso/MoveEngine.js",
-            "line": 468,
+            "line": 473,
             "description": "Quadratic ease-in-out tween calculation.",
             "itemtype": "method",
             "name": "easeInOutQuad",
@@ -4090,7 +4090,7 @@
         },
         {
             "file": "../src/traviso/MoveEngine.js",
-            "line": 486,
+            "line": 491,
             "description": "Methid that precesses a single frame.",
             "itemtype": "method",
             "name": "run",
@@ -4100,7 +4100,7 @@
         },
         {
             "file": "../src/traviso/MoveEngine.js",
-            "line": 586,
+            "line": 591,
             "description": "Clears all references and stops all animations and tweens.",
             "itemtype": "method",
             "name": "destroy",

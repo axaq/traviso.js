@@ -23,7 +23,7 @@ var TRAVISO = TRAVISO || {};
  * @property {String} VERSION
  * @static
  */
-TRAVISO.VERSION = "v0.0.8";
+TRAVISO.VERSION = "v0.0.9";
 
 /**
  * The types of available path finding algorithms

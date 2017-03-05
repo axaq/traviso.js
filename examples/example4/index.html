@@ -3,49 +3,35 @@
     <head>
         <title>Traviso.js - Example 4 - Camera Controls</title>
         <style>
-			body {
-				margin: 0;
-				padding: 0;
-				background-color: #000000;
-			}
-		</style>
-		
-		<script src="../js/pixi.js"></script>
-		<script src="../js/traviso.dev.js"></script>
+            body {
+                margin: 0;
+                padding: 0;
+                background-color: #000000;
+            }
+        </style>
+        
+        <script src="../js/pixi.js"></script>
+        <script src="../js/traviso.dev.js"></script>
     </head>
     <body>
-    	<script>
+        <script>
 
-	////// Global on-frame renderer function
-	function update() 
-	{
-		renderer.render(stage);
-		requestAnimationFrame(update); 
-	}
-	
-	////// Here, we initialize the pixi stage
-	
-	// create an new instance of a pixi container
-	stage = new PIXI.Container();
+    ////// Here, we initialize the pixi application
+    var pixiRoot = new PIXI.Application(800, 600, { backgroundColor : 0x6BACDE });
 
-	// create a renderer instance
-	renderer = PIXI.autoDetectRenderer(800, 600, { backgroundColor : 0x6BACDE });
-	
-	// add the renderer view element to the DOM
-	document.body.appendChild(renderer.view);
-	
-	update();
-	
-	////// Here, we create our traviso instance and add on top of pixi
-	
-	// engine-instance configuration object
-	var instanceConfig =
+    // add the renderer view element to the DOM
+    document.body.appendChild(pixiRoot.view);
+    
+    ////// Here, we create our traviso instance and add on top of pixi
+    
+    // engine-instance configuration object
+    var instanceConfig =
     {
-    	mapDataPath : "mapData.xml", // the path to the xml file that defines map data, required
+        mapDataPath : "mapData.xml", // the path to the xml file that defines map data, required
         assetsToLoad : ["../assets/assets_map.json", "../assets/assets_characters.json", "../assets/btn_centralize.png", "../assets/btn_zoomIn.png", "../assets/btn_zoomOut.png", "../assets/btn_centralizeToObject.png", "../assets/btn_focusToObject.png"],
         
         callbackScope : this, // the scope to apply when calling callback functions, default null
-		engineInstanceReadyCallback : this.onEngineInstanceReady // callback function that will be called once everything is loaded and engine instance is ready, needs "callbackScope" property, default null
+        engineInstanceReadyCallback : this.onEngineInstanceReady // callback function that will be called once everything is loaded and engine instance is ready, needs "callbackScope" property, default null
     };
     
     var engine = TRAVISO.getEngineInstance(instanceConfig);
@@ -53,64 +39,64 @@
     // this method will be called when the engine is ready
     function onEngineInstanceReady()
     {
-    	stage.addChild(engine);
-    	
-    	// create buttons
-    	var btnZoomIn = new PIXI.Sprite.fromFrame("../assets/btn_zoomIn.png");
-	    stage.addChild(btnZoomIn);
-	    
-	    var btnZoomOut = new PIXI.Sprite.fromFrame("../assets/btn_zoomOut.png");
-	    stage.addChild(btnZoomOut);
-	    
-	    var btnCentralize = new PIXI.Sprite.fromFrame("../assets/btn_centralize.png");
-	    stage.addChild(btnCentralize);
-	    
-	    var btnCentralizeToObject = new PIXI.Sprite.fromFrame("../assets/btn_centralizeToObject.png");
-	    stage.addChild(btnCentralizeToObject);
-	    
-	    var btnFocusMapToObject = new PIXI.Sprite.fromFrame("../assets/btn_focusToObject.png");
-	    stage.addChild(btnFocusMapToObject);
-	    
-	    // set positions
-	    btnZoomIn.position.x = 8;
-	    btnZoomOut.position.x = btnZoomIn.position.x + btnZoomIn.width + 8;
-	    btnCentralize.position.x = btnZoomOut.position.x + btnZoomOut.width + 8;
-	    btnCentralizeToObject.position.x = btnCentralize.position.x + btnCentralize.width + 8;
-	    btnFocusMapToObject.position.x = btnCentralizeToObject.position.x + btnCentralizeToObject.width + 8;
-	    
-	    btnZoomIn.interactive = btnZoomIn.buttonMode = true;
-	    btnZoomOut.interactive = btnZoomOut.buttonMode = true;
-	    btnCentralize.interactive = btnCentralize.buttonMode = true;
-	    btnCentralizeToObject.interactive = btnCentralizeToObject.buttonMode = true;
-	    btnFocusMapToObject.interactive = btnFocusMapToObject.buttonMode = true;
-	    
-	    // add click callbacks
-	    btnZoomIn.click = btnZoomIn.tap = function(data)
-		{
-		    engine.zoomIn();
-		};
-		
-		btnZoomOut.click = btnZoomOut.tap = function(data)
-		{
-		    engine.zoomOut();
-		};
-		
-		btnCentralize.click = btnCentralize.tap = function(data)
-		{
-		    engine.centralizeToCurrentExternalCenter();
-		};
-		
-		btnCentralizeToObject.click = btnCentralizeToObject.tap = function(data)
-		{
-		    engine.centralizeToObject(engine.getCurrentControllable());
-		};
-		
-		btnFocusMapToObject.click = btnFocusMapToObject.tap = function(data)
-		{
-		    engine.focusMapToObject(engine.getCurrentControllable());
-		};
+        pixiRoot.stage.addChild(engine);
+        
+        // create buttons
+        var btnZoomIn = new PIXI.Sprite.fromFrame("../assets/btn_zoomIn.png");
+        pixiRoot.stage.addChild(btnZoomIn);
+        
+        var btnZoomOut = new PIXI.Sprite.fromFrame("../assets/btn_zoomOut.png");
+        pixiRoot.stage.addChild(btnZoomOut);
+        
+        var btnCentralize = new PIXI.Sprite.fromFrame("../assets/btn_centralize.png");
+        pixiRoot.stage.addChild(btnCentralize);
+        
+        var btnCentralizeToObject = new PIXI.Sprite.fromFrame("../assets/btn_centralizeToObject.png");
+        pixiRoot.stage.addChild(btnCentralizeToObject);
+        
+        var btnFocusMapToObject = new PIXI.Sprite.fromFrame("../assets/btn_focusToObject.png");
+        pixiRoot.stage.addChild(btnFocusMapToObject);
+        
+        // set positions
+        btnZoomIn.position.x = 8;
+        btnZoomOut.position.x = btnZoomIn.position.x + btnZoomIn.width + 8;
+        btnCentralize.position.x = btnZoomOut.position.x + btnZoomOut.width + 8;
+        btnCentralizeToObject.position.x = btnCentralize.position.x + btnCentralize.width + 8;
+        btnFocusMapToObject.position.x = btnCentralizeToObject.position.x + btnCentralizeToObject.width + 8;
+        
+        btnZoomIn.interactive = btnZoomIn.buttonMode = true;
+        btnZoomOut.interactive = btnZoomOut.buttonMode = true;
+        btnCentralize.interactive = btnCentralize.buttonMode = true;
+        btnCentralizeToObject.interactive = btnCentralizeToObject.buttonMode = true;
+        btnFocusMapToObject.interactive = btnFocusMapToObject.buttonMode = true;
+        
+        // add click callbacks
+        btnZoomIn.click = btnZoomIn.tap = function(data)
+        {
+            engine.zoomIn();
+        };
+        
+        btnZoomOut.click = btnZoomOut.tap = function(data)
+        {
+            engine.zoomOut();
+        };
+        
+        btnCentralize.click = btnCentralize.tap = function(data)
+        {
+            engine.centralizeToCurrentExternalCenter();
+        };
+        
+        btnCentralizeToObject.click = btnCentralizeToObject.tap = function(data)
+        {
+            engine.centralizeToObject(engine.getCurrentControllable());
+        };
+        
+        btnFocusMapToObject.click = btnFocusMapToObject.tap = function(data)
+        {
+            engine.focusMapToObject(engine.getCurrentControllable());
+        };
     }
 
-		</script>
+        </script>
     </body>
 </html>
