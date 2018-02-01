@@ -57,6 +57,15 @@
             "fors": {},
             "namespaces": {}
         },
+        "../src/traviso/MapMethods.1.js": {
+            "name": "../src/traviso/MapMethods.1.js",
+            "modules": {},
+            "classes": {},
+            "fors": {
+                "TRAVISO": 1
+            },
+            "namespaces": {}
+        },
         "../src/traviso/MapMethods.js": {
             "name": "../src/traviso/MapMethods.js",
             "modules": {},
@@ -347,27 +356,24 @@
         {
             "file": "../src/traviso/map/ObjectView.js",
             "line": 41,
-            "description": "The size of the map-object in terms of rows and columns.",
+            "description": "Number of tiles that map-object covers horizontally on the isometric map",
             "itemtype": "property",
-            "name": "size",
-            "type": "Object",
-            "class": "ObjectView",
-            "subprops": [
-                {
-                    "name": "r",
-                    "description": "",
-                    "type": "Number"
-                },
-                {
-                    "name": "c",
-                    "description": "",
-                    "type": "Number"
-                }
-            ]
+            "name": "columnSpan",
+            "type": "Number",
+            "class": "ObjectView"
         },
         {
             "file": "../src/traviso/map/ObjectView.js",
-            "line": 61,
+            "line": 45,
+            "description": "Number of tiles that map-object covers vertically on the isometric map",
+            "itemtype": "property",
+            "name": "rowSpan",
+            "type": "Number",
+            "class": "ObjectView"
+        },
+        {
+            "file": "../src/traviso/map/ObjectView.js",
+            "line": 59,
             "description": "A dictionary for all the textures defined for the map-object.",
             "itemtype": "property",
             "name": "textures",
@@ -378,7 +384,7 @@
         },
         {
             "file": "../src/traviso/map/ObjectView.js",
-            "line": 67,
+            "line": 65,
             "description": "A dictionary for interaction offset points for each visual if defined in the map data file.",
             "itemtype": "property",
             "name": "interactionOffsets",
@@ -389,7 +395,7 @@
         },
         {
             "file": "../src/traviso/map/ObjectView.js",
-            "line": 84,
+            "line": 82,
             "description": "The height of the object in the first frame of its idle textures.",
             "itemtype": "property",
             "name": "firstTextureHeight",
@@ -400,7 +406,7 @@
         },
         {
             "file": "../src/traviso/map/ObjectView.js",
-            "line": 96,
+            "line": 94,
             "description": "Animation speed for the movieclips included in the map-object visuals.",
             "itemtype": "property",
             "name": "animSpeed",
@@ -410,7 +416,7 @@
         },
         {
             "file": "../src/traviso/map/ObjectView.js",
-            "line": 110,
+            "line": 108,
             "description": "Changes the map-objects's texture(s) according to the specified direction-id and the state of the map-object (moving or stationary).",
             "itemtype": "method",
             "name": "changeVisualToDirection",
@@ -460,7 +466,7 @@
         },
         {
             "file": "../src/traviso/map/ObjectView.js",
-            "line": 139,
+            "line": 137,
             "description": "Changes the map-objects's texture(s) according to the specified visual-id.",
             "itemtype": "method",
             "name": "changeVisual",
@@ -505,7 +511,7 @@
         },
         {
             "file": "../src/traviso/map/ObjectView.js",
-            "line": 190,
+            "line": 188,
             "description": "Clears all references.",
             "itemtype": "method",
             "name": "destroy",
@@ -571,7 +577,7 @@
         },
         {
             "file": "../src/traviso/map/TileView.js",
-            "line": 116,
+            "line": 115,
             "description": "Changes the highlight state of the map-tile.",
             "itemtype": "method",
             "name": "setHighlighted",
@@ -593,7 +599,7 @@
         },
         {
             "file": "../src/traviso/map/TileView.js",
-            "line": 125,
+            "line": 124,
             "description": "The highlight state of the map-tile.",
             "itemtype": "property",
             "name": "isHighlighted",
@@ -602,7 +608,7 @@
         },
         {
             "file": "../src/traviso/map/TileView.js",
-            "line": 173,
+            "line": 172,
             "description": "Clears all references.",
             "itemtype": "method",
             "name": "destroy",
@@ -1583,7 +1589,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 520,
+            "line": 521,
             "description": "Vertice points of the map",
             "itemtype": "property",
             "name": "mapVertices",
@@ -1594,7 +1600,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 532,
+            "line": 533,
             "description": "Total width of all ground tiles",
             "itemtype": "property",
             "name": "mapVisualWidthReal",
@@ -1605,7 +1611,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 537,
+            "line": 538,
             "description": "Total height of all ground tiles",
             "itemtype": "property",
             "name": "mapVisualHeightReal",
@@ -1616,7 +1622,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 563,
+            "line": 565,
             "description": "Calculates 2d x position of a tile",
             "itemtype": "method",
             "name": "getTilePosXFor",
@@ -1640,7 +1646,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 575,
+            "line": 577,
             "description": "Calculates 2d y position of a tile",
             "itemtype": "method",
             "name": "getTilePosYFor",
@@ -1664,7 +1670,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 588,
+            "line": 590,
             "description": "Shows or hides the display object that includes the objects-layer",
             "itemtype": "method",
             "name": "showHideObjectLayer",
@@ -1679,7 +1685,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 598,
+            "line": 600,
             "description": "Shows or hides the display object that includes the ground/terrain layer",
             "itemtype": "method",
             "name": "showHideGroundLayer",
@@ -1694,7 +1700,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 609,
+            "line": 611,
             "description": "Returns the TileView instance that sits in the location given",
             "itemtype": "method",
             "name": "getTileAtRowAndColumn",
@@ -1718,7 +1724,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 621,
+            "line": 623,
             "description": "Returns all the ObjectView instances referenced to the given location with the specified row and column indexes.",
             "itemtype": "method",
             "name": "getObjectsAtRowAndColumn",
@@ -1742,7 +1748,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 633,
+            "line": 635,
             "description": "Returns all the ObjectView instances referenced to the given location.",
             "itemtype": "method",
             "name": "getObjectsAtLocation",
@@ -1773,7 +1779,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 647,
+            "line": 649,
             "description": "Creates and adds a predefined (in XML file) map-object to the map using the specified object type-id.",
             "itemtype": "method",
             "name": "createAndAddObjectToLocation",
@@ -1809,7 +1815,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 662,
+            "line": 664,
             "description": "Adds an already-created object to the map.",
             "itemtype": "method",
             "name": "addObjectToLocation",
@@ -1825,21 +1831,14 @@
                             "type": "Boolean"
                         },
                         {
-                            "name": "size",
-                            "description": "object that includes the size in rows and columns",
-                            "type": "Object",
-                            "props": [
-                                {
-                                    "name": "r",
-                                    "description": "the size of the map-object in rows",
-                                    "type": "Number"
-                                },
-                                {
-                                    "name": "c",
-                                    "description": "the size of the map-object in columns",
-                                    "type": "Number"
-                                }
-                            ]
+                            "name": "columnSpan",
+                            "description": "number of tiles that map-object covers horizontally on the isometric map",
+                            "type": "Number"
+                        },
+                        {
+                            "name": "rowSpan",
+                            "description": "number of tiles that map-object covers vertically on the isometric map",
+                            "type": "Number"
                         }
                     ]
                 },
@@ -1887,26 +1886,16 @@
                             "optdefault": "true"
                         },
                         {
-                            "name": "size",
-                            "description": "object that includes the size in rows and columns, default { c:1, r: 1 }",
-                            "type": "Object",
-                            "optional": true,
-                            "props": [
-                                {
-                                    "name": "r",
-                                    "description": "the size of the map-object in rows",
-                                    "type": "Number",
-                                    "optional": true,
-                                    "optdefault": "1"
-                                },
-                                {
-                                    "name": "c",
-                                    "description": "the size of the map-object in columns",
-                                    "type": "Number",
-                                    "optional": true,
-                                    "optdefault": "1"
-                                }
-                            ]
+                            "name": "columnSpan",
+                            "description": "number of tiles that map-object covers horizontally on the isometric map",
+                            "type": "Number",
+                            "optional": true
+                        },
+                        {
+                            "name": "rowSpan",
+                            "description": "number of tiles that map-object covers vertically on the isometric map",
+                            "type": "Number",
+                            "optional": true
                         }
                     ]
                 },
@@ -1936,7 +1925,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 716,
+            "line": 715,
             "description": "Removes the object and its references from the map.",
             "itemtype": "method",
             "name": "removeObjectFromLocation",
@@ -1972,7 +1961,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 732,
+            "line": 730,
             "description": "Centralizes and zooms the EngineView instance to the object specified.",
             "itemtype": "method",
             "name": "focusMapToObject",
@@ -2000,21 +1989,14 @@
                             ]
                         },
                         {
-                            "name": "size",
-                            "description": "the object that holds the size of the map-object on the map",
-                            "type": "Object",
-                            "props": [
-                                {
-                                    "name": "c",
-                                    "description": "the column index of the map location",
-                                    "type": "Number"
-                                },
-                                {
-                                    "name": "r",
-                                    "description": "the row index of the map location",
-                                    "type": "Number"
-                                }
-                            ]
+                            "name": "columnSpan",
+                            "description": "number of tiles that map-object covers horizontally on the isometric map",
+                            "type": "Number"
+                        },
+                        {
+                            "name": "rowSpan",
+                            "description": "number of tiles that map-object covers vertically on the isometric map",
+                            "type": "Number"
                         }
                     ]
                 }
@@ -2023,7 +2005,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 749,
+            "line": 745,
             "description": "Centralizes and zooms the EngineView instance to the map location specified by row and column index.",
             "itemtype": "method",
             "name": "focusMapToLocation",
@@ -2048,7 +2030,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 764,
+            "line": 759,
             "description": "Centralizes the EngineView instance to the object specified.",
             "itemtype": "method",
             "name": "centralizeToObject",
@@ -2082,7 +2064,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 778,
+            "line": 772,
             "description": "Centralizes the EngineView instance to the map location specified by row and column index.",
             "itemtype": "method",
             "name": "centralizeToLocation",
@@ -2109,7 +2091,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 794,
+            "line": 788,
             "description": "Centralizes the EngineView instance to the current location of the attention/focus.",
             "itemtype": "method",
             "name": "centralizeToCurrentFocusLocation",
@@ -2126,7 +2108,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 806,
+            "line": 800,
             "description": "External center is the central point of the frame defined by the user to be used as the visual size of the engine.\nThis method centralizes the EngineView instance with respect to this external center-point.",
             "itemtype": "method",
             "name": "centralizeToCurrentExternalCenter",
@@ -2143,7 +2125,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 822,
+            "line": 816,
             "description": "Centralizes the EngineView instance to the points specified.",
             "itemtype": "method",
             "name": "centralizeToPoint",
@@ -2170,7 +2152,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 847,
+            "line": 841,
             "description": "Sets all the parameters related to zooming in and out.",
             "itemtype": "method",
             "name": "setZoomParameters",
@@ -2215,7 +2197,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 869,
+            "line": 863,
             "description": "Sets map's scale.",
             "itemtype": "method",
             "name": "setScale",
@@ -2239,7 +2221,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 895,
+            "line": 889,
             "description": "Zooms camera by to the amount given.",
             "itemtype": "method",
             "name": "zoomTo",
@@ -2261,7 +2243,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 923,
+            "line": 917,
             "description": "Zooms the camera one level out.",
             "itemtype": "method",
             "name": "zoomOut",
@@ -2278,7 +2260,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 934,
+            "line": 928,
             "description": "Zooms the camera one level in.",
             "itemtype": "method",
             "name": "zoomIn",
@@ -2295,7 +2277,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 945,
+            "line": 939,
             "description": "Returns the current controllable map-object.",
             "itemtype": "method",
             "name": "getCurrentControllable",
@@ -2307,7 +2289,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 956,
+            "line": 950,
             "description": "Sets a map-object as the current controllable. This object will be moving in further relevant user interactions.",
             "itemtype": "method",
             "name": "setCurrentControllable",
@@ -2341,7 +2323,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 970,
+            "line": 964,
             "description": "Adds a reference of the given map-object to the given location in the object array.\nThis should be called when an object moved or transfered to the corresponding location.\nUses objects size property to add its reference to all relevant cells.",
             "access": "private",
             "tagname": "",
@@ -2354,21 +2336,14 @@
                     "type": "ObjectView",
                     "props": [
                         {
-                            "name": "size",
-                            "description": "the object that defines the size of the map-object",
-                            "type": "Object",
-                            "props": [
-                                {
-                                    "name": "c",
-                                    "description": "number of tiles that map-object covers horizontally on the isometric map",
-                                    "type": "Number"
-                                },
-                                {
-                                    "name": "r",
-                                    "description": "number of tiles that map-object covers vertically on the isometric map",
-                                    "type": "Number"
-                                }
-                            ]
+                            "name": "columnSpan",
+                            "description": "number of tiles that map-object covers horizontally on the isometric map",
+                            "type": "Number"
+                        },
+                        {
+                            "name": "rowSpan",
+                            "description": "number of tiles that map-object covers vertically on the isometric map",
+                            "type": "Number"
                         }
                     ]
                 },
@@ -2394,7 +2369,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 995,
+            "line": 986,
             "description": "Adds a reference of the given map-object to the given location in the object array.\nUpdates the cell as movable or not according to the object being movable onto or not.",
             "access": "private",
             "tagname": "",
@@ -2435,7 +2410,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1018,
+            "line": 1009,
             "description": "Removes references of the given map-object from the given location in the object array.\nThis should be called when an object moved or transfered from the corresponding location.\nUses objects size property to remove its references from all relevant cells.",
             "access": "private",
             "tagname": "",
@@ -2448,21 +2423,14 @@
                     "type": "ObjectView",
                     "props": [
                         {
-                            "name": "size",
-                            "description": "the object that defines the size of the map-object",
-                            "type": "Object",
-                            "props": [
-                                {
-                                    "name": "c",
-                                    "description": "number of tiles that map-object covers horizontally on the isometric map",
-                                    "type": "Number"
-                                },
-                                {
-                                    "name": "r",
-                                    "description": "number of tiles that map-object covers vertically on the isometric map",
-                                    "type": "Number"
-                                }
-                            ]
+                            "name": "columnSpan",
+                            "description": "number of tiles that map-object covers horizontally on the isometric map",
+                            "type": "Number"
+                        },
+                        {
+                            "name": "rowSpan",
+                            "description": "number of tiles that map-object covers vertically on the isometric map",
+                            "type": "Number"
                         }
                     ]
                 },
@@ -2488,7 +2456,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1043,
+            "line": 1031,
             "description": "Removes a reference of the given map-object from the given location in the object array.\nUpdates the cell as movable or not according to the other object refences in the same cell.",
             "access": "private",
             "tagname": "",
@@ -2522,7 +2490,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1084,
+            "line": 1072,
             "description": "Removes all map-object references from the given location in the object array.",
             "access": "private",
             "tagname": "",
@@ -2551,7 +2519,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1102,
+            "line": 1090,
             "description": "Sets alphas of the map-objects referenced to the given location.",
             "itemtype": "method",
             "name": "changeObjAlphasInLocation",
@@ -2583,7 +2551,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1124,
+            "line": 1112,
             "description": "Sets a map-abjects' location and logically moves it to the new location.",
             "access": "private",
             "tagname": "",
@@ -2636,7 +2604,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1145,
+            "line": 1133,
             "description": "Sets occlusion transperancies according to given map-object's location.\nThis method only works for user-controllable object.",
             "access": "private",
             "tagname": "",
@@ -2687,7 +2655,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1179,
+            "line": 1167,
             "description": "Arranges depths (z-index) of the map-objects starting from the given location.",
             "access": "private",
             "tagname": "",
@@ -2716,7 +2684,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1207,
+            "line": 1195,
             "description": "Clears the highlight for the old path and highlights the new path on map.",
             "itemtype": "method",
             "name": "arrangePathHighlight",
@@ -2739,7 +2707,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1244,
+            "line": 1232,
             "description": "Stops a moving object.",
             "itemtype": "method",
             "name": "stopObject",
@@ -2756,7 +2724,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1259,
+            "line": 1247,
             "description": "Moves the specified map-object through a path.",
             "itemtype": "method",
             "name": "moveObjThrough",
@@ -2804,7 +2772,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1304,
+            "line": 1292,
             "description": "Sets up the engine at the begining of each tile change move for the specified object",
             "itemtype": "method",
             "name": "onObjMoveStepBegin",
@@ -2868,7 +2836,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1359,
+            "line": 1347,
             "description": "Sets up the engine at the end of each tile change move for the specified object",
             "itemtype": "method",
             "name": "onObjMoveStepEnd",
@@ -2921,7 +2889,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1452,
+            "line": 1440,
             "description": "Searches and returns a path between two locations if there is one.",
             "itemtype": "method",
             "name": "getPath",
@@ -2969,7 +2937,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1470,
+            "line": 1458,
             "description": "Checks for a path and moves the map-object on map if there is an available path",
             "itemtype": "method",
             "name": "checkAndMoveObjectToTile",
@@ -3043,7 +3011,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1495,
+            "line": 1483,
             "description": "Checks for a path and moves the map-object on map if there is an available path",
             "itemtype": "method",
             "name": "checkAndMoveObjectToLocation",
@@ -3105,7 +3073,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1522,
+            "line": 1510,
             "description": "Moves the current controllable map-object to a location if available.",
             "itemtype": "method",
             "name": "moveCurrentControllableToLocation",
@@ -3143,7 +3111,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1541,
+            "line": 1529,
             "description": "Moves the current controllable map-object to one of the adjacent available tiles of the map-object specified.",
             "itemtype": "method",
             "name": "moveCurrentControllableToObj",
@@ -3171,21 +3139,14 @@
                             ]
                         },
                         {
-                            "name": "size",
-                            "description": "the object that defines the size of the target map-object",
-                            "type": "Object",
-                            "props": [
-                                {
-                                    "name": "c",
-                                    "description": "number of tiles that map-object covers horizontally on the isometric map",
-                                    "type": "Number"
-                                },
-                                {
-                                    "name": "r",
-                                    "description": "number of tiles that map-object covers vertically on the isometric map",
-                                    "type": "Number"
-                                }
-                            ]
+                            "name": "columnSpan",
+                            "description": "number of tiles that map-object covers horizontally on the isometric map",
+                            "type": "Number"
+                        },
+                        {
+                            "name": "rowSpan",
+                            "description": "number of tiles that map-object covers vertically on the isometric map",
+                            "type": "Number"
                         }
                     ]
                 },
@@ -3205,7 +3166,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1612,
+            "line": 1599,
             "description": "Finds the nearest tile to the point given in the map's local scope.",
             "itemtype": "method",
             "name": "getTileFromLocalPos",
@@ -3236,7 +3197,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1652,
+            "line": 1639,
             "description": "Checks if an interaction occurs using the interaction data coming from PIXI.\nIf there is any interaction starts necessary movements or performs necessary callbacks.",
             "itemtype": "method",
             "name": "checkForTileClick",
@@ -3260,7 +3221,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1697,
+            "line": 1684,
             "description": "Enables mouse/touch interactions.",
             "itemtype": "method",
             "name": "enableInteraction",
@@ -3268,7 +3229,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1710,
+            "line": 1697,
             "description": "Disables mouse/touch interactions.",
             "itemtype": "method",
             "name": "disableInteraction",
@@ -3276,7 +3237,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1724,
+            "line": 1711,
             "description": "Checks if the given point is inside the masked area if there is a mask defined.",
             "itemtype": "method",
             "name": "isInteractionInMask",
@@ -3309,7 +3270,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1791,
+            "line": 1778,
             "description": "Repositions the content according to user settings. Call this method \nwhenever you want to change the size or position of the engine.",
             "itemtype": "method",
             "name": "repositionContent",
@@ -3325,7 +3286,7 @@
         },
         {
             "file": "../src/traviso/EngineView.js",
-            "line": 1836,
+            "line": 1823,
             "description": "Clears all references and stops all animations inside the engine.\nCall this method when you want to get rid of an engine instance.",
             "itemtype": "method",
             "name": "destroy",
@@ -3341,6 +3302,259 @@
             "file": "../src/traviso/Header.js",
             "line": 1,
             "author": "Hakan Karlidag - @axaq",
+            "class": "TRAVISO"
+        },
+        {
+            "file": "../src/traviso/MapMethods.1.js",
+            "line": 1,
+            "author": "Hakan Karlidag - @axaq",
+            "class": "TRAVISO"
+        },
+        {
+            "file": "../src/traviso/MapMethods.1.js",
+            "line": 5,
+            "description": "Handles loading of necessary assets and map data for the given engine instance",
+            "itemtype": "method",
+            "name": "loadAssetsAndData",
+            "static": 1,
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "engine",
+                    "description": "engine instance",
+                    "type": "EngineView",
+                    "props": [
+                        {
+                            "name": "config",
+                            "description": "configuration object for the engine instance",
+                            "type": "Object",
+                            "props": [
+                                {
+                                    "name": "assetsToLoad",
+                                    "description": "array of paths to the assets that are desired to be loaded by traviso, no need to use if assets are already loaded to PIXI cache, default null",
+                                    "type": "Array(String)",
+                                    "optional": true,
+                                    "optdefault": "null"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "loadedCallback",
+                    "description": "Callback function",
+                    "type": "Function",
+                    "optional": true,
+                    "optdefault": "null"
+                }
+            ],
+            "class": "TRAVISO"
+        },
+        {
+            "file": "../src/traviso/MapMethods.1.js",
+            "line": 29,
+            "description": "Handles loading of map data for the given engine instance",
+            "itemtype": "method",
+            "name": "loadData",
+            "static": 1,
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "engine",
+                    "description": "engine instance",
+                    "type": "EngineView",
+                    "props": [
+                        {
+                            "name": "config",
+                            "description": "configuration object for the engine instance",
+                            "type": "Object",
+                            "props": [
+                                {
+                                    "name": "mapDataPath",
+                                    "description": "the path to the xml file that defines map data",
+                                    "type": "String"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "loadedCallback",
+                    "description": "Callback function",
+                    "type": "Function",
+                    "optional": true,
+                    "optdefault": "null"
+                }
+            ],
+            "class": "TRAVISO"
+        },
+        {
+            "file": "../src/traviso/MapMethods.1.js",
+            "line": 248,
+            "description": "Returns an object with all properties of a map-object defined by object-type",
+            "itemtype": "method",
+            "name": "getObjectInfo",
+            "static": 1,
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "engine",
+                    "description": "engine instance",
+                    "type": "EngineView"
+                },
+                {
+                    "name": "objectType",
+                    "description": "type/id of the related object tag defined in the xml file",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "an object with all properties of a map-object",
+                "type": "Object"
+            },
+            "class": "TRAVISO"
+        },
+        {
+            "file": "../src/traviso/MapMethods.1.js",
+            "line": 285,
+            "description": "Returns an array of textures {PIXI.Texture} belong to a map-object defined by object-type and sprite-id",
+            "itemtype": "method",
+            "name": "getObjectTextures",
+            "static": 1,
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "engine",
+                    "description": "engine instance",
+                    "type": "EngineView"
+                },
+                {
+                    "name": "objectType",
+                    "description": "type/id of the related object tag defined in the xml file",
+                    "type": "String"
+                },
+                {
+                    "name": "visualId",
+                    "description": "id of the related v tag defined in the xml file",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "an array of textures",
+                "type": "Array(PIXI.Texture)"
+            },
+            "class": "TRAVISO"
+        },
+        {
+            "file": "../src/traviso/MapMethods.1.js",
+            "line": 324,
+            "description": "Returns an object with all properties of a map-tile defined by tileType",
+            "itemtype": "method",
+            "name": "getTileInfo",
+            "static": 1,
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "engine",
+                    "description": "engine instance",
+                    "type": "EngineView"
+                },
+                {
+                    "name": "tileType",
+                    "description": "type/id of the related tile tag defined in the xml file",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "an object with all properties of a map-tile",
+                "type": "Object"
+            },
+            "class": "TRAVISO"
+        },
+        {
+            "file": "../src/traviso/MapMethods.1.js",
+            "line": 358,
+            "description": "Returns the predefined stationary texture id for the given direction",
+            "itemtype": "method",
+            "name": "getStationaryDirVisualId",
+            "static": 1,
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "dir",
+                    "description": "index of the direction",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "texture id for the given direction",
+                "type": "String"
+            },
+            "class": "TRAVISO"
+        },
+        {
+            "file": "../src/traviso/MapMethods.1.js",
+            "line": 373,
+            "description": "Returns the predefined moving texture id for the given direction",
+            "itemtype": "method",
+            "name": "getMovingDirVisualId",
+            "static": 1,
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "dir",
+                    "description": "index of the direction",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "texture id for the given direction",
+                "type": "String"
+            },
+            "class": "TRAVISO"
+        },
+        {
+            "file": "../src/traviso/MapMethods.1.js",
+            "line": 388,
+            "description": "Returns the direction (id) between two locations",
+            "itemtype": "method",
+            "name": "getDirBetween",
+            "static": 1,
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "r1",
+                    "description": "row index of the first location",
+                    "type": "Number"
+                },
+                {
+                    "name": "c1",
+                    "description": "column index of the first location",
+                    "type": "Number"
+                },
+                {
+                    "name": "r2",
+                    "description": "row index of the second location",
+                    "type": "Number"
+                },
+                {
+                    "name": "c2",
+                    "description": "column index of the second location",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "direction id",
+                "type": "Number"
+            },
             "class": "TRAVISO"
         },
         {
@@ -3392,10 +3606,10 @@
         },
         {
             "file": "../src/traviso/MapMethods.js",
-            "line": 29,
+            "line": 40,
             "description": "Handles loading of map data for the given engine instance",
             "itemtype": "method",
-            "name": "loadData",
+            "name": "assetsAndDataLoaded",
             "static": 1,
             "access": "private",
             "tagname": "",
@@ -3403,21 +3617,7 @@
                 {
                     "name": "engine",
                     "description": "engine instance",
-                    "type": "EngineView",
-                    "props": [
-                        {
-                            "name": "config",
-                            "description": "configuration object for the engine instance",
-                            "type": "Object",
-                            "props": [
-                                {
-                                    "name": "mapDataPath",
-                                    "description": "the path to the xml file that defines map data",
-                                    "type": "String"
-                                }
-                            ]
-                        }
-                    ]
+                    "type": "EngineView"
                 },
                 {
                     "name": "loadedCallback",
@@ -3425,13 +3625,25 @@
                     "type": "Function",
                     "optional": true,
                     "optdefault": "null"
+                },
+                {
+                    "name": "resources",
+                    "description": "object holding the resources loaded",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "mapData.data",
+                            "description": "the object that holds the json map data",
+                            "type": "Object"
+                        }
+                    ]
                 }
             ],
             "class": "TRAVISO"
         },
         {
             "file": "../src/traviso/MapMethods.js",
-            "line": 248,
+            "line": 165,
             "description": "Returns an object with all properties of a map-object defined by object-type",
             "itemtype": "method",
             "name": "getObjectInfo",
@@ -3458,7 +3670,7 @@
         },
         {
             "file": "../src/traviso/MapMethods.js",
-            "line": 285,
+            "line": 202,
             "description": "Returns an array of textures {PIXI.Texture} belong to a map-object defined by object-type and sprite-id",
             "itemtype": "method",
             "name": "getObjectTextures",
@@ -3490,7 +3702,7 @@
         },
         {
             "file": "../src/traviso/MapMethods.js",
-            "line": 324,
+            "line": 235,
             "description": "Returns an object with all properties of a map-tile defined by tileType",
             "itemtype": "method",
             "name": "getTileInfo",
@@ -3517,7 +3729,7 @@
         },
         {
             "file": "../src/traviso/MapMethods.js",
-            "line": 358,
+            "line": 267,
             "description": "Returns the predefined stationary texture id for the given direction",
             "itemtype": "method",
             "name": "getStationaryDirVisualId",
@@ -3539,7 +3751,7 @@
         },
         {
             "file": "../src/traviso/MapMethods.js",
-            "line": 373,
+            "line": 281,
             "description": "Returns the predefined moving texture id for the given direction",
             "itemtype": "method",
             "name": "getMovingDirVisualId",
@@ -3561,7 +3773,7 @@
         },
         {
             "file": "../src/traviso/MapMethods.js",
-            "line": 388,
+            "line": 295,
             "description": "Returns the direction (id) between two locations",
             "itemtype": "method",
             "name": "getDirBetween",
@@ -4904,6 +5116,10 @@
         {
             "message": "Missing item type",
             "line": " ../src/traviso/Header.js:1"
+        },
+        {
+            "message": "Missing item type",
+            "line": " ../src/traviso/MapMethods.1.js:1"
         },
         {
             "message": "Missing item type",

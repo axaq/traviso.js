@@ -59,10 +59,8 @@ TRAVISO.config = {
  * @static
  * @param s {String} text to log
  */
-TRAVISO.trace = function(s)
-{
-    if (TRAVISO.config.logEnabled)
-    {
+TRAVISO.trace = function(s) {
+    if (TRAVISO.config.logEnabled) {
         console.log("TRAVISO: " + s);
     }
 };
@@ -129,8 +127,7 @@ TRAVISO.trace = function(s)
  * @param [globalConfig] {Object} configuration object for the traviso engine
  * @return {EngineView} a new instance of the isometric engine 
  */ 
-TRAVISO.getEngineInstance = function(instanceConfig, globalConfig)
-{
+TRAVISO.getEngineInstance = function(instanceConfig, globalConfig) {
     TRAVISO.init(globalConfig);
     return new TRAVISO.EngineView(instanceConfig);
 };
@@ -143,42 +140,39 @@ TRAVISO.getEngineInstance = function(instanceConfig, globalConfig)
  * @static
  * @param [globalConfig] {Object} configuration object for the traviso engine
  */
-TRAVISO.init = function(globalConfig)
-{
+TRAVISO.init = function(globalConfig) {
 	// do necessary checks and assignments for global settings
-	if (globalConfig)
-    {
+	if (globalConfig) {
         TRAVISO.config.logEnabled = globalConfig.logEnabled;
     }
     
-    if (TRAVISO.isReady)
-    {
+    if (TRAVISO.isReady) {
         return;
     }
     
     // Externally modifiable properties for EngineView
-	var modifiables = [	"instantCameraZoom",
-						"followCharacter", 
-						"instantCameraRelocation", 
-						"instantObjectRelocation", 
-						"changeTransperancies", 
-						"highlightPath", 
-						"highlightTargetTile", 
-						"tileHighlightAnimated", 
-						"dontAutoMoveToTile", 
-						"checkPathOnEachTile", 
-						"mapDraggable", 
-						"callbackScope", 
-						"engineInstanceReadyCallback", 
-						"tileSelectCallback", 
-						"objectSelectCallback", 
-						"objectReachedDestinationCallback", 
-						"otherObjectsOnTheNextTileCallback",
-						"objectUpdateCallback"
-					  ];
+	var modifiables = [
+        "instantCameraZoom",
+        "followCharacter", 
+        "instantCameraRelocation", 
+        "instantObjectRelocation", 
+        "changeTransperancies", 
+        "highlightPath", 
+        "highlightTargetTile", 
+        "tileHighlightAnimated", 
+        "dontAutoMoveToTile", 
+        "checkPathOnEachTile", 
+        "mapDraggable", 
+        "callbackScope", 
+        "engineInstanceReadyCallback", 
+        "tileSelectCallback", 
+        "objectSelectCallback", 
+        "objectReachedDestinationCallback", 
+        "otherObjectsOnTheNextTileCallback",
+        "objectUpdateCallback"
+    ];
 	
-	for (var i=0; i < modifiables.length; i++)
-	{
+	for (var i=0; i < modifiables.length; i++) {
 		TRAVISO.defineProperty(modifiables[i]);
 	}
 	
@@ -199,14 +193,14 @@ TRAVISO.init = function(globalConfig)
 	 * @static
 	 */
 	TRAVISO.directions = {
-	    O: 0,
-	    S: 1,
+	    O:  0,
+	    S:  1,
 	    SW: 2,
-	    W: 3,
+	    W:  3,
 	    NW: 4,
-	    N: 5,
+	    N:  5,
 	    NE: 6,
-	    E: 7,
+	    E:  7,
 	    SE: 8
 	};
 	
@@ -237,8 +231,7 @@ TRAVISO.init = function(globalConfig)
  * @static
  * @param key {String} name of the property
  */
-TRAVISO.defineProperty = function(key)
-{
+TRAVISO.defineProperty = function(key) {
     Object.defineProperty(TRAVISO.EngineView.prototype, key, {
 	    get: function() {
 	        return this.config[key];

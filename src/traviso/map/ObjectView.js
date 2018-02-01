@@ -39,10 +39,12 @@ TRAVISO.ObjectView = function(engine, objectType, animSpeed)
 	 * @property {Boolean} isInteractive
 	 */
 	/**
-	 * The size of the map-object in terms of rows and columns.
-	 * @property {Object} size
-	 * @property {Number} size.r
-	 * @property {Number} size.c
+	 * Number of tiles that map-object covers horizontally on the isometric map
+     * @property {Number} columnSpan
+	 */
+    /**
+	 * Number of tiles that map-object covers vertically on the isometric map
+     * @property {Number} rowSpan
 	 */
     var info = TRAVISO.getObjectInfo(this.engine, this.type);
     this.isMovableTo = info.m;
@@ -50,13 +52,9 @@ TRAVISO.ObjectView = function(engine, objectType, animSpeed)
     this.interactive = this.interactiveChildren = false;
     this.isFloorObject = info.f;
     this.noTransparency = info.nt;
-    var arr = info.s.split("x");
-    this.size =
-    {
-        r : parseInt(arr[0], 10),
-        c : parseInt(arr[1], 10)
-    };
-    var xAnchor = this.size.r / (this.size.c + this.size.r);
+    this.rowSpan = info.rowSpan;
+    this.columnSpan = info.columnSpan;
+    var xAnchor = this.rowSpan / (this.columnSpan + this.rowSpan);
 	
 	/**
 	 * A dictionary for all the textures defined for the map-object.
@@ -197,7 +195,6 @@ TRAVISO.ObjectView.prototype.destroy = function()
 	if (this.container)
 	{
 	    this.engine = null;
-	    this.size = null;
 	    this.textures = null;
 	    // this.removeChild(this.container);
 	    // this.container.textures = null;

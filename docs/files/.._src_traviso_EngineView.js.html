@@ -477,12 +477,12 @@ TRAVISO.EngineView.prototype.createMap = function()
 	
 	// add ground image first if it is defined
 	var groundImageSprite;
-	if (this.mapData.singleGroundImagePath)
+	if (this.mapData.singleGroundImage)
 	{
-	    groundImageSprite = new PIXI.Sprite.fromFrame(this.mapData.singleGroundImagePath);
+	    groundImageSprite = new PIXI.Sprite.fromFrame(this.mapData.singleGroundImage.path);
 	    this.groundContainer.addChild(groundImageSprite);
 	    
-	    groundImageSprite.scale.set(this.mapData.singleGroundImageScale);
+	    groundImageSprite.scale.set(this.mapData.singleGroundImage.scale || 1);
         
         this.groundImageSprite = groundImageSprite;
 	}
@@ -587,7 +587,8 @@ TRAVISO.EngineView.prototype.createMap = function()
 		    	
 		    	this.addObjRefToLocation(obj, obj.mapPos);
 		    	
-		    	if (initialControllableLocation &amp;&amp; initialControllableLocation.c === j &amp;&amp; initialControllableLocation.r === i)
+		    	// if (initialControllableLocation &amp;&amp; initialControllableLocation.c === j &amp;&amp; initialControllableLocation.r === i)
+		    	if (initialControllableLocation &amp;&amp; initialControllableLocation.columnIndex === j &amp;&amp; initialControllableLocation.rowIndex === i)
 		    	{
 		    		this.currentControllable = obj;
 		    	}
@@ -651,7 +652,8 @@ TRAVISO.EngineView.prototype.createMap = function()
 	
 	if (this.config.followCharacter &amp;&amp; initialControllableLocation)
 	{
-		this.centralizeToLocation(initialControllableLocation.c, initialControllableLocation.r, true);
+		// this.centralizeToLocation(initialControllableLocation.c, initialControllableLocation.r, true);
+		this.centralizeToLocation(initialControllableLocation.columnIndex, initialControllableLocation.rowIndex, true);
 	}
 	else
 	{
@@ -764,16 +766,14 @@ TRAVISO.EngineView.prototype.createAndAddObjectToLocation = function(type, pos)
  * @method addObjectToLocation
  * @param obj {Object} either an external display object or a map-object (ObjectView)
  * @param obj.isMovableTo {Boolean} if the object can be moved onto by other map-objects
- * @param obj.size {Object} object that includes the size in rows and columns
- * @param obj.size.r {Number} the size of the map-object in rows
- * @param obj.size.c {Number} the size of the map-object in columns
+ * @param obj.columnSpan {Number} number of tiles that map-object covers horizontally on the isometric map
+ * @param obj.rowSpan {Number} number of tiles that map-object covers vertically on the isometric map
  * @param pos {Object} object including r and c coordinates
  * @param pos.r {Number} the row index of the map location
  * @param pos.c {Number} the column index of the map location
  * @return {Object} the newly added object
  */
-TRAVISO.EngineView.prototype.addObjectToLocation = function(obj, pos) 
-{
+TRAVISO.EngineView.prototype.addObjectToLocation = function(obj, pos) {
 	obj.position.x = this.getTilePosXFor(pos.r,pos.c);
 	obj.position.y = this.getTilePosYFor(pos.r,pos.c) + this.TILE_HALF_H;
 	obj.mapPos = { c:pos.c, r:pos.r };
@@ -794,18 +794,17 @@ TRAVISO.EngineView.prototype.addObjectToLocation = function(obj, pos)
  * @method addCustomObjectToLocation
  * @param displayObject {PIXI.DisplayObject} object to be added to location
  * @param [displayObject.isMovableTo=true] {Boolean} if the object can be moved onto by other map-objects, default true
- * @param [displayObject.size] {Object} object that includes the size in rows and columns, default { c:1, r: 1 }
- * @param [displayObject.size.r=1] {Number} the size of the map-object in rows
- * @param [displayObject.size.c=1] {Number} the size of the map-object in columns
+ * @param [displayObject.columnSpan] {Number} number of tiles that map-object covers horizontally on the isometric map
+ * @param [displayObject.rowSpan] {Number} number of tiles that map-object covers vertically on the isometric map
  * @param pos {Object} object including r and c coordinates
  * @param pos.r {Number} the row index of the map location
  * @param pos.c {Number} the column index of the map location
  * @return {Object} the newly added object
  */
-TRAVISO.EngineView.prototype.addCustomObjectToLocation = function(displayObject, pos) 
-{
+TRAVISO.EngineView.prototype.addCustomObjectToLocation = function(displayObject, pos) {
 	displayObject.isMovableTo = TRAVISO.existy(displayObject.isMovableTo) ? displayObject.isMovableTo : true;
-	displayObject.size = displayObject.size || { c:1, r: 1 };
+	displayObject.columnSpan = displayObject.columnSpan || 1;
+	displayObject.rowSpan = displayObject.rowSpan || 1;
 	
 	return this.addObjectToLocation(displayObject, pos);
 	
@@ -821,8 +820,7 @@ TRAVISO.EngineView.prototype.addCustomObjectToLocation = function(displayObject,
  * @param [pos.r] {Number} the row index of the map location
  * @param [pos.c] {Number} the column index of the map location
  */
-TRAVISO.EngineView.prototype.removeObjectFromLocation = function(obj, pos) 
-{
+TRAVISO.EngineView.prototype.removeObjectFromLocation = function(obj, pos) {
 	pos = pos || obj.mapPos;
 	this.objContainer.removeChild(obj);
 	this.removeObjRefFromLocation(obj, pos);
@@ -836,13 +834,11 @@ TRAVISO.EngineView.prototype.removeObjectFromLocation = function(obj, pos)
  * @param obj.mapPos {Object} the object that holds the location of the map-object on the map
  * @param obj.mapPos.c {Number} the column index of the map location
  * @param obj.mapPos.r {Number} the row index of the map location
- * @param obj.size {Object} the object that holds the size of the map-object on the map
- * @param obj.size.c {Number} the column index of the map location
- * @param obj.size.r {Number} the row index of the map location
+ * @param obj.columnSpan {Number} number of tiles that map-object covers horizontally on the isometric map
+ * @param obj.rowSpan {Number} number of tiles that map-object covers vertically on the isometric map
  */
-TRAVISO.EngineView.prototype.focusMapToObject = function(obj)
-{
-	this.focusMapToLocation(obj.mapPos.c + (obj.size.c - 1) / 2, obj.mapPos.r - (obj.size.r - 1) / 2, 0);
+TRAVISO.EngineView.prototype.focusMapToObject = function(obj) {
+	this.focusMapToLocation(obj.mapPos.c + (obj.columnSpan - 1) / 2, obj.mapPos.r - (obj.rowSpan - 1) / 2, 0);
 };
 
 /**
@@ -853,8 +849,7 @@ TRAVISO.EngineView.prototype.focusMapToObject = function(obj)
  * @param r {Number} the row index of the map location
  * @param zoomAmount {Number} targeted zoom level for focusing
  */
-TRAVISO.EngineView.prototype.focusMapToLocation = function(c, r, zoomAmount)
-{
+TRAVISO.EngineView.prototype.focusMapToLocation = function(c, r, zoomAmount) {
 	// NOTE: using zoomTo instead of setScale causes centralizeToPoint to be called twice (no visual problem)
 	this.zoomTo(zoomAmount, false);
 	this.centralizeToLocation(c,r);
@@ -869,8 +864,7 @@ TRAVISO.EngineView.prototype.focusMapToLocation = function(c, r, zoomAmount)
  * @param obj.mapPos.c {Number} the column index of the map location
  * @param obj.mapPos.r {Number} the row index of the map location
  */
-TRAVISO.EngineView.prototype.centralizeToObject = function(obj)
-{
+TRAVISO.EngineView.prototype.centralizeToObject = function(obj) {
 	this.centralizeToLocation(obj.mapPos.c, obj.mapPos.r);
 };
 
@@ -1074,20 +1068,17 @@ TRAVISO.EngineView.prototype.setCurrentControllable = function(obj)
  * @private
  * @method addObjRefToLocation
  * @param obj {ObjectView} object to be bind to location
- * @param obj.size {Object} the object that defines the size of the map-object
- * @param obj.size.c {Number} number of tiles that map-object covers horizontally on the isometric map
- * @param obj.size.r {Number} number of tiles that map-object covers vertically on the isometric map
+ * @param obj.columnSpan {Number} number of tiles that map-object covers horizontally on the isometric map
+ * @param obj.rowSpan {Number} number of tiles that map-object covers vertically on the isometric map
  * @param pos {Object} object including r and c coordinates
  * @param pos.r {Number} the row index of the map location
  * @param pos.c {Number} the column index of the map location
  */
-TRAVISO.EngineView.prototype.addObjRefToLocation = function(obj, pos)
-{
-	for (var k=pos.c; k &lt; pos.c + obj.size.c; k++)
-	{
-		for (var m=pos.r; m &gt; pos.r - obj.size.r; m--)
-		{
-			this.addObjRefToSingleLocation(obj, { c:k, r:m });
+TRAVISO.EngineView.prototype.addObjRefToLocation = function(obj, pos) {
+    var k, m;
+	for (k = pos.c; k &lt; pos.c + obj.columnSpan; k++) {
+		for (m = pos.r; m &gt; pos.r - obj.rowSpan; m--) {
+			this.addObjRefToSingleLocation(obj, { c: k, r: m });
 		}
 	}
 };
@@ -1122,20 +1113,17 @@ TRAVISO.EngineView.prototype.addObjRefToSingleLocation = function(obj, pos)
  * @private
  * @method removeObjRefFromLocation
  * @param obj {ObjectView} object to be bind to location
- * @param obj.size {Object} the object that defines the size of the map-object
- * @param obj.size.c {Number} number of tiles that map-object covers horizontally on the isometric map
- * @param obj.size.r {Number} number of tiles that map-object covers vertically on the isometric map
+ * @param obj.columnSpan {Number} number of tiles that map-object covers horizontally on the isometric map
+ * @param obj.rowSpan {Number} number of tiles that map-object covers vertically on the isometric map
  * @param pos {Object} object including r and c coordinates
  * @param pos.r {Number} the row index of the map location
  * @param pos.c {Number} the column index of the map location
  */
-TRAVISO.EngineView.prototype.removeObjRefFromLocation = function(obj, pos) 
-{
-	for (var k=pos.c; k &lt; pos.c + obj.size.c; k++)
-	{
-		for (var m=pos.r; m &gt; pos.r - obj.size.r; m--)
-		{
-			this.removeObjRefFromSingleLocation(obj, { c:k, r:m });
+TRAVISO.EngineView.prototype.removeObjRefFromLocation = function(obj, pos) {
+    var k, m;
+	for (k = pos.c; k &lt; pos.c + obj.columnSpan; k++) {
+		for (m = pos.r; m &gt; pos.r - obj.rowSpan; m--) {
+			this.removeObjRefFromSingleLocation(obj, { c: k, r: m });
 		}
 	}
 };
@@ -1645,9 +1633,8 @@ TRAVISO.EngineView.prototype.moveCurrentControllableToLocation = function(pos, s
  * @param obj.mapPos {Object} object including r and c coordinates
  * @param obj.mapPos.c {Number} the column index of the map location
  * @param obj.mapPos.r {Number} the row index of the map location
- * @param obj.size {Object} the object that defines the size of the target map-object
- * @param obj.size.c {Number} number of tiles that map-object covers horizontally on the isometric map
- * @param obj.size.r {Number} number of tiles that map-object covers vertically on the isometric map
+ * @param obj.columnSpan {Number} number of tiles that map-object covers horizontally on the isometric map
+ * @param obj.rowSpan {Number} number of tiles that map-object covers vertically on the isometric map
  * @param [speed=null] {Number} speed of the map-object to be used during movement, if not defined it uses previous speed or the MoveEngine&#x27;s default speed, default null 
  * @return {Boolean} if there is an available path to move to the target map-object
  */
@@ -1666,7 +1653,7 @@ TRAVISO.EngineView.prototype.moveCurrentControllableToObj = function(obj, speed)
             return true;
         }
     } 
-	var cellArray = this.pathFinding.getAdjacentOpenCells(obj.mapPos.c, obj.mapPos.r, obj.size.c, obj.size.r);
+	var cellArray = this.pathFinding.getAdjacentOpenCells(obj.mapPos.c, obj.mapPos.r, obj.columnSpan, obj.rowSpan);
 	var tile;
 	var minLength = 3000;
 	var path, minPath, tempFlagHolder;
@@ -2004,9 +1991,8 @@ TRAVISO.EngineView.prototype.destroy = function()
 	this.config = null;
     this.mapData.groundMapData = null;
     this.mapData.objectsMapData = null;
-    this.mapData.textures.tiles = null;
-    this.mapData.textures.objects = null;
-    this.mapData.textures = null;
+    this.mapData.objects = null;
+    this.mapData.tiles = null;
     this.mapData = null;
 };
 

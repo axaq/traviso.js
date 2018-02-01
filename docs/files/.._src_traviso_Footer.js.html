@@ -100,16 +100,25 @@
 /**
  * @author Hakan Karlidag - @axaq
  */
+    // Add support for AMD (Asynchronous Module Definition) libraries such as require.js.
+    if (typeof define === &#x27;function&#x27; &amp;&amp; define.amd) {
+        define([], function() {
+            return {
+                TRAVISO: TRAVISO
+            };
+        });
+    }
 
+    // Add support for CommonJS libraries such as browserify.
     if (typeof exports !== &#x27;undefined&#x27;) {
-        if (typeof module !== &#x27;undefined&#x27; &amp;&amp; module.exports) {
-            exports = module.exports = TRAVISO;
-        }
         exports.TRAVISO = TRAVISO;
-    } else if (typeof define !== &#x27;undefined&#x27; &amp;&amp; define.amd) {
-        define(TRAVISO);
-    } else {
-        root.TRAVISO = TRAVISO;
+    }
+
+    // Define globally in case AMD is not available or unused.
+    if (typeof window !== &#x27;undefined&#x27;) {
+        window.TRAVISO = TRAVISO;
+    } else if (typeof global !== &#x27;undefined&#x27;) { // Add to global in Node.js (for testing, etc).
+        global.TRAVISO = TRAVISO;
     }
 }).call(this);
     </pre>

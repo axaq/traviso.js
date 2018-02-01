@@ -178,9 +178,8 @@ TRAVISO.TileView = function(engine, tileType)
      * @property {PIXI.DisplayObject} highlightedOverlay
      * @protected
      */
-    if (this.engine.mapData.textures.tileHighlight)
-    {
-        this.highlightedOverlay = new PIXI.Sprite.fromFrame(this.engine.mapData.textures.tileHighlight);
+    if (this.engine.mapData.tileHighlightImage) {
+        this.highlightedOverlay = new PIXI.Sprite.fromFrame(this.engine.mapData.tileHighlightImage.path);
         this.highlightedOverlay.anchor.x = 0.5;
         this.highlightedOverlay.anchor.y = 0.5;
         this.addChild(this.highlightedOverlay);

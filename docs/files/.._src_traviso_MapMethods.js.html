@@ -115,232 +115,149 @@
  */
 TRAVISO.loadAssetsAndData = function(engine, loadedCallback)
 {
+    if (!engine.config.mapDataPath)
+    {
+        throw new Error(&quot;TRAVISO: No JSON-file path defined for map data. Plese check your configuration object that you pass to the &#x27;getEngineInstance&#x27; method.&quot;);
+    } else if (engine.config.mapDataPath.split(&quot;.&quot;).pop() !== &quot;json&quot;) {
+        throw new Error(&quot;TRAVISO: Invalid map-data file path. This file has to be a json file.&quot;);
+    }
+
+    var loader = new PIXI.loaders.Loader();
+    loader.add(&quot;mapData&quot;, engine.config.mapDataPath);
+
     if (engine.config.assetsToLoad &amp;&amp; engine.config.assetsToLoad !== &quot;&quot; &amp;&amp; engine.config.assetsToLoad.length &gt; 0)
     {
-        PIXI.loader.add(engine.config.assetsToLoad).load(function () { TRAVISO.loadData(engine, loadedCallback); });
+        loader.add(engine.config.assetsToLoad);
     }
-    else
-    {
-        TRAVISO.loadData(engine, loadedCallback);
-    }
+
+    loader.load(function (loader, resources) { TRAVISO.assetsAndDataLoaded(engine, loadedCallback, resources); });
+
+    // TRAVISO.loadData();
 };
+
 
 /**
  * Handles loading of map data for the given engine instance 
  *
- * @method loadData
+ * @method assetsAndDataLoaded
  * @for TRAVISO
  * @static
  * @private
  * @param engine {EngineView} engine instance
- * @param engine.config {Object} configuration object for the engine instance
- * @param engine.config.mapDataPath {String} the path to the xml file that defines map data
  * @param [loadedCallback=null] {Function} Callback function
+ * @param resources {Object} object holding the resources loaded
+ * @param resources.mapData.data {Object} the object that holds the json map data
  */
-TRAVISO.loadData = function(engine, loadedCallback)
-{
-    engine.mapData = {};
-    
-    if (!engine.config.mapDataPath)
-    {
-        throw new Error(&quot;TRAVISO: No XML path defined for map data. Plese check your configuration object that you pass to the &#x27;getEngineInstance&#x27; method.&quot;);
+TRAVISO.assetsAndDataLoaded = function(engine, loadedCallback, resources) {
+    // console.log(&#x27;assetsAndDataLoaded&#x27;, resources.mapData.data);
+
+    var mapData = resources.mapData.data;
+
+    // initial controls
+
+    if ( !TRAVISO.existy(mapData.initialControllableLocation) ) {
+        TRAVISO.trace(&quot;Map-data file warning: No &#x27;initialControllableLocation&#x27; defined. Ignore this warning if you are adding it later manually.&quot;);
+    } else if ( !TRAVISO.existy(mapData.initialControllableLocation.columnIndex) || !TRAVISO.existy(mapData.initialControllableLocation.rowIndex) ) {
+        TRAVISO.trace(&quot;Map-data file warning: &#x27;initialControllableLocation&#x27; exists but it is not defined properly.&quot;);
+        mapData.initialControllableLocation = null;
     }
-    else
-    {
-        this.ajaxRequest = new XMLHttpRequest();
-        this.ajaxRequest.onreadystatechange = function()
-        {
-            if (this.readyState === 4)
-            {
-                if (this.status === 200 || window.location.href.indexOf(&quot;http&quot;) === -1)
-                {
-                    var arr, i, j, data, rows;
-                    
-                    // check if single_ground_image is defined or not 
-                    var singleGroundImageData = this.responseXML.getElementsByTagName(&quot;single_ground_image&quot;);
-                    if (singleGroundImageData &amp;&amp; singleGroundImageData.length &gt; 0)
-                    {
-                    	var singleGroundImagePathData = singleGroundImageData[0].getElementsByTagName(&quot;path&quot;);
-                    	if (singleGroundImagePathData &amp;&amp; singleGroundImagePathData.length &gt; 0)
-                    	{
-                    		engine.mapData.singleGroundImagePath = String(singleGroundImagePathData[0].firstChild.nodeValue);
-                    		
-                    		var attScale = singleGroundImageData[0].attributes.getNamedItem(&quot;scale&quot;);
-	                    	attScale = (attScale) ? parseInt(attScale.nodeValue, 10) : 1;
-	                    	if (attScale &lt;= 0) { attScale = 1; }
-                    		engine.mapData.singleGroundImageScale = attScale;
-                    	}
-                    	else
-                    	{
-                    		TRAVISO.trace(&quot;Path is NOT defined for single_ground_image&quot;);
-                    	}
-                    }
-                    
-                    data = this.responseXML.getElementsByTagName(&quot;ground_map&quot;)[0];
-                    rows = data.getElementsByTagName(&quot;row&quot;);
-                    engine.mapData.groundMapData = [];
-                    for (i = 0; i &lt; rows.length; i++)
-                    {
-                        arr = String(rows[i].firstChild.nodeValue).split(&quot;,&quot;);
-                        // remove empty spaces in a row and cast to an array
-                        for (j = arr.length; j--; ) { arr[j] = arr[j] | 0; }
-                        engine.mapData.groundMapData[i] = arr;
-                    }
-					
-                    data = this.responseXML.getElementsByTagName(&quot;object_map&quot;)[0];
-                    rows = data.getElementsByTagName(&quot;row&quot;);
-                    engine.mapData.objectsMapData = [];
-                    for (i = 0; i &lt; rows.length; i++)
-                    {
-                        arr = String(rows[i].firstChild.nodeValue).split(&quot;,&quot;);
-                        // remove empty spaces in a row and cast to an array
-                        for (j = arr.length; j--; ) { arr[j] = arr[j] | 0; }
-                        engine.mapData.objectsMapData[i] = arr;
-                    }
 
-                    var initialControllableLocationData = this.responseXML.getElementsByTagName(&quot;initial_controllable_location&quot;);
-                    
-                    if (initialControllableLocationData &amp;&amp; initialControllableLocationData.length &gt; 0)
-                    {
-                        var initialControllableLocation = initialControllableLocationData[0];
-                        engine.mapData.initialControllableLocation =
-                        {
-                            c : parseInt(initialControllableLocation.attributes.getNamedItem(&quot;c&quot;).nodeValue, 10),
-                            r : parseInt(initialControllableLocation.attributes.getNamedItem(&quot;r&quot;).nodeValue, 10)
-                        };
-                    }
-                    else
-                    {
-                        TRAVISO.trace(&quot;No initial_controllable_location defined in the XML file.&quot;);
-                    }
-                                        
-                    engine.mapData.textures = {};
-                    engine.mapData.textures.tiles = [];
-                    engine.mapData.textures.objects = [];
-                    
-                    // set tile properties
-                    arr = this.responseXML.getElementsByTagName(&quot;tile&quot;);
-                    
-                    for (i = 0; i &lt; arr.length; i++)
-                    {
-                        engine.mapData.textures.tiles[arr[i].attributes.getNamedItem(&quot;id&quot;).nodeValue] =
-                        {
-                            t : (arr[i].firstChild &amp;&amp; arr[i].firstChild.nodeValue) ? String(arr[i].firstChild.nodeValue) : null,
-                            m : parseInt(arr[i].attributes.getNamedItem(&quot;movable&quot;).nodeValue, 10)
-                        };
-                    }
+    if ( mapData.tileHighlightImage &amp;&amp; !mapData.tileHighlightImage.path ) {
+        TRAVISO.trace(&quot;Map-data file warning: &#x27;tileHighlightImage&#x27; exists but its &#x27;path&#x27; is not defined properly.&quot;);
+        mapData.tileHighlightImage = null;
+    }
 
-					var tileHighlightData = this.responseXML.getElementsByTagName(&quot;tile_highlight_image&quot;);
-					if (tileHighlightData &amp;&amp; tileHighlightData.length &gt; 0 &amp;&amp; tileHighlightData[0].firstChild)
-                    {
-                    	engine.mapData.textures.tileHighlight = String(tileHighlightData[0].firstChild.nodeValue);
-                    }
+    if ( mapData.singleGroundImage &amp;&amp; !mapData.singleGroundImage.path ) {
+        TRAVISO.trace(&quot;Map-data file warning: &#x27;singleGroundImage&#x27; exists but its &#x27;path&#x27; is not defined properly.&quot;);
+        mapData.singleGroundImage = null;
+    }
 
-                    // set object properties
-                    arr = this.responseXML.getElementsByTagName(&quot;object&quot;);
-                    
-                    var oTextures, interactionOffsets, temp, isFloorObject, noTransparency;
-                    for (i = 0; i &lt; arr.length; i++)
-                    {
-                        oTextures = { };
-                        interactionOffsets = { };
+    var i,j, arr;
+    var rows = mapData.groundMap;
+    mapData.groundMapData = [];
+    for (i = 0; i &lt; rows.length; i++) {
+        arr = String(rows[i].row).split(&quot;,&quot;);
+        // remove empty spaces in a row and cast to an array
+        for (j = arr.length; j--; ) { arr[j] = arr[j] | 0; }
+        mapData.groundMapData[i] = arr;
+    }
+    
+    rows = mapData.objectsMap;
+    mapData.objectsMapData = [];
+    for (i = 0; i &lt; rows.length; i++) {
+        arr = String(rows[i].row).split(&quot;,&quot;);
+        // remove empty spaces in a row and cast to an array
+        for (j = arr.length; j--; ) { arr[j] = arr[j] | 0; }
+        mapData.objectsMapData[i] = arr;
+    }
 
-                        ///////////////////////////////////////////////////////////////////////////
+    if ( !TRAVISO.existy(mapData.tiles) ) {
+        TRAVISO.trace(&quot;Map-data file warning: No &#x27;tiles&#x27; defined.&quot;);
+        mapData.tiles = {};
+    }
+    if ( !TRAVISO.existy(mapData.objects) ) {
+        TRAVISO.trace(&quot;Map-data file warning: No &#x27;objects&#x27; defined.&quot;);
+        mapData.objects = {};
+    } 
 
-                        var objectVisuals = arr[i].getElementsByTagName(&quot;v&quot;);
+    var obj, objId, visual, visualId, 
+        interactionOffsets, oTextures, m, n;
+    for (objId in mapData.objects) {
+        obj = mapData.objects[objId];
+        if ( !TRAVISO.existy(obj.visuals) ) {
+            throw new Error(&quot;TRAVISO: No visuals defined in data-file for object type: &quot; + objId);
+        }
+        obj.id = objId;
+        if ( !TRAVISO.existy(obj.rowSpan) ) { obj.rowSpan = 1; }
+        if ( !TRAVISO.existy(obj.columnSpan) ) { obj.columnSpan = 1; }
 
-                        if (!objectVisuals || objectVisuals.length &lt; 1)
-                        {
-                            throw new Error(&quot;TRAVISO: No visuals defined in XML for object type: &quot; + arr[i].attributes.getNamedItem(&quot;id&quot;).nodeValue);
-                        }
-                        else
-                        {
-                        	var m, k, v, vId, vIpor, vIpoc, vFrames;
-                            for (k = 0; k &lt; objectVisuals.length; k++)
-                            {
-                                v = objectVisuals[k];
-                                temp = v.attributes.getNamedItem(&quot;id&quot;);
-                                vId = temp ? temp.nodeValue : null;
-                                if (!vId || vId === &quot;&quot; || vId.length &lt; 1)
-                                {
-                                    throw new Error(&quot;TRAVISO: A v tag without an id is detected in the XML file.&quot;);
-                                }
-                                
-                                temp = v.attributes.getNamedItem(&quot;ipor&quot;);
-                                vIpor = temp ? temp.nodeValue : null;
-                                temp = v.attributes.getNamedItem(&quot;ipoc&quot;);
-                                vIpoc = temp ? temp.nodeValue : null;
-                                interactionOffsets[vId] = null;
-                                if (vIpor &amp;&amp; vIpor !== &quot;&quot; &amp;&amp; vIpor.length &gt; 0 &amp;&amp; vIpoc &amp;&amp; vIpoc !== &quot;&quot; &amp;&amp; vIpoc.length &gt; 0)
-                                {
-                                    interactionOffsets[vId] = { c: parseInt(vIpoc), r: parseInt(vIpor) };
-                                }
+        oTextures = {};
+        interactionOffsets = {};
 
-                                vFrames = v.getElementsByTagName(&quot;f&quot;);
-                                if (vFrames &amp;&amp; vFrames.length &gt; 0)
-                                {
-                                    oTextures[vId] = [];
-                                    for (m = 0; m &lt; vFrames.length; m++)
-                                    {
-                                        oTextures[vId][m] = String(vFrames[m].firstChild.nodeValue);
-                                    }
-                                }
-                                else
-                                {
-                                    var vPath = String(v.attributes.getNamedItem(&quot;path&quot;).nodeValue);
-                                    var vExtension = String(v.attributes.getNamedItem(&quot;ext&quot;).nodeValue);
-                                    var vNumberOfFrames = parseInt(v.attributes.getNamedItem(&quot;number_of_frames&quot;).nodeValue, 10);
-                                    var vStartNumber = parseInt(v.attributes.getNamedItem(&quot;start_number&quot;).nodeValue, 10);
+        for (visualId in obj.visuals) {
+            visual = obj.visuals[visualId];
 
-                                    if (!vPath || !vExtension || !vNumberOfFrames || vNumberOfFrames &lt; 1)
-                                    {
-                                        throw new Error(&quot;TRAVISO: Misdefined v tag attributes detected in XML file for v id: &quot; + vId);
-                                    }
+            if ( TRAVISO.existy(visual.ipor) &amp;&amp; TRAVISO.existy(visual.ipoc) ) {
+                interactionOffsets[visualId] = { c: parseInt(visual.ipoc), r: parseInt(visual.ipor) };
+            }
 
-                                    oTextures[vId] = [];
-                                    if (vNumberOfFrames === 1)
-                                    {
-                                        oTextures[vId][0] = vPath + &quot;.&quot; + vExtension;
-                                    }
-                                    else
-                                    {
-                                        var n = 0;
-                                        for (m = vStartNumber; m &lt; vNumberOfFrames; m++)
-                                        {
-                                            oTextures[vId][n++] = vPath + String(m) + &quot;.&quot; + vExtension;
-                                        }
-                                    }
-                                }
+            if ( visual.frames &amp;&amp; visual.frames.length &gt; 0 ) {
+                oTextures[visualId] = [];
+                for (m = 0; m &lt; visual.frames.length; m++) {
+                    oTextures[visualId][m] = visual.frames[m].path;
+                }
+            } else {
+                if (!visual.path || !visual.extension || !visual.numberOfFrames || visual.numberOfFrames &lt; 1) {
+                    throw new Error(&quot;TRAVISO: Invalid or missing visual attributes detected in data-file for visual with id: &quot; + visualId);
+                }
 
-                            }
-                        }
-                        
-                        isFloorObject = arr[i].attributes.getNamedItem(&quot;floor&quot;) ? parseInt(arr[i].attributes.getNamedItem(&quot;floor&quot;).nodeValue, 10) : false;
-                        noTransparency = arr[i].attributes.getNamedItem(&quot;noTransparency&quot;) ? parseInt(arr[i].attributes.getNamedItem(&quot;noTransparency&quot;).nodeValue, 10) : false;
-                        
-                        engine.mapData.textures.objects[arr[i].attributes.getNamedItem(&quot;id&quot;).nodeValue] =
-                        {
-                            t : oTextures,
-                            io : interactionOffsets,
-                            s : arr[i].attributes.getNamedItem(&quot;s&quot;).nodeValue,
-                            f : isFloorObject,
-                            nt : noTransparency,
-                            m : parseInt(arr[i].attributes.getNamedItem(&quot;movable&quot;).nodeValue, 10),
-                            i : parseInt(arr[i].attributes.getNamedItem(&quot;interactive&quot;).nodeValue, 10)
-                        };
-                    }
-
-                    if (loadedCallback)
-                    {
-                        loadedCallback();
+                oTextures[visualId] = [];
+                if (visual.numberOfFrames === 1) {
+                    oTextures[visualId][0] = visual.path + &quot;.&quot; + visual.extension;
+                } else {
+                    n = 0;
+                    for (m = visual.startIndex; m &lt; visual.numberOfFrames; m++) {
+                        oTextures[visualId][n++] = visual.path + String(m) + &quot;.&quot; + visual.extension;
                     }
                 }
             }
-        };
+        }
 
-        this.ajaxRequest.open(&quot;GET&quot;, engine.config.mapDataPath, true);
-        if (this.ajaxRequest.overrideMimeType) { this.ajaxRequest.overrideMimeType(&quot;application/xml&quot;); }
-        this.ajaxRequest.send(null);
+        obj.t = oTextures;
+        obj.io = interactionOffsets;
+        obj.f = !!obj.floor;
+        obj.nt = !!obj.noTransparency;
+        obj.m = !!obj.movable;
+        obj.i = !!obj.interactive;
+    }
+    
+    delete mapData.objectsMap;
+    delete mapData.groundMap;
+
+    engine.mapData = mapData;
+
+    if (loadedCallback) {
+        loadedCallback();
     }
 };
 
@@ -357,9 +274,8 @@ TRAVISO.loadData = function(engine, loadedCallback)
  */
 TRAVISO.getObjectInfo = function(engine, objectType)
 {
-    var objInfo = engine.mapData.textures.objects[objectType];
-    if (objInfo)
-    {
+    var objInfo = engine.mapData.objects[objectType];
+    if (objInfo) {
         var textures = {};
         for (var key in objInfo.t)
         {
@@ -372,11 +288,12 @@ TRAVISO.getObjectInfo = function(engine, objectType)
             nt : objInfo.nt,
             t : textures,
             io : objInfo.io,
-            s : objInfo.s
+            s : objInfo.s,
+            rowSpan : objInfo.rowSpan,
+            columnSpan : objInfo.columnSpan
         };
     }
-    else
-    {
+    else {
         throw new Error(&quot;TRAVISO: No info defined for object type: &quot; + objectType);
     }
 };
@@ -393,29 +310,23 @@ TRAVISO.getObjectInfo = function(engine, objectType)
  * @param visualId {String} id of the related v tag defined in the xml file
  * @return {Array(PIXI.Texture)} an array of textures
  */
-TRAVISO.getObjectTextures = function(engine, objectType, visualId)
-{
-    var objInfo = engine.mapData.textures.objects[objectType];
-    if (objInfo)
-    {
+TRAVISO.getObjectTextures = function(engine, objectType, visualId) {
+    var objInfo = engine.mapData.objects[objectType];
+    if (objInfo) {
         var textures = null;
         var textureNames = objInfo.t[visualId];
-        if (textureNames)
-        {   
+        if (textureNames) {
             textures = [];
-            for (var j = 0; j &lt; textureNames.length; j++)
-            {
+            for (var j = 0; j &lt; textureNames.length; j++) {
                 textures[textures.length] = PIXI.Texture.fromFrame(textureNames[j]);
             }
         }
-        else
-        {
+        else {
             TRAVISO.trace(&quot;No textures defined for object type: &quot; + objectType + &quot; and visualId: &quot; + visualId);
         }
         return textures;
     }
-    else
-    {
+    else {
         throw new Error(&quot;TRAVISO: No info defined for object type: &quot; + objectType);
     }
 };
@@ -431,25 +342,23 @@ TRAVISO.getObjectTextures = function(engine, objectType, visualId)
  * @param tileType {String} type/id of the related tile tag defined in the xml file
  * @return {Object} an object with all properties of a map-tile
  */
-TRAVISO.getTileInfo = function(engine, tileType)
-{
-    var tileInfo = engine.mapData.textures.tiles[tileType];
-    if (tileInfo)
-    {
+TRAVISO.getTileInfo = function(engine, tileType) {
+    var tileInfo = engine.mapData.tiles[tileType];
+    if (tileInfo) {
         return {
-            m : tileInfo.m,
-            t : tileInfo.t ? [PIXI.Texture.fromFrame(tileInfo.t)] : []
+            // m : tileInfo.m,
+            m : tileInfo.movable,
+            // t : tileInfo.t ? [PIXI.Texture.fromFrame(tileInfo.t)] : []
+            t : tileInfo.path ? [PIXI.Texture.fromFrame(tileInfo.path)] : []
         };
     }
-    else if (engine.mapData.singleGroundImagePath)
-    {
+    else if (engine.mapData.singleGroundImage) {
         return {
             m : parseInt(tileType) &gt; 0 ? 1 : 0,
             t : []
         };
     }
-    else
-    {
+    else {
         throw new Error(&quot;TRAVISO: No info defined for tile type: &quot; + tileType);
     }
 };
@@ -464,8 +373,7 @@ TRAVISO.getTileInfo = function(engine, tileType)
  * @param dir {Number} index of the direction
  * @return {String} texture id for the given direction
  */
-TRAVISO.getStationaryDirVisualId = function(dir)
-{
+TRAVISO.getStationaryDirVisualId = function(dir) {
     return TRAVISO.RESERVED_TEXTURE_IDS[dir];
 };
 
@@ -479,8 +387,7 @@ TRAVISO.getStationaryDirVisualId = function(dir)
  * @param dir {Number} index of the direction
  * @return {String} texture id for the given direction
  */
-TRAVISO.getMovingDirVisualId = function(dir)
-{
+TRAVISO.getMovingDirVisualId = function(dir) {
     return TRAVISO.RESERVED_TEXTURE_IDS[dir + 8];
 };
 
@@ -497,23 +404,19 @@ TRAVISO.getMovingDirVisualId = function(dir)
  * @param c2 {Number} column index of the second location
  * @return {Number} direction id
  */
-TRAVISO.getDirBetween = function(r1, c1, r2, c2)
-{
+TRAVISO.getDirBetween = function(r1, c1, r2, c2) {
     var dir = TRAVISO.directions.S;
-    if (r1 === r2)
-    {
+    if (r1 === r2) {
         if (c1 === c2) 		{ dir = TRAVISO.directions.O; }
         else if (c1 &lt; c2) 	{ dir = TRAVISO.directions.NE; }
         else 				{ dir = TRAVISO.directions.SW; }
     }
-    else if (r1 &lt; r2)
-    {
+    else if (r1 &lt; r2) {
         if (c1 === c2)		{ dir = TRAVISO.directions.SE; }
         else if (c1 &lt; c2)	{ dir = TRAVISO.directions.W; }
         else				{ dir = TRAVISO.directions.S; }
     }
-    else if (r1 &gt; r2)
-    {
+    else if (r1 &gt; r2) {
         if (c1 === c2)		{ dir = TRAVISO.directions.NW; }
         else if (c1 &lt; c2)	{ dir = TRAVISO.directions.N; }
         else				{ dir = TRAVISO.directions.E; }

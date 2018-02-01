@@ -4,7 +4,7 @@
  * Copyright (c) 2015, Hakan Karlidag - @axaq
  * www.travisojs.com
  *
- * Compiled: 2017-03-05
+ * Compiled: 2018-01-30
  *
  * traviso.js is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license.php
@@ -14,8 +14,6 @@
  */
 
 (function(){
-
-    var root = this;
 
 /**
  * @author Hakan Karlidag - @axaq
@@ -286,232 +284,149 @@ TRAVISO.defineProperty = function(key)
  */
 TRAVISO.loadAssetsAndData = function(engine, loadedCallback)
 {
+    if (!engine.config.mapDataPath)
+    {
+        throw new Error("TRAVISO: No JSON-file path defined for map data. Plese check your configuration object that you pass to the 'getEngineInstance' method.");
+    } else if (engine.config.mapDataPath.split(".").pop() !== "json") {
+        throw new Error("TRAVISO: Invalid map-data file path. This file has to be a json file.");
+    }
+
+    var loader = new PIXI.loaders.Loader();
+    loader.add("mapData", engine.config.mapDataPath);
+
     if (engine.config.assetsToLoad && engine.config.assetsToLoad !== "" && engine.config.assetsToLoad.length > 0)
     {
-        PIXI.loader.add(engine.config.assetsToLoad).load(function () { TRAVISO.loadData(engine, loadedCallback); });
+        loader.add(engine.config.assetsToLoad);
     }
-    else
-    {
-        TRAVISO.loadData(engine, loadedCallback);
-    }
+
+    loader.load(function (loader, resources) { TRAVISO.assetsAndDataLoaded(engine, loadedCallback, resources); });
+
+    // TRAVISO.loadData();
 };
+
 
 /**
  * Handles loading of map data for the given engine instance 
  *
- * @method loadData
+ * @method assetsAndDataLoaded
  * @for TRAVISO
  * @static
  * @private
  * @param engine {EngineView} engine instance
- * @param engine.config {Object} configuration object for the engine instance
- * @param engine.config.mapDataPath {String} the path to the xml file that defines map data
  * @param [loadedCallback=null] {Function} Callback function
+ * @param resources {Object} object holding the resources loaded
+ * @param resources.mapData.data {Object} the object that holds the json map data
  */
-TRAVISO.loadData = function(engine, loadedCallback)
-{
-    engine.mapData = {};
-    
-    if (!engine.config.mapDataPath)
-    {
-        throw new Error("TRAVISO: No XML path defined for map data. Plese check your configuration object that you pass to the 'getEngineInstance' method.");
+TRAVISO.assetsAndDataLoaded = function(engine, loadedCallback, resources) {
+    // console.log('assetsAndDataLoaded', resources.mapData.data);
+
+    var mapData = resources.mapData.data;
+
+    // initial controls
+
+    if ( !TRAVISO.existy(mapData.initialControllableLocation) ) {
+        TRAVISO.trace("Map-data file warning: No 'initialControllableLocation' defined. Ignore this warning if you are adding it later manually.");
+    } else if ( !TRAVISO.existy(mapData.initialControllableLocation.columnIndex) || !TRAVISO.existy(mapData.initialControllableLocation.rowIndex) ) {
+        TRAVISO.trace("Map-data file warning: 'initialControllableLocation' exists but it is not defined properly.");
+        mapData.initialControllableLocation = null;
     }
-    else
-    {
-        this.ajaxRequest = new XMLHttpRequest();
-        this.ajaxRequest.onreadystatechange = function()
-        {
-            if (this.readyState === 4)
-            {
-                if (this.status === 200 || window.location.href.indexOf("http") === -1)
-                {
-                    var arr, i, j, data, rows;
-                    
-                    // check if single_ground_image is defined or not 
-                    var singleGroundImageData = this.responseXML.getElementsByTagName("single_ground_image");
-                    if (singleGroundImageData && singleGroundImageData.length > 0)
-                    {
-                    	var singleGroundImagePathData = singleGroundImageData[0].getElementsByTagName("path");
-                    	if (singleGroundImagePathData && singleGroundImagePathData.length > 0)
-                    	{
-                    		engine.mapData.singleGroundImagePath = String(singleGroundImagePathData[0].firstChild.nodeValue);
-                    		
-                    		var attScale = singleGroundImageData[0].attributes.getNamedItem("scale");
-	                    	attScale = (attScale) ? parseInt(attScale.nodeValue, 10) : 1;
-	                    	if (attScale <= 0) { attScale = 1; }
-                    		engine.mapData.singleGroundImageScale = attScale;
-                    	}
-                    	else
-                    	{
-                    		TRAVISO.trace("Path is NOT defined for single_ground_image");
-                    	}
-                    }
-                    
-                    data = this.responseXML.getElementsByTagName("ground_map")[0];
-                    rows = data.getElementsByTagName("row");
-                    engine.mapData.groundMapData = [];
-                    for (i = 0; i < rows.length; i++)
-                    {
-                        arr = String(rows[i].firstChild.nodeValue).split(",");
-                        // remove empty spaces in a row and cast to an array
-                        for (j = arr.length; j--; ) { arr[j] = arr[j] | 0; }
-                        engine.mapData.groundMapData[i] = arr;
-                    }
-					
-                    data = this.responseXML.getElementsByTagName("object_map")[0];
-                    rows = data.getElementsByTagName("row");
-                    engine.mapData.objectsMapData = [];
-                    for (i = 0; i < rows.length; i++)
-                    {
-                        arr = String(rows[i].firstChild.nodeValue).split(",");
-                        // remove empty spaces in a row and cast to an array
-                        for (j = arr.length; j--; ) { arr[j] = arr[j] | 0; }
-                        engine.mapData.objectsMapData[i] = arr;
-                    }
 
-                    var initialControllableLocationData = this.responseXML.getElementsByTagName("initial_controllable_location");
-                    
-                    if (initialControllableLocationData && initialControllableLocationData.length > 0)
-                    {
-                        var initialControllableLocation = initialControllableLocationData[0];
-                        engine.mapData.initialControllableLocation =
-                        {
-                            c : parseInt(initialControllableLocation.attributes.getNamedItem("c").nodeValue, 10),
-                            r : parseInt(initialControllableLocation.attributes.getNamedItem("r").nodeValue, 10)
-                        };
-                    }
-                    else
-                    {
-                        TRAVISO.trace("No initial_controllable_location defined in the XML file.");
-                    }
-                                        
-                    engine.mapData.textures = {};
-                    engine.mapData.textures.tiles = [];
-                    engine.mapData.textures.objects = [];
-                    
-                    // set tile properties
-                    arr = this.responseXML.getElementsByTagName("tile");
-                    
-                    for (i = 0; i < arr.length; i++)
-                    {
-                        engine.mapData.textures.tiles[arr[i].attributes.getNamedItem("id").nodeValue] =
-                        {
-                            t : (arr[i].firstChild && arr[i].firstChild.nodeValue) ? String(arr[i].firstChild.nodeValue) : null,
-                            m : parseInt(arr[i].attributes.getNamedItem("movable").nodeValue, 10)
-                        };
-                    }
+    if ( mapData.tileHighlightImage && !mapData.tileHighlightImage.path ) {
+        TRAVISO.trace("Map-data file warning: 'tileHighlightImage' exists but its 'path' is not defined properly.");
+        mapData.tileHighlightImage = null;
+    }
 
-					var tileHighlightData = this.responseXML.getElementsByTagName("tile_highlight_image");
-					if (tileHighlightData && tileHighlightData.length > 0 && tileHighlightData[0].firstChild)
-                    {
-                    	engine.mapData.textures.tileHighlight = String(tileHighlightData[0].firstChild.nodeValue);
-                    }
+    if ( mapData.singleGroundImage && !mapData.singleGroundImage.path ) {
+        TRAVISO.trace("Map-data file warning: 'singleGroundImage' exists but its 'path' is not defined properly.");
+        mapData.singleGroundImage = null;
+    }
 
-                    // set object properties
-                    arr = this.responseXML.getElementsByTagName("object");
-                    
-                    var oTextures, interactionOffsets, temp, isFloorObject, noTransparency;
-                    for (i = 0; i < arr.length; i++)
-                    {
-                        oTextures = { };
-                        interactionOffsets = { };
+    var i,j, arr;
+    var rows = mapData.groundMap;
+    mapData.groundMapData = [];
+    for (i = 0; i < rows.length; i++) {
+        arr = String(rows[i].row).split(",");
+        // remove empty spaces in a row and cast to an array
+        for (j = arr.length; j--; ) { arr[j] = arr[j] | 0; }
+        mapData.groundMapData[i] = arr;
+    }
+    
+    rows = mapData.objectsMap;
+    mapData.objectsMapData = [];
+    for (i = 0; i < rows.length; i++) {
+        arr = String(rows[i].row).split(",");
+        // remove empty spaces in a row and cast to an array
+        for (j = arr.length; j--; ) { arr[j] = arr[j] | 0; }
+        mapData.objectsMapData[i] = arr;
+    }
 
-                        ///////////////////////////////////////////////////////////////////////////
+    if ( !TRAVISO.existy(mapData.tiles) ) {
+        TRAVISO.trace("Map-data file warning: No 'tiles' defined.");
+        mapData.tiles = {};
+    }
+    if ( !TRAVISO.existy(mapData.objects) ) {
+        TRAVISO.trace("Map-data file warning: No 'objects' defined.");
+        mapData.objects = {};
+    } 
 
-                        var objectVisuals = arr[i].getElementsByTagName("v");
+    var obj, objId, visual, visualId, 
+        interactionOffsets, oTextures, m, n;
+    for (objId in mapData.objects) {
+        obj = mapData.objects[objId];
+        if ( !TRAVISO.existy(obj.visuals) ) {
+            throw new Error("TRAVISO: No visuals defined in data-file for object type: " + objId);
+        }
+        obj.id = objId;
+        if ( !TRAVISO.existy(obj.rowSpan) ) { obj.rowSpan = 1; }
+        if ( !TRAVISO.existy(obj.columnSpan) ) { obj.columnSpan = 1; }
 
-                        if (!objectVisuals || objectVisuals.length < 1)
-                        {
-                            throw new Error("TRAVISO: No visuals defined in XML for object type: " + arr[i].attributes.getNamedItem("id").nodeValue);
-                        }
-                        else
-                        {
-                        	var m, k, v, vId, vIpor, vIpoc, vFrames;
-                            for (k = 0; k < objectVisuals.length; k++)
-                            {
-                                v = objectVisuals[k];
-                                temp = v.attributes.getNamedItem("id");
-                                vId = temp ? temp.nodeValue : null;
-                                if (!vId || vId === "" || vId.length < 1)
-                                {
-                                    throw new Error("TRAVISO: A v tag without an id is detected in the XML file.");
-                                }
-                                
-                                temp = v.attributes.getNamedItem("ipor");
-                                vIpor = temp ? temp.nodeValue : null;
-                                temp = v.attributes.getNamedItem("ipoc");
-                                vIpoc = temp ? temp.nodeValue : null;
-                                interactionOffsets[vId] = null;
-                                if (vIpor && vIpor !== "" && vIpor.length > 0 && vIpoc && vIpoc !== "" && vIpoc.length > 0)
-                                {
-                                    interactionOffsets[vId] = { c: parseInt(vIpoc), r: parseInt(vIpor) };
-                                }
+        oTextures = {};
+        interactionOffsets = {};
 
-                                vFrames = v.getElementsByTagName("f");
-                                if (vFrames && vFrames.length > 0)
-                                {
-                                    oTextures[vId] = [];
-                                    for (m = 0; m < vFrames.length; m++)
-                                    {
-                                        oTextures[vId][m] = String(vFrames[m].firstChild.nodeValue);
-                                    }
-                                }
-                                else
-                                {
-                                    var vPath = String(v.attributes.getNamedItem("path").nodeValue);
-                                    var vExtension = String(v.attributes.getNamedItem("ext").nodeValue);
-                                    var vNumberOfFrames = parseInt(v.attributes.getNamedItem("number_of_frames").nodeValue, 10);
-                                    var vStartNumber = parseInt(v.attributes.getNamedItem("start_number").nodeValue, 10);
+        for (visualId in obj.visuals) {
+            visual = obj.visuals[visualId];
 
-                                    if (!vPath || !vExtension || !vNumberOfFrames || vNumberOfFrames < 1)
-                                    {
-                                        throw new Error("TRAVISO: Misdefined v tag attributes detected in XML file for v id: " + vId);
-                                    }
+            if ( TRAVISO.existy(visual.ipor) && TRAVISO.existy(visual.ipoc) ) {
+                interactionOffsets[visualId] = { c: parseInt(visual.ipoc), r: parseInt(visual.ipor) };
+            }
 
-                                    oTextures[vId] = [];
-                                    if (vNumberOfFrames === 1)
-                                    {
-                                        oTextures[vId][0] = vPath + "." + vExtension;
-                                    }
-                                    else
-                                    {
-                                        var n = 0;
-                                        for (m = vStartNumber; m < vNumberOfFrames; m++)
-                                        {
-                                            oTextures[vId][n++] = vPath + String(m) + "." + vExtension;
-                                        }
-                                    }
-                                }
+            if ( visual.frames && visual.frames.length > 0 ) {
+                oTextures[visualId] = [];
+                for (m = 0; m < visual.frames.length; m++) {
+                    oTextures[visualId][m] = visual.frames[m].path;
+                }
+            } else {
+                if (!visual.path || !visual.extension || !visual.numberOfFrames || visual.numberOfFrames < 1) {
+                    throw new Error("TRAVISO: Invalid or missing visual attributes detected in data-file for visual with id: " + visualId);
+                }
 
-                            }
-                        }
-                        
-                        isFloorObject = arr[i].attributes.getNamedItem("floor") ? parseInt(arr[i].attributes.getNamedItem("floor").nodeValue, 10) : false;
-                        noTransparency = arr[i].attributes.getNamedItem("noTransparency") ? parseInt(arr[i].attributes.getNamedItem("noTransparency").nodeValue, 10) : false;
-                        
-                        engine.mapData.textures.objects[arr[i].attributes.getNamedItem("id").nodeValue] =
-                        {
-                            t : oTextures,
-                            io : interactionOffsets,
-                            s : arr[i].attributes.getNamedItem("s").nodeValue,
-                            f : isFloorObject,
-                            nt : noTransparency,
-                            m : parseInt(arr[i].attributes.getNamedItem("movable").nodeValue, 10),
-                            i : parseInt(arr[i].attributes.getNamedItem("interactive").nodeValue, 10)
-                        };
-                    }
-
-                    if (loadedCallback)
-                    {
-                        loadedCallback();
+                oTextures[visualId] = [];
+                if (visual.numberOfFrames === 1) {
+                    oTextures[visualId][0] = visual.path + "." + visual.extension;
+                } else {
+                    n = 0;
+                    for (m = visual.startIndex; m < visual.numberOfFrames; m++) {
+                        oTextures[visualId][n++] = visual.path + String(m) + "." + visual.extension;
                     }
                 }
             }
-        };
+        }
 
-        this.ajaxRequest.open("GET", engine.config.mapDataPath, true);
-        if (this.ajaxRequest.overrideMimeType) { this.ajaxRequest.overrideMimeType("application/xml"); }
-        this.ajaxRequest.send(null);
+        obj.t = oTextures;
+        obj.io = interactionOffsets;
+        obj.f = !!obj.floor;
+        obj.nt = !!obj.noTransparency;
+        obj.m = !!obj.movable;
+        obj.i = !!obj.interactive;
+    }
+    
+    delete mapData.objectsMap;
+    delete mapData.groundMap;
+
+    engine.mapData = mapData;
+
+    if (loadedCallback) {
+        loadedCallback();
     }
 };
 
@@ -528,9 +443,8 @@ TRAVISO.loadData = function(engine, loadedCallback)
  */
 TRAVISO.getObjectInfo = function(engine, objectType)
 {
-    var objInfo = engine.mapData.textures.objects[objectType];
-    if (objInfo)
-    {
+    var objInfo = engine.mapData.objects[objectType];
+    if (objInfo) {
         var textures = {};
         for (var key in objInfo.t)
         {
@@ -543,11 +457,12 @@ TRAVISO.getObjectInfo = function(engine, objectType)
             nt : objInfo.nt,
             t : textures,
             io : objInfo.io,
-            s : objInfo.s
+            s : objInfo.s,
+            rowSpan : objInfo.rowSpan,
+            columnSpan : objInfo.columnSpan
         };
     }
-    else
-    {
+    else {
         throw new Error("TRAVISO: No info defined for object type: " + objectType);
     }
 };
@@ -564,29 +479,23 @@ TRAVISO.getObjectInfo = function(engine, objectType)
  * @param visualId {String} id of the related v tag defined in the xml file
  * @return {Array(PIXI.Texture)} an array of textures
  */
-TRAVISO.getObjectTextures = function(engine, objectType, visualId)
-{
-    var objInfo = engine.mapData.textures.objects[objectType];
-    if (objInfo)
-    {
+TRAVISO.getObjectTextures = function(engine, objectType, visualId) {
+    var objInfo = engine.mapData.objects[objectType];
+    if (objInfo) {
         var textures = null;
         var textureNames = objInfo.t[visualId];
-        if (textureNames)
-        {   
+        if (textureNames) {
             textures = [];
-            for (var j = 0; j < textureNames.length; j++)
-            {
+            for (var j = 0; j < textureNames.length; j++) {
                 textures[textures.length] = PIXI.Texture.fromFrame(textureNames[j]);
             }
         }
-        else
-        {
+        else {
             TRAVISO.trace("No textures defined for object type: " + objectType + " and visualId: " + visualId);
         }
         return textures;
     }
-    else
-    {
+    else {
         throw new Error("TRAVISO: No info defined for object type: " + objectType);
     }
 };
@@ -602,25 +511,23 @@ TRAVISO.getObjectTextures = function(engine, objectType, visualId)
  * @param tileType {String} type/id of the related tile tag defined in the xml file
  * @return {Object} an object with all properties of a map-tile
  */
-TRAVISO.getTileInfo = function(engine, tileType)
-{
-    var tileInfo = engine.mapData.textures.tiles[tileType];
-    if (tileInfo)
-    {
+TRAVISO.getTileInfo = function(engine, tileType) {
+    var tileInfo = engine.mapData.tiles[tileType];
+    if (tileInfo) {
         return {
-            m : tileInfo.m,
-            t : tileInfo.t ? [PIXI.Texture.fromFrame(tileInfo.t)] : []
+            // m : tileInfo.m,
+            m : tileInfo.movable,
+            // t : tileInfo.t ? [PIXI.Texture.fromFrame(tileInfo.t)] : []
+            t : tileInfo.path ? [PIXI.Texture.fromFrame(tileInfo.path)] : []
         };
     }
-    else if (engine.mapData.singleGroundImagePath)
-    {
+    else if (engine.mapData.singleGroundImage) {
         return {
             m : parseInt(tileType) > 0 ? 1 : 0,
             t : []
         };
     }
-    else
-    {
+    else {
         throw new Error("TRAVISO: No info defined for tile type: " + tileType);
     }
 };
@@ -635,8 +542,7 @@ TRAVISO.getTileInfo = function(engine, tileType)
  * @param dir {Number} index of the direction
  * @return {String} texture id for the given direction
  */
-TRAVISO.getStationaryDirVisualId = function(dir)
-{
+TRAVISO.getStationaryDirVisualId = function(dir) {
     return TRAVISO.RESERVED_TEXTURE_IDS[dir];
 };
 
@@ -650,8 +556,7 @@ TRAVISO.getStationaryDirVisualId = function(dir)
  * @param dir {Number} index of the direction
  * @return {String} texture id for the given direction
  */
-TRAVISO.getMovingDirVisualId = function(dir)
-{
+TRAVISO.getMovingDirVisualId = function(dir) {
     return TRAVISO.RESERVED_TEXTURE_IDS[dir + 8];
 };
 
@@ -668,23 +573,19 @@ TRAVISO.getMovingDirVisualId = function(dir)
  * @param c2 {Number} column index of the second location
  * @return {Number} direction id
  */
-TRAVISO.getDirBetween = function(r1, c1, r2, c2)
-{
+TRAVISO.getDirBetween = function(r1, c1, r2, c2) {
     var dir = TRAVISO.directions.S;
-    if (r1 === r2)
-    {
+    if (r1 === r2) {
         if (c1 === c2) 		{ dir = TRAVISO.directions.O; }
         else if (c1 < c2) 	{ dir = TRAVISO.directions.NE; }
         else 				{ dir = TRAVISO.directions.SW; }
     }
-    else if (r1 < r2)
-    {
+    else if (r1 < r2) {
         if (c1 === c2)		{ dir = TRAVISO.directions.SE; }
         else if (c1 < c2)	{ dir = TRAVISO.directions.W; }
         else				{ dir = TRAVISO.directions.S; }
     }
-    else if (r1 > r2)
-    {
+    else if (r1 > r2) {
         if (c1 === c2)		{ dir = TRAVISO.directions.NW; }
         else if (c1 < c2)	{ dir = TRAVISO.directions.N; }
         else				{ dir = TRAVISO.directions.E; }
@@ -2102,10 +2003,12 @@ TRAVISO.ObjectView = function(engine, objectType, animSpeed)
 	 * @property {Boolean} isInteractive
 	 */
 	/**
-	 * The size of the map-object in terms of rows and columns.
-	 * @property {Object} size
-	 * @property {Number} size.r
-	 * @property {Number} size.c
+	 * Number of tiles that map-object covers horizontally on the isometric map
+     * @property {Number} columnSpan
+	 */
+    /**
+	 * Number of tiles that map-object covers vertically on the isometric map
+     * @property {Number} rowSpan
 	 */
     var info = TRAVISO.getObjectInfo(this.engine, this.type);
     this.isMovableTo = info.m;
@@ -2113,13 +2016,9 @@ TRAVISO.ObjectView = function(engine, objectType, animSpeed)
     this.interactive = this.interactiveChildren = false;
     this.isFloorObject = info.f;
     this.noTransparency = info.nt;
-    var arr = info.s.split("x");
-    this.size =
-    {
-        r : parseInt(arr[0], 10),
-        c : parseInt(arr[1], 10)
-    };
-    var xAnchor = this.size.r / (this.size.c + this.size.r);
+    this.rowSpan = info.rowSpan;
+    this.columnSpan = info.columnSpan;
+    var xAnchor = this.rowSpan / (this.columnSpan + this.rowSpan);
 	
 	/**
 	 * A dictionary for all the textures defined for the map-object.
@@ -2260,7 +2159,6 @@ TRAVISO.ObjectView.prototype.destroy = function()
 	if (this.container)
 	{
 	    this.engine = null;
-	    this.size = null;
 	    this.textures = null;
 	    // this.removeChild(this.container);
 	    // this.container.textures = null;
@@ -2351,9 +2249,8 @@ TRAVISO.TileView = function(engine, tileType)
      * @property {PIXI.DisplayObject} highlightedOverlay
      * @protected
      */
-    if (this.engine.mapData.textures.tileHighlight)
-    {
-        this.highlightedOverlay = new PIXI.Sprite.fromFrame(this.engine.mapData.textures.tileHighlight);
+    if (this.engine.mapData.tileHighlightImage) {
+        this.highlightedOverlay = new PIXI.Sprite.fromFrame(this.engine.mapData.tileHighlightImage.path);
         this.highlightedOverlay.anchor.x = 0.5;
         this.highlightedOverlay.anchor.y = 0.5;
         this.addChild(this.highlightedOverlay);
@@ -2843,12 +2740,12 @@ TRAVISO.EngineView.prototype.createMap = function()
 	
 	// add ground image first if it is defined
 	var groundImageSprite;
-	if (this.mapData.singleGroundImagePath)
+	if (this.mapData.singleGroundImage)
 	{
-	    groundImageSprite = new PIXI.Sprite.fromFrame(this.mapData.singleGroundImagePath);
+	    groundImageSprite = new PIXI.Sprite.fromFrame(this.mapData.singleGroundImage.path);
 	    this.groundContainer.addChild(groundImageSprite);
 	    
-	    groundImageSprite.scale.set(this.mapData.singleGroundImageScale);
+	    groundImageSprite.scale.set(this.mapData.singleGroundImage.scale || 1);
         
         this.groundImageSprite = groundImageSprite;
 	}
@@ -2953,7 +2850,8 @@ TRAVISO.EngineView.prototype.createMap = function()
 		    	
 		    	this.addObjRefToLocation(obj, obj.mapPos);
 		    	
-		    	if (initialControllableLocation && initialControllableLocation.c === j && initialControllableLocation.r === i)
+		    	// if (initialControllableLocation && initialControllableLocation.c === j && initialControllableLocation.r === i)
+		    	if (initialControllableLocation && initialControllableLocation.columnIndex === j && initialControllableLocation.rowIndex === i)
 		    	{
 		    		this.currentControllable = obj;
 		    	}
@@ -3017,7 +2915,8 @@ TRAVISO.EngineView.prototype.createMap = function()
 	
 	if (this.config.followCharacter && initialControllableLocation)
 	{
-		this.centralizeToLocation(initialControllableLocation.c, initialControllableLocation.r, true);
+		// this.centralizeToLocation(initialControllableLocation.c, initialControllableLocation.r, true);
+		this.centralizeToLocation(initialControllableLocation.columnIndex, initialControllableLocation.rowIndex, true);
 	}
 	else
 	{
@@ -3130,16 +3029,14 @@ TRAVISO.EngineView.prototype.createAndAddObjectToLocation = function(type, pos)
  * @method addObjectToLocation
  * @param obj {Object} either an external display object or a map-object (ObjectView)
  * @param obj.isMovableTo {Boolean} if the object can be moved onto by other map-objects
- * @param obj.size {Object} object that includes the size in rows and columns
- * @param obj.size.r {Number} the size of the map-object in rows
- * @param obj.size.c {Number} the size of the map-object in columns
+ * @param obj.columnSpan {Number} number of tiles that map-object covers horizontally on the isometric map
+ * @param obj.rowSpan {Number} number of tiles that map-object covers vertically on the isometric map
  * @param pos {Object} object including r and c coordinates
  * @param pos.r {Number} the row index of the map location
  * @param pos.c {Number} the column index of the map location
  * @return {Object} the newly added object
  */
-TRAVISO.EngineView.prototype.addObjectToLocation = function(obj, pos) 
-{
+TRAVISO.EngineView.prototype.addObjectToLocation = function(obj, pos) {
 	obj.position.x = this.getTilePosXFor(pos.r,pos.c);
 	obj.position.y = this.getTilePosYFor(pos.r,pos.c) + this.TILE_HALF_H;
 	obj.mapPos = { c:pos.c, r:pos.r };
@@ -3160,18 +3057,17 @@ TRAVISO.EngineView.prototype.addObjectToLocation = function(obj, pos)
  * @method addCustomObjectToLocation
  * @param displayObject {PIXI.DisplayObject} object to be added to location
  * @param [displayObject.isMovableTo=true] {Boolean} if the object can be moved onto by other map-objects, default true
- * @param [displayObject.size] {Object} object that includes the size in rows and columns, default { c:1, r: 1 }
- * @param [displayObject.size.r=1] {Number} the size of the map-object in rows
- * @param [displayObject.size.c=1] {Number} the size of the map-object in columns
+ * @param [displayObject.columnSpan] {Number} number of tiles that map-object covers horizontally on the isometric map
+ * @param [displayObject.rowSpan] {Number} number of tiles that map-object covers vertically on the isometric map
  * @param pos {Object} object including r and c coordinates
  * @param pos.r {Number} the row index of the map location
  * @param pos.c {Number} the column index of the map location
  * @return {Object} the newly added object
  */
-TRAVISO.EngineView.prototype.addCustomObjectToLocation = function(displayObject, pos) 
-{
+TRAVISO.EngineView.prototype.addCustomObjectToLocation = function(displayObject, pos) {
 	displayObject.isMovableTo = TRAVISO.existy(displayObject.isMovableTo) ? displayObject.isMovableTo : true;
-	displayObject.size = displayObject.size || { c:1, r: 1 };
+	displayObject.columnSpan = displayObject.columnSpan || 1;
+	displayObject.rowSpan = displayObject.rowSpan || 1;
 	
 	return this.addObjectToLocation(displayObject, pos);
 	
@@ -3187,8 +3083,7 @@ TRAVISO.EngineView.prototype.addCustomObjectToLocation = function(displayObject,
  * @param [pos.r] {Number} the row index of the map location
  * @param [pos.c] {Number} the column index of the map location
  */
-TRAVISO.EngineView.prototype.removeObjectFromLocation = function(obj, pos) 
-{
+TRAVISO.EngineView.prototype.removeObjectFromLocation = function(obj, pos) {
 	pos = pos || obj.mapPos;
 	this.objContainer.removeChild(obj);
 	this.removeObjRefFromLocation(obj, pos);
@@ -3202,13 +3097,11 @@ TRAVISO.EngineView.prototype.removeObjectFromLocation = function(obj, pos)
  * @param obj.mapPos {Object} the object that holds the location of the map-object on the map
  * @param obj.mapPos.c {Number} the column index of the map location
  * @param obj.mapPos.r {Number} the row index of the map location
- * @param obj.size {Object} the object that holds the size of the map-object on the map
- * @param obj.size.c {Number} the column index of the map location
- * @param obj.size.r {Number} the row index of the map location
+ * @param obj.columnSpan {Number} number of tiles that map-object covers horizontally on the isometric map
+ * @param obj.rowSpan {Number} number of tiles that map-object covers vertically on the isometric map
  */
-TRAVISO.EngineView.prototype.focusMapToObject = function(obj)
-{
-	this.focusMapToLocation(obj.mapPos.c + (obj.size.c - 1) / 2, obj.mapPos.r - (obj.size.r - 1) / 2, 0);
+TRAVISO.EngineView.prototype.focusMapToObject = function(obj) {
+	this.focusMapToLocation(obj.mapPos.c + (obj.columnSpan - 1) / 2, obj.mapPos.r - (obj.rowSpan - 1) / 2, 0);
 };
 
 /**
@@ -3219,8 +3112,7 @@ TRAVISO.EngineView.prototype.focusMapToObject = function(obj)
  * @param r {Number} the row index of the map location
  * @param zoomAmount {Number} targeted zoom level for focusing
  */
-TRAVISO.EngineView.prototype.focusMapToLocation = function(c, r, zoomAmount)
-{
+TRAVISO.EngineView.prototype.focusMapToLocation = function(c, r, zoomAmount) {
 	// NOTE: using zoomTo instead of setScale causes centralizeToPoint to be called twice (no visual problem)
 	this.zoomTo(zoomAmount, false);
 	this.centralizeToLocation(c,r);
@@ -3235,8 +3127,7 @@ TRAVISO.EngineView.prototype.focusMapToLocation = function(c, r, zoomAmount)
  * @param obj.mapPos.c {Number} the column index of the map location
  * @param obj.mapPos.r {Number} the row index of the map location
  */
-TRAVISO.EngineView.prototype.centralizeToObject = function(obj)
-{
+TRAVISO.EngineView.prototype.centralizeToObject = function(obj) {
 	this.centralizeToLocation(obj.mapPos.c, obj.mapPos.r);
 };
 
@@ -3440,20 +3331,17 @@ TRAVISO.EngineView.prototype.setCurrentControllable = function(obj)
  * @private
  * @method addObjRefToLocation
  * @param obj {ObjectView} object to be bind to location
- * @param obj.size {Object} the object that defines the size of the map-object
- * @param obj.size.c {Number} number of tiles that map-object covers horizontally on the isometric map
- * @param obj.size.r {Number} number of tiles that map-object covers vertically on the isometric map
+ * @param obj.columnSpan {Number} number of tiles that map-object covers horizontally on the isometric map
+ * @param obj.rowSpan {Number} number of tiles that map-object covers vertically on the isometric map
  * @param pos {Object} object including r and c coordinates
  * @param pos.r {Number} the row index of the map location
  * @param pos.c {Number} the column index of the map location
  */
-TRAVISO.EngineView.prototype.addObjRefToLocation = function(obj, pos)
-{
-	for (var k=pos.c; k < pos.c + obj.size.c; k++)
-	{
-		for (var m=pos.r; m > pos.r - obj.size.r; m--)
-		{
-			this.addObjRefToSingleLocation(obj, { c:k, r:m });
+TRAVISO.EngineView.prototype.addObjRefToLocation = function(obj, pos) {
+    var k, m;
+	for (k = pos.c; k < pos.c + obj.columnSpan; k++) {
+		for (m = pos.r; m > pos.r - obj.rowSpan; m--) {
+			this.addObjRefToSingleLocation(obj, { c: k, r: m });
 		}
 	}
 };
@@ -3488,20 +3376,17 @@ TRAVISO.EngineView.prototype.addObjRefToSingleLocation = function(obj, pos)
  * @private
  * @method removeObjRefFromLocation
  * @param obj {ObjectView} object to be bind to location
- * @param obj.size {Object} the object that defines the size of the map-object
- * @param obj.size.c {Number} number of tiles that map-object covers horizontally on the isometric map
- * @param obj.size.r {Number} number of tiles that map-object covers vertically on the isometric map
+ * @param obj.columnSpan {Number} number of tiles that map-object covers horizontally on the isometric map
+ * @param obj.rowSpan {Number} number of tiles that map-object covers vertically on the isometric map
  * @param pos {Object} object including r and c coordinates
  * @param pos.r {Number} the row index of the map location
  * @param pos.c {Number} the column index of the map location
  */
-TRAVISO.EngineView.prototype.removeObjRefFromLocation = function(obj, pos) 
-{
-	for (var k=pos.c; k < pos.c + obj.size.c; k++)
-	{
-		for (var m=pos.r; m > pos.r - obj.size.r; m--)
-		{
-			this.removeObjRefFromSingleLocation(obj, { c:k, r:m });
+TRAVISO.EngineView.prototype.removeObjRefFromLocation = function(obj, pos) {
+    var k, m;
+	for (k = pos.c; k < pos.c + obj.columnSpan; k++) {
+		for (m = pos.r; m > pos.r - obj.rowSpan; m--) {
+			this.removeObjRefFromSingleLocation(obj, { c: k, r: m });
 		}
 	}
 };
@@ -4011,9 +3896,8 @@ TRAVISO.EngineView.prototype.moveCurrentControllableToLocation = function(pos, s
  * @param obj.mapPos {Object} object including r and c coordinates
  * @param obj.mapPos.c {Number} the column index of the map location
  * @param obj.mapPos.r {Number} the row index of the map location
- * @param obj.size {Object} the object that defines the size of the target map-object
- * @param obj.size.c {Number} number of tiles that map-object covers horizontally on the isometric map
- * @param obj.size.r {Number} number of tiles that map-object covers vertically on the isometric map
+ * @param obj.columnSpan {Number} number of tiles that map-object covers horizontally on the isometric map
+ * @param obj.rowSpan {Number} number of tiles that map-object covers vertically on the isometric map
  * @param [speed=null] {Number} speed of the map-object to be used during movement, if not defined it uses previous speed or the MoveEngine's default speed, default null 
  * @return {Boolean} if there is an available path to move to the target map-object
  */
@@ -4032,7 +3916,7 @@ TRAVISO.EngineView.prototype.moveCurrentControllableToObj = function(obj, speed)
             return true;
         }
     } 
-	var cellArray = this.pathFinding.getAdjacentOpenCells(obj.mapPos.c, obj.mapPos.r, obj.size.c, obj.size.r);
+	var cellArray = this.pathFinding.getAdjacentOpenCells(obj.mapPos.c, obj.mapPos.r, obj.columnSpan, obj.rowSpan);
 	var tile;
 	var minLength = 3000;
 	var path, minPath, tempFlagHolder;
@@ -4370,24 +4254,32 @@ TRAVISO.EngineView.prototype.destroy = function()
 	this.config = null;
     this.mapData.groundMapData = null;
     this.mapData.objectsMapData = null;
-    this.mapData.textures.tiles = null;
-    this.mapData.textures.objects = null;
-    this.mapData.textures = null;
+    this.mapData.objects = null;
+    this.mapData.tiles = null;
     this.mapData = null;
 };
 
 /**
  * @author Hakan Karlidag - @axaq
  */
+    // Add support for AMD (Asynchronous Module Definition) libraries such as require.js.
+    if (typeof define === 'function' && define.amd) {
+        define([], function() {
+            return {
+                TRAVISO: TRAVISO
+            };
+        });
+    }
 
+    // Add support for CommonJS libraries such as browserify.
     if (typeof exports !== 'undefined') {
-        if (typeof module !== 'undefined' && module.exports) {
-            exports = module.exports = TRAVISO;
-        }
         exports.TRAVISO = TRAVISO;
-    } else if (typeof define !== 'undefined' && define.amd) {
-        define(TRAVISO);
-    } else {
-        root.TRAVISO = TRAVISO;
+    }
+
+    // Define globally in case AMD is not available or unused.
+    if (typeof window !== 'undefined') {
+        window.TRAVISO = TRAVISO;
+    } else if (typeof global !== 'undefined') { // Add to global in Node.js (for testing, etc).
+        global.TRAVISO = TRAVISO;
     }
 }).call(this);
