@@ -18,7 +18,7 @@
             <h1 class="blue-main-title">traviso.js</h1>
         </div>
         <div class="yui3-u-1-4 version project-version">
-            API Docs for: 0.0.8
+            API Docs for: 0.0.9
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -158,10 +158,8 @@ TRAVISO.config = {
  * @static
  * @param s {String} text to log
  */
-TRAVISO.trace = function(s)
-{
-    if (TRAVISO.config.logEnabled)
-    {
+TRAVISO.trace = function(s) {
+    if (TRAVISO.config.logEnabled) {
         console.log(&quot;TRAVISO: &quot; + s);
     }
 };
@@ -217,19 +215,17 @@ TRAVISO.trace = function(s)
  * @param {Number(Hexadecimal)} [instanceConfig.backgroundColor=null] background color, if defined the engine will create a solid colored background for the map, default null
  * @param {Boolean} [instanceConfig.useMask=false] creates a mask using the position frame defined by &#x27;initialPositionFrame&#x27; property or the &#x27;posFrame&#x27; parameter that is passed to &#x27;repositionContent&#x27; method, default false
  * 
- * @param {Object} [instanceConfig.callbackScope=null] the scope to apply when calling callback functions, default null
- * @param {Function} [instanceConfig.engineInstanceReadyCallback=null] callback function that will be called once everything is loaded and engine instance is ready, needs &#x27;callbackScope&#x27; property, default null
- * @param {Function} [instanceConfig.tileSelectCallback=null] callback function that will be called when a tile is selected, needs &#x27;callbackScope&#x27; property, default null
- * @param {Function} [instanceConfig.objectSelectCallback=null] callback function that will be called when a tile with an interactive map-object on it is selected, needs &#x27;callbackScope&#x27; property, default null
- * @param {Function} [instanceConfig.objectReachedDestinationCallback=null] callback function that will be called when any moving object reaches its destination, needs &#x27;callbackScope&#x27; property, default null
- * @param {Function} [instanceConfig.otherObjectsOnTheNextTileCallback=null] callback function that will be called when any moving object is in move and there are other objects on the next tile, needs &#x27;callbackScope&#x27; property, default null
+ * @param {Function} [instanceConfig.engineInstanceReadyCallback=null] callback function that will be called once everything is loaded and engine instance is ready, default null
+ * @param {Function} [instanceConfig.tileSelectCallback=null] callback function that will be called when a tile is selected (call params will be the row and column indexes of the tile selected), default null
+ * @param {Function} [instanceConfig.objectSelectCallback=null] callback function that will be called when a tile with an interactive map-object on it is selected (call param will be the object selected), default null
+ * @param {Function} [instanceConfig.objectReachedDestinationCallback=null] callback function that will be called when any moving object reaches its destination (call param will be the moving object itself), default null
+ * @param {Function} [instanceConfig.otherObjectsOnTheNextTileCallback=null] callback function that will be called when any moving object is in move and there are other objects on the next tile (call params will be the moving object and an array of objects on the next tile), default null
  * @param {Function} [instanceConfig.objectUpdateCallback=null] callback function that will be called everytime an objects direction or position changed, default null
  * 
  * @param [globalConfig] {Object} configuration object for the traviso engine
  * @return {EngineView} a new instance of the isometric engine 
  */ 
-TRAVISO.getEngineInstance = function(instanceConfig, globalConfig)
-{
+TRAVISO.getEngineInstance = function(instanceConfig, globalConfig) {
     TRAVISO.init(globalConfig);
     return new TRAVISO.EngineView(instanceConfig);
 };
@@ -242,42 +238,38 @@ TRAVISO.getEngineInstance = function(instanceConfig, globalConfig)
  * @static
  * @param [globalConfig] {Object} configuration object for the traviso engine
  */
-TRAVISO.init = function(globalConfig)
-{
+TRAVISO.init = function(globalConfig) {
 	// do necessary checks and assignments for global settings
-	if (globalConfig)
-    {
+	if (globalConfig) {
         TRAVISO.config.logEnabled = globalConfig.logEnabled;
     }
     
-    if (TRAVISO.isReady)
-    {
+    if (TRAVISO.isReady) {
         return;
     }
     
     // Externally modifiable properties for EngineView
-	var modifiables = [	&quot;instantCameraZoom&quot;,
-						&quot;followCharacter&quot;, 
-						&quot;instantCameraRelocation&quot;, 
-						&quot;instantObjectRelocation&quot;, 
-						&quot;changeTransperancies&quot;, 
-						&quot;highlightPath&quot;, 
-						&quot;highlightTargetTile&quot;, 
-						&quot;tileHighlightAnimated&quot;, 
-						&quot;dontAutoMoveToTile&quot;, 
-						&quot;checkPathOnEachTile&quot;, 
-						&quot;mapDraggable&quot;, 
-						&quot;callbackScope&quot;, 
-						&quot;engineInstanceReadyCallback&quot;, 
-						&quot;tileSelectCallback&quot;, 
-						&quot;objectSelectCallback&quot;, 
-						&quot;objectReachedDestinationCallback&quot;, 
-						&quot;otherObjectsOnTheNextTileCallback&quot;,
-						&quot;objectUpdateCallback&quot;
-					  ];
+	var modifiables = [
+        &quot;instantCameraZoom&quot;,
+        &quot;followCharacter&quot;, 
+        &quot;instantCameraRelocation&quot;, 
+        &quot;instantObjectRelocation&quot;, 
+        &quot;changeTransperancies&quot;, 
+        &quot;highlightPath&quot;, 
+        &quot;highlightTargetTile&quot;, 
+        &quot;tileHighlightAnimated&quot;, 
+        &quot;dontAutoMoveToTile&quot;, 
+        &quot;checkPathOnEachTile&quot;, 
+        &quot;mapDraggable&quot;,
+        &quot;engineInstanceReadyCallback&quot;,
+        &quot;tileSelectCallback&quot;, 
+        &quot;objectSelectCallback&quot;, 
+        &quot;objectReachedDestinationCallback&quot;, 
+        &quot;otherObjectsOnTheNextTileCallback&quot;,
+        &quot;objectUpdateCallback&quot;
+    ];
 	
-	for (var i=0; i &lt; modifiables.length; i++)
-	{
+	for (var i=0; i &lt; modifiables.length; i++) {
 		TRAVISO.defineProperty(modifiables[i]);
 	}
 	
@@ -298,14 +290,14 @@ TRAVISO.init = function(globalConfig)
 	 * @static
 	 */
 	TRAVISO.directions = {
-	    O: 0,
-	    S: 1,
+	    O:  0,
+	    S:  1,
 	    SW: 2,
-	    W: 3,
+	    W:  3,
 	    NW: 4,
-	    N: 5,
+	    N:  5,
 	    NE: 6,
-	    E: 7,
+	    E:  7,
 	    SE: 8
 	};
 	
@@ -336,8 +328,7 @@ TRAVISO.init = function(globalConfig)
  * @static
  * @param key {String} name of the property
  */
-TRAVISO.defineProperty = function(key)
-{
+TRAVISO.defineProperty = function(key) {
     Object.defineProperty(TRAVISO.EngineView.prototype, key, {
 	    get: function() {
 	        return this.config[key];
