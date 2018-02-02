@@ -71,9 +71,6 @@ TRAVISO.MoveEngine = function(engine, defaultSpeed)
     this.ticker = new PIXI.ticker.Ticker();
     this.ticker.add(this.processFunc);
     this.ticker.start();
-
-    // var scope = this;
-    // requestAnimationFrame(function() { scope.run(); });
 };
 
 // constructor
@@ -579,12 +576,8 @@ TRAVISO.MoveEngine.prototype.run = function()
                         j--;
                     }
                 }
-                
             }
         }
-        
-        // var scope = this;
-        // requestAnimationFrame(function() { scope.run(); });
     }
 };
 

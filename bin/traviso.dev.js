@@ -1,10 +1,10 @@
 /**
  * @license
- * traviso.js - v0.0.8
+ * traviso.js - v0.0.9
  * Copyright (c) 2015, Hakan Karlidag - @axaq
  * www.travisojs.com
  *
- * Compiled: 2018-01-30
+ * Compiled: 2018-02-02
  *
  * traviso.js is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license.php
@@ -76,10 +76,8 @@ TRAVISO.config = {
  * @static
  * @param s {String} text to log
  */
-TRAVISO.trace = function(s)
-{
-    if (TRAVISO.config.logEnabled)
-    {
+TRAVISO.trace = function(s) {
+    if (TRAVISO.config.logEnabled) {
         console.log("TRAVISO: " + s);
     }
 };
@@ -135,19 +133,17 @@ TRAVISO.trace = function(s)
  * @param {Number(Hexadecimal)} [instanceConfig.backgroundColor=null] background color, if defined the engine will create a solid colored background for the map, default null
  * @param {Boolean} [instanceConfig.useMask=false] creates a mask using the position frame defined by 'initialPositionFrame' property or the 'posFrame' parameter that is passed to 'repositionContent' method, default false
  * 
- * @param {Object} [instanceConfig.callbackScope=null] the scope to apply when calling callback functions, default null
- * @param {Function} [instanceConfig.engineInstanceReadyCallback=null] callback function that will be called once everything is loaded and engine instance is ready, needs 'callbackScope' property, default null
- * @param {Function} [instanceConfig.tileSelectCallback=null] callback function that will be called when a tile is selected, needs 'callbackScope' property, default null
- * @param {Function} [instanceConfig.objectSelectCallback=null] callback function that will be called when a tile with an interactive map-object on it is selected, needs 'callbackScope' property, default null
- * @param {Function} [instanceConfig.objectReachedDestinationCallback=null] callback function that will be called when any moving object reaches its destination, needs 'callbackScope' property, default null
- * @param {Function} [instanceConfig.otherObjectsOnTheNextTileCallback=null] callback function that will be called when any moving object is in move and there are other objects on the next tile, needs 'callbackScope' property, default null
+ * @param {Function} [instanceConfig.engineInstanceReadyCallback=null] callback function that will be called once everything is loaded and engine instance is ready, default null
+ * @param {Function} [instanceConfig.tileSelectCallback=null] callback function that will be called when a tile is selected (call params will be the row and column indexes of the tile selected), default null
+ * @param {Function} [instanceConfig.objectSelectCallback=null] callback function that will be called when a tile with an interactive map-object on it is selected (call param will be the object selected), default null
+ * @param {Function} [instanceConfig.objectReachedDestinationCallback=null] callback function that will be called when any moving object reaches its destination (call param will be the moving object itself), default null
+ * @param {Function} [instanceConfig.otherObjectsOnTheNextTileCallback=null] callback function that will be called when any moving object is in move and there are other objects on the next tile (call params will be the moving object and an array of objects on the next tile), default null
  * @param {Function} [instanceConfig.objectUpdateCallback=null] callback function that will be called everytime an objects direction or position changed, default null
  * 
  * @param [globalConfig] {Object} configuration object for the traviso engine
  * @return {EngineView} a new instance of the isometric engine 
  */ 
-TRAVISO.getEngineInstance = function(instanceConfig, globalConfig)
-{
+TRAVISO.getEngineInstance = function(instanceConfig, globalConfig) {
     TRAVISO.init(globalConfig);
     return new TRAVISO.EngineView(instanceConfig);
 };
@@ -160,42 +156,38 @@ TRAVISO.getEngineInstance = function(instanceConfig, globalConfig)
  * @static
  * @param [globalConfig] {Object} configuration object for the traviso engine
  */
-TRAVISO.init = function(globalConfig)
-{
+TRAVISO.init = function(globalConfig) {
 	// do necessary checks and assignments for global settings
-	if (globalConfig)
-    {
+	if (globalConfig) {
         TRAVISO.config.logEnabled = globalConfig.logEnabled;
     }
     
-    if (TRAVISO.isReady)
-    {
+    if (TRAVISO.isReady) {
         return;
     }
     
     // Externally modifiable properties for EngineView
-	var modifiables = [	"instantCameraZoom",
-						"followCharacter", 
-						"instantCameraRelocation", 
-						"instantObjectRelocation", 
-						"changeTransperancies", 
-						"highlightPath", 
-						"highlightTargetTile", 
-						"tileHighlightAnimated", 
-						"dontAutoMoveToTile", 
-						"checkPathOnEachTile", 
-						"mapDraggable", 
-						"callbackScope", 
-						"engineInstanceReadyCallback", 
-						"tileSelectCallback", 
-						"objectSelectCallback", 
-						"objectReachedDestinationCallback", 
-						"otherObjectsOnTheNextTileCallback",
-						"objectUpdateCallback"
-					  ];
+	var modifiables = [
+        "instantCameraZoom",
+        "followCharacter", 
+        "instantCameraRelocation", 
+        "instantObjectRelocation", 
+        "changeTransperancies", 
+        "highlightPath", 
+        "highlightTargetTile", 
+        "tileHighlightAnimated", 
+        "dontAutoMoveToTile", 
+        "checkPathOnEachTile", 
+        "mapDraggable",
+        "engineInstanceReadyCallback",
+        "tileSelectCallback", 
+        "objectSelectCallback", 
+        "objectReachedDestinationCallback", 
+        "otherObjectsOnTheNextTileCallback",
+        "objectUpdateCallback"
+    ];
 	
-	for (var i=0; i < modifiables.length; i++)
-	{
+	for (var i=0; i < modifiables.length; i++) {
 		TRAVISO.defineProperty(modifiables[i]);
 	}
 	
@@ -216,14 +208,14 @@ TRAVISO.init = function(globalConfig)
 	 * @static
 	 */
 	TRAVISO.directions = {
-	    O: 0,
-	    S: 1,
+	    O:  0,
+	    S:  1,
 	    SW: 2,
-	    W: 3,
+	    W:  3,
 	    NW: 4,
-	    N: 5,
+	    N:  5,
 	    NE: 6,
-	    E: 7,
+	    E:  7,
 	    SE: 8
 	};
 	
@@ -254,8 +246,7 @@ TRAVISO.init = function(globalConfig)
  * @static
  * @param key {String} name of the property
  */
-TRAVISO.defineProperty = function(key)
-{
+TRAVISO.defineProperty = function(key) {
     Object.defineProperty(TRAVISO.EngineView.prototype, key, {
 	    get: function() {
 	        return this.config[key];
@@ -611,10 +602,8 @@ TRAVISO.getDirBetween = function(r1, c1, r2, c2) {
  * @param [noOutliers=false] {Boolean} If the outlier values won't be processed, default false
  * @return {Number} mapped value according to target range
  */
-TRAVISO.mathMap = function(v, min1, max1, min2, max2, noOutliers)
-{
-    if (noOutliers)
-    {
+TRAVISO.mathMap = function(v, min1, max1, min2, max2, noOutliers) {
+    if (noOutliers) {
         if (v < min1) { return min2; }
         else if (v > max1) { return max2; }
     }
@@ -635,8 +624,7 @@ TRAVISO.mathMap = function(v, min1, max1, min2, max2, noOutliers)
  * @param v2.y {Number} y component
  * @return {Number} dot product of two vectors
  */
-TRAVISO.dotProduct = function(v1, v2)
-{
+TRAVISO.dotProduct = function(v1, v2) {
     return v1.x * v2.x + v1.y * v2.y;
 };
 
@@ -651,8 +639,7 @@ TRAVISO.dotProduct = function(v1, v2)
  * @param v.y {Number} y component
  * @return {Object} unit vector
  */
-TRAVISO.getUnit = function(v)
-{
+TRAVISO.getUnit = function(v) {
     var m = Math.sqrt(v.x * v.x + v.y * v.y);
     return { x: v.x / m, y: v.y / m };
 };
@@ -669,14 +656,12 @@ TRAVISO.getUnit = function(v)
  * @param vertices {Array(Array(Number))} array containing the vertices of the polygon
  * @return {Boolean} if the point is inside the polygon
  */
-TRAVISO.isInPolygon = function(gp, vertices) 
-{
+TRAVISO.isInPolygon = function(gp, vertices) {
 	var testy = gp.y;
 	var testx = gp.x;
 	var nvert = vertices.length;
 	var i, j, c = false;
-	for ( i = 0, j = nvert - 1; i < nvert; j = i++)
-	{
+	for (i = 0, j = nvert - 1; i < nvert; j = i++) {
 		if ( ((vertices[i][1] > testy) !== (vertices[j][1] > testy)) && 
 			(testx < (vertices[j][0] - vertices[i][0]) * (testy - vertices[i][1]) / (vertices[j][1] - vertices[i][1]) + vertices[i][0]) )
 		{
@@ -700,8 +685,7 @@ TRAVISO.isInPolygon = function(gp, vertices)
  * @param p2.y {Number} y component
  * @return {Boolean} the distance between two points
  */
-TRAVISO.getDist = function(p1, p2)
-{
+TRAVISO.getDist = function(p1, p2) {
 	return Math.sqrt((p2.x-p1.x) * (p2.x-p1.x) + (p2.y-p1.y) * (p2.y-p1.y));
 };
 
@@ -717,22 +701,20 @@ TRAVISO.getDist = function(p1, p2)
  * @param scope {Object} local scope
  * @return {Boolean} global point
  */
-TRAVISO.localToGlobal = function(lp, scope) 
-{
+TRAVISO.localToGlobal = function(lp, scope) {
 	var sX = scope.position.x + lp.x;
 	var sY = scope.position.y + lp.y;
 	
 	var p = scope.parent;
-	while(p)
-	{
-		sX += p.position.x;
-		sY += p.position.y;
-		p = p.parent;
+	while (p) {
+        sX += p.position.x;
+        sY += p.position.y;
+        p = p.parent;
 	}
 	
     return {
-      x: sX,
-      y: sY
+        x: sX,
+        y: sY
     };
 };
 
@@ -748,22 +730,20 @@ TRAVISO.localToGlobal = function(lp, scope)
  * @param scope {Object} local scope
  * @return {Boolean} local point
  */
-TRAVISO.globalToLocal = function(gp, scope) 
-{
+TRAVISO.globalToLocal = function(gp, scope) {
 	var sX = scope.position.x;
 	var sY = scope.position.y;
 	
 	var p = scope.parent;
-	while(p)
-	{
+	while (p) {
 		sX += p.position.x;
 		sY += p.position.y;
 		p = p.parent;
 	}
 	
     return {
-      x: gp.x - sX,
-      y: gp.y - sY
+        x: gp.x - sX,
+        y: gp.y - sY
     };
 };
 
@@ -776,8 +756,7 @@ TRAVISO.globalToLocal = function(gp, scope)
  * @param value {Object} value to check
  * @return {Boolean} if the value existy
  */
-TRAVISO.existy = function(value)
-{
+TRAVISO.existy = function(value) {
     return value !== null && value !== undefined;
 };
 
@@ -854,9 +833,6 @@ TRAVISO.MoveEngine = function(engine, defaultSpeed)
     this.ticker = new PIXI.ticker.Ticker();
     this.ticker.add(this.processFunc);
     this.ticker.start();
-
-    // var scope = this;
-    // requestAnimationFrame(function() { scope.run(); });
 };
 
 // constructor
@@ -1362,12 +1338,8 @@ TRAVISO.MoveEngine.prototype.run = function()
                         j--;
                     }
                 }
-                
             }
         }
-        
-        // var scope = this;
-        // requestAnimationFrame(function() { scope.run(); });
     }
 };
 
@@ -2077,7 +2049,7 @@ Object.defineProperty(TRAVISO.ObjectView.prototype, "animSpeed", {
  * @param [moving=false] {Boolean} if the requested visuals are for moving or stationary state  
  * @param [stopOnFirstFrame=false] {Boolean} if true stops on the first frame after changing the visuals
  * @param [noLoop=false] {Boolean} if true the movieclip animation will not loop after the first animation 
- * @param [onAnimComplete=null] {Function} Callback function to call if 'noLoop' is true after the first run of the animation, uses the engine's 'callbackScope'
+ * @param [onAnimComplete=null] {Function} callback function to call if 'noLoop' is true after the first run of the animation
  * @param [animSpeed=0.5] {Number} animation speed for the movieclips
  */
 TRAVISO.ObjectView.prototype.changeVisualToDirection = function(direction, moving, stopOnFirstFrame, noLoop, onAnimComplete, animSpeed)
@@ -2106,7 +2078,7 @@ TRAVISO.ObjectView.prototype.changeVisualToDirection = function(direction, movin
  * @param vId {String} visual-id
  * @param [stopOnFirstFrame=false] {Boolean} if true stops on the first frame after changing the visuals
  * @param [noLoop=false] {Boolean} if true the movieclip animation will not loop after the first animation 
- * @param [onAnimComplete=null] {Function} Callback function to call if 'noLoop' is true after the first run of the animation, uses the engine's 'callbackScope'
+ * @param [onAnimComplete=null] {Function} callback function to call if 'noLoop' is true after the first run of the animation
  * @param [animSpeed=null] {Number} animation speed for the movieclips, stays the same if not defined
  */
 TRAVISO.ObjectView.prototype.changeVisual = function(vId, stopOnFirstFrame, noLoop, onAnimComplete, animSpeed)
@@ -2134,7 +2106,7 @@ TRAVISO.ObjectView.prototype.changeVisual = function(vId, stopOnFirstFrame, noLo
         if (noLoop && onAnimComplete) 
         {
             var scope = this;
-            this.container.onComplete = function () { setTimeout(function () { onAnimComplete.call( scope.engine.config.callbackScope, scope); }, 100); };
+            this.container.onComplete = function () { setTimeout(function () { onAnimComplete( scope ); }, 100); };
         }
         if (TRAVISO.existy(animSpeed) && animSpeed > 0) { this.animSpeed = animSpeed; }
         this.container.gotoAndPlay(0);
@@ -2144,7 +2116,7 @@ TRAVISO.ObjectView.prototype.changeVisual = function(vId, stopOnFirstFrame, noLo
         this.container.gotoAndStop(0);
     }
     
-    if (this.engine.config.objectUpdateCallback) { this.engine.config.objectUpdateCallback.call(this.engine.config.callbackScope, this); }
+    if (this.engine.config.objectUpdateCallback) { this.engine.config.objectUpdateCallback( this ); }
     
     return true;
 };
@@ -2202,7 +2174,7 @@ TRAVISO.TileView = function(engine, tileType)
     var halfWidth = this.engine.TILE_HALF_W;
 
     /**
-     * Defines the positions of the vertices of the tile in the local scope.
+     * Defines the positions of the vertices of the tile.
      * @property {Array(Array(Number))} vertices
      * @protected
      */
@@ -2428,11 +2400,10 @@ TRAVISO.EngineView = function(config)
      * @property {String} config.mapDataPath the path to the xml file that defines map data, required
      * @property {Array(String)} config.assetsToLoad=null array of paths to the assets that are desired to be loaded by traviso, no need to use if assets are already loaded to PIXI cache, default null 
      * 
-     * @property {Object} config.callbackScope=null the scope to apply when calling callback functions, default null
      * @property {Function} config.engineInstanceReadyCallback=null callback function that will be called once everything is loaded and engine instance is ready, default null
-     * @property {Function} config.tileSelectCallback=null callback function that will be called when a tile is selected, default null
-     * @property {Function} config.objectSelectCallback=null callback function that will be called when a tile with an interactive map-object on it is selected, default null
-     * @property {Function} config.objectReachedDestinationCallback=null callback function that will be called when any moving object reaches its destination, default null
+     * @property {Function} config.tileSelectCallback=null callback function that will be called when a tile is selected (call params will be the row and column indexes of the tile selected), default null
+     * @property {Function} config.objectSelectCallback=null callback function that will be called when a tile with an interactive map-object on it is selected (call param will be the object selected), default null
+     * @property {Function} config.objectReachedDestinationCallback=null callback function that will be called when any moving object reaches its destination (call param will be the moving object itself), default null
      * @property {Function} config.otherObjectsOnTheNextTileCallback=null callback function that will be called when any moving object is in move and there are other objects on the next tile, default null
      * @property {Function} config.objectUpdateCallback=null callback function that will be called everytime an objects direction or position changed, default null
      * 
@@ -2558,32 +2529,27 @@ TRAVISO.EngineView = function(config)
      * @default true
      */
     /** 
-     * the scope to apply when calling callback functions
-     * @property {Object} callbackScope 
-     * @default null
-     */
-    /** 
      * callback function that will be called once everything is loaded and engine instance is ready
      * @property {Function} engineInstanceReadyCallback 
      * @default null
      */
     /** 
-     * callback function that will be called when a tile is selected
+     * callback function that will be called when a tile is selected. Params will be the row and column indexes of the tile selected.
      * @property {Function} tileSelectCallback 
      * @default null
      */
     /** 
-     * callback function that will be called when a tile with an interactive map-object on it is selected
+     * callback function that will be called when a tile with an interactive map-object on it is selected. Call param will be the object selected.
      * @property {Function} objectSelectCallback 
      * @default null
      */
     /** 
-     * callback function that will be called when any moving object reaches its destination
+     * callback function that will be called when any moving object reaches its destination. Call param will be the moving object itself.
      * @property {Function} objectReachedDestinationCallback 
      * @default null
      */
     /** 
-     * callback function that will be called when any moving object is in move and there are other objects on the next tile
+     * callback function that will be called when any moving object is in move and there are other objects on the next tile. Call params will be the moving object and an array of objects on the next tile.
      * @property {Function} otherObjectsOnTheNextTileCallback 
      * @default null
      */
@@ -2593,11 +2559,7 @@ TRAVISO.EngineView = function(config)
      * @default null
      */
     
-    var scope = this;
-    TRAVISO.loadAssetsAndData(this, function()
-    {
-        scope.onAllAssetsLoaded();
-    });
+    TRAVISO.loadAssetsAndData(this, this.onAllAssetsLoaded.bind(this));
 };
 
 // constructor
@@ -2656,7 +2618,7 @@ TRAVISO.EngineView.prototype.onAllAssetsLoaded = function()
     
     this.enableInteraction();
     
-    if (this.config.engineInstanceReadyCallback) { this.config.engineInstanceReadyCallback.call(this.config.callbackScope, this); }
+    if (this.config.engineInstanceReadyCallback) { this.config.engineInstanceReadyCallback(this); }
 };
 
 /**
@@ -3687,7 +3649,7 @@ TRAVISO.EngineView.prototype.onObjMoveStepBegin = function(obj, pos)
     	// var objects = this.getObjectsAtLocation(pos);
     	// if (objects && objects.length > 1)
     	// {
-    		// if (this.config.otherObjectsOnTheNextTileCallback) { this.config.otherObjectsOnTheNextTileCallback.call(this.config.callbackScope, obj, objects); }
+    		// if (this.config.otherObjectsOnTheNextTileCallback) { this.config.otherObjectsOnTheNextTileCallback( obj, objects ); }
     	// }
     	
     	this.moveEngine.setMoveParameters(obj, pos);
@@ -3749,10 +3711,10 @@ TRAVISO.EngineView.prototype.onObjMoveStepEnd = function(obj)
     	var tile = this.tileArray[obj.mapPos.r][obj.mapPos.c];
     	tile.setHighlighted(false, !this.config.tileHighlightAnimated);
     	
-//    	if (this.config.followCharacter) { this.centralizeToLocation(obj.mapPos.c, obj.mapPos.r); }
+   	    // if (this.config.followCharacter) { this.centralizeToLocation(obj.mapPos.c, obj.mapPos.r); }
     }
 	
-	if (pathEnded && this.config.objectReachedDestinationCallback) { this.config.objectReachedDestinationCallback.call(this.config.callbackScope, obj); }
+	if (pathEnded && this.config.objectReachedDestinationCallback) { this.config.objectReachedDestinationCallback( obj ); }
 };
 
 TRAVISO.EngineView.prototype.checkForFollowCharacter = function(obj) 
@@ -3769,7 +3731,7 @@ TRAVISO.EngineView.prototype.checkForFollowCharacter = function(obj)
 
 TRAVISO.EngineView.prototype.checkForTileChange = function(obj) 
 {
-    if (this.config.objectUpdateCallback) { this.config.objectUpdateCallback.call(this.config.callbackScope, obj); }
+    if (this.config.objectUpdateCallback) { this.config.objectUpdateCallback( obj ); }
     
 	var pos = { x: obj.position.x, y: obj.position.y - this.TILE_HALF_H };
 	// var tile = this.tileArray[obj.mapPos.r][obj.mapPos.c];
@@ -3793,7 +3755,7 @@ TRAVISO.EngineView.prototype.checkForTileChange = function(obj)
 	    	var objects = this.getObjectsAtLocation(obj.currentTargetTile.mapPos);
 	    	if (objects && objects.length > 1)
 	    	{
-	    		if (this.config.otherObjectsOnTheNextTileCallback) { this.config.otherObjectsOnTheNextTileCallback.call(this.config.callbackScope, obj, objects); }
+	    		if (this.config.otherObjectsOnTheNextTileCallback) { this.config.otherObjectsOnTheNextTileCallback( obj, objects ); }
 	    	}
 		}
 	}	
@@ -3935,7 +3897,7 @@ TRAVISO.EngineView.prototype.moveCurrentControllableToObj = function(obj, speed)
                 this.moveObjThrough(this.currentControllable, [tile]);
                 this.config.instantObjectRelocation = tempFlagHolder;
                 this.currentControllable.changeVisualToDirection(this.currentControllable.currentDirection, false);
-				if (this.config.objectReachedDestinationCallback) { this.config.objectReachedDestinationCallback.call(this.config.callbackScope, this.currentControllable); }
+				if (this.config.objectReachedDestinationCallback) { this.config.objectReachedDestinationCallback( this.currentControllable ); }
 				return true;
 			}
 			path = this.getPath(this.currentControllable.mapPos, tile.mapPos);
@@ -4020,7 +3982,7 @@ TRAVISO.EngineView.prototype.checkForTileClick = function(mdata)
             {
                 if(a[k].isInteractive) 
                 {
-                    if (this.config.objectSelectCallback) { this.config.objectSelectCallback.call(this.config.callbackScope, a[k]); }
+                    if (this.config.objectSelectCallback) { this.config.objectSelectCallback( a[k] ); }
                     break;
                 }
                 // TODO CHECK: this might cause issues when there is one movable and one not movable object on the same tile
@@ -4029,7 +3991,7 @@ TRAVISO.EngineView.prototype.checkForTileClick = function(mdata)
                     if (this.config.dontAutoMoveToTile || !this.currentControllable || this.checkAndMoveObjectToTile(this.currentControllable, closestTile))
                     {
                         if (this.config.highlightTargetTile) { closestTile.setHighlighted(true, !this.config.tileHighlightAnimated); }
-                        if (this.config.tileSelectCallback) { this.config.tileSelectCallback.call(this.config.callbackScope, closestTile.mapPos.r, closestTile.mapPos.c); }
+                        if (this.config.tileSelectCallback) { this.config.tileSelectCallback(closestTile.mapPos.r, closestTile.mapPos.c); }
                         break;
                     }
                 } 
@@ -4038,7 +4000,7 @@ TRAVISO.EngineView.prototype.checkForTileClick = function(mdata)
 		else if (this.config.dontAutoMoveToTile || !this.currentControllable || this.checkAndMoveObjectToTile(this.currentControllable, closestTile))
 		{
 			if (this.config.highlightTargetTile) { closestTile.setHighlighted(true, !this.config.tileHighlightAnimated); }
-			if (this.config.tileSelectCallback) { this.config.tileSelectCallback.call(this.config.callbackScope, closestTile.mapPos.r, closestTile.mapPos.c); }
+			if (this.config.tileSelectCallback) { this.config.tileSelectCallback(closestTile.mapPos.r, closestTile.mapPos.c); }
 		} 
 	}
 };
@@ -4050,10 +4012,9 @@ TRAVISO.EngineView.prototype.checkForTileClick = function(mdata)
  */
 TRAVISO.EngineView.prototype.enableInteraction = function()
 {
-	var scope = this;
-	this.mousedown = this.touchstart = function(d) { scope.onMouseDown(d); };
-	this.mousemove = this.touchmove = function(d) { scope.onMouseMove(d); };
-	this.mouseup = this.mouseupout = this.touchend = function(d) { scope.onMouseUp(d); };
+	this.mousedown = this.touchstart = this.onMouseDown.bind(this);
+	this.mousemove = this.touchmove = this.onMouseMove.bind(this);
+	this.mouseup = this.mouseupout = this.touchend = this.onMouseUp.bind(this);
 	this.interactive = true;
 };
 /**

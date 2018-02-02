@@ -44,12 +44,10 @@ You can found the documentation [here](<http://www.travisojs.com/docs/>)
 * Built-in support for block-like tiles
 * Ground/terrain height
 * Fog of war
-* Particle system
-* Physics engine
 
 ### Contribute ###
 
-Do you want to contribute. That's awesome. You can either message me through Twitter ([@axaq](https://twitter.com/axaq)) or use the Traviso.js [blog](http://www.travisojs.com/blog/).
+Do you want to contribute? That's awesome. You can either message me through Twitter ([@axaq](https://twitter.com/axaq)) or use the Traviso.js [blog](http://www.travisojs.com/blog/).
 
 ### How to build ###
 
@@ -88,7 +86,7 @@ This will create a minified version at bin/traviso.js and a non-minified version
     
     // engine-instance configuration object
     var instanceConfig = {
-        mapDataPath : "mapData.xml", // the path to the xml file that defines map data, required
+        mapDataPath : "mapData.json", // the path to the json file that defines map data, required
         assetsToLoad : ["../assets/spritesheet.json", "../assets/house.png"], // array of paths to the assets that are desired to be loaded by traviso, no need to use if assets are already loaded to PIXI cache, default null
     };
     

@@ -32,7 +32,7 @@ TRAVISO.TileView = function(engine, tileType)
     var halfWidth = this.engine.TILE_HALF_W;
 
     /**
-     * Defines the positions of the vertices of the tile in the local scope.
+     * Defines the positions of the vertices of the tile.
      * @property {Array(Array(Number))} vertices
      * @protected
      */

@@ -116,12 +116,11 @@ TRAVISO.trace = function(s) {
  * @param {Number(Hexadecimal)} [instanceConfig.backgroundColor=null] background color, if defined the engine will create a solid colored background for the map, default null
  * @param {Boolean} [instanceConfig.useMask=false] creates a mask using the position frame defined by 'initialPositionFrame' property or the 'posFrame' parameter that is passed to 'repositionContent' method, default false
  * 
- * @param {Object} [instanceConfig.callbackScope=null] the scope to apply when calling callback functions, default null
- * @param {Function} [instanceConfig.engineInstanceReadyCallback=null] callback function that will be called once everything is loaded and engine instance is ready, needs 'callbackScope' property, default null
- * @param {Function} [instanceConfig.tileSelectCallback=null] callback function that will be called when a tile is selected, needs 'callbackScope' property, default null
- * @param {Function} [instanceConfig.objectSelectCallback=null] callback function that will be called when a tile with an interactive map-object on it is selected, needs 'callbackScope' property, default null
- * @param {Function} [instanceConfig.objectReachedDestinationCallback=null] callback function that will be called when any moving object reaches its destination, needs 'callbackScope' property, default null
- * @param {Function} [instanceConfig.otherObjectsOnTheNextTileCallback=null] callback function that will be called when any moving object is in move and there are other objects on the next tile, needs 'callbackScope' property, default null
+ * @param {Function} [instanceConfig.engineInstanceReadyCallback=null] callback function that will be called once everything is loaded and engine instance is ready, default null
+ * @param {Function} [instanceConfig.tileSelectCallback=null] callback function that will be called when a tile is selected (call params will be the row and column indexes of the tile selected), default null
+ * @param {Function} [instanceConfig.objectSelectCallback=null] callback function that will be called when a tile with an interactive map-object on it is selected (call param will be the object selected), default null
+ * @param {Function} [instanceConfig.objectReachedDestinationCallback=null] callback function that will be called when any moving object reaches its destination (call param will be the moving object itself), default null
+ * @param {Function} [instanceConfig.otherObjectsOnTheNextTileCallback=null] callback function that will be called when any moving object is in move and there are other objects on the next tile (call params will be the moving object and an array of objects on the next tile), default null
  * @param {Function} [instanceConfig.objectUpdateCallback=null] callback function that will be called everytime an objects direction or position changed, default null
  * 
  * @param [globalConfig] {Object} configuration object for the traviso engine
@@ -162,9 +161,8 @@ TRAVISO.init = function(globalConfig) {
         "tileHighlightAnimated", 
         "dontAutoMoveToTile", 
         "checkPathOnEachTile", 
-        "mapDraggable", 
-        "callbackScope", 
-        "engineInstanceReadyCallback", 
+        "mapDraggable",
+        "engineInstanceReadyCallback",
         "tileSelectCallback", 
         "objectSelectCallback", 
         "objectReachedDestinationCallback", 

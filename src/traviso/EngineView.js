@@ -66,11 +66,10 @@ TRAVISO.EngineView = function(config)
      * @property {String} config.mapDataPath the path to the xml file that defines map data, required
      * @property {Array(String)} config.assetsToLoad=null array of paths to the assets that are desired to be loaded by traviso, no need to use if assets are already loaded to PIXI cache, default null 
      * 
-     * @property {Object} config.callbackScope=null the scope to apply when calling callback functions, default null
      * @property {Function} config.engineInstanceReadyCallback=null callback function that will be called once everything is loaded and engine instance is ready, default null
-     * @property {Function} config.tileSelectCallback=null callback function that will be called when a tile is selected, default null
-     * @property {Function} config.objectSelectCallback=null callback function that will be called when a tile with an interactive map-object on it is selected, default null
-     * @property {Function} config.objectReachedDestinationCallback=null callback function that will be called when any moving object reaches its destination, default null
+     * @property {Function} config.tileSelectCallback=null callback function that will be called when a tile is selected (call params will be the row and column indexes of the tile selected), default null
+     * @property {Function} config.objectSelectCallback=null callback function that will be called when a tile with an interactive map-object on it is selected (call param will be the object selected), default null
+     * @property {Function} config.objectReachedDestinationCallback=null callback function that will be called when any moving object reaches its destination (call param will be the moving object itself), default null
      * @property {Function} config.otherObjectsOnTheNextTileCallback=null callback function that will be called when any moving object is in move and there are other objects on the next tile, default null
      * @property {Function} config.objectUpdateCallback=null callback function that will be called everytime an objects direction or position changed, default null
      * 
@@ -196,32 +195,27 @@ TRAVISO.EngineView = function(config)
      * @default true
      */
     /** 
-     * the scope to apply when calling callback functions
-     * @property {Object} callbackScope 
-     * @default null
-     */
-    /** 
      * callback function that will be called once everything is loaded and engine instance is ready
      * @property {Function} engineInstanceReadyCallback 
      * @default null
      */
     /** 
-     * callback function that will be called when a tile is selected
+     * callback function that will be called when a tile is selected. Params will be the row and column indexes of the tile selected.
      * @property {Function} tileSelectCallback 
      * @default null
      */
     /** 
-     * callback function that will be called when a tile with an interactive map-object on it is selected
+     * callback function that will be called when a tile with an interactive map-object on it is selected. Call param will be the object selected.
      * @property {Function} objectSelectCallback 
      * @default null
      */
     /** 
-     * callback function that will be called when any moving object reaches its destination
+     * callback function that will be called when any moving object reaches its destination. Call param will be the moving object itself.
      * @property {Function} objectReachedDestinationCallback 
      * @default null
      */
     /** 
-     * callback function that will be called when any moving object is in move and there are other objects on the next tile
+     * callback function that will be called when any moving object is in move and there are other objects on the next tile. Call params will be the moving object and an array of objects on the next tile.
      * @property {Function} otherObjectsOnTheNextTileCallback 
      * @default null
      */
@@ -231,11 +225,7 @@ TRAVISO.EngineView = function(config)
      * @default null
      */
     
-    var scope = this;
-    TRAVISO.loadAssetsAndData(this, function()
-    {
-        scope.onAllAssetsLoaded();
-    });
+    TRAVISO.loadAssetsAndData(this, this.onAllAssetsLoaded.bind(this));
 };
 
 // constructor
@@ -294,7 +284,7 @@ TRAVISO.EngineView.prototype.onAllAssetsLoaded = function()
     
     this.enableInteraction();
     
-    if (this.config.engineInstanceReadyCallback) { this.config.engineInstanceReadyCallback.call(this.config.callbackScope, this); }
+    if (this.config.engineInstanceReadyCallback) { this.config.engineInstanceReadyCallback(this); }
 };
 
 /**
@@ -1325,7 +1315,7 @@ TRAVISO.EngineView.prototype.onObjMoveStepBegin = function(obj, pos)
     	// var objects = this.getObjectsAtLocation(pos);
     	// if (objects && objects.length > 1)
     	// {
-    		// if (this.config.otherObjectsOnTheNextTileCallback) { this.config.otherObjectsOnTheNextTileCallback.call(this.config.callbackScope, obj, objects); }
+    		// if (this.config.otherObjectsOnTheNextTileCallback) { this.config.otherObjectsOnTheNextTileCallback( obj, objects ); }
     	// }
     	
     	this.moveEngine.setMoveParameters(obj, pos);
@@ -1390,7 +1380,7 @@ TRAVISO.EngineView.prototype.onObjMoveStepEnd = function(obj)
    	    // if (this.config.followCharacter) { this.centralizeToLocation(obj.mapPos.c, obj.mapPos.r); }
     }
 	
-	if (pathEnded && this.config.objectReachedDestinationCallback) { this.config.objectReachedDestinationCallback.call(this.config.callbackScope, obj); }
+	if (pathEnded && this.config.objectReachedDestinationCallback) { this.config.objectReachedDestinationCallback( obj ); }
 };
 
 TRAVISO.EngineView.prototype.checkForFollowCharacter = function(obj) 
@@ -1407,7 +1397,7 @@ TRAVISO.EngineView.prototype.checkForFollowCharacter = function(obj)
 
 TRAVISO.EngineView.prototype.checkForTileChange = function(obj) 
 {
-    if (this.config.objectUpdateCallback) { this.config.objectUpdateCallback.call(this.config.callbackScope, obj); }
+    if (this.config.objectUpdateCallback) { this.config.objectUpdateCallback( obj ); }
     
 	var pos = { x: obj.position.x, y: obj.position.y - this.TILE_HALF_H };
 	// var tile = this.tileArray[obj.mapPos.r][obj.mapPos.c];
@@ -1431,7 +1421,7 @@ TRAVISO.EngineView.prototype.checkForTileChange = function(obj)
 	    	var objects = this.getObjectsAtLocation(obj.currentTargetTile.mapPos);
 	    	if (objects && objects.length > 1)
 	    	{
-	    		if (this.config.otherObjectsOnTheNextTileCallback) { this.config.otherObjectsOnTheNextTileCallback.call(this.config.callbackScope, obj, objects); }
+	    		if (this.config.otherObjectsOnTheNextTileCallback) { this.config.otherObjectsOnTheNextTileCallback( obj, objects ); }
 	    	}
 		}
 	}	
@@ -1573,7 +1563,7 @@ TRAVISO.EngineView.prototype.moveCurrentControllableToObj = function(obj, speed)
                 this.moveObjThrough(this.currentControllable, [tile]);
                 this.config.instantObjectRelocation = tempFlagHolder;
                 this.currentControllable.changeVisualToDirection(this.currentControllable.currentDirection, false);
-				if (this.config.objectReachedDestinationCallback) { this.config.objectReachedDestinationCallback.call(this.config.callbackScope, this.currentControllable); }
+				if (this.config.objectReachedDestinationCallback) { this.config.objectReachedDestinationCallback( this.currentControllable ); }
 				return true;
 			}
 			path = this.getPath(this.currentControllable.mapPos, tile.mapPos);
@@ -1658,7 +1648,7 @@ TRAVISO.EngineView.prototype.checkForTileClick = function(mdata)
             {
                 if(a[k].isInteractive) 
                 {
-                    if (this.config.objectSelectCallback) { this.config.objectSelectCallback.call(this.config.callbackScope, a[k]); }
+                    if (this.config.objectSelectCallback) { this.config.objectSelectCallback( a[k] ); }
                     break;
                 }
                 // TODO CHECK: this might cause issues when there is one movable and one not movable object on the same tile
@@ -1667,7 +1657,7 @@ TRAVISO.EngineView.prototype.checkForTileClick = function(mdata)
                     if (this.config.dontAutoMoveToTile || !this.currentControllable || this.checkAndMoveObjectToTile(this.currentControllable, closestTile))
                     {
                         if (this.config.highlightTargetTile) { closestTile.setHighlighted(true, !this.config.tileHighlightAnimated); }
-                        if (this.config.tileSelectCallback) { this.config.tileSelectCallback.call(this.config.callbackScope, closestTile.mapPos.r, closestTile.mapPos.c); }
+                        if (this.config.tileSelectCallback) { this.config.tileSelectCallback(closestTile.mapPos.r, closestTile.mapPos.c); }
                         break;
                     }
                 } 
@@ -1676,7 +1666,7 @@ TRAVISO.EngineView.prototype.checkForTileClick = function(mdata)
 		else if (this.config.dontAutoMoveToTile || !this.currentControllable || this.checkAndMoveObjectToTile(this.currentControllable, closestTile))
 		{
 			if (this.config.highlightTargetTile) { closestTile.setHighlighted(true, !this.config.tileHighlightAnimated); }
-			if (this.config.tileSelectCallback) { this.config.tileSelectCallback.call(this.config.callbackScope, closestTile.mapPos.r, closestTile.mapPos.c); }
+			if (this.config.tileSelectCallback) { this.config.tileSelectCallback(closestTile.mapPos.r, closestTile.mapPos.c); }
 		} 
 	}
 };
@@ -1688,10 +1678,9 @@ TRAVISO.EngineView.prototype.checkForTileClick = function(mdata)
  */
 TRAVISO.EngineView.prototype.enableInteraction = function()
 {
-	var scope = this;
-	this.mousedown = this.touchstart = function(d) { scope.onMouseDown(d); };
-	this.mousemove = this.touchmove = function(d) { scope.onMouseMove(d); };
-	this.mouseup = this.mouseupout = this.touchend = function(d) { scope.onMouseUp(d); };
+	this.mousedown = this.touchstart = this.onMouseDown.bind(this);
+	this.mousemove = this.touchmove = this.onMouseMove.bind(this);
+	this.mouseup = this.mouseupout = this.touchend = this.onMouseUp.bind(this);
 	this.interactive = true;
 };
 /**

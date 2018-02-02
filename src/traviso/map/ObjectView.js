@@ -113,7 +113,7 @@ Object.defineProperty(TRAVISO.ObjectView.prototype, "animSpeed", {
  * @param [moving=false] {Boolean} if the requested visuals are for moving or stationary state  
  * @param [stopOnFirstFrame=false] {Boolean} if true stops on the first frame after changing the visuals
  * @param [noLoop=false] {Boolean} if true the movieclip animation will not loop after the first animation 
- * @param [onAnimComplete=null] {Function} Callback function to call if 'noLoop' is true after the first run of the animation, uses the engine's 'callbackScope'
+ * @param [onAnimComplete=null] {Function} callback function to call if 'noLoop' is true after the first run of the animation
  * @param [animSpeed=0.5] {Number} animation speed for the movieclips
  */
 TRAVISO.ObjectView.prototype.changeVisualToDirection = function(direction, moving, stopOnFirstFrame, noLoop, onAnimComplete, animSpeed)
@@ -142,7 +142,7 @@ TRAVISO.ObjectView.prototype.changeVisualToDirection = function(direction, movin
  * @param vId {String} visual-id
  * @param [stopOnFirstFrame=false] {Boolean} if true stops on the first frame after changing the visuals
  * @param [noLoop=false] {Boolean} if true the movieclip animation will not loop after the first animation 
- * @param [onAnimComplete=null] {Function} Callback function to call if 'noLoop' is true after the first run of the animation, uses the engine's 'callbackScope'
+ * @param [onAnimComplete=null] {Function} callback function to call if 'noLoop' is true after the first run of the animation
  * @param [animSpeed=null] {Number} animation speed for the movieclips, stays the same if not defined
  */
 TRAVISO.ObjectView.prototype.changeVisual = function(vId, stopOnFirstFrame, noLoop, onAnimComplete, animSpeed)
@@ -170,7 +170,7 @@ TRAVISO.ObjectView.prototype.changeVisual = function(vId, stopOnFirstFrame, noLo
         if (noLoop && onAnimComplete) 
         {
             var scope = this;
-            this.container.onComplete = function () { setTimeout(function () { onAnimComplete.call( scope.engine.config.callbackScope, scope); }, 100); };
+            this.container.onComplete = function () { setTimeout(function () { onAnimComplete( scope ); }, 100); };
         }
         if (TRAVISO.existy(animSpeed) && animSpeed > 0) { this.animSpeed = animSpeed; }
         this.container.gotoAndPlay(0);
@@ -180,7 +180,7 @@ TRAVISO.ObjectView.prototype.changeVisual = function(vId, stopOnFirstFrame, noLo
         this.container.gotoAndStop(0);
     }
     
-    if (this.engine.config.objectUpdateCallback) { this.engine.config.objectUpdateCallback.call(this.engine.config.callbackScope, this); }
+    if (this.engine.config.objectUpdateCallback) { this.engine.config.objectUpdateCallback( this ); }
     
     return true;
 };
