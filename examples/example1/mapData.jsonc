@@ -1,7 +1,7 @@
 {
     "tiles": {
         /*
-        An tile item is keyed by its id. These ids will be used in the groundMap later in this file to identify location of the tile.
+        A tile item is keyed by its id. These ids will be used in the groundMap later in this file to identify the location of the tile.
         DON'T use "0" as id/key since it represents empty tiles in the groundMap.
         A tile should include the following attributes:
             movable:    (true/false) This defines weather other characters can move onto this type of tile.
@@ -163,7 +163,7 @@
     /*
     singleGroundImage:  Only use if you have a single ground image to layout underneath your map.
                         path: (String) Either should be loaded before the engine starts or should be passed to the engine inside the 'assetsToLoad' property.
-                        scale: (Integer) scale amount to apply to the single-ground-image so that you can use smaller images and scale them up for extra big maps, default 1. 
+                        scale: (Integer) Scale amount to apply to the single-ground-image so that you can use smaller images and scale them up for extra big maps, default 1. 
     */
     /*
     groundMap: Defines ground/terrain layer of the map. 0 means no tile image AND non-walkable area.

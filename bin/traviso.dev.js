@@ -4,7 +4,7 @@
  * Copyright (c) 2015, Hakan Karlidag - @axaq
  * www.travisojs.com
  *
- * Compiled: 2018-02-02
+ * Compiled: 2018-02-05
  *
  * traviso.js is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license.php
@@ -40,7 +40,7 @@ var TRAVISO = TRAVISO || {};
  * @property {String} VERSION
  * @static
  */
-TRAVISO.VERSION = "v0.0.9";
+TRAVISO.VERSION = "v1.0.0";
 
 /**
  * The types of available path finding algorithms

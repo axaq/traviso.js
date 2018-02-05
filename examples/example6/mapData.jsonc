@@ -145,7 +145,7 @@
     /*
     singleGroundImage:  Only use if you have a single ground image to layout underneath your map.
                         path: (String) Either should be loaded before the engine starts or should be passed to the engine inside the 'assetsToLoad' property.
-                        scale: (Integer) scale amount to apply to the single-ground-image so that you can use smaller images and scale them up for extra big maps, default 1. 
+                        scale: (Integer) Scale amount to apply to the single-ground-image so that you can use smaller images and scale them up for extra big maps, default 1. 
     */
     "singleGroundImage": { "path": "../assets/groundImage.jpg", "scale": 2 },
     /*
