@@ -23,7 +23,7 @@ If you’re interested, you can follow me on twitter
 
 - [How to Customise](<http://www.travisojs.com/blog/tutorial/2015/03/15/engine-configuration.html>)
 
-- [Data File Structure](<http://www.travisojs.com/blog/tutorial/2015/03/15/data-file-structure.htmll>)
+- [Data File Structure](<http://www.travisojs.com/blog/tutorial/2015/03/15/data-file-structure.html>)
 
 - [Camera Controls](<http://www.travisojs.com/blog/demo/2015/03/20/camera-controls.html>)
 
