@@ -4,7 +4,7 @@
  * Copyright (c) 2015, Hakan Karlidag - @axaq
  * www.travisojs.com
  *
- * Compiled: 2018-02-05
+ * Compiled: 2019-10-26
  *
  * traviso.js is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license.php
@@ -40,7 +40,7 @@ var TRAVISO = TRAVISO || {};
  * @property {String} VERSION
  * @static
  */
-TRAVISO.VERSION = "v1.0.0";
+TRAVISO.VERSION = "v1.0.1";
 
 /**
  * The types of available path finding algorithms
@@ -573,13 +573,13 @@ TRAVISO.getDirBetween = function(r1, c1, r2, c2) {
     }
     else if (r1 < r2) {
         if (c1 === c2)		{ dir = TRAVISO.directions.SE; }
-        else if (c1 < c2)	{ dir = TRAVISO.directions.W; }
+        else if (c1 < c2)	{ dir = TRAVISO.directions.E; }
         else				{ dir = TRAVISO.directions.S; }
     }
     else if (r1 > r2) {
         if (c1 === c2)		{ dir = TRAVISO.directions.NW; }
         else if (c1 < c2)	{ dir = TRAVISO.directions.N; }
-        else				{ dir = TRAVISO.directions.E; }
+        else				{ dir = TRAVISO.directions.W; }
     }
     return dir;
 };
