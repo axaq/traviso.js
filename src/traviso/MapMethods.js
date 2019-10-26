@@ -314,13 +314,13 @@ TRAVISO.getDirBetween = function(r1, c1, r2, c2) {
     }
     else if (r1 < r2) {
         if (c1 === c2)		{ dir = TRAVISO.directions.SE; }
-        else if (c1 < c2)	{ dir = TRAVISO.directions.W; }
+        else if (c1 < c2)	{ dir = TRAVISO.directions.E; }
         else				{ dir = TRAVISO.directions.S; }
     }
     else if (r1 > r2) {
         if (c1 === c2)		{ dir = TRAVISO.directions.NW; }
         else if (c1 < c2)	{ dir = TRAVISO.directions.N; }
-        else				{ dir = TRAVISO.directions.E; }
+        else				{ dir = TRAVISO.directions.W; }
     }
     return dir;
 };
