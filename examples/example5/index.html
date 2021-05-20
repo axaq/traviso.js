@@ -52,10 +52,10 @@
         pixiRoot.stage.addChild(engine);
     }
     
-    // this method will be called everytime a tile is selected in the engine
+    // this method will be called every time a tile is selected in the engine
     function onTileSelect(rowIndex, columnIndex)
     {
-            
+
     }
     
     // this method will be called when a tile with an interactive map-object on it is selected
@@ -71,7 +71,7 @@
         for (var i=0; i < objectsOnDestination.length; i++)
         {
             // check if there is a flag on the destination tile
-            if(objectsOnDestination[i].type === 10)
+            if(objectsOnDestination[i].type === '10')
             {
                 obj.changeVisual("flip", false, true, flipAnimFinished);
                 break;
@@ -93,7 +93,7 @@
         for (var i=0; i < objectsOnNewTile.length; i++)
         {
             // check if there are boxes on the next tile
-            if(objectsOnNewTile[i].type === 12)
+            if(objectsOnNewTile[i].type === '12')
             {
                 boxAnim = createAndStartBoxAnim();
                 engine.addCustomObjectToLocation(boxAnim, objectsOnNewTile[i].mapPos);
@@ -102,17 +102,17 @@
         }
     }
     
-    // creates 6 boxes and spreads them up throuh a simple tween animation
+    // creates 6 boxes and spreads them up through a simple tween animation
     function createAndStartBoxAnim()
     {
-        // create six seperate boxes to spread
+        // create six separate boxes to spread
         var boxAnim = new PIXI.Container();
-        var t = PIXI.Texture.fromFrame("box.png");
+        var t = PIXI.Texture.from("box.png");
         var box;
         var boxes = [];
         for (var i=0; i < 6; i++)
         {
-            box = new PIXI.extras.AnimatedSprite([t]);
+            box = new PIXI.AnimatedSprite([t]);
             box.anchor.x = box.anchor.y = 0.5;
             boxAnim.addChild(box);
             boxes[boxes.length] = box;

@@ -109,7 +109,7 @@
  * @constructor
  * @param engine {EngineView} the engine instance that the map-object sits in
  * @param [objectType=0] {Number} type-id of the object as defined in the XML file
- * @param [animSpeed=0.5] {Number} animation speed for the movieclips
+ * @param [animSpeed=0.5] {Number} animation speed for the movieClips
  */
 TRAVISO.ObjectView = function(engine, objectType, animSpeed)
 {
@@ -170,7 +170,7 @@ TRAVISO.ObjectView = function(engine, objectType, animSpeed)
     
     this.currentInteractionOffset = this.interactionOffsets.idle;
 	
-    this.container = new PIXI.extras.AnimatedSprite(this.textures.idle);
+    this.container = new PIXI.AnimatedSprite(this.textures.idle);
     this.container.interactive = this.container.interactiveChildren = false;
     this.container.anchor.x = xAnchor;
     this.container.anchor.y = 1;
@@ -191,7 +191,7 @@ TRAVISO.ObjectView.constructor = TRAVISO.ObjectView;
 TRAVISO.ObjectView.prototype = Object.create(PIXI.Container.prototype);
 
 /**
- * Animation speed for the movieclips included in the map-object visuals.
+ * Animation speed for the movieClips included in the map-object visuals.
  * @property {Number} animSpeed
  * @default 0.5
  */
@@ -211,9 +211,9 @@ Object.defineProperty(TRAVISO.ObjectView.prototype, &quot;animSpeed&quot;, {
  * @param direction {Number} direction-id as defined in &#x27;TRAVISO.directions&#x27;
  * @param [moving=false] {Boolean} if the requested visuals are for moving or stationary state  
  * @param [stopOnFirstFrame=false] {Boolean} if true stops on the first frame after changing the visuals
- * @param [noLoop=false] {Boolean} if true the movieclip animation will not loop after the first animation 
+ * @param [noLoop=false] {Boolean} if true the movieClip animation will not loop after the first animation 
  * @param [onAnimComplete=null] {Function} callback function to call if &#x27;noLoop&#x27; is true after the first run of the animation
- * @param [animSpeed=0.5] {Number} animation speed for the movieclips
+ * @param [animSpeed=0.5] {Number} animation speed for the movieClips
  */
 TRAVISO.ObjectView.prototype.changeVisualToDirection = function(direction, moving, stopOnFirstFrame, noLoop, onAnimComplete, animSpeed)
 {
@@ -240,9 +240,9 @@ TRAVISO.ObjectView.prototype.changeVisualToDirection = function(direction, movin
  * @private
  * @param vId {String} visual-id
  * @param [stopOnFirstFrame=false] {Boolean} if true stops on the first frame after changing the visuals
- * @param [noLoop=false] {Boolean} if true the movieclip animation will not loop after the first animation 
+ * @param [noLoop=false] {Boolean} if true the movieClip animation will not loop after the first animation 
  * @param [onAnimComplete=null] {Function} callback function to call if &#x27;noLoop&#x27; is true after the first run of the animation
- * @param [animSpeed=null] {Number} animation speed for the movieclips, stays the same if not defined
+ * @param [animSpeed=null] {Number} animation speed for the movieClips, stays the same if not defined
  */
 TRAVISO.ObjectView.prototype.changeVisual = function(vId, stopOnFirstFrame, noLoop, onAnimComplete, animSpeed)
 {

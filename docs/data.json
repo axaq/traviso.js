@@ -150,7 +150,7 @@
                 },
                 {
                     "name": "animSpeed",
-                    "description": "animation speed for the movieclips",
+                    "description": "animation speed for the movieClips",
                     "type": "Number",
                     "optional": true,
                     "optdefault": "0.5"
@@ -398,7 +398,7 @@
         {
             "file": "../src/traviso/map/ObjectView.js",
             "line": 94,
-            "description": "Animation speed for the movieclips included in the map-object visuals.",
+            "description": "Animation speed for the movieClips included in the map-object visuals.",
             "itemtype": "property",
             "name": "animSpeed",
             "type": "Number",
@@ -433,7 +433,7 @@
                 },
                 {
                     "name": "noLoop",
-                    "description": "if true the movieclip animation will not loop after the first animation",
+                    "description": "if true the movieClip animation will not loop after the first animation",
                     "type": "Boolean",
                     "optional": true,
                     "optdefault": "false"
@@ -447,7 +447,7 @@
                 },
                 {
                     "name": "animSpeed",
-                    "description": "animation speed for the movieclips",
+                    "description": "animation speed for the movieClips",
                     "type": "Number",
                     "optional": true,
                     "optdefault": "0.5"
@@ -478,7 +478,7 @@
                 },
                 {
                     "name": "noLoop",
-                    "description": "if true the movieclip animation will not loop after the first animation",
+                    "description": "if true the movieClip animation will not loop after the first animation",
                     "type": "Boolean",
                     "optional": true,
                     "optdefault": "false"
@@ -492,7 +492,7 @@
                 },
                 {
                     "name": "animSpeed",
-                    "description": "animation speed for the movieclips, stays the same if not defined",
+                    "description": "animation speed for the movieClips, stays the same if not defined",
                     "type": "Number",
                     "optional": true,
                     "optdefault": "null"
@@ -1091,7 +1091,7 @@
                 },
                 {
                     "name": "checkPathOnEachTile=true",
-                    "description": "looks for a path everytime an object moves to a new tile (set to false if you don't have other moving objects on your map), default true",
+                    "description": "looks for a path every time an object moves to a new tile (set to false if you don't have other moving objects on your map), default true",
                     "type": "Boolean"
                 },
                 {
@@ -1146,7 +1146,7 @@
                 },
                 {
                     "name": "objectUpdateCallback=null",
-                    "description": "callback function that will be called everytime an objects direction or position changed, default null",
+                    "description": "callback function that will be called every time an objects direction or position changed, default null",
                     "type": "Function"
                 }
             ]
@@ -1316,7 +1316,7 @@
         {
             "file": "../src/traviso/EngineView.js",
             "line": 186,
-            "description": "engine looks for a path everytime an object moves to a new tile on the path\n(set to false if you don't have moving objects other then your controllable on your map)",
+            "description": "engine looks for a path every time an object moves to a new tile on the path\n(set to false if you don't have moving objects other then your controllable on your map)",
             "itemtype": "property",
             "name": "checkPathOnEachTile",
             "type": "Boolean",
@@ -1386,7 +1386,7 @@
         {
             "file": "../src/traviso/EngineView.js",
             "line": 222,
-            "description": "callback function that will be called everytime an objects direction or position changed",
+            "description": "callback function that will be called every time an objects direction or position changed",
             "itemtype": "property",
             "name": "objectUpdateCallback",
             "type": "Function",
@@ -4604,7 +4604,7 @@
                         },
                         {
                             "name": "checkPathOnEachTile",
-                            "description": "engine looks for a path everytime an object moves to a new tile on the path (set to false if you don't have moving objects other then your controllable on your map), default true",
+                            "description": "engine looks for a path every time an object moves to a new tile on the path (set to false if you don't have moving objects other then your controllable on your map), default true",
                             "type": "Boolean",
                             "optional": true,
                             "optdefault": "true"
@@ -4667,7 +4667,7 @@
                         },
                         {
                             "name": "objectUpdateCallback",
-                            "description": "callback function that will be called everytime an objects direction or position changed, default null",
+                            "description": "callback function that will be called every time an objects direction or position changed, default null",
                             "type": "Function",
                             "optional": true,
                             "optdefault": "null"

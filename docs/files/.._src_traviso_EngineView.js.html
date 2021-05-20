@@ -155,7 +155,7 @@ TRAVISO.EngineView = function(config)
      * @property {Number(Hexadecimal)} [config.tileHighlightStrokeColor=0xFFFFFF] color code for the tile highlight stroke (this will be overridden if a highlight-image is defined), default 0xFFFFFF
      * @property {Number} [config.tileHighlightStrokeAlpha=1.0] apha value for the tile highlight stroke (this will be overridden if a highlight-image is defined), default 1.0
      * @property {Boolean} config.dontAutoMoveToTile=false when a tile selected don&#x27;t move the controllable immediately but still call &#x27;tileSelectCallback&#x27;, default false
-     * @property {Boolean} config.checkPathOnEachTile=true looks for a path everytime an object moves to a new tile (set to false if you don&#x27;t have other moving objects on your map), default true
+     * @property {Boolean} config.checkPathOnEachTile=true looks for a path every time an object moves to a new tile (set to false if you don&#x27;t have other moving objects on your map), default true
      * 
      * @property {Boolean} config.mapDraggable=true enable dragging the map with touch-and-touchmove or mousedown-and-mousemove on the map, default true
      * 
@@ -170,7 +170,7 @@ TRAVISO.EngineView = function(config)
      * @property {Function} config.objectSelectCallback=null callback function that will be called when a tile with an interactive map-object on it is selected (call param will be the object selected), default null
      * @property {Function} config.objectReachedDestinationCallback=null callback function that will be called when any moving object reaches its destination (call param will be the moving object itself), default null
      * @property {Function} config.otherObjectsOnTheNextTileCallback=null callback function that will be called when any moving object is in move and there are other objects on the next tile, default null
-     * @property {Function} config.objectUpdateCallback=null callback function that will be called everytime an objects direction or position changed, default null
+     * @property {Function} config.objectUpdateCallback=null callback function that will be called every time an objects direction or position changed, default null
      * 
      * @private
      */
@@ -283,7 +283,7 @@ TRAVISO.EngineView = function(config)
      * @default false
      */
     /** 
-     * engine looks for a path everytime an object moves to a new tile on the path
+     * engine looks for a path every time an object moves to a new tile on the path
      * (set to false if you don&#x27;t have moving objects other then your controllable on your map)
      * @property {Boolean} checkPathOnEachTile 
      * @default true
@@ -319,7 +319,7 @@ TRAVISO.EngineView = function(config)
      * @default null
      */
     /** 
-     * callback function that will be called everytime an objects direction or position changed
+     * callback function that will be called every time an objects direction or position changed
      * @property {Function} objectUpdateCallback 
      * @default null
      */

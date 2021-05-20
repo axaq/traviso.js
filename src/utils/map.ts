@@ -186,7 +186,6 @@ export const getTileInfo = (engine: EngineView, tileType: string): TileInfo => {
         return {
             // m : tileInfo.m,
             m: tileInfo.movable,
-            // t : tileInfo.t ? [PIXI.Texture.fromFrame(tileInfo.t)] : []
             t: tileInfo.path ? [Texture.from(tileInfo.path)] : [],
         };
     } else if (engine.mapData.singleGroundImage) {

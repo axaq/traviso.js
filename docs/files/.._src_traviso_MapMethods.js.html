@@ -117,7 +117,7 @@ TRAVISO.loadAssetsAndData = function(engine, loadedCallback)
 {
     if (!engine.config.mapDataPath)
     {
-        throw new Error(&quot;TRAVISO: No JSON-file path defined for map data. Plese check your configuration object that you pass to the &#x27;getEngineInstance&#x27; method.&quot;);
+        throw new Error(&quot;TRAVISO: No JSON-file path defined for map data. Please check your configuration object that you pass to the &#x27;getEngineInstance&#x27; method.&quot;);
     } else if (engine.config.mapDataPath.split(&quot;.&quot;).pop() !== &quot;json&quot;) {
         throw new Error(&quot;TRAVISO: Invalid map-data file path. This file has to be a json file.&quot;);
     }
@@ -318,7 +318,7 @@ TRAVISO.getObjectTextures = function(engine, objectType, visualId) {
         if (textureNames) {
             textures = [];
             for (var j = 0; j &lt; textureNames.length; j++) {
-                textures[textures.length] = PIXI.Texture.fromFrame(textureNames[j]);
+                textures[textures.length] = PIXI.Texture.from(textureNames[j]);
             }
         }
         else {
@@ -348,8 +348,8 @@ TRAVISO.getTileInfo = function(engine, tileType) {
         return {
             // m : tileInfo.m,
             m : tileInfo.movable,
-            // t : tileInfo.t ? [PIXI.Texture.fromFrame(tileInfo.t)] : []
-            t : tileInfo.path ? [PIXI.Texture.fromFrame(tileInfo.path)] : []
+            // t : tileInfo.t ? [PIXI.Texture.from(tileInfo.t)] : []
+            t : tileInfo.path ? [PIXI.Texture.from(tileInfo.path)] : []
         };
     }
     else if (engine.mapData.singleGroundImage) {
