@@ -1,7 +1,7 @@
 language: node_js
 node_js:
- - node
+    - node
 install:
-  - npm install && npm run build
+    - npm install && npm run build
 script:
-  - npm run test
+    - npm run test
