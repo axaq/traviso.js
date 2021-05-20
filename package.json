@@ -1,0 +1,81 @@
+{
+    "name": "traviso.js",
+    "version": "0.1.3",
+    "description": "Traviso.js - Isometric Javascript Engine",
+    "author": {
+        "name": "Hakan Karlidag - @axaq",
+        "url": "https://twitter.com/axaq"
+    },
+    "url": "www.travisojs.com",
+    "homepage": "http://www.travisojs.com",
+    "bugs": "https://github.com/axaq/traviso.js/issues",
+    "logo": "http://www.travisojs.com/img/logo_small.jpg",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/axaq/traviso.js.git"
+    },
+    "keywords": [
+        "typescript",
+        "javascript",
+        "game-development",
+        "isometric",
+        "pixijs"
+    ],
+    "main": "dist/cjs/traviso.js",
+    "module": "dist/es/traviso.js",
+    "iife": "dist/es/traviso.js",
+    "types": "types/index.d.ts",
+    "files": [
+        "dist",
+        "types",
+        "!**/*.tsbuildinfo",
+        "!src",
+        "!docs",
+        "!playground",
+        "!examples",
+        "!.prettierrc",
+        "!.prettierignore",
+        "!.rollup.cache",
+        "!.eslintcache",
+        "!.mocharc.jsonc",
+        "!.editorconfig",
+        "!logo_small.png"
+    ],
+    "scripts": {
+        "build": "npm-run-all build:*",
+        "build:rollup": "npm run clean && rollup -c",
+        "clean": "rimraf dist && rimraf types",
+        "test": "npm-run-all test:*",
+        "test:format": "prettier --check .",
+        "test:package": "pkg-ok",
+        "preversion": "npm-run-all clean build test"
+    },
+    "dependencies": {},
+    "peerDependencies": {
+        "pixi.js": "^6.0.4"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.14.2",
+        "@babel/preset-env": "^7.14.2",
+        "@rollup/plugin-babel": "^5.3.0",
+        "@rollup/plugin-commonjs": "^19.0.0",
+        "@rollup/plugin-node-resolve": "^13.0.0",
+        "@types/chai": "^4.2.18",
+        "@types/mocha": "^8.2.2",
+        "chai": "^4.3.4",
+        "mocha": "^8.4.0",
+        "npm-run-all": "^4.1.5",
+        "pixi.js": "^6.0.4",
+        "pkg-ok": "^2.3.1",
+        "prettier": "^2.3.0",
+        "rimraf": "^3.0.2",
+        "rollup": "^2.47.0",
+        "rollup-plugin-jscc": "^2.0.0",
+        "rollup-plugin-peer-deps-external": "^2.2.4",
+        "rollup-plugin-terser": "^7.0.2",
+        "rollup-plugin-typescript2": "^0.30.0",
+        "ts-node": "^9.1.1",
+        "typescript": "^4.2.4"
+    }
+}
