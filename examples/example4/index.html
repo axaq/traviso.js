@@ -10,14 +10,18 @@
             }
         </style>
         
-        <script src="../js/pixi.js"></script>
-        <script src="../js/traviso.dev.js"></script>
+        <script src="../js/pixi.min.js"></script>
+        <script src="../../dist/browser/traviso.min.js"></script>
     </head>
     <body>
         <script>
 
     ////// Here, we initialize the pixi application
-    var pixiRoot = new PIXI.Application(800, 600, { backgroundColor : 0x6BACDE });
+    var pixiRoot = new PIXI.Application({
+        width: 800,
+        height: 600,
+        backgroundColor: 0x6BACDE,
+    });
 
     // add the renderer view element to the DOM
     document.body.appendChild(pixiRoot.view);
@@ -41,19 +45,19 @@
         pixiRoot.stage.addChild(engine);
         
         // create buttons
-        var btnZoomIn = new PIXI.Sprite.fromFrame("../assets/btn_zoomIn.png");
+        var btnZoomIn = new PIXI.Sprite(PIXI.Texture.from("../assets/btn_zoomIn.png"));
         pixiRoot.stage.addChild(btnZoomIn);
         
-        var btnZoomOut = new PIXI.Sprite.fromFrame("../assets/btn_zoomOut.png");
+        var btnZoomOut = new PIXI.Sprite(PIXI.Texture.from("../assets/btn_zoomOut.png"));
         pixiRoot.stage.addChild(btnZoomOut);
         
-        var btnCentralize = new PIXI.Sprite.fromFrame("../assets/btn_centralize.png");
+        var btnCentralize = new PIXI.Sprite(PIXI.Texture.from("../assets/btn_centralize.png"));
         pixiRoot.stage.addChild(btnCentralize);
         
-        var btnCentralizeToObject = new PIXI.Sprite.fromFrame("../assets/btn_centralizeToObject.png");
+        var btnCentralizeToObject = new PIXI.Sprite(PIXI.Texture.from("../assets/btn_centralizeToObject.png"));
         pixiRoot.stage.addChild(btnCentralizeToObject);
         
-        var btnFocusMapToObject = new PIXI.Sprite.fromFrame("../assets/btn_focusToObject.png");
+        var btnFocusMapToObject = new PIXI.Sprite(PIXI.Texture.from("../assets/btn_focusToObject.png"));
         pixiRoot.stage.addChild(btnFocusMapToObject);
         
         // set positions

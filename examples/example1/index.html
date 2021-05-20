@@ -10,14 +10,18 @@
             }
         </style>
         
-        <script src="../js/pixi.js"></script>
-        <script src="../js/traviso.dev.js"></script>
+        <script src="../js/pixi.min.js"></script>
+        <script src="../../dist/browser/traviso.min.js"></script>
     </head>
     <body>
         <script>
 
     ////// Here, we initialize the pixi application
-    var pixiRoot = new PIXI.Application(800, 600, { backgroundColor : 0x6BACDE });
+    var pixiRoot = new PIXI.Application({
+        width: 800,
+        height: 600,
+        backgroundColor: 0x6BACDE,
+    });
 
     // add the renderer view element to the DOM
     document.body.appendChild(pixiRoot.view);
