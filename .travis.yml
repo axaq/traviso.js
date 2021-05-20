@@ -1,5 +1,7 @@
 language: node_js
 node_js:
-  - "node"
-  - "14"
-  - "8"
+ - node
+install:
+  - npm install && npm run build
+script:
+  - npm run test
