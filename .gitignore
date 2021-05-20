@@ -53,6 +53,7 @@ Thumbs.db
 /dist
 /target
 /build
+/types
 
 # dotenv environment variables file
 .env
