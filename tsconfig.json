@@ -57,7 +57,7 @@
     },
     // Include all TypeScript files, including those that shouldn't be built.
     "include": ["src", "benchmark"],
-    "exclude": ["dist", "types", "**/node_modules", "**/rollup.config.js"],
+    "exclude": ["dist", "types", "docs", "**/node_modules", "**/rollup.config.js"],
     "ts-node": {
         "files": true,
         "compilerOptions": {
