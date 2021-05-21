@@ -111,7 +111,7 @@ export default [
         output: [
             {
                 // dir: 'dist',
-                file: 'dist/browser/traviso.js',
+                file: pkg.iife,
                 format: 'iife',
                 globals,
                 sourcemap: true,
@@ -119,7 +119,7 @@ export default [
                 name: 'TRAVISO',
             },
             {
-                file: 'dist/cjs/traviso.js',
+                file: pkg.main,
                 format: 'cjs',
                 globals,
                 sourcemap: true,
@@ -127,7 +127,7 @@ export default [
             },
             {
                 // dir: 'dist',
-                file: 'dist/es/traviso.js',
+                file: pkg.module,
                 format: 'es',
                 globals,
                 sourcemap: true,
