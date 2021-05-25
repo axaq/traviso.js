@@ -28,7 +28,7 @@ If you’re interested, you can follow me on twitter
 
 ### Docs
 
-You can found the documentation [here](http://www.travisojs.com/docs/)
+You can find the documentation [here](http://www.travisojs.com/docs/)
 
 ### What is Ahead
 

@@ -14,7 +14,7 @@ export type TravisoConfiguration = {
  * @namespace TRAVISO
  */
 export * from './version';
-// export * from './map/EngineView';
+export * from './map/EngineView';
 // export * from './utils/map';
 export * from './utils/hello';
 export * from './utils/trace';

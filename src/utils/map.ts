@@ -111,7 +111,7 @@ export type MapData = {
  * @memberof TRAVISO
  * @private
  * @param engine {EngineView} engine instance
- * @param objectType {String} type/id of the related object tag defined in the xml file
+ * @param objectType {String} type/id of the related object tag defined in the json file
  * @return {Object} an object with all properties of a map-object
  */
 export const getObjectInfo = (engine: EngineView, objectType: string): IObjectInfo => {
@@ -146,8 +146,8 @@ export const getObjectInfo = (engine: EngineView, objectType: string): IObjectIn
  * @static
  * @private
  * @param engine {EngineView} engine instance
- * @param objectType {String} type/id of the related object tag defined in the xml file
- * @param visualId {String} id of the related v tag defined in the xml file
+ * @param objectType {String} type/id of the related object tag defined in the json file
+ * @param visualId {String} id of the related v tag defined in the json file
  * @return {Array(PIXI.Texture)} an array of textures
  */
 export const getObjectTextures = (engine: EngineView, objectType: string, visualId: ObjectVisualKey): Texture[] => {
@@ -177,7 +177,7 @@ export const getObjectTextures = (engine: EngineView, objectType: string, visual
  * @static
  * @private
  * @param engine {EngineView} engine instance
- * @param tileType {String} type/id of the related tile tag defined in the xml file
+ * @param tileType {String} type/id of the related tile tag defined in the json file
  * @return {Object} an object with all properties of a map-tile
  */
 export const getTileInfo = (engine: EngineView, tileType: string): TileInfo => {

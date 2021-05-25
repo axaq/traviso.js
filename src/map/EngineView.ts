@@ -76,9 +76,6 @@ export type EngineConfiguration = {
  *
  * @class EngineView
  * @extends PIXI.Container
- * @constructor
- * @param config {Object} configuration object for the isometric engine instance
- * @param config.mapDataPath {String} the path to the xml file that defines map data, required
  */
 export class EngineView extends Container {
     /**
@@ -142,12 +139,14 @@ export class EngineView extends Container {
     private config: EngineConfiguration;
 
     /**
-     * height of a single isometric tile
-     * @property {Number} TILE_H
+     * The default height of a single isometric tile
+     * 
      * @default 74
+     * @property
      * @private
+     * @internal
      */
-    private TILE_H: number;
+    private static DEFAULT_TILE_H: number = 74;
     // /**
     //  * width of a single isometric tile
     //  * @property {Number} TILE_W
@@ -156,17 +155,20 @@ export class EngineView extends Container {
     //  */
     // private TILE_W: number;
     /**
-     * the angle between the top-left edge and the horizontal diagonal of a isometric quad
-     * @property {Number} ISO_ANGLE
+     * The default angle (in degrees) between the top-left edge and the horizontal diagonal of a isometric quad
+     * 
      * @default 30
+     * @property
      * @private
+     * @internal
      */
-    private ISO_ANGLE: number;
+    private static DEFAULT_ISO_ANGLE: number = 30;
     /**
      * half-height of a single isometric tile
-     * @property {Number} TILE_HALF_H
+     * @property {number} TILE_HALF_H
      * @default 37
      * @private
+     * @internal
      */
     public TILE_HALF_H: number;
     /**
@@ -299,7 +301,14 @@ export class EngineView extends Container {
     private onMouseUp_binded: (event: InteractionEvent) => void;
     private onMouseDown_binded: (event: InteractionEvent) => void;
     private onMouseMove_binded: (event: InteractionEvent) => void;
-
+    
+    /**
+     * Main display object container class to hold all views
+     * within the engine and all map related logic
+     *
+     * @constructor
+     * @param config {EngineConfiguration} configuration object for the isometric engine instance
+     */
     constructor(config: EngineConfiguration) {
         super();
 
@@ -340,6 +349,8 @@ export class EngineView extends Container {
             ? this.config.checkPathOnEachTile
             : true;
         this.config.mapDraggable = existy(this.config.mapDraggable) ? this.config.mapDraggable : true;
+        this.config.isoAngle = existy(this.config.isoAngle) ? this.config.isoAngle : EngineView.DEFAULT_ISO_ANGLE;
+        this.config.tileHeight = existy(this.config.tileHeight) ? this.config.tileHeight : EngineView.DEFAULT_TILE_H;
 
         this.setZoomParameters(
             this.config.minScale,
@@ -349,10 +360,8 @@ export class EngineView extends Container {
             this.config.instantCameraZoom
         );
 
-        this.TILE_H = this.config.tileHeight || 74;
-        this.ISO_ANGLE = this.config.isoAngle || 30;
-        this.TILE_HALF_H = this.TILE_H / 2;
-        this.TILE_HALF_W = this.TILE_HALF_H * Math.tan(((90 - this.ISO_ANGLE) * Math.PI) / 180);
+        this.TILE_HALF_H = this.config.tileHeight / 2;
+        this.TILE_HALF_W = this.TILE_HALF_H * Math.tan(((90 - this.config.isoAngle) * Math.PI) / 180);
         // this.TILE_W = this.TILE_HALF_W * 2;
 
         this.loadAssetsAndData();
@@ -833,10 +842,10 @@ export class EngineView extends Container {
     }
 
     /**
-     * Creates and adds a predefined (in XML file) map-object to the map using the specified object type-id.
+     * Creates and adds a predefined (in json file) map-object to the map using the specified object type-id.
      *
      * @method createAndAddObjectToLocation
-     * @param type {Number} type-id of the object as defined in the XML file
+     * @param type {Number} type-id of the object as defined in the json file
      * @param pos {Object} object including r and c coordinates
      * @param pos.r {Number} the row index of the map location
      * @param pos.c {Number} the column index of the map location
@@ -873,7 +882,7 @@ export class EngineView extends Container {
 
     /**
      * Enables adding external custom display objects to the specified location.
-     * This method should be used for the objects that are not already defined in XML file and don't have a type-id.
+     * This method should be used for the objects that are not already defined in json file and don't have a type-id.
      * The resulting object will be independent of engine mechanics apart from depth controls.
      *
      * @method addCustomObjectToLocation

@@ -24,7 +24,7 @@ import {
  * @extends PIXI.Container
  * @constructor
  * @param engine {EngineView} the engine instance that the map-object sits in
- * @param type {Number} type-id of the object as defined in the XML file
+ * @param type {Number} type-id of the object as defined in the json file
  * @param [animSpeed=0.5] {Number} animation speed for the animated visuals
  */
 export class ObjectView extends Container {
@@ -35,7 +35,7 @@ export class ObjectView extends Container {
      */
     private engine: EngineView;
     /**
-     * Type-id of the map-object as defined in the XML file.
+     * Type-id of the map-object as defined in the json file.
      * @property {string} type
      */
     private type: string;
