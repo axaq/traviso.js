@@ -4,21 +4,30 @@ const VERSION = '$_VERSION';
 /**
  * Skips the hello message of renderers that are created after this is run.
  *
- * @function skipHello
  * @memberof TRAVISO
+ * @for TRAVISO
+ * 
+ * @function
+ * @method
+ * @static
+ * @public
  */
 export function skipHello(): void {
     saidHello = true;
 }
 
 /**
- * Logs out the version and renderer information for this running instance of PIXI.
- * If you don't want to see this message you can run `PIXI.utils.skipHello()` before
- * creating your renderer. Keep in mind that doing that will forever make you a jerk face.
+ * Logs out the version information for this running instance of TRAVISO.
+ * If you don't want to see this message you can run `TRAVISO.skipHello()` before
+ * creating your engine.
  *
- * @static
- * @function sayHello
  * @memberof TRAVISO
+ * @for TRAVISO
+ * 
+ * @function
+ * @method
+ * @static
+ * @public
  */
 export function sayHello(): void {
     if (saidHello) {

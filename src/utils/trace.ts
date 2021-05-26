@@ -3,9 +3,14 @@ let logEnabled: boolean = true;
 /**
  * Writes logs to the browser console
  *
- * @method trace
  * @memberof TRAVISO
+ * @for TRAVISO
+ * 
+ * @method
+ * @function
+ * @public
  * @static
+ * 
  * @param s {string} text to log
  */
 export function trace(s: string): void {
@@ -18,10 +23,15 @@ export function trace(s: string): void {
 /**
  * Determines if TRAVISO can log helper text.
  *
- * @static
  * @memberof TRAVISO
- * @function enableDisableLogging
- * @param [enabled=true] {boolean} enable logging or not
+ * @for TRAVISO
+ * 
+ * @method
+ * @function
+ * @public
+ * @static
+ * 
+ * @param enabled {boolean} enable logging or not, default `true`
  * @return {boolean} logging enabled or not
  */
 export function enableDisableLogging(enabled: boolean = true): boolean {

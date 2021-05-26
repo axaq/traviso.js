@@ -9,18 +9,18 @@ import { ObjectView } from '../map/ObjectView';
 import { GridNode } from '../pathFinding/GridNode';
 import { getDist, getUnit } from '../utils/calculations';
 import { EasingFunction, EasingType, getEasingFunc } from '../utils/easing';
-import { ColumnRowPair, PositionPair } from '../utils/map';
+import { TColumnRowPair, TPositionPair } from '../utils/map';
 
 export interface IMovable extends ObjectView {
     // [key: string]: any,
-    speedUnit: PositionPair;
+    speedUnit: TPositionPair;
     speedMagnitude: number;
     currentPath: GridNode[];
     currentPathStep: number;
-    currentTarget: PositionPair;
+    currentTarget: TPositionPair;
     currentTargetTile: GridNode;
     currentReachThresh: number;
-    prevPosition: PositionPair;
+    prevPosition: TPositionPair;
 }
 
 export interface ITween {
@@ -389,9 +389,9 @@ export class MoveEngine {
      * @param pos.r {Object} the row index of the map location
      * @param pos.c {Object} the column index of the map location
      */
-    public setMoveParameters(o: IMovable, pos: ColumnRowPair): void {
+    public setMoveParameters(o: IMovable, pos: TColumnRowPair): void {
         const px = this.engine.getTilePosXFor(pos.r, pos.c);
-        const py = this.engine.getTilePosYFor(pos.r, pos.c) + this.engine.TILE_HALF_H;
+        const py = this.engine.getTilePosYFor(pos.r, pos.c) + this.engine.tileHalfHeight;
 
         o.speedUnit = getUnit({ x: px - o.position.x, y: py - o.position.y });
 

@@ -1,45 +1,61 @@
-import { EngineConfiguration, EngineView } from './map/EngineView';
+import { TEngineConfiguration, EngineView } from './map/EngineView';
 import { sayHello } from './utils/hello';
 import { enableDisableLogging, trace } from './utils/trace';
 import { VERSION } from './version';
 
-export type TravisoConfiguration = {
+/**
+ * Type declaration for global traviso configuration.
+ */
+export type TTravisoConfiguration = {
+    /** 
+     * Determines if TRAVISO can log helper text. 
+     * @default false
+     */
     logEnabled: boolean;
 };
 
 /**
  * Main TRAVISO namespace.
  *
- * @static
  * @namespace TRAVISO
  */
 export * from './version';
 export * from './map/EngineView';
-// export * from './utils/map';
+export { TileView } from './map/TileView';
 export * from './utils/hello';
 export * from './utils/trace';
+export { TColumnRowPair, TPositionPair } from './utils/map';
 
 /**
  * Global configuration settings for traviso
  *
- * @property {TravisoConfiguration} config
+ * @property
  * @protected
+ * @internal
  */
-let config: TravisoConfiguration = {
+let config: TTravisoConfiguration = {
     logEnabled: false,
 };
 
+/**
+ * Flag defining whether traviso is set or not
+ *
+ * @property
+ * @protected
+ * @internal
+ */
 let isReady: boolean = false;
 
 /**
  * Initializes traviso global settings if it hasn't been already.
  *
- * @method init
- * @for TRAVISO
- * @static
- * @param [globalConfig] {Object} configuration object for the traviso engine
+ * @method
+ * @function
+ * @internal
+ * 
+ * @param globalConfig {TTravisoConfiguration} configuration object for the traviso engine
  */
-const init = (globalConfig: TravisoConfiguration): void => {
+const init = (globalConfig: TTravisoConfiguration): void => {
     // do necessary checks and assignments for global settings
     if (globalConfig) {
         config = {
@@ -60,16 +76,22 @@ const init = (globalConfig: TravisoConfiguration): void => {
  * Creates and returns an isometric engine instance with the provided configuration.
  * Also initializes traviso global settings if it hasn't been already.
  *
- * @method getEngineInstance
+ * @memberof TRAVISO
  * @for TRAVISO
+ * 
+ * @method
+ * @function
+ * @public
  * @static
- * @param {EngineConfiguration} instanceConfig configuration object for the isometric instance
- * @param {TravisoConfiguration} [globalConfig=null] configuration object for the traviso engine
- * @return {EngineView} a new instance of the isometric engine
+ * 
+ * @param instanceConfig {TEngineConfiguration} Configuration object for the isometric instance, required
+ * @param globalConfig {TTravisoConfiguration} Configuration object for the traviso engine, default null
+ * 
+ * @returns {EngineView} A new instance of the isometric engine
  */
 export const getEngineInstance = (
-    instanceConfig: EngineConfiguration,
-    globalConfig: TravisoConfiguration = null
+    instanceConfig: TEngineConfiguration,
+    globalConfig: TTravisoConfiguration = null
 ): EngineView => {
     init(globalConfig);
     return new EngineView(instanceConfig);

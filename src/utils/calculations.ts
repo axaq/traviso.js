@@ -1,5 +1,5 @@
 import { DisplayObject } from 'pixi.js';
-import { PositionPair } from './map';
+import { TPositionPair } from './map';
 
 /**
  * Checks if the value existy.
@@ -60,7 +60,7 @@ export const mathMap = (
  * @param v2.y {Number} y component
  * @return {Number} dot product of two vectors
  */
-export const dotProduct = (v1: PositionPair, v2: PositionPair): number => {
+export const dotProduct = (v1: TPositionPair, v2: TPositionPair): number => {
     return v1.x * v2.x + v1.y * v2.y;
 };
 
@@ -75,7 +75,7 @@ export const dotProduct = (v1: PositionPair, v2: PositionPair): number => {
  * @param v.y {Number} y component
  * @return {Object} unit vector
  */
-export const getUnit = (v: PositionPair): PositionPair => {
+export const getUnit = (v: TPositionPair): TPositionPair => {
     const m = Math.sqrt(v.x * v.x + v.y * v.y);
     return { x: v.x / m, y: v.y / m };
 };
@@ -92,7 +92,7 @@ export const getUnit = (v: PositionPair): PositionPair => {
  * @param vertices {Array(Array(Number))} array containing the vertices of the polygon
  * @return {Boolean} if the point is inside the polygon
  */
-export const isInPolygon = (gp: PositionPair, vertices: number[][]): boolean => {
+export const isInPolygon = (gp: TPositionPair, vertices: number[][]): boolean => {
     const testY = gp.y;
     const testX = gp.x;
     const nVert = vertices.length;
@@ -126,7 +126,7 @@ export const isInPolygon = (gp: PositionPair, vertices: number[][]): boolean => 
  * @param p2.y {Number} y component
  * @return {Boolean} the distance between two points
  */
-export const getDist = (p1: PositionPair, p2: PositionPair): number => {
+export const getDist = (p1: TPositionPair, p2: TPositionPair): number => {
     return Math.sqrt((p2.x - p1.x) * (p2.x - p1.x) + (p2.y - p1.y) * (p2.y - p1.y));
 };
 
@@ -142,7 +142,7 @@ export const getDist = (p1: PositionPair, p2: PositionPair): number => {
  * @param scope {Object} local scope
  * @return {Boolean} global point
  */
-export const localToGlobal = (lp: PositionPair, scope: DisplayObject): PositionPair => {
+export const localToGlobal = (lp: TPositionPair, scope: DisplayObject): TPositionPair => {
     let sX = scope.position.x + lp.x;
     let sY = scope.position.y + lp.y;
 
@@ -171,7 +171,7 @@ export const localToGlobal = (lp: PositionPair, scope: DisplayObject): PositionP
  * @param scope {Object} local scope
  * @return {Boolean} local point
  */
-export const globalToLocal = (gp: PositionPair, scope: DisplayObject): PositionPair => {
+export const globalToLocal = (gp: TPositionPair, scope: DisplayObject): TPositionPair => {
     let sX = scope.position.x;
     let sY = scope.position.y;
 

@@ -4,7 +4,7 @@
 
 import { Texture, Container, Graphics, Sprite, AnimatedSprite } from 'pixi.js';
 import { EngineView } from './EngineView';
-import { ColumnRowPair, getTileInfo } from '../utils/map';
+import { TColumnRowPair, getTileInfo } from '../utils/map';
 import { ITweenTarget } from './MoveEngine';
 
 /**
@@ -56,7 +56,7 @@ export class TileView extends Container {
      * Position of the tile in terms of column and row index.
      * @property {Boolean}
      */
-    public mapPos: ColumnRowPair;
+    public mapPos: TColumnRowPair;
 
     private onHighlightTweenEnd_binded: () => void;
 
@@ -75,8 +75,8 @@ export class TileView extends Container {
         this.engine = engine;
         this.type = type;
 
-        const halfHeight = this.engine.TILE_HALF_H;
-        const halfWidth = this.engine.TILE_HALF_W;
+        const halfHeight = this.engine.tileHalfHeight;
+        const halfWidth = this.engine.tileHalfWidth;
 
         this.vertices = [
             [-halfWidth, 0],

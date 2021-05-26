@@ -7,7 +7,7 @@ import { EngineView } from './EngineView';
 import { existy } from '../utils/calculations';
 import { Direction, DIRECTIONS } from '../utils/constants';
 import {
-    ColumnRowPair,
+    TColumnRowPair,
     ObjectInfoInteractionOffsets,
     ObjectInfoTextures,
     ObjectVisualKey,
@@ -77,7 +77,7 @@ export class ObjectView extends Container {
     public noTransparency: boolean;
     public isFloorObject: boolean;
 
-    public currentInteractionOffset: ColumnRowPair;
+    public currentInteractionOffset: TColumnRowPair;
 
     public currentDirection: Direction;
 
@@ -92,7 +92,7 @@ export class ObjectView extends Container {
      * Position of the object in terms of column and row index.
      * @property {Boolean}
      */
-    public mapPos: ColumnRowPair;
+    public mapPos: TColumnRowPair;
 
     private onContainerAnimCompleteCallback: (objectView: ObjectView) => unknown;
     private onContainerAnimComplete_delayed_binded: () => void;

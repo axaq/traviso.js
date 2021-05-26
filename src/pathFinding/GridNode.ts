@@ -1,11 +1,11 @@
-import { ColumnRowPair } from '../utils/map';
+import { TColumnRowPair } from '../utils/map';
 
 export class GridNode {
     public x: number;
     public y: number;
     public weight: number;
     public staticWeight: number;
-    public mapPos: ColumnRowPair;
+    public mapPos: TColumnRowPair;
     // calculation params
     public closed: boolean;
     public parent: GridNode;

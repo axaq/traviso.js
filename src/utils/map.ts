@@ -22,12 +22,24 @@ export type ObjectVisualKey =
     | 'move_e'
     | 'move_se'
     | string;
-export type ColumnRowPair = { c: number; r: number };
-export type PositionPair = { x: number; y: number };
+/** Type declaration for column-row pair objects */
+export type TColumnRowPair = {
+    /** column index of the column-row pair */
+    c: number; 
+    /** row index of the column-row pair */
+    r: number 
+};
+/** Type declaration for x-y position pair objects */
+export type TPositionPair = {
+    /** x position of the pair */
+    x: number; 
+    /** y position of the pair */
+    y: number
+};
 export type ObjectInfoTextures = { [key in ObjectVisualKey]: Texture[] };
 export type ObjectInfoTextureNames = { [key in ObjectVisualKey]: string[] };
 export type ObjectInfoInteractionOffsets = {
-    [key in ObjectVisualKey]: ColumnRowPair;
+    [key in ObjectVisualKey]: TColumnRowPair;
 };
 
 export type TileInfo = {
@@ -81,7 +93,8 @@ export type MapDataObjects = {
     [key: string]: IMapDataObject;
 };
 
-export type MapData = {
+/** Type declaration for processed map data */
+export type TMapData = {
     tiles: MapDataTiles;
     objects: MapDataObjects;
     initialControllableLocation: {
