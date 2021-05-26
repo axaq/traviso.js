@@ -1,40 +1,55 @@
 import { ObjectVisualKey } from './map';
 
-export type Direction = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
-export type Directions = {
-    O: Direction;
-    S: Direction;
-    SW: Direction;
-    W: Direction;
-    NW: Direction;
-    N: Direction;
-    NE: Direction;
-    E: Direction;
-    SE: Direction;
+export type TDirection = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
+/** Type declaration for reserved direction IDs */
+export type TDirections = {
+    /** idle, no direction */
+    O: 0;
+    /** south */
+    S: 1;
+    /** south-west */
+    SW: 2;
+    /** west */
+    W: 3;
+    /** north-west */
+    NW: 4;
+    /** north */
+    N: 5;
+    /** north-east */
+    NE: 6;
+    /** east */
+    E: 7;
+    /** south-east */
+    SE: 8;
 };
 
 // export type Traviso = {
-//     DIRECTIONS: Directions,
+//     DIRECTIONS: TDirections,
 
 // }
 
 /**
  * The direction IDs to be used in the engine
  *
- * @property {Object} DIRECTIONS
- * @property {Number} DIRECTIONS.O=0 idle no direction
- * @property {Number} DIRECTIONS.S=1 south
- * @property {Number} DIRECTIONS.SW=2 south west
- * @property {Number} DIRECTIONS.W=3 west
- * @property {Number} DIRECTIONS.NW=4 north west
- * @property {Number} DIRECTIONS.N=5 north
- * @property {Number} DIRECTIONS.NE=6 north east
- * @property {Number} DIRECTIONS.E=7 east
- * @property {Number} DIRECTIONS.SE=8 south east
- * @protected
+ * @memberof TRAVISO
+ * @for TRAVISO
+ *
  * @static
+ * @protected
+ * @constant
+ * @property
+ *
+ * @property {TDirection} DIRECTIONS.O=0 idle, no direction
+ * @property {TDirection} DIRECTIONS.S=1 south
+ * @property {TDirection} DIRECTIONS.SW=2 south west
+ * @property {TDirection} DIRECTIONS.W=3 west
+ * @property {TDirection} DIRECTIONS.NW=4 north west
+ * @property {TDirection} DIRECTIONS.N=5 north
+ * @property {TDirection} DIRECTIONS.NE=6 north east
+ * @property {TDirection} DIRECTIONS.E=7 east
+ * @property {TDirection} DIRECTIONS.SE=8 south east
  */
-export const DIRECTIONS: Directions = {
+export const DIRECTIONS: TDirections = {
     O: 0,
     S: 1,
     SW: 2,
@@ -46,13 +61,17 @@ export const DIRECTIONS: Directions = {
     SE: 8,
 };
 
-export type ReservedTextureIDs = ObjectVisualKey[];
+export type TReservedTextureIDs = ObjectVisualKey[];
 /**
- * @property {Array} RESERVED_TEXTURE_IDS
- * @protected
+ * Texture IDs reserved for internal use
+ *
  * @static
+ * @protected
+ * @constant
+ * @property
+ * @internal
  */
-export const RESERVED_TEXTURE_IDS: ReservedTextureIDs = [
+export const RESERVED_TEXTURE_IDS: TReservedTextureIDs = [
     'idle',
     'idle_s',
     'idle_sw',
@@ -72,16 +91,23 @@ export const RESERVED_TEXTURE_IDS: ReservedTextureIDs = [
     'move_se',
 ];
 
+/** Type declaration for the IDs of available path finding algorithms */
+export type TPathFindingAlgorithmID = 0 | 1;
+/** Type declaration for available path finding algorithms */
+export type TPathFindingAlgorithms = {
+    ASTAR_ORTHOGONAL: TPathFindingAlgorithmID,
+    ASTAR_DIAGONAL: TPathFindingAlgorithmID,
+};
 /**
  * The types of available path finding algorithms
  *
- * @property {Object} PF_ALGORITHMS
- * @property {Number} PF_ALGORITHMS.ASTAR_ORTHOGONAL=0
- * @property {Number} PF_ALGORITHMS.ASTAR_DIAGONAL=1
- * @protected
  * @static
+ * @protected
+ * @constant
+ * @property
+ * @public
  */
-export const PF_ALGORITHMS = {
+export const PF_ALGORITHMS: TPathFindingAlgorithms = {
     ASTAR_ORTHOGONAL: 0,
     ASTAR_DIAGONAL: 1,
 };

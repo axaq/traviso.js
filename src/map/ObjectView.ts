@@ -5,7 +5,7 @@
 import { Container, AnimatedSprite } from 'pixi.js';
 import { EngineView } from './EngineView';
 import { existy } from '../utils/calculations';
-import { Direction, DIRECTIONS } from '../utils/constants';
+import { TDirection, DIRECTIONS } from '../utils/constants';
 import {
     TColumnRowPair,
     ObjectInfoInteractionOffsets,
@@ -79,7 +79,7 @@ export class ObjectView extends Container {
 
     public currentInteractionOffset: TColumnRowPair;
 
-    public currentDirection: Direction;
+    public currentDirection: TDirection;
 
     /**
      * Defines if the map-object is movable onto by other map-objects.
@@ -154,7 +154,7 @@ export class ObjectView extends Container {
      * Changes the map-object's texture(s) according to the specified direction-id and the state of the map-object (moving or stationary).
      *
      * @method changeVisualToDirection
-     * @param direction {Number} direction-id as defined in 'TRAVISO.DIRECTIONS'
+     * @param direction {TDirection} direction-id as defined in `TRAVISO.DIRECTIONS`
      * @param [moving=false] {Boolean} if the requested visuals are for moving or stationary state
      * @param [stopOnFirstFrame=false] {Boolean} if true stops on the first frame after changing the visuals
      * @param [noLoop=false] {Boolean} if true the animation will not loop after the first run
@@ -162,7 +162,7 @@ export class ObjectView extends Container {
      * @param [animSpeed=null] {Number} animation speed for the animated visuals, stays the same if not defined
      */
     public changeVisualToDirection(
-        direction: Direction,
+        direction: TDirection,
         moving: boolean = false,
         stopOnFirstFrame: boolean = false,
         noLoop: boolean = false,

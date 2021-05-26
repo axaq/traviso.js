@@ -1,6 +1,6 @@
 import { Texture } from 'pixi.js';
 import { EngineView } from '../map/EngineView';
-import { Direction, DIRECTIONS, RESERVED_TEXTURE_IDS } from './constants';
+import { TDirection, DIRECTIONS, RESERVED_TEXTURE_IDS } from './constants';
 import { trace } from './trace';
 
 export type ObjectVisualKey =
@@ -42,7 +42,7 @@ export type ObjectInfoInteractionOffsets = {
     [key in ObjectVisualKey]: TColumnRowPair;
 };
 
-export type TileInfo = {
+export type TTileInfo = {
     m: boolean;
     t: Texture[];
 };
@@ -89,14 +89,14 @@ export interface IMapDataObject extends IObjectInfo {
     id: string;
     textureNames: ObjectInfoTextureNames;
 }
-export type MapDataObjects = {
+export type TMapDataObjects = {
     [key: string]: IMapDataObject;
 };
 
 /** Type declaration for processed map data */
 export type TMapData = {
     tiles: MapDataTiles;
-    objects: MapDataObjects;
+    objects: TMapDataObjects;
     initialControllableLocation: {
         columnIndex: number;
         rowIndex: number;
@@ -185,15 +185,15 @@ export const getObjectTextures = (engine: EngineView, objectType: string, visual
 /**
  * Returns an object with all properties of a map-tile defined by tileType
  *
- * @function getTileInfo
- * @memberof TRAVISO
+ * @method
+ * @function
  * @static
- * @private
+ * 
  * @param engine {EngineView} engine instance
- * @param tileType {String} type/id of the related tile tag defined in the json file
- * @return {Object} an object with all properties of a map-tile
+ * @param tileType {string} type/id of the related tile tag defined in the json file
+ * @return {TTileInfo} an information object with certain properties (movability and textures) of a map-tile
  */
-export const getTileInfo = (engine: EngineView, tileType: string): TileInfo => {
+export const getTileInfo = (engine: EngineView, tileType: string): TTileInfo => {
     const tileInfo = engine.mapData.tiles[tileType];
     if (tileInfo) {
         return {
@@ -213,29 +213,29 @@ export const getTileInfo = (engine: EngineView, tileType: string): TileInfo => {
 
 /**
  * Returns the predefined moving texture id for the given direction
- *
- * @function getMovingDirVisualId
- * @memberof TRAVISO
+ * 
+ * @method
+ * @function
  * @static
- * @private
- * @param dir {Number} index of the direction
- * @return {String} texture id for the given direction
+ * 
+ * @param dir {TDirection} index of the direction
+ * @return {ObjectVisualKey} texture id for the given direction
  */
-export const getMovingDirVisualId = (dir: Direction): ObjectVisualKey => {
+export const getMovingDirVisualId = (dir: TDirection): ObjectVisualKey => {
     return RESERVED_TEXTURE_IDS[dir + 8];
 };
 
 /**
  * Returns the predefined stationary texture id for the given direction
  *
- * @function getStationaryDirVisualId
- * @memberof TRAVISO
+ * @method
+ * @function
  * @static
- * @private
- * @param dir {Number} index of the direction
- * @return {String} texture id for the given direction
+ * 
+ * @param dir {TDirection} index of the direction
+ * @return {ObjectVisualKey} texture id for the given direction
  */
-export const getStationaryDirVisualId = (dir: Direction): ObjectVisualKey => {
+export const getStationaryDirVisualId = (dir: TDirection): ObjectVisualKey => {
     return RESERVED_TEXTURE_IDS[dir];
 };
 
@@ -246,14 +246,14 @@ export const getStationaryDirVisualId = (dir: Direction): ObjectVisualKey => {
  * @memberof TRAVISO
  * @static
  * @private
- * @param r1 {Number} row index of the first location
- * @param c1 {Number} column index of the first location
- * @param r2 {Number} row index of the second location
- * @param c2 {Number} column index of the second location
- * @return {Number} direction id
+ * @param r1 {number} row index of the first location
+ * @param c1 {number} column index of the first location
+ * @param r2 {number} row index of the second location
+ * @param c2 {number} column index of the second location
+ * @return {TDirection} direction id
  */
-export const getDirBetween = (r1: number, c1: number, r2: number, c2: number): Direction => {
-    let dir = DIRECTIONS.S;
+export const getDirBetween = (r1: number, c1: number, r2: number, c2: number): TDirection => {
+    let dir: TDirection = DIRECTIONS.S;
     if (r1 === r2) {
         if (c1 === c2) {
             dir = DIRECTIONS.O;

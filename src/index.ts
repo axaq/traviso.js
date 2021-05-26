@@ -7,8 +7,8 @@ import { VERSION } from './version';
  * Type declaration for global traviso configuration.
  */
 export type TTravisoConfiguration = {
-    /** 
-     * Determines if TRAVISO can log helper text. 
+    /**
+     * Determines if TRAVISO can log helper text.
      * @default false
      */
     logEnabled: boolean;
@@ -24,6 +24,14 @@ export * from './map/EngineView';
 export { TileView } from './map/TileView';
 export * from './utils/hello';
 export * from './utils/trace';
+export {
+    TDirection,
+    TDirections,
+    DIRECTIONS,
+    PF_ALGORITHMS,
+    TPathFindingAlgorithms,
+    TPathFindingAlgorithmID,
+} from './utils/constants';
 export { TColumnRowPair, TPositionPair } from './utils/map';
 
 /**
@@ -52,7 +60,7 @@ let isReady: boolean = false;
  * @method
  * @function
  * @internal
- * 
+ *
  * @param globalConfig {TTravisoConfiguration} configuration object for the traviso engine
  */
 const init = (globalConfig: TTravisoConfiguration): void => {
@@ -78,15 +86,15 @@ const init = (globalConfig: TTravisoConfiguration): void => {
  *
  * @memberof TRAVISO
  * @for TRAVISO
- * 
+ *
  * @method
  * @function
  * @public
  * @static
- * 
+ *
  * @param instanceConfig {TEngineConfiguration} Configuration object for the isometric instance, required
  * @param globalConfig {TTravisoConfiguration} Configuration object for the traviso engine, default null
- * 
+ *
  * @returns {EngineView} A new instance of the isometric engine
  */
 export const getEngineInstance = (

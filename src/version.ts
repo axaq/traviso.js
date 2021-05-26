@@ -1,11 +1,13 @@
 /**
  * String of the current TRAVISO version.
  *
- * @static
- * @constant
  * @memberof TRAVISO
- * @name VERSION
- * @type {string}
+ * @for TRAVISO
+ * 
+ * @static
+ * @protected
+ * @constant
+ * @property
  */
 
 export const VERSION: string = '$_VERSION';

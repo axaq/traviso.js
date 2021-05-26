@@ -2709,13 +2709,13 @@ img {
 					<a href="engineview.html#constructor" class="tsd-kind-icon">constructor</a>
 				</li>
 				<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a href="engineview.html#_config" class="tsd-kind-icon">_config</a>
+				</li>
+				<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
 					<a href="engineview.html#_currentscale" class="tsd-kind-icon">_current<wbr>Scale</a>
 				</li>
 				<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
 					<a href="engineview.html#bg" class="tsd-kind-icon">bg</a>
-				</li>
-				<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-					<a href="engineview.html#config" class="tsd-kind-icon">config</a>
 				</li>
 				<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
 					<a href="engineview.html#currentcontrollable" class="tsd-kind-icon">current<wbr>Controllable</a>
@@ -3062,7 +3062,19 @@ img {
 			<a href="../modules.html#tcolumnrowpair" class="tsd-kind-icon">TColumn<wbr>Row<wbr>Pair</a>
 		</li>
 		<li class=" tsd-kind-type-alias">
+			<a href="../modules.html#tdirection" class="tsd-kind-icon">TDirection</a>
+		</li>
+		<li class=" tsd-kind-type-alias">
+			<a href="../modules.html#tdirections" class="tsd-kind-icon">TDirections</a>
+		</li>
+		<li class=" tsd-kind-type-alias">
 			<a href="../modules.html#tengineconfiguration" class="tsd-kind-icon">TEngine<wbr>Configuration</a>
+		</li>
+		<li class=" tsd-kind-type-alias">
+			<a href="../modules.html#tpathfindingalgorithmid" class="tsd-kind-icon">TPath<wbr>Finding<wbr>AlgorithmID</a>
+		</li>
+		<li class=" tsd-kind-type-alias">
+			<a href="../modules.html#tpathfindingalgorithms" class="tsd-kind-icon">TPath<wbr>Finding<wbr>Algorithms</a>
 		</li>
 		<li class=" tsd-kind-type-alias">
 			<a href="../modules.html#tpositionframe" class="tsd-kind-icon">TPosition<wbr>Frame</a>
@@ -3073,7 +3085,13 @@ img {
 		<li class=" tsd-kind-type-alias">
 			<a href="../modules.html#ttravisoconfiguration" class="tsd-kind-icon">TTraviso<wbr>Configuration</a>
 		</li>
+		<li class=" tsd-kind-variable tsd-is-protected">
+			<a href="../modules.html#directions" class="tsd-kind-icon">DIRECTIONS</a>
+		</li>
 		<li class=" tsd-kind-variable">
+			<a href="../modules.html#pf_algorithms" class="tsd-kind-icon">PF_<wbr>ALGORITHMS</a>
+		</li>
+		<li class=" tsd-kind-variable tsd-is-protected">
 			<a href="../modules.html#version" class="tsd-kind-icon">VERSION</a>
 		</li>
 		<li class=" tsd-kind-function">
@@ -3129,9 +3147,9 @@ img {
 					<section class="tsd-index-section ">
 						<h3>Properties</h3>
 						<ul class="tsd-index-list">
+							<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="engineview.html#_config" class="tsd-kind-icon">_config</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="engineview.html#_currentscale" class="tsd-kind-icon">_current<wbr>Scale</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="engineview.html#bg" class="tsd-kind-icon">bg</a></li>
-							<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="engineview.html#config" class="tsd-kind-icon">config</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="engineview.html#currentcontrollable" class="tsd-kind-icon">current<wbr>Controllable</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="engineview.html#currentfocuslocation" class="tsd-kind-icon">current<wbr>Focus<wbr>Location</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="engineview.html#currentzoom" class="tsd-kind-icon">current<wbr>Zoom</a></li>
@@ -3272,7 +3290,7 @@ img {
 						<aside class="tsd-sources">
 							<p>Overrides Container.constructor</p>
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L396">map/EngineView.ts:396</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L428">map/EngineView.ts:428</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -3298,12 +3316,33 @@ img {
 		<section class="tsd-panel-group tsd-member-group ">
 			<h2>Properties</h2>
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+				<a name="_config" class="tsd-anchor"></a>
+				<h3><span class="tsd-flag ts-flagPrivate">Private</span> _config</h3>
+				<div class="tsd-signature tsd-kind-icon">_config<span class="tsd-signature-symbol">:</span> <a href="../modules.html#tengineconfiguration" class="tsd-signature-type" data-tsd-kind="Type alias">TEngineConfiguration</a></div>
+				<aside class="tsd-sources">
+					<ul>
+						<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L224">map/EngineView.ts:224</a></li>
+					</ul>
+				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Internal property holding the engine configuration.</p>
+					</div>
+					<dl class="tsd-comment-tags">
+						<dt>property</dt>
+						<dd></dd>
+						<dt>internal</dt>
+						<dd></dd>
+					</dl>
+				</div>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
 				<a name="_currentscale" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagPrivate">Private</span> _current<wbr>Scale</h3>
 				<div class="tsd-signature tsd-kind-icon">_current<wbr>Scale<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L288">map/EngineView.ts:288</a></li>
+						<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L288">map/EngineView.ts:288</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -3324,32 +3363,12 @@ img {
 				<div class="tsd-signature tsd-kind-icon">bg<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Graphics</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L305">map/EngineView.ts:305</a></li>
+						<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L309">map/EngineView.ts:309</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
 						<p>Solid colored background</p>
-					</div>
-					<dl class="tsd-comment-tags">
-						<dt>property</dt>
-						<dd><p>{PIXI.Graphics} bg</p>
-						</dd>
-					</dl>
-				</div>
-			</section>
-			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
-				<a name="config" class="tsd-anchor"></a>
-				<h3><span class="tsd-flag ts-flagPrivate">Private</span> config</h3>
-				<div class="tsd-signature tsd-kind-icon">config<span class="tsd-signature-symbol">:</span> <a href="../modules.html#tengineconfiguration" class="tsd-signature-type" data-tsd-kind="Type alias">TEngineConfiguration</a></div>
-				<aside class="tsd-sources">
-					<ul>
-						<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L224">map/EngineView.ts:224</a></li>
-					</ul>
-				</aside>
-				<div class="tsd-comment tsd-typography">
-					<div class="lead">
-						<p>Internal property holding the engine configuration.</p>
 					</div>
 					<dl class="tsd-comment-tags">
 						<dt>property</dt>
@@ -3365,7 +3384,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">current<wbr>Controllable<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ObjectView</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L363">map/EngineView.ts:363</a></li>
+						<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L389">map/EngineView.ts:389</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -3374,8 +3393,9 @@ img {
 					</div>
 					<dl class="tsd-comment-tags">
 						<dt>property</dt>
-						<dd><p>{ObjectView} currentControllable</p>
-						</dd>
+						<dd></dd>
+						<dt>internal</dt>
+						<dd></dd>
 					</dl>
 				</div>
 			</section>
@@ -3385,7 +3405,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">current<wbr>Focus<wbr>Location<span class="tsd-signature-symbol">:</span> <a href="../modules.html#tcolumnrowpair" class="tsd-signature-type" data-tsd-kind="Type alias">TColumnRowPair</a></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L383">map/EngineView.ts:383</a></li>
+						<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L415">map/EngineView.ts:415</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -3395,7 +3415,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">current<wbr>Zoom<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L294">map/EngineView.ts:294</a></li>
+						<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L296">map/EngineView.ts:296</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -3404,8 +3424,9 @@ img {
 					</div>
 					<dl class="tsd-comment-tags">
 						<dt>property</dt>
-						<dd><p>{Number} currentZoom</p>
-						</dd>
+						<dd></dd>
+						<dt>internal</dt>
+						<dd></dd>
 					</dl>
 				</div>
 			</section>
@@ -3415,7 +3436,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">drag<wbr>Init<wbr>StartingX<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L389">map/EngineView.ts:389</a></li>
+						<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L421">map/EngineView.ts:421</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -3425,7 +3446,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">drag<wbr>Init<wbr>StartingY<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L390">map/EngineView.ts:390</a></li>
+						<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L422">map/EngineView.ts:422</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -3435,7 +3456,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">drag<wbr>Prev<wbr>StartingX<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L391">map/EngineView.ts:391</a></li>
+						<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L423">map/EngineView.ts:423</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -3445,7 +3466,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">drag<wbr>Prev<wbr>StartingY<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L392">map/EngineView.ts:392</a></li>
+						<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L424">map/EngineView.ts:424</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -3455,7 +3476,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">dragging<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = false</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L388">map/EngineView.ts:388</a></li>
+						<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L420">map/EngineView.ts:420</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -3465,7 +3486,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">external<wbr>Center<span class="tsd-signature-symbol">:</span> <a href="../modules.html#tpositionpair" class="tsd-signature-type" data-tsd-kind="Type alias">TPositionPair</a></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L298">map/EngineView.ts:298</a></li>
+						<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L300">map/EngineView.ts:300</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -3475,7 +3496,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">ground<wbr>Container<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Container</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L323">map/EngineView.ts:323</a></li>
+						<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L333">map/EngineView.ts:333</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -3484,8 +3505,9 @@ img {
 					</div>
 					<dl class="tsd-comment-tags">
 						<dt>property</dt>
-						<dd><p>{PIXI.Container} groundContainer</p>
-						</dd>
+						<dd></dd>
+						<dt>internal</dt>
+						<dd></dd>
 					</dl>
 				</div>
 			</section>
@@ -3495,7 +3517,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">map<wbr>Container<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Container</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L317">map/EngineView.ts:317</a></li>
+						<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L325">map/EngineView.ts:325</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -3504,8 +3526,9 @@ img {
 					</div>
 					<dl class="tsd-comment-tags">
 						<dt>property</dt>
-						<dd><p>{PIXI.Container} mapContainer</p>
-						</dd>
+						<dd></dd>
+						<dt>internal</dt>
+						<dd></dd>
 					</dl>
 				</div>
 			</section>
@@ -3515,7 +3538,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">map<wbr>Data<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">TMapData</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L272">map/EngineView.ts:272</a></li>
+						<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L272">map/EngineView.ts:272</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -3534,7 +3557,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">map<wbr>Mask<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Graphics</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L311">map/EngineView.ts:311</a></li>
+						<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L317">map/EngineView.ts:317</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -3543,8 +3566,9 @@ img {
 					</div>
 					<dl class="tsd-comment-tags">
 						<dt>property</dt>
-						<dd><p>{PIXI.Graphics} mapMask</p>
-						</dd>
+						<dd></dd>
+						<dt>internal</dt>
+						<dd></dd>
 					</dl>
 				</div>
 			</section>
@@ -3554,7 +3578,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">map<wbr>SizeC<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L339">map/EngineView.ts:339</a></li>
+						<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L357">map/EngineView.ts:357</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -3563,8 +3587,9 @@ img {
 					</div>
 					<dl class="tsd-comment-tags">
 						<dt>property</dt>
-						<dd><p>{Number} mapSizeC</p>
-						</dd>
+						<dd></dd>
+						<dt>internal</dt>
+						<dd></dd>
 					</dl>
 				</div>
 			</section>
@@ -3574,7 +3599,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">map<wbr>SizeR<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L334">map/EngineView.ts:334</a></li>
+						<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L349">map/EngineView.ts:349</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -3583,8 +3608,9 @@ img {
 					</div>
 					<dl class="tsd-comment-tags">
 						<dt>property</dt>
-						<dd><p>{Number} mapSizeR</p>
-						</dd>
+						<dd></dd>
+						<dt>internal</dt>
+						<dd></dd>
 					</dl>
 				</div>
 			</section>
@@ -3594,7 +3620,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">map<wbr>Vertices<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">[]</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L369">map/EngineView.ts:369</a></li>
+						<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L397">map/EngineView.ts:397</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -3603,8 +3629,9 @@ img {
 					</div>
 					<dl class="tsd-comment-tags">
 						<dt>property</dt>
-						<dd><p>{Array(Array(Number))} mapVertices</p>
-						</dd>
+						<dd></dd>
+						<dt>internal</dt>
+						<dd></dd>
 					</dl>
 				</div>
 			</section>
@@ -3614,7 +3641,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">map<wbr>Visual<wbr>Height<wbr>Real<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L381">map/EngineView.ts:381</a></li>
+						<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L413">map/EngineView.ts:413</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -3623,8 +3650,9 @@ img {
 					</div>
 					<dl class="tsd-comment-tags">
 						<dt>property</dt>
-						<dd><p>{Number} mapVisualHeightReal</p>
-						</dd>
+						<dd></dd>
+						<dt>internal</dt>
+						<dd></dd>
 					</dl>
 				</div>
 			</section>
@@ -3634,7 +3662,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">map<wbr>Visual<wbr>Width<wbr>Real<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L375">map/EngineView.ts:375</a></li>
+						<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L405">map/EngineView.ts:405</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -3643,8 +3671,9 @@ img {
 					</div>
 					<dl class="tsd-comment-tags">
 						<dt>property</dt>
-						<dd><p>{Number} mapVisualWidthReal</p>
-						</dd>
+						<dd></dd>
+						<dt>internal</dt>
+						<dd></dd>
 					</dl>
 				</div>
 			</section>
@@ -3654,7 +3683,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">map<wbr>Visual<wbr>Width<wbr>Scaled<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L385">map/EngineView.ts:385</a></li>
+						<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L417">map/EngineView.ts:417</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -3664,7 +3693,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">move<wbr>Engine<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">MoveEngine</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L280">map/EngineView.ts:280</a></li>
+						<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L280">map/EngineView.ts:280</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -3683,7 +3712,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">obj<wbr>Array<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ObjectView</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">[]</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L351">map/EngineView.ts:351</a></li>
+						<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L373">map/EngineView.ts:373</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -3692,8 +3721,9 @@ img {
 					</div>
 					<dl class="tsd-comment-tags">
 						<dt>property</dt>
-						<dd><p>{Array(Array(ObjectView))} objArray</p>
-						</dd>
+						<dd></dd>
+						<dt>internal</dt>
+						<dd></dd>
 					</dl>
 				</div>
 			</section>
@@ -3703,7 +3733,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">obj<wbr>Container<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Container</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L329">map/EngineView.ts:329</a></li>
+						<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L341">map/EngineView.ts:341</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -3712,8 +3742,9 @@ img {
 					</div>
 					<dl class="tsd-comment-tags">
 						<dt>property</dt>
-						<dd><p>{PIXI.Container} objContainer</p>
-						</dd>
+						<dd></dd>
+						<dt>internal</dt>
+						<dd></dd>
 					</dl>
 				</div>
 			</section>
@@ -3723,7 +3754,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">on<wbr>Mouse<wbr>Down_<wbr>binded<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">InteractionEvent</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L395">map/EngineView.ts:395</a></li>
+						<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L427">map/EngineView.ts:427</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-type-declaration">
@@ -3754,7 +3785,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">on<wbr>Mouse<wbr>Move_<wbr>binded<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">InteractionEvent</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L396">map/EngineView.ts:396</a></li>
+						<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L428">map/EngineView.ts:428</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-type-declaration">
@@ -3785,7 +3816,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">on<wbr>Mouse<wbr>Up_<wbr>binded<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">InteractionEvent</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L394">map/EngineView.ts:394</a></li>
+						<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L426">map/EngineView.ts:426</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-type-declaration">
@@ -3816,7 +3847,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">path<wbr>Finding<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">PathFinding</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L357">map/EngineView.ts:357</a></li>
+						<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L381">map/EngineView.ts:381</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -3825,8 +3856,9 @@ img {
 					</div>
 					<dl class="tsd-comment-tags">
 						<dt>property</dt>
-						<dd><p>{PathFinding} pathFinding</p>
-						</dd>
+						<dd></dd>
+						<dt>internal</dt>
+						<dd></dd>
 					</dl>
 				</div>
 			</section>
@@ -3836,7 +3868,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">pos<wbr>Frame<span class="tsd-signature-symbol">:</span> <a href="../modules.html#tpositionframe" class="tsd-signature-type" data-tsd-kind="Type alias">TPositionFrame</a><span class="tsd-signature-symbol"> = ...</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L296">map/EngineView.ts:296</a></li>
+						<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L298">map/EngineView.ts:298</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -3846,7 +3878,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">tile<wbr>Array<span class="tsd-signature-symbol">:</span> <a href="tileview.html" class="tsd-signature-type" data-tsd-kind="Class">TileView</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">[]</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L345">map/EngineView.ts:345</a></li>
+						<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L365">map/EngineView.ts:365</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -3855,8 +3887,9 @@ img {
 					</div>
 					<dl class="tsd-comment-tags">
 						<dt>property</dt>
-						<dd><p>{Array(Array(TileView))} tileArray</p>
-						</dd>
+						<dd></dd>
+						<dt>internal</dt>
+						<dd></dd>
 					</dl>
 				</div>
 			</section>
@@ -3866,7 +3899,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">tile<wbr>Half<wbr>Height<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L255">map/EngineView.ts:255</a></li>
+						<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L255">map/EngineView.ts:255</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -3888,7 +3921,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">tile<wbr>Half<wbr>Width<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L264">map/EngineView.ts:264</a></li>
+						<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L264">map/EngineView.ts:264</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -3910,7 +3943,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">DEFAULT_<wbr>ISO_<wbr>ANGLE<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 30</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L246">map/EngineView.ts:246</a></li>
+						<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L246">map/EngineView.ts:246</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -3936,7 +3969,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">DEFAULT_<wbr>TILE_<wbr>H<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 74</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L235">map/EngineView.ts:235</a></li>
+						<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L235">map/EngineView.ts:235</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -3970,7 +4003,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L2244">map/EngineView.ts:2244</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L2290">map/EngineView.ts:2290</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -3991,7 +4024,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L2247">map/EngineView.ts:2247</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L2293">map/EngineView.ts:2293</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -4020,18 +4053,17 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L2300">map/EngineView.ts:2300</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L2346">map/EngineView.ts:2346</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
 							<div class="lead">
-								<p>engine looks for a path every time an object moves to a new tile on the path
+								<p>Engine looks for a path every time an object moves to a new tile on the path
 								(set to false if you don&#39;t have moving objects other then your controllable on your map)</p>
 							</div>
 							<dl class="tsd-comment-tags">
 								<dt>property</dt>
-								<dd><p>{Boolean} checkPathOnEachTile</p>
-								</dd>
+								<dd></dd>
 								<dt>default</dt>
 								<dd><p>true</p>
 								</dd>
@@ -4042,12 +4074,12 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L2303">map/EngineView.ts:2303</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L2349">map/EngineView.ts:2349</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
 							<div class="lead">
-								<p>engine looks for a path every time an object moves to a new tile on the path
+								<p>Engine looks for a path every time an object moves to a new tile on the path
 								(set to false if you don&#39;t have moving objects other then your controllable on your map)</p>
 							</div>
 						</div>
@@ -4072,12 +4104,12 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L2288">map/EngineView.ts:2288</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L2334">map/EngineView.ts:2334</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
 							<div class="lead">
-								<p>when a tile selected don&#39;t move the controllable immediately but still call &#39;tileSelectCallback&#39;</p>
+								<p>When a tile selected don&#39;t move the controllable immediately but still call &#39;tileSelectCallback&#39;</p>
 							</div>
 							<dl class="tsd-comment-tags">
 								<dt>member</dt>
@@ -4093,12 +4125,12 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L2291">map/EngineView.ts:2291</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L2337">map/EngineView.ts:2337</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
 							<div class="lead">
-								<p>when a tile selected don&#39;t move the controllable immediately but still call &#39;tileSelectCallback&#39;</p>
+								<p>When a tile selected don&#39;t move the controllable immediately but still call &#39;tileSelectCallback&#39;</p>
 							</div>
 						</div>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -4122,7 +4154,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L2322">map/EngineView.ts:2322</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L2368">map/EngineView.ts:2368</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -4161,7 +4193,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L2325">map/EngineView.ts:2325</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L2371">map/EngineView.ts:2371</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -4208,7 +4240,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L2211">map/EngineView.ts:2211</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L2257">map/EngineView.ts:2257</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -4229,7 +4261,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L2214">map/EngineView.ts:2214</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L2260">map/EngineView.ts:2260</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -4258,7 +4290,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L2255">map/EngineView.ts:2255</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L2301">map/EngineView.ts:2301</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -4279,7 +4311,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L2258">map/EngineView.ts:2258</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L2304">map/EngineView.ts:2304</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -4308,12 +4340,12 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L2266">map/EngineView.ts:2266</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L2312">map/EngineView.ts:2312</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
 							<div class="lead">
-								<p>highlight the target tile when the current controllable moves on the map</p>
+								<p>Highlight the target tile when the current controllable moves on the map</p>
 							</div>
 							<dl class="tsd-comment-tags">
 								<dt>member</dt>
@@ -4329,12 +4361,12 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L2269">map/EngineView.ts:2269</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L2315">map/EngineView.ts:2315</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
 							<div class="lead">
-								<p>highlight the target tile when the current controllable moves on the map</p>
+								<p>Highlight the target tile when the current controllable moves on the map</p>
 							</div>
 						</div>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -4358,7 +4390,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L2222">map/EngineView.ts:2222</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L2268">map/EngineView.ts:2268</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -4379,7 +4411,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L2225">map/EngineView.ts:2225</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L2271">map/EngineView.ts:2271</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -4408,7 +4440,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L2200">map/EngineView.ts:2200</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L2246">map/EngineView.ts:2246</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -4429,7 +4461,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L2203">map/EngineView.ts:2203</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L2249">map/EngineView.ts:2249</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -4458,7 +4490,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L2233">map/EngineView.ts:2233</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L2279">map/EngineView.ts:2279</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -4479,7 +4511,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L2236">map/EngineView.ts:2236</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L2282">map/EngineView.ts:2282</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -4508,7 +4540,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L2311">map/EngineView.ts:2311</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L2357">map/EngineView.ts:2357</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -4529,7 +4561,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L2314">map/EngineView.ts:2314</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L2360">map/EngineView.ts:2360</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -4558,7 +4590,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L2355">map/EngineView.ts:2355</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L2401">map/EngineView.ts:2401</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -4597,7 +4629,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L2358">map/EngineView.ts:2358</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L2404">map/EngineView.ts:2404</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -4644,7 +4676,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L2344">map/EngineView.ts:2344</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L2390">map/EngineView.ts:2390</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -4683,7 +4715,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L2347">map/EngineView.ts:2347</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L2393">map/EngineView.ts:2393</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -4730,7 +4762,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L2382">map/EngineView.ts:2382</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L2428">map/EngineView.ts:2428</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -4769,7 +4801,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L2385">map/EngineView.ts:2385</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L2431">map/EngineView.ts:2431</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -4816,7 +4848,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L2366">map/EngineView.ts:2366</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L2412">map/EngineView.ts:2412</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -4858,7 +4890,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L2372">map/EngineView.ts:2372</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L2418">map/EngineView.ts:2418</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -4908,7 +4940,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L2277">map/EngineView.ts:2277</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L2323">map/EngineView.ts:2323</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -4929,7 +4961,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L2280">map/EngineView.ts:2280</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L2326">map/EngineView.ts:2326</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -4958,7 +4990,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L2415">map/EngineView.ts:2415</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L2461">map/EngineView.ts:2461</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -4979,7 +5011,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L2418">map/EngineView.ts:2418</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L2464">map/EngineView.ts:2464</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -5008,7 +5040,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L2426">map/EngineView.ts:2426</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L2472">map/EngineView.ts:2472</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -5029,7 +5061,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L2429">map/EngineView.ts:2429</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L2475">map/EngineView.ts:2475</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -5058,7 +5090,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L2393">map/EngineView.ts:2393</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L2439">map/EngineView.ts:2439</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -5079,7 +5111,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L2396">map/EngineView.ts:2396</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L2442">map/EngineView.ts:2442</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -5108,7 +5140,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L2404">map/EngineView.ts:2404</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L2450">map/EngineView.ts:2450</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -5129,7 +5161,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L2407">map/EngineView.ts:2407</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L2453">map/EngineView.ts:2453</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -5158,7 +5190,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L2333">map/EngineView.ts:2333</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L2379">map/EngineView.ts:2379</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -5200,7 +5232,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L2336">map/EngineView.ts:2336</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L2382">map/EngineView.ts:2382</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -5252,7 +5284,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L1009">map/EngineView.ts:1009</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L1041">map/EngineView.ts:1041</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -5298,7 +5330,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L1308">map/EngineView.ts:1308</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L1352">map/EngineView.ts:1352</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -5309,8 +5341,9 @@ img {
 							</div>
 							<dl class="tsd-comment-tags">
 								<dt>method</dt>
-								<dd><p>addObjRefToLocation</p>
-								</dd>
+								<dd></dd>
+								<dt>function</dt>
+								<dd></dd>
 							</dl>
 						</div>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -5324,7 +5357,7 @@ img {
 							<li>
 								<h5>pos: <a href="../modules.html#tcolumnrowpair" class="tsd-signature-type" data-tsd-kind="Type alias">TColumnRowPair</a></h5>
 								<div class="tsd-comment tsd-typography">
-									<p>object including r and c coordinates</p>
+									<p>position object including row and column coordinates</p>
 								</div>
 							</li>
 						</ul>
@@ -5342,7 +5375,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L1328">map/EngineView.ts:1328</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L1372">map/EngineView.ts:1372</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -5352,8 +5385,9 @@ img {
 							</div>
 							<dl class="tsd-comment-tags">
 								<dt>method</dt>
-								<dd><p>addObjRefToSingleLocation</p>
-								</dd>
+								<dd></dd>
+								<dt>function</dt>
+								<dd></dd>
 							</dl>
 						</div>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -5367,7 +5401,7 @@ img {
 							<li>
 								<h5>pos: <a href="../modules.html#tcolumnrowpair" class="tsd-signature-type" data-tsd-kind="Type alias">TColumnRowPair</a></h5>
 								<div class="tsd-comment tsd-typography">
-									<p>object including r and c coordinates</p>
+									<p>position object including row and column coordinates</p>
 								</div>
 							</li>
 						</ul>
@@ -5385,7 +5419,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L980">map/EngineView.ts:980</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L1012">map/EngineView.ts:1012</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -5429,7 +5463,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L1518">map/EngineView.ts:1518</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L1561">map/EngineView.ts:1561</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -5438,8 +5472,11 @@ img {
 							</div>
 							<dl class="tsd-comment-tags">
 								<dt>method</dt>
-								<dd><p>arrangeDepthsFromLocation</p>
-								</dd>
+								<dd></dd>
+								<dt>function</dt>
+								<dd></dd>
+								<dt>internal</dt>
+								<dd></dd>
 							</dl>
 						</div>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -5447,7 +5484,7 @@ img {
 							<li>
 								<h5>pos: <a href="../modules.html#tcolumnrowpair" class="tsd-signature-type" data-tsd-kind="Type alias">TColumnRowPair</a></h5>
 								<div class="tsd-comment tsd-typography">
-									<p>location object including the map coordinates</p>
+									<p>position object including row and column coordinates</p>
 								</div>
 							</li>
 						</ul>
@@ -5465,7 +5502,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L1443">map/EngineView.ts:1443</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L1486">map/EngineView.ts:1486</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -5474,8 +5511,11 @@ img {
 							</div>
 							<dl class="tsd-comment-tags">
 								<dt>method</dt>
-								<dd><p>arrangeObjLocation</p>
-								</dd>
+								<dd></dd>
+								<dt>function</dt>
+								<dd></dd>
+								<dt>internal</dt>
+								<dd></dd>
 							</dl>
 						</div>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -5489,7 +5529,7 @@ img {
 							<li>
 								<h5>pos: <a href="../modules.html#tcolumnrowpair" class="tsd-signature-type" data-tsd-kind="Type alias">TColumnRowPair</a></h5>
 								<div class="tsd-comment tsd-typography">
-									<p>object including r and c coordinates</p>
+									<p>position object including row and column coordinates</p>
 								</div>
 							</li>
 						</ul>
@@ -5507,7 +5547,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L1463">map/EngineView.ts:1463</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L1505">map/EngineView.ts:1505</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -5517,8 +5557,11 @@ img {
 							</div>
 							<dl class="tsd-comment-tags">
 								<dt>method</dt>
-								<dd><p>arrangeObjTransparencies</p>
-								</dd>
+								<dd></dd>
+								<dt>function</dt>
+								<dd></dd>
+								<dt>internal</dt>
+								<dd></dd>
 							</dl>
 						</div>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -5532,13 +5575,13 @@ img {
 							<li>
 								<h5>prevPos: <a href="../modules.html#tcolumnrowpair" class="tsd-signature-type" data-tsd-kind="Type alias">TColumnRowPair</a></h5>
 								<div class="tsd-comment tsd-typography">
-									<p>previous location of the map-object</p>
+									<p>previous location of the map-object in terms of row and column coordinates</p>
 								</div>
 							</li>
 							<li>
 								<h5>pos: <a href="../modules.html#tcolumnrowpair" class="tsd-signature-type" data-tsd-kind="Type alias">TColumnRowPair</a></h5>
 								<div class="tsd-comment tsd-typography">
-									<p>new location of the map-object</p>
+									<p>new location of the map-object in terms of row and column coordinates</p>
 								</div>
 							</li>
 						</ul>
@@ -5556,7 +5599,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L1541">map/EngineView.ts:1541</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L1587">map/EngineView.ts:1587</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -5565,14 +5608,20 @@ img {
 							</div>
 							<dl class="tsd-comment-tags">
 								<dt>method</dt>
-								<dd><p>arrangePathHighlight</p>
-								</dd>
+								<dd></dd>
+								<dt>function</dt>
+								<dd></dd>
+								<dt>internal</dt>
+								<dd></dd>
 							</dl>
 						</div>
 						<h4 class="tsd-parameters-title">Parameters</h4>
 						<ul class="tsd-parameters">
 							<li>
 								<h5>currentPath: <span class="tsd-signature-type">GridNode</span><span class="tsd-signature-symbol">[]</span></h5>
+								<div class="tsd-comment tsd-typography">
+									<p>the old path to clear the highlight from</p>
+								</div>
 							</li>
 							<li>
 								<h5>newPath: <span class="tsd-signature-type">GridNode</span><span class="tsd-signature-symbol">[]</span></h5>
@@ -5595,7 +5644,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L502">map/EngineView.ts:502</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L534">map/EngineView.ts:534</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -5616,7 +5665,7 @@ img {
 							<li>
 								<h5>loader: <span class="tsd-signature-type">Loader</span></h5>
 								<div class="tsd-comment tsd-typography">
-									<p>engine instance</p>
+									<p>PIXI&#39;s loader instance</p>
 								</div>
 							</li>
 						</ul>
@@ -5634,7 +5683,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L1103">map/EngineView.ts:1103</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L1138">map/EngineView.ts:1138</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -5644,14 +5693,18 @@ img {
 							</div>
 							<dl class="tsd-comment-tags">
 								<dt>method</dt>
-								<dd><p>centralizeToCurrentExternalCenter</p>
-								</dd>
+								<dd></dd>
+								<dt>function</dt>
+								<dd></dd>
 							</dl>
 						</div>
 						<h4 class="tsd-parameters-title">Parameters</h4>
 						<ul class="tsd-parameters">
 							<li>
 								<h5>instantRelocate: <span class="tsd-signature-type">boolean</span></h5>
+								<div class="tsd-comment tsd-typography">
+									<p>specifies if the camera move will be animated or instant</p>
+								</div>
 							</li>
 						</ul>
 						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -5668,7 +5721,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L1093">map/EngineView.ts:1093</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L1125">map/EngineView.ts:1125</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -5701,7 +5754,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L1080">map/EngineView.ts:1080</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L1112">map/EngineView.ts:1112</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -5746,7 +5799,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L1069">map/EngineView.ts:1069</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L1101">map/EngineView.ts:1101</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -5782,7 +5835,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L1120">map/EngineView.ts:1120</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L1158">map/EngineView.ts:1158</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -5791,8 +5844,9 @@ img {
 							</div>
 							<dl class="tsd-comment-tags">
 								<dt>method</dt>
-								<dd><p>centralizeToPoint</p>
-								</dd>
+								<dd></dd>
+								<dt>function</dt>
+								<dd></dd>
 							</dl>
 						</div>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -5811,6 +5865,9 @@ img {
 							</li>
 							<li>
 								<h5>instantRelocate: <span class="tsd-signature-type">boolean</span></h5>
+								<div class="tsd-comment tsd-typography">
+									<p>specifies if the relocation will be animated or instant</p>
+								</div>
 							</li>
 						</ul>
 						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -5827,7 +5884,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L1419">map/EngineView.ts:1419</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L1461">map/EngineView.ts:1461</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -5851,7 +5908,7 @@ img {
 							<li>
 								<h5>pos: <a href="../modules.html#tcolumnrowpair" class="tsd-signature-type" data-tsd-kind="Type alias">TColumnRowPair</a></h5>
 								<div class="tsd-comment tsd-typography">
-									<p>object including r and c coordinates</p>
+									<p>position object including row and column coordinates</p>
 								</div>
 							</li>
 						</ul>
@@ -5869,7 +5926,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L1812">map/EngineView.ts:1812</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L1858">map/EngineView.ts:1858</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -5915,7 +5972,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L1792">map/EngineView.ts:1792</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L1838">map/EngineView.ts:1838</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -5961,7 +6018,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L1709">map/EngineView.ts:1709</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L1755">map/EngineView.ts:1755</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -5984,7 +6041,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L1726">map/EngineView.ts:1726</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L1772">map/EngineView.ts:1772</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -6007,7 +6064,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L1955">map/EngineView.ts:1955</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L2001">map/EngineView.ts:2001</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -6044,7 +6101,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L966">map/EngineView.ts:966</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L998">map/EngineView.ts:998</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -6088,7 +6145,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L687">map/EngineView.ts:687</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L719">map/EngineView.ts:719</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -6119,7 +6176,7 @@ img {
 						<aside class="tsd-sources">
 							<p>Overrides Container.destroy</p>
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L2133">map/EngineView.ts:2133</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L2179">map/EngineView.ts:2179</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -6147,7 +6204,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L2020">map/EngineView.ts:2020</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L2066">map/EngineView.ts:2066</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -6174,7 +6231,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L2004">map/EngineView.ts:2004</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L2050">map/EngineView.ts:2050</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -6201,7 +6258,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L1055">map/EngineView.ts:1055</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L1087">map/EngineView.ts:1087</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -6249,7 +6306,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L1044">map/EngineView.ts:1044</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L1076">map/EngineView.ts:1076</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -6285,7 +6342,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L1279">map/EngineView.ts:1279</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L1323">map/EngineView.ts:1323</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -6313,7 +6370,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L951">map/EngineView.ts:951</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L983">map/EngineView.ts:983</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -6351,7 +6408,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L938">map/EngineView.ts:938</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L970">map/EngineView.ts:970</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -6395,7 +6452,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L1769">map/EngineView.ts:1769</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L1815">map/EngineView.ts:1815</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -6438,7 +6495,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L924">map/EngineView.ts:924</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L956">map/EngineView.ts:956</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -6482,7 +6539,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L1920">map/EngineView.ts:1920</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L1966">map/EngineView.ts:1966</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -6520,7 +6577,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L870">map/EngineView.ts:870</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L902">map/EngineView.ts:902</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -6564,7 +6621,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L885">map/EngineView.ts:885</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L917">map/EngineView.ts:917</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -6608,7 +6665,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L2042">map/EngineView.ts:2042</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L2088">map/EngineView.ts:2088</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -6645,7 +6702,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L471">map/EngineView.ts:471</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L503">map/EngineView.ts:503</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -6675,7 +6732,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L1832">map/EngineView.ts:1832</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L1878">map/EngineView.ts:1878</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -6715,7 +6772,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L1851">map/EngineView.ts:1851</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L1897">map/EngineView.ts:1897</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -6755,7 +6812,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L1587">map/EngineView.ts:1587</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L1633">map/EngineView.ts:1633</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -6800,7 +6857,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L648">map/EngineView.ts:648</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L680">map/EngineView.ts:680</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -6831,7 +6888,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L2056">map/EngineView.ts:2056</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L2102">map/EngineView.ts:2102</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -6854,7 +6911,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L2065">map/EngineView.ts:2065</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L2111">map/EngineView.ts:2111</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -6877,7 +6934,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L2074">map/EngineView.ts:2074</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L2120">map/EngineView.ts:2120</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -6900,7 +6957,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L1628">map/EngineView.ts:1628</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L1674">map/EngineView.ts:1674</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -6943,7 +7000,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L1676">map/EngineView.ts:1676</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L1722">map/EngineView.ts:1722</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -6979,7 +7036,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L1355">map/EngineView.ts:1355</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L1399">map/EngineView.ts:1399</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -6990,8 +7047,9 @@ img {
 							</div>
 							<dl class="tsd-comment-tags">
 								<dt>method</dt>
-								<dd><p>removeObjRefFromLocation</p>
-								</dd>
+								<dd></dd>
+								<dt>function</dt>
+								<dd></dd>
 							</dl>
 						</div>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -7005,7 +7063,7 @@ img {
 							<li>
 								<h5>pos: <a href="../modules.html#tcolumnrowpair" class="tsd-signature-type" data-tsd-kind="Type alias">TColumnRowPair</a></h5>
 								<div class="tsd-comment tsd-typography">
-									<p>object including r and c coordinates</p>
+									<p>position object including row and column coordinates</p>
 								</div>
 							</li>
 						</ul>
@@ -7023,7 +7081,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L1374">map/EngineView.ts:1374</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L1418">map/EngineView.ts:1418</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -7033,8 +7091,9 @@ img {
 							</div>
 							<dl class="tsd-comment-tags">
 								<dt>method</dt>
-								<dd><p>removeObjRefFromSingleLocation</p>
-								</dd>
+								<dd></dd>
+								<dt>function</dt>
+								<dd></dd>
 							</dl>
 						</div>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -7048,7 +7107,7 @@ img {
 							<li>
 								<h5>pos: <a href="../modules.html#tcolumnrowpair" class="tsd-signature-type" data-tsd-kind="Type alias">TColumnRowPair</a></h5>
 								<div class="tsd-comment tsd-typography">
-									<p>object including r and c coordinates</p>
+									<p>position object including row and column coordinates</p>
 								</div>
 							</li>
 						</ul>
@@ -7066,7 +7125,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L1028">map/EngineView.ts:1028</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L1060">map/EngineView.ts:1060</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -7109,7 +7168,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L2094">map/EngineView.ts:2094</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L2140">map/EngineView.ts:2140</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -7138,7 +7197,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L1291">map/EngineView.ts:1291</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L1335">map/EngineView.ts:1335</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -7174,7 +7233,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L1182">map/EngineView.ts:1182</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L1223">map/EngineView.ts:1223</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -7195,13 +7254,13 @@ img {
 							<li>
 								<h5>s: <span class="tsd-signature-type">number</span></h5>
 								<div class="tsd-comment tsd-typography">
-									<p>scale amount for both x and y coordinates</p>
+									<p>Scale amount for both x and y coordinates</p>
 								</div>
 							</li>
 							<li>
 								<h5>instantZoom: <span class="tsd-signature-type">boolean</span></h5>
 								<div class="tsd-comment tsd-typography">
-									<p>specifies if the scaling will be animated or instant</p>
+									<p>Specifies if the scaling will be animated or instant</p>
 								</div>
 							</li>
 						</ul>
@@ -7213,13 +7272,13 @@ img {
 				<a name="setzoomparameters" class="tsd-anchor"></a>
 				<h3>set<wbr>Zoom<wbr>Parameters</h3>
 				<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-					<li class="tsd-signature tsd-kind-icon">set<wbr>Zoom<wbr>Parameters<span class="tsd-signature-symbol">(</span>minScale<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, maxScale<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, numberOfZoomLevels<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, initialZoomLevel<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, instantCameraZoom<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					<li class="tsd-signature tsd-kind-icon">set<wbr>Zoom<wbr>Parameters<span class="tsd-signature-symbol">(</span>minScale<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span>, maxScale<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span>, numberOfZoomLevels<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span>, initialZoomLevel<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span>, instantCameraZoom<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 				</ul>
 				<ul class="tsd-descriptions">
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L1151">map/EngineView.ts:1151</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L1192">map/EngineView.ts:1192</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -7228,26 +7287,42 @@ img {
 							</div>
 							<dl class="tsd-comment-tags">
 								<dt>method</dt>
-								<dd><p>setZoomParameters</p>
-								</dd>
+								<dd></dd>
+								<dt>function</dt>
+								<dd></dd>
 							</dl>
 						</div>
 						<h4 class="tsd-parameters-title">Parameters</h4>
 						<ul class="tsd-parameters">
 							<li>
-								<h5>minScale: <span class="tsd-signature-type">number</span></h5>
+								<h5>minScale: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 0.5</span></h5>
+								<div class="tsd-comment tsd-typography">
+									<p>minimum scale that the PIXI.Container for the map can get, default 0.5</p>
+								</div>
 							</li>
 							<li>
-								<h5>maxScale: <span class="tsd-signature-type">number</span></h5>
+								<h5>maxScale: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 1.5</span></h5>
+								<div class="tsd-comment tsd-typography">
+									<p>maximum scale that the PIXI.Container for the map can get, default 1.5</p>
+								</div>
 							</li>
 							<li>
-								<h5>numberOfZoomLevels: <span class="tsd-signature-type">number</span></h5>
+								<h5>numberOfZoomLevels: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 5</span></h5>
+								<div class="tsd-comment tsd-typography">
+									<p>used to calculate zoom increment, defined by user, default 5</p>
+								</div>
 							</li>
 							<li>
-								<h5>initialZoomLevel: <span class="tsd-signature-type">number</span></h5>
+								<h5>initialZoomLevel: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 0</span></h5>
+								<div class="tsd-comment tsd-typography">
+									<p>initial zoom level of the map, default 0</p>
+								</div>
 							</li>
 							<li>
 								<h5>instantCameraZoom: <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = false</span></h5>
+								<div class="tsd-comment tsd-typography">
+									<p>specifies whether to zoom instantly or with a tween animation, default false</p>
+								</div>
 							</li>
 						</ul>
 						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -7264,7 +7339,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L910">map/EngineView.ts:910</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L942">map/EngineView.ts:942</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -7301,7 +7376,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L898">map/EngineView.ts:898</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L930">map/EngineView.ts:930</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -7338,7 +7413,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L1569">map/EngineView.ts:1569</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L1615">map/EngineView.ts:1615</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -7374,7 +7449,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L1270">map/EngineView.ts:1270</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L1314">map/EngineView.ts:1314</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -7407,7 +7482,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L1261">map/EngineView.ts:1261</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L1305">map/EngineView.ts:1305</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -7416,14 +7491,18 @@ img {
 							</div>
 							<dl class="tsd-comment-tags">
 								<dt>method</dt>
-								<dd><p>zoomOut</p>
-								</dd>
+								<dd></dd>
+								<dt>function</dt>
+								<dd></dd>
 							</dl>
 						</div>
 						<h4 class="tsd-parameters-title">Parameters</h4>
 						<ul class="tsd-parameters">
 							<li>
 								<h5>instantZoom: <span class="tsd-signature-type">boolean</span></h5>
+								<div class="tsd-comment tsd-typography">
+									<p>Specifies whether to zoom instantly or with a tween animation</p>
+								</div>
 							</li>
 						</ul>
 						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -7440,7 +7519,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/eb58c66/src/map/EngineView.ts#L1215">map/EngineView.ts:1215</a></li>
+								<li>Defined in <a href="https://github.com/axaq/traviso.js/blob/3de8f4b/src/map/EngineView.ts#L1256">map/EngineView.ts:1256</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
