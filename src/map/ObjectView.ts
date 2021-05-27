@@ -1,7 +1,3 @@
-/**
- * @author Hakan Karlidag - @axaq
- */
-
 import { Container, AnimatedSprite } from 'pixi.js';
 import { EngineView } from './EngineView';
 import { existy } from '../utils/calculations';
@@ -22,89 +18,129 @@ import {
  *
  * @class ObjectView
  * @extends PIXI.Container
- * @constructor
- * @param engine {EngineView} the engine instance that the map-object sits in
- * @param type {Number} type-id of the object as defined in the json file
- * @param [animSpeed=0.5] {Number} animation speed for the animated visuals
  */
 export class ObjectView extends Container {
     /**
      * A reference to the engine view that the map-object sits in.
      * @property {EngineView} engine
-     * @protected
+     * @private
+     * @internal
      */
-    private engine: EngineView;
+    private _engine: EngineView;
     /**
      * Type-id of the map-object as defined in the json file.
-     * @property {string} type
+     * @property
+     * @private
      */
-    private type: string;
+    private _type: string;
     /**
      * Defines if the map-object is movable onto by other map-objects.
-     * @property {Boolean} isMovableTo
+     * @property
+     * @public
      */
     public isMovableTo: boolean;
     /**
      * Defines if the map-object is interactive/selectable.
-     * @property {Boolean} isInteractive
+     * @property
+     * @public
      */
     public isInteractive: boolean;
     /**
      * Number of tiles that map-object covers horizontally on the isometric map
-     * @property {Number} columnSpan
+     * @property
+     * @public
      */
     public columnSpan: number;
     /**
      * Number of tiles that map-object covers vertically on the isometric map
-     * @property {Number} rowSpan
+     * @property
+     * @public
      */
     public rowSpan: number;
 
     /**
      * A dictionary for all the textures defined for the map-object.
-     * @property {ObjectInfoTextures} textures
-     * @protected
+     * @property
+     * @private
      */
-    private textures: ObjectInfoTextures;
+    private _textures: ObjectInfoTextures;
 
     /**
      * A dictionary for interaction offset points for each visual if defined in the map data file.
-     * @property {ObjectInfoInteractionOffsets} interactionOffsets
-     * @protected
+     * @property
+     * @private
      */
-    private interactionOffsets: ObjectInfoInteractionOffsets;
+    private _interactionOffsets: ObjectInfoInteractionOffsets;
 
+    /**
+     * If true doesn't allow transparency change on this object
+     * @property
+     * @public
+     */
     public noTransparency: boolean;
+    /**
+     * Defines if the object is a floor object or not
+     * @property
+     * @public
+     */
     public isFloorObject: boolean;
-
+    /**
+     * Interaction offset points for the active visual.
+     * @property
+     * @public
+     */
     public currentInteractionOffset: TColumnRowPair;
-
+    /**
+     * Current direction of the object.
+     * @property
+     * @public
+     */
     public currentDirection: TDirection;
 
     /**
      * Defines if the map-object is movable onto by other map-objects.
-     * @property {Container} container
-     * @protected
+     * @property
      * @private
+     * @internal
      */
-    private container: AnimatedSprite;
+    private _container: AnimatedSprite;
     /**
      * Position of the object in terms of column and row index.
-     * @property {Boolean}
+     * @property
+     * @public
      */
     public mapPos: TColumnRowPair;
 
+    /**
+     * @property
+     * @function
+     * @private
+     * @internal
+     */
     private onContainerAnimCompleteCallback: (objectView: ObjectView) => unknown;
+    /**
+     * @property
+     * @function
+     * @private
+     * @internal
+     */
     private onContainerAnimComplete_delayed_binded: () => void;
+    /**
+     * @property
+     * @function
+     * @private
+     * @internal
+     */
     private onContainerAnimComplete_binded: () => void;
 
     /**
      * Visual class constructor for the map-objects.
      *
      * @constructor
-     * @param engine {EngineView} the engine instance that the map-object sits in
-     * @param type {Number} type-id of the object as defined in the JSON file
-     * @param [animSpeed=0.5] {Number} animation speed for the animated visuals
+     *
+     * @param engine {EngineView} the engine instance that the map-object sits in, required
+     * @param type {number} type-id of the object as defined in the JSON file
+     * @param animSpeed {number} animation speed for the animated visuals, default 0.5
      */
     constructor(engine: EngineView, type: string, animSpeed: number = 0.5) {
         super();
@@ -112,10 +148,10 @@ export class ObjectView extends Container {
         this.onContainerAnimComplete_delayed_binded = this.onContainerAnimComplete_delayed.bind(this);
         this.onContainerAnimComplete_binded = this.onContainerAnimComplete.bind(this);
 
-        this.engine = engine;
-        this.type = type;
+        this._engine = engine;
+        this._type = type;
 
-        const info: IObjectInfo = getObjectInfo(this.engine, this.type);
+        const info: IObjectInfo = getObjectInfo(this._engine, this._type);
         this.isMovableTo = info.m;
         this.isInteractive = info.i;
         this.interactive = this.interactiveChildren = false;
@@ -124,42 +160,45 @@ export class ObjectView extends Container {
         this.rowSpan = info.rowSpan;
         this.columnSpan = info.columnSpan;
         const xAnchor = this.rowSpan / (this.columnSpan + this.rowSpan);
-        this.textures = info.t;
-        this.interactionOffsets = info.io;
-        this.currentInteractionOffset = this.interactionOffsets.idle;
+        this._textures = info.t;
+        this._interactionOffsets = info.io;
+        this.currentInteractionOffset = this._interactionOffsets.idle;
 
-        this.container = new AnimatedSprite(this.textures.idle);
-        this.container.interactive = this.container.interactiveChildren = false;
-        this.container.anchor.x = xAnchor;
-        this.container.anchor.y = 1;
-        this.addChild(this.container);
+        this._container = new AnimatedSprite(this._textures.idle);
+        this._container.interactive = this._container.interactiveChildren = false;
+        this._container.anchor.x = xAnchor;
+        this._container.anchor.y = 1;
+        this.addChild(this._container);
         this.animSpeed = animSpeed;
-        this.container.gotoAndStop(0);
+        this._container.gotoAndStop(0);
     }
 
     /**
      * Animation speed for the animated visuals included in the map-object visuals.
      *
-     * @property {Number} animSpeed
+     * @property
      * @default 0.5
      */
     public get animSpeed(): number {
-        return this.container.animationSpeed;
+        return this._container.animationSpeed;
     }
     public set animSpeed(value: number) {
-        this.container.animationSpeed = existy(value) && value > 0 ? value : 0.5;
+        this._container.animationSpeed = existy(value) && value > 0 ? value : 0.5;
     }
 
     /**
      * Changes the map-object's texture(s) according to the specified direction-id and the state of the map-object (moving or stationary).
      *
-     * @method changeVisualToDirection
+     * @method
+     * @function
+     * @public
+     *
      * @param direction {TDirection} direction-id as defined in `TRAVISO.DIRECTIONS`
-     * @param [moving=false] {Boolean} if the requested visuals are for moving or stationary state
-     * @param [stopOnFirstFrame=false] {Boolean} if true stops on the first frame after changing the visuals
-     * @param [noLoop=false] {Boolean} if true the animation will not loop after the first run
-     * @param [onAnimComplete=null] {Function} callback function to call if 'noLoop' is true after the first run of the animation
-     * @param [animSpeed=null] {Number} animation speed for the animated visuals, stays the same if not defined
+     * @param moving {boolean} if the requested visuals are for moving or stationary state, default `false`
+     * @param stopOnFirstFrame {boolean} if true stops on the first frame after changing the visuals, default `false`
+     * @param noLoop {boolean} if true the animation will not loop after the first run, default `false`
+     * @param onAnimComplete {Function} callback function to call if 'noLoop' is true after the first run of the animation, default `null`
+     * @param animSpeed {number} animation speed for the animated visuals, stays the same if not defined, default `null`
      */
     public changeVisualToDirection(
         direction: TDirection,
@@ -179,7 +218,7 @@ export class ObjectView extends Container {
             )
         ) {
             if (!this.changeVisual('idle', stopOnFirstFrame, noLoop, onAnimComplete, animSpeed)) {
-                throw new Error("no 'idle' visual defined as backup for object type " + this.type);
+                throw new Error("no 'idle' visual defined as backup for object type " + this._type);
             } else {
                 this.currentDirection = DIRECTIONS.O;
             }
@@ -191,13 +230,17 @@ export class ObjectView extends Container {
     /**
      * Changes the map-object's texture(s) according to the specified visual-id.
      *
-     * @method changeVisual
-     * @private
-     * @param vId {String} visual-id
-     * @param [stopOnFirstFrame=false] {Boolean} if true stops on the first frame after changing the visuals
-     * @param [noLoop=false] {Boolean} if true the animation will not loop after the first run
-     * @param [onAnimComplete=null] {Function} callback function to call if 'noLoop' is true after the first run of the animation
-     * @param [animSpeed=null] {Number} animation speed for the animated visuals, stays the same if not defined
+     * @method
+     * @function
+     * @public
+     * @internal
+     *
+     * @param vId {string} visual-id
+     * @param stopOnFirstFrame {boolean} if true stops on the first frame after changing the visuals, default `false`
+     * @param noLoop {boolean} if true the animation will not loop after the first run, default `false`
+     * @param onAnimComplete {Function} callback function to call if 'noLoop' is true after the first run of the animation, default `null`
+     * @param animSpeed {number} animation speed for the animated visuals, stays the same if not defined, default `null`
+     * @return {boolean} `true` if the visual-id was valid and the visual has changed without errors
      */
     public changeVisual(
         vId: ObjectVisualKey,
@@ -206,39 +249,39 @@ export class ObjectView extends Container {
         onAnimComplete: (objectView: ObjectView) => unknown = null,
         animSpeed: number = null
     ): boolean {
-        if (!this.textures[vId]) {
+        if (!this._textures[vId]) {
             // trace("!!! No textures defined for vId: " + vId);
             return false;
         }
 
-        this.currentInteractionOffset = this.interactionOffsets[vId];
+        this.currentInteractionOffset = this._interactionOffsets[vId];
 
-        if (this.container.textures === this.textures[vId] && !noLoop) {
-            this.container.loop = !noLoop;
+        if (this._container.textures === this._textures[vId] && !noLoop) {
+            this._container.loop = !noLoop;
             if (existy(animSpeed) && animSpeed > 0) {
                 this.animSpeed = animSpeed;
             }
             return true;
         }
 
-        this.container.textures = this.textures[vId];
+        this._container.textures = this._textures[vId];
 
-        if (!stopOnFirstFrame && this.textures[vId].length > 1) {
-            this.container.loop = !noLoop;
+        if (!stopOnFirstFrame && this._textures[vId].length > 1) {
+            this._container.loop = !noLoop;
             if (noLoop && onAnimComplete) {
                 this.onContainerAnimCompleteCallback = onAnimComplete;
-                this.container.onComplete = this.onContainerAnimComplete_binded;
+                this._container.onComplete = this.onContainerAnimComplete_binded;
             }
             if (existy(animSpeed) && animSpeed > 0) {
                 this.animSpeed = animSpeed;
             }
-            this.container.gotoAndPlay(0);
+            this._container.gotoAndPlay(0);
         } else {
-            this.container.gotoAndStop(0);
+            this._container.gotoAndStop(0);
         }
 
-        if (this.engine.objectUpdateCallback) {
-            this.engine.objectUpdateCallback(this);
+        if (this._engine.objectUpdateCallback) {
+            this._engine.objectUpdateCallback(this);
         }
 
         return true;
@@ -255,16 +298,18 @@ export class ObjectView extends Container {
     /**
      * Clears all references.
      *
-     * @method destroy
+     * @method
+     * @function
+     * @public
      */
-    destroy(): void {
-        if (this.container) {
-            this.engine = null;
-            this.textures = null;
-            // this.removeChild(this.container);
-            // this.container.textures = null;
-            this.container.onComplete = null;
-            this.container = null;
+    public destroy(): void {
+        if (this._container) {
+            this._engine = null;
+            this._textures = null;
+            // this.removeChild(this._container);
+            // this._container.textures = null;
+            this._container.onComplete = null;
+            this._container = null;
         }
     }
 }

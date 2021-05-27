@@ -5,12 +5,12 @@ let logEnabled: boolean = true;
  *
  * @memberof TRAVISO
  * @for TRAVISO
- * 
+ *
  * @method
  * @function
  * @public
  * @static
- * 
+ *
  * @param s {string} text to log
  */
 export function trace(s: string): void {
@@ -25,12 +25,12 @@ export function trace(s: string): void {
  *
  * @memberof TRAVISO
  * @for TRAVISO
- * 
+ *
  * @method
  * @function
  * @public
  * @static
- * 
+ *
  * @param enabled {boolean} enable logging or not, default `true`
  * @return {boolean} logging enabled or not
  */

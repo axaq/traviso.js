@@ -25,16 +25,16 @@ export type ObjectVisualKey =
 /** Type declaration for column-row pair objects */
 export type TColumnRowPair = {
     /** column index of the column-row pair */
-    c: number; 
+    c: number;
     /** row index of the column-row pair */
-    r: number 
+    r: number;
 };
 /** Type declaration for x-y position pair objects */
 export type TPositionPair = {
     /** x position of the pair */
-    x: number; 
+    x: number;
     /** y position of the pair */
-    y: number
+    y: number;
 };
 export type ObjectInfoTextures = { [key in ObjectVisualKey]: Texture[] };
 export type ObjectInfoTextureNames = { [key in ObjectVisualKey]: string[] };
@@ -75,6 +75,7 @@ export interface IObjectInfo {
     f: boolean;
     s: unknown; // TODO: This is probably not being used any more
     t: ObjectInfoTextures;
+    /** Interaction offsets for each visual defined for the object */
     io: ObjectInfoInteractionOffsets;
     rowSpan: number;
     columnSpan: number;
@@ -119,13 +120,14 @@ export type TMapData = {
 /**
  * Returns an object with all properties of a map-object defined by object-type
  *
- * @function getObjectInfo
- * @static
- * @memberof TRAVISO
+ * @method
+ * @function
  * @private
+ * @static
+ *
  * @param engine {EngineView} engine instance
- * @param objectType {String} type/id of the related object tag defined in the json file
- * @return {Object} an object with all properties of a map-object
+ * @param objectType {string} type/id of the related object tag defined in the json file
+ * @return {IObjectInfo} an object with certain properties of a map-object
  */
 export const getObjectInfo = (engine: EngineView, objectType: string): IObjectInfo => {
     const objInfo: IMapDataObject = engine.mapData.objects[objectType];
@@ -159,8 +161,8 @@ export const getObjectInfo = (engine: EngineView, objectType: string): IObjectIn
  * @static
  * @private
  * @param engine {EngineView} engine instance
- * @param objectType {String} type/id of the related object tag defined in the json file
- * @param visualId {String} id of the related v tag defined in the json file
+ * @param objectType {string} type/id of the related object tag defined in the json file
+ * @param visualId {string} id of the related v tag defined in the json file
  * @return {Array(PIXI.Texture)} an array of textures
  */
 export const getObjectTextures = (engine: EngineView, objectType: string, visualId: ObjectVisualKey): Texture[] => {
@@ -188,7 +190,7 @@ export const getObjectTextures = (engine: EngineView, objectType: string, visual
  * @method
  * @function
  * @static
- * 
+ *
  * @param engine {EngineView} engine instance
  * @param tileType {string} type/id of the related tile tag defined in the json file
  * @return {TTileInfo} an information object with certain properties (movability and textures) of a map-tile
@@ -213,11 +215,11 @@ export const getTileInfo = (engine: EngineView, tileType: string): TTileInfo => 
 
 /**
  * Returns the predefined moving texture id for the given direction
- * 
+ *
  * @method
  * @function
  * @static
- * 
+ *
  * @param dir {TDirection} index of the direction
  * @return {ObjectVisualKey} texture id for the given direction
  */
@@ -231,7 +233,7 @@ export const getMovingDirVisualId = (dir: TDirection): ObjectVisualKey => {
  * @method
  * @function
  * @static
- * 
+ *
  * @param dir {TDirection} index of the direction
  * @return {ObjectVisualKey} texture id for the given direction
  */

@@ -1,8 +1,3 @@
-/**
- * @author Hakan Karlidag - @axaq
- */
-
-import { trace } from '../utils/trace';
 import { BinaryHeap } from './BinaryHeap';
 import { GridNode } from './GridNode';
 
@@ -22,26 +17,22 @@ export type PathFindingOptions = {
  * Includes all path finding logic.
  *
  * @class PathFinding
- * @constructor
- * @param mapSizeC {Number} number of columns
- * @param mapSizeR {Number} number of rows
- * @param {Object} [options] settings for the search algorithm
- * @param {Boolean} [options.diagonal] Specifies whether to use diagonal tiles
  */
 export class PathFinding {
     /**
      * @property {Array(Array(GridNode))} grid
-     * @protected
+     * @private
      */
     private grid: GridNode[][];
     /**
-     * @property {Boolean} diagonal
-     * @protected
+     * @property {boolean} diagonal
+     * @private
      */
     private diagonal: boolean;
     /**
-     * @property {Function} heuristic
-     * @protected
+     * Active heuristic method to use
+     * @property
+     * @private
      */
     private heuristic: PathFindingHeuristicFunction;
 
@@ -50,8 +41,14 @@ export class PathFinding {
     private nodes: GridNode[];
     private dirtyNodes: GridNode[];
 
-    // See list of heuristics: http://theory.stanford.edu/~amitp/GameProgramming/Heuristics.html
-    public static heuristics: {
+    /**
+     * See list of heuristics: http://theory.stanford.edu/~amitp/GameProgramming/Heuristics.html
+     *
+     * @property
+     * @private
+     * @static
+     */
+    private static readonly HEURISTICS: {
         [key in 'manhattan' | 'diagonal']: PathFindingHeuristicFunction;
     } = {
         manhattan: (pos0: GridNode, pos1: GridNode) => {
@@ -67,12 +64,20 @@ export class PathFinding {
             return D * (d1 + d2) + (D2 - 2 * D) * Math.min(d1, d2);
         },
     };
-
+    /**
+     * Constructor function for the PathFinding class.
+     *
+     * @constructor
+     *
+     * @param mapSizeC {number} number of columns
+     * @param mapSizeR {number} number of rows
+     * @param options {PathFindingOptions}  settings for the search algorithm, default `{}`
+     */
     constructor(mapSizeC: number, mapSizeR: number, options: PathFindingOptions = {}) {
         //define map
         this.nodes = [];
         this.diagonal = !!options.diagonal;
-        this.heuristic = this.diagonal ? PathFinding.heuristics.diagonal : PathFinding.heuristics.manhattan;
+        this.heuristic = this.diagonal ? PathFinding.HEURISTICS.diagonal : PathFinding.HEURISTICS.manhattan;
         this.closest = !!options.closest;
         this.grid = [];
         let c = 0,
@@ -197,10 +202,10 @@ export class PathFinding {
      *
      * @method solve
      * @private
-     * @param originC {Number} column index of the source location
-     * @param originR {Number} row index of the source location
-     * @param destC {Number} column index of the destination location
-     * @param destR {Number} row index of the destination location
+     * @param originC {number} column index of the source location
+     * @param originR {number} row index of the source location
+     * @param destC {number} column index of the destination location
+     * @param destR {number} row index of the destination location
      * @return {Array(Object)} solution path
      */
     public solve(originC: number, originR: number, destC: number, destR: number): GridNode[] {
@@ -217,10 +222,10 @@ export class PathFinding {
      * Finds available adjacent cells of an area defined by location and size.
      *
      * @method getAdjacentOpenCells
-     * @param cellC {Number} column index of the location
-     * @param cellR {Number} row index of the location
-     * @param sizeC {Number} column size of the area
-     * @param sizeR {Number} row size of the area
+     * @param cellC {number} column index of the location
+     * @param cellR {number} row index of the location
+     * @param sizeC {number} column size of the area
+     * @param sizeR {number} row size of the area
      * @return {Array(Object)} an array of available cells
      */
     public getAdjacentOpenCells(cellC: number, cellR: number, sizeC: number, sizeR: number): GridNode[] {
@@ -253,17 +258,20 @@ export class PathFinding {
 
     /**
      * Perform an A* Search on a graph given a start and end node.
-     * @param {GridNode} start
-     * @param {GridNode} end
-     * @param {Object} [options]
-     * @param {Boolean} [options.closest] Specifies whether to return the
-                path to the closest node if the target is unreachable.
-    * @param {Function} [options.heuristic] Heuristic function.
-    */
+     *
+     * @method
+     * @function
+     * @private
+     *
+     * @param start {GridNode} beginning node of search
+     * @param end {GridNode} end node of the search
+     * @param options {Object} Search options
+     * @return {Array(GridNode)} resulting list of nodes
+     */
     private search(start: GridNode, end: GridNode, options: PathFindingSearchOptions = {}): GridNode[] {
         this.init();
 
-        const heuristic = options.heuristic || PathFinding.heuristics.manhattan;
+        const heuristic = options.heuristic || PathFinding.HEURISTICS.manhattan;
         const closest = options.closest || false;
 
         const openHeap = this.getHeap();
@@ -352,8 +360,8 @@ export class PathFinding {
      * Checks if the location is occupied/available or not.
      *
      * @method isCellFilled
-     * @param c {Number} column index of the location
-     * @param r {Number} row index of the location
+     * @param c {number} column index of the location
+     * @param r {number} row index of the location
      * @return {Array(Object)} if the location is not available
      */
     public isCellFilled(c: number, r: number): boolean {
@@ -367,9 +375,9 @@ export class PathFinding {
      * Sets individual cell state for ground layer.
      *
      * @method setCell
-     * @param c {Number} column index of the location
-     * @param r {Number} row index of the location
-     * @param movable {Boolean} free to move or not
+     * @param c {number} column index of the location
+     * @param r {number} row index of the location
+     * @param movable {boolean} free to move or not
      */
     public setCell(c: number, r: number, movable: number): void {
         this.grid[c][r].staticWeight = this.grid[c][r].weight = movable;
@@ -379,9 +387,9 @@ export class PathFinding {
      * Sets individual cell state for objects layer.
      *
      * @method setDynamicCell
-     * @param c {Number} column index of the location
-     * @param r {Number} row index of the location
-     * @param movable {Boolean} free to move or not
+     * @param c {number} column index of the location
+     * @param r {number} row index of the location
+     * @param movable {boolean} free to move or not
      */
     public setDynamicCell(c: number, r: number, movable: number): void {
         // if it is movable by static tile property
@@ -393,11 +401,11 @@ export class PathFinding {
     /**
      * Clears all references.
      *
-     * @method destroy
+     * @method
+     * @function
+     * @public
      */
     public destroy(): void {
-        trace('PathFinding destroy');
-
         this.grid = null;
         this.nodes = null;
         this.dirtyNodes = null;

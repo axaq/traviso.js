@@ -22,8 +22,10 @@ export type TTravisoConfiguration = {
 export * from './version';
 export * from './map/EngineView';
 export { TileView } from './map/TileView';
-export * from './utils/hello';
+export { ObjectView } from './map/ObjectView';
+export { skipHello } from './utils/hello';
 export * from './utils/trace';
+export { existy, mathMap, dotProduct, getUnit, getDist, isInPolygon } from './utils/calculations';
 export {
     TDirection,
     TDirections,
@@ -38,7 +40,7 @@ export { TColumnRowPair, TPositionPair } from './utils/map';
  * Global configuration settings for traviso
  *
  * @property
- * @protected
+ * @private
  * @internal
  */
 let config: TTravisoConfiguration = {
@@ -49,7 +51,7 @@ let config: TTravisoConfiguration = {
  * Flag defining whether traviso is set or not
  *
  * @property
- * @protected
+ * @private
  * @internal
  */
 let isReady: boolean = false;

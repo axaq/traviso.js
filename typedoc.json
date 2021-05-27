@@ -2,6 +2,7 @@
     "entryPoints": ["src/index.ts"],
     "out": "docs",
     "excludeExternals": true,
+    "excludeInternal": false,
     "includeVersion": true,
     "theme": "minimal",
     "hideGenerator": true

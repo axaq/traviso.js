@@ -45,86 +45,100 @@ export interface ITweenTarget {
  * This is created and used by EngineView instances.
  *
  * @class MoveEngine
- * @constructor
- * @param engine {EngineView} the engine instance that the animations will perform on
- * @param [defaultSpeed=3] {Number} default speed for the map-objects to be used when they move on map
  */
 export class MoveEngine {
     /**
      * A reference to the engine view that uses this move engine.
-     * @property {EngineView} engine
-     * @protected
+     * @property
+     * @private
      */
-    private engine: EngineView;
+    private _engine: EngineView;
 
     /**
      * The speed value to be used for object movements if not defined specifically.
-     * @property {Number} DEFAULT_SPEED
-     * @protected
-     * @default 3
+     * @property
+     * @private
+     * @default `3`
      */
-    private DEFAULT_SPEED: number;
+    private _defaultSpeed: number;
     /**
      * Specifies if the move-engine will process the object movements.
-     * @property {Boolean} activeForMovables
-     * @protected
+     * @property
+     * @private
+     * @default `false`
      */
-    private activeForMovables: boolean = false;
+    private _activeForMovables: boolean = false;
     /**
      * Specifies if the move-engine will process the tweens.
-     * @property {Boolean} activeForTweens
-     * @protected
+     * @property
+     * @private
+     * @default `false`
      */
-    private activeForTweens: boolean = false;
+    private _activeForTweens: boolean = false;
     /**
      * Specifies if the move-engine will process the tweens and object movements.
-     * @property {Boolean} processFrame
-     * @protected
+     * @property
+     * @private
+     * @default `true`
      */
-    private processFrame: boolean = true;
+    private _processFrame: boolean = true;
     /**
      * The list to store current map-objects in move.
-     * @property {Array(ObjectView)} movables
-     * @protected
+     * @property
+     * @private
+     * @default `[]`
      */
-    private movables: IMovable[] = [];
+    private _movables: IMovable[] = [];
     /**
      * The list to store targets for the current tweens.
-     * @property {Array(Object)} tweenTargets
-     * @protected
+     * @property
+     * @private
+     * @default `[]`
      */
-    private tweenTargets: ITweenTarget[] = [];
+    private _tweenTargets: ITweenTarget[] = [];
     /**
      * Used to calculate how many frames a tween will take to process.
-     * @property {Number} fps
-     * @protected
+     * @property
+     * @private
+     * @default `60`
      */
-    private fps: number = 60;
+    private _fps: number = 60;
 
-    private ticker: Ticker;
-    private processFunc: () => void;
+    private _ticker: Ticker;
+    private _processFunc: () => void;
 
+    /**
+     * Constructor function for MoveEngine.
+     *
+     * @constructor
+     *
+     * @param engine {EngineView} the engine instance that the animations will perform on
+     * @param defaultSpeed {number} default speed for the map-objects to be used when they move on map, default 3
+     */
     constructor(engine: EngineView, defaultSpeed: number = 3) {
-        this.engine = engine;
-        this.DEFAULT_SPEED = defaultSpeed;
+        this._engine = engine;
+        this._defaultSpeed = defaultSpeed;
 
-        this.processFunc = this.run.bind(this);
-        this.ticker = new Ticker();
-        this.ticker.add(this.processFunc);
-        this.ticker.start();
+        this._processFunc = this.run.bind(this);
+        this._ticker = new Ticker();
+        this._ticker.add(this._processFunc);
+        this._ticker.start();
     }
 
     /**
      * Adds a single tween for the given object.
      *
-     * @method addTween
-     * @param o {Object} the object to add tween animation to
-     * @param duration {Number} the duration of the tween animation in seconds
-     * @param {{ [key: string]: number }} vars the object defining which properties of the target object will be animated
-     * @param [delay=0] {Number} the amount of waiting before the tween animation starts, in seconds
-     * @param [easing="linear"] {String} type of the easing
-     * @param [overwrite=false] {Boolean} if the other tween animations assigned to the same object are going to be killed
-     * @param [onComplete=null] {Function} callback function to be called after the tween animation finished
+     * @method
+     * @function
+     * @public
+     *
+     * @param o {ITweenTarget} the object to add tween animation to
+     * @param duration {number} the duration of the tween animation in seconds
+     * @param vars {{ [key: string]: number }} the object defining which properties of the target object will be animated
+     * @param delay {number} the amount of waiting before the tween animation starts, in seconds, default `0`
+     * @param easing {EasingType} type of the easing, default `'linear'`
+     * @param overwrite {boolean} if the other tween animations assigned to the same object are going to be killed, default `false`
+     * @param onComplete {Function} callback function to be called after the tween animation finished, default `null`
      */
     public addTween(
         o: ITweenTarget,
@@ -153,12 +167,12 @@ export class MoveEngine {
                 easingFunc: getEasingFunc(easing),
                 overwrite: overwrite || false,
                 onComplete: onComplete || null,
-                totalFrames: duration * this.fps,
+                totalFrames: duration * this._fps,
                 currentFrame: 0,
                 vars: v,
             };
 
-            const idx = this.tweenTargets.indexOf(o);
+            const idx = this._tweenTargets.indexOf(o);
             if (idx >= 0) {
                 let tweens: ITween[] = o.tweens;
                 if (!tweens) {
@@ -175,11 +189,11 @@ export class MoveEngine {
                 o.tweens = tweens;
             } else {
                 o.tweens = [t];
-                this.tweenTargets[this.tweenTargets.length] = o;
+                this._tweenTargets[this._tweenTargets.length] = o;
             }
 
-            if (this.tweenTargets.length > 0 && !this.activeForTweens) {
-                this.activeForTweens = true;
+            if (this._tweenTargets.length > 0 && !this._activeForTweens) {
+                this._activeForTweens = true;
             }
         }
     }
@@ -187,19 +201,22 @@ export class MoveEngine {
     /**
      * Removes a single tween from the given object.
      *
-     * @method removeTween
-     * @param o {Object} the object to remove the tween animation from
-     * @param t {Object} the tween to be removed from the object
-     * @return {Boolean} if the tween is found and removed
+     * @method
+     * @function
+     * @public
+     *
+     * @param o {ITweenTarget} the object to remove the tween animation from
+     * @param t {ITween} the tween to be removed from the object
+     * @return {boolean} if the tween is found and removed
      */
     public removeTween(o: ITweenTarget, t: ITween): boolean {
         let targetRemoved = false;
 
         if (o && t) {
-            const idx = this.tweenTargets.indexOf(o);
+            const idx = this._tweenTargets.indexOf(o);
             if (idx >= 0) {
-                if (this.tweenTargets[idx].tweens && this.tweenTargets[idx].tweens.length > 0) {
-                    const tweens = this.tweenTargets[idx].tweens;
+                if (this._tweenTargets[idx].tweens && this._tweenTargets[idx].tweens.length > 0) {
+                    const tweens = this._tweenTargets[idx].tweens;
                     const idx2 = tweens.indexOf(t);
                     if (idx2 >= 0) {
                         t.onComplete = null;
@@ -208,7 +225,7 @@ export class MoveEngine {
 
                         tweens.splice(idx2, 1);
                         if (tweens.length === 0) {
-                            this.tweenTargets.splice(idx, 1);
+                            this._tweenTargets.splice(idx, 1);
                             targetRemoved = true;
                         }
                     } else {
@@ -221,8 +238,8 @@ export class MoveEngine {
                 throw new Error('No tween target defined for this object');
             }
 
-            if (this.tweenTargets.length === 0) {
-                this.activeForTweens = false;
+            if (this._tweenTargets.length === 0) {
+                this._activeForTweens = false;
             }
         }
 
@@ -232,33 +249,36 @@ export class MoveEngine {
     /**
      * Removes and kills all tweens assigned to the given object.
      *
-     * @method killTweensOf
-     * @param o {Object} the object to remove the tween animations from
-     * @return {Boolean} if any tween is found and removed from the object specified
+     * @method
+     * @function
+     * @public
+     *
+     * @param o {ITweenTarget} the object to remove the tween animations from
+     * @return {boolean} if any tween is found and removed from the object specified
      */
     public killTweensOf(o: ITweenTarget): boolean {
         let targetRemoved = false;
 
-        const idx = this.tweenTargets.indexOf(o);
+        const idx = this._tweenTargets.indexOf(o);
         if (idx >= 0) {
-            if (this.tweenTargets[idx].tweens && this.tweenTargets[idx].tweens.length > 0) {
-                const tweens = this.tweenTargets[idx].tweens;
+            if (this._tweenTargets[idx].tweens && this._tweenTargets[idx].tweens.length > 0) {
+                const tweens = this._tweenTargets[idx].tweens;
                 for (let j = 0; j < tweens.length; j++) {
                     tweens[j].onComplete = null;
                     tweens[j].easingFunc = null;
                     tweens[j].target = null;
                     tweens[j] = null;
                 }
-                this.tweenTargets[idx].tweens = null;
+                this._tweenTargets[idx].tweens = null;
             }
 
-            this.tweenTargets.splice(idx, 1);
+            this._tweenTargets.splice(idx, 1);
 
             targetRemoved = true;
         }
 
-        if (this.tweenTargets.length === 0) {
-            this.activeForTweens = false;
+        if (this._tweenTargets.length === 0) {
+            this._activeForTweens = false;
         }
 
         return targetRemoved;
@@ -267,43 +287,48 @@ export class MoveEngine {
     /**
      * Removes and kills all the tweens in operation currently.
      *
-     * @method removeAllTweens
+     * @method
+     * @function
+     * @private
      */
     private removeAllTweens(): void {
-        this.activeForTweens = false;
+        this._activeForTweens = false;
 
         let tweens, i, j;
-        const len = this.tweenTargets.length;
+        const len = this._tweenTargets.length;
         for (i = 0; i < len; i++) {
-            tweens = this.tweenTargets[i].tweens;
+            tweens = this._tweenTargets[i].tweens;
             for (j = 0; j < tweens.length; j++) {
                 tweens[j].onComplete = null;
                 tweens[j].easingFunc = null;
                 tweens[j].target = null;
                 tweens[j] = null;
             }
-            this.tweenTargets[i].tweens = null;
-            this.tweenTargets[i] = null;
+            this._tweenTargets[i].tweens = null;
+            this._tweenTargets[i] = null;
         }
 
-        this.tweenTargets = [];
+        this._tweenTargets = [];
     }
 
     /**
      * Adds a map-object as movable to the engine.
      *
-     * @method addMovable
-     * @param o {ObjectView} the map-object to add as movable
+     * @method
+     * @function
+     * @public
+     *
+     * @param o {IMovable} the map-object to add as movable
      */
     public addMovable(o: IMovable): void {
-        if (this.movables.indexOf(o) >= 0) {
+        if (this._movables.indexOf(o) >= 0) {
             return;
         }
 
-        this.movables[this.movables.length] = o;
+        this._movables[this._movables.length] = o;
 
-        if (this.movables.length > 0 && !this.activeForMovables) {
-            this.activeForMovables = true;
+        if (this._movables.length > 0 && !this._activeForMovables) {
+            this._activeForMovables = true;
         }
 
         // all movables needs to have the following variables:
@@ -315,18 +340,21 @@ export class MoveEngine {
     /**
      * Removes a map-object from the current movables list.
      *
-     * @method removeMovable
-     * @param o {ObjectView} the map-object to remove
-     * @return {Boolean} if the map-object is removed
+     * @method
+     * @function
+     * @public
+     *
+     * @param o {IMovable} the map-object to remove
+     * @return {boolean} if the map-object is removed or not
      */
     public removeMovable(o: IMovable): boolean {
-        const idx = this.movables.indexOf(o);
+        const idx = this._movables.indexOf(o);
         if (idx !== -1) {
             o.speedUnit = { x: 0, y: 0 };
-            this.movables.splice(idx, 1);
+            this._movables.splice(idx, 1);
         }
-        if (this.movables.length === 0) {
-            this.activeForMovables = false;
+        if (this._movables.length === 0) {
+            this._activeForMovables = false;
         }
         // TODO: might be a good idea to remove/reset all related parameters from the object here
 
@@ -336,26 +364,31 @@ export class MoveEngine {
     /**
      * Removes all movables.
      *
-     * @method removeAllMovables
+     * @method
+     * @function
+     * @private
      */
     private removeAllMovables(): void {
-        this.activeForMovables = false;
+        this._activeForMovables = false;
 
-        const len = this.movables.length;
+        const len = this._movables.length;
         for (let i = 0; i < len; i++) {
-            this.movables[i] = null;
+            this._movables[i] = null;
         }
 
-        this.movables = [];
+        this._movables = [];
     }
 
     /**
      * Changes the current path of a map-object.
      *
-     * @method addNewPathToObject
-     * @param o {ObjectView} the map-object to add the path to
-     * @param path {Array(Object)} the new path
-     * @param [speed=null] {Number} speed of the map-object to be used during movement, if not defined it uses previous speed or the MoveEngine's default speed, default null
+     * @method
+     * @function
+     * @public
+     *
+     * @param o {IMovable} the map-object to add the path to
+     * @param path {Array(GridNode)} the new path
+     * @param speed {number} speed of the map-object to be used during movement, if not defined it uses previous speed or the MoveEngine's default speed, default null
      */
     public addNewPathToObject(o: IMovable, path: GridNode[], speed: number): void {
         if (o.currentPath && o.currentTarget) {
@@ -363,35 +396,39 @@ export class MoveEngine {
         }
         o.currentPath = path;
         o.currentPathStep = o.currentPath.length - 1;
-        o.speedMagnitude = speed || o.speedMagnitude || this.DEFAULT_SPEED;
+        o.speedMagnitude = speed || o.speedMagnitude || this._defaultSpeed;
     }
 
     /**
      * Prepares a map-object for movement.
      *
-     * @method prepareForMove
-     * @param o {ObjectView} the movable map-object
-     * @param path {Array(Object)} the path for the object
-     * @param [speed=null] {Number} speed of the map-object to be used during movement, if not defined it uses previous speed or the MoveEngine's default speed, default null
+     * @method
+     * @function
+     * @public
+     *
+     * @param o {IMovable} the movable map-object
+     * @param path {Array(GridNode)} the path for the object
+     * @param speed {number} speed of the map-object to be used during movement, if not defined it uses previous speed or the MoveEngine's default speed, default null
      */
     public prepareForMove(o: IMovable, path: GridNode[], speed: number = null): void {
         o.currentPath = path;
         o.currentPathStep = o.currentPath.length - 1;
-        o.speedMagnitude = speed || o.speedMagnitude || this.DEFAULT_SPEED;
+        o.speedMagnitude = speed || o.speedMagnitude || this._defaultSpeed;
     }
 
     /**
      * Sets movement specific parameters for the map-object according to target location.
      *
-     * @method setMoveParameters
-     * @param o {ObjectView} the movable map-object
-     * @param pos {Object} target location
-     * @param pos.r {Object} the row index of the map location
-     * @param pos.c {Object} the column index of the map location
+     * @method
+     * @function
+     * @public
+     *
+     * @param o {IMovable} the movable map-object
+     * @param pos {TColumnRowPair} target location
      */
     public setMoveParameters(o: IMovable, pos: TColumnRowPair): void {
-        const px = this.engine.getTilePosXFor(pos.r, pos.c);
-        const py = this.engine.getTilePosYFor(pos.r, pos.c) + this.engine.tileHalfHeight;
+        const px = this._engine.getTilePosXFor(pos.r, pos.c);
+        const py = this._engine.getTilePosYFor(pos.r, pos.c) + this._engine.tileHalfHeight;
 
         o.speedUnit = getUnit({ x: px - o.position.x, y: py - o.position.y });
 
@@ -404,20 +441,21 @@ export class MoveEngine {
     /**
      * Method that precesses a single frame.
      *
-     * @method run
+     * @method
+     * @function
      * @private
      */
     private run(): void {
         // NOTE: Write an alternative with a real time driven animator
 
-        if (this.processFrame) {
+        if (this._processFrame) {
             let len: number, o: IMovable, i: number;
-            if (this.activeForMovables) {
-                len = this.movables.length;
+            if (this._activeForMovables) {
+                len = this._movables.length;
 
                 let dist;
                 for (i = 0; i < len; i++) {
-                    o = this.movables[i];
+                    o = this._movables[i];
 
                     // move object
 
@@ -433,7 +471,7 @@ export class MoveEngine {
                             o.position.x = o.currentTarget.x;
                             o.position.y = o.currentTarget.y;
 
-                            this.engine.onObjMoveStepEnd(o);
+                            this._engine.onObjMoveStepEnd(o);
                             i--;
                             len--;
                             continue;
@@ -444,8 +482,8 @@ export class MoveEngine {
                     o.position.y += o.speedMagnitude * o.speedUnit.y;
 
                     // check for tile change
-                    this.engine.checkForTileChange(o);
-                    this.engine.checkForFollowCharacter(o);
+                    this._engine.checkForTileChange(o);
+                    this._engine.checkForFollowCharacter(o);
 
                     // check for direction change
                 }
@@ -453,20 +491,20 @@ export class MoveEngine {
                 // will need a different loop to process crashes
                 // for (i=0; i < len; i++)
                 // {
-                // o = this.movables[i];
+                // o = this._movables[i];
                 // }
             }
 
-            if (this.activeForTweens) {
+            if (this._activeForTweens) {
                 // and a loop for tween animations
-                len = this.tweenTargets.length;
+                len = this._tweenTargets.length;
                 let t: ITween,
                     tt: ITweenTarget,
                     tweens: ITween[],
                     j: number,
                     vars: { [key: string]: { b: number; c: number } };
                 for (i = 0; i < len; i++) {
-                    tt = this.tweenTargets[i];
+                    tt = this._tweenTargets[i];
                     tweens = tt.tweens;
                     for (j = 0; j < tweens.length; j++) {
                         t = tweens[j];
@@ -495,22 +533,24 @@ export class MoveEngine {
     /**
      * Clears all references and stops all animations and tweens.
      *
-     * @method destroy
+     * @method
+     * @function
+     * @public
      */
     public destroy(): void {
         trace('MoveEngine destroy');
 
-        this.processFrame = false;
+        this._processFrame = false;
 
-        if (this.ticker) {
-            this.ticker.stop();
+        if (this._ticker) {
+            this._ticker.stop();
         }
 
         this.removeAllMovables();
         this.removeAllTweens();
-        this.movables = null;
-        this.tweenTargets = null;
-        this.engine = null;
-        this.ticker = null;
+        this._movables = null;
+        this._tweenTargets = null;
+        this._engine = null;
+        this._ticker = null;
     }
 }

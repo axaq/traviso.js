@@ -6,7 +6,7 @@ const VERSION = '$_VERSION';
  *
  * @memberof TRAVISO
  * @for TRAVISO
- * 
+ *
  * @function
  * @method
  * @static
@@ -23,7 +23,7 @@ export function skipHello(): void {
  *
  * @memberof TRAVISO
  * @for TRAVISO
- * 
+ *
  * @function
  * @method
  * @static

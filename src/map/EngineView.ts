@@ -1,4 +1,13 @@
-import { Texture, Container, Graphics, InteractionData, InteractionEvent, Loader, Sprite, DisplayObject } from 'pixi.js';
+import {
+    Texture,
+    Container,
+    Graphics,
+    InteractionData,
+    InteractionEvent,
+    Loader,
+    Sprite,
+    DisplayObject,
+} from 'pixi.js';
 import { ObjectView } from './ObjectView';
 import { TileView } from './TileView';
 import { MoveEngine, IMovable, ITweenTarget } from './MoveEngine';
@@ -26,22 +35,22 @@ export type TPositionFrame = {
     /** x position of the frame */
     x: number;
     /** y position of the frame */
-    y: number; 
+    y: number;
     /** width of the frame */
     w: number;
     /** height of the frame */
-    h: number
+    h: number;
 };
 /**
  * Type declaration for engine-specific configuration.
  */
 export type TEngineConfiguration = {
-    /** 
+    /**
      * minimum scale that the PIXI.Container for the map can get, default 0.5
      * @default 0.5
      */
     minScale?: number;
-    /** 
+    /**
      * maximum scale that the PIXI.Container for the map can get, default 1.5
      * @default 1.5
      */
@@ -50,93 +59,93 @@ export type TEngineConfiguration = {
     minZoom?: number;
     /** maximum zoom level, engine defined  */
     maxZoom?: number;
-    /** 
+    /**
      * zoom increment amount calculated by the engine according to user settings, default 0.5
      * @default 0.5
      */
     zoomIncrement?: number;
-    /** 
+    /**
      * used to calculate zoom increment, defined by user, default 5
      * @default 5
      */
     numberOfZoomLevels?: number;
-    /** 
+    /**
      * initial zoom level of the map, default 0
      * @default 0
      */
     initialZoomLevel?: number;
-    /** 
+    /**
      * specifies whether to zoom instantly or with a tween animation, default false
      * @default false
      */
     instantCameraZoom?: boolean;
-    
-    /** 
+
+    /**
      * height of a single isometric tile, default 74
      * @default 74
      */
     tileHeight?: number;
-    /** 
+    /**
      * the angle between the top-left edge and the horizontal diagonal of a isometric quad, default 30
      * @default 30
      */
     isoAngle?: number;
 
-    /** 
+    /**
      * frame to position the engine, default `{ x : 0, y : 0, w : 800, h : 600 }`
      * @default { x : 0, y : 0, w : 800, h : 600 }
      */
     initialPositionFrame?: TPositionFrame;
 
-    /** 
+    /**
      * the type of path finding algorithm two use, default `TRAVISO.PF_ALGORITHMS.ASTAR_ORTHOGONAL`
      * @default TRAVISO.PF_ALGORITHMS.ASTAR_ORTHOGONAL
      */
     pathFindingType?: number;
-    /** 
+    /**
      * whether to return the path to the closest node if the target is unreachable, default false
      * @default false
      */
     pathFindingClosest?: boolean;
 
-    /** 
+    /**
      * defines if the camera will follow the current controllable or not, default true
      * @default true
      */
     followCharacter?: boolean;
-    /** 
+    /**
      * specifies whether the camera moves instantly or with a tween animation to the target location, default false
      * @default false
      */
     instantCameraRelocation?: boolean;
-    /** 
+    /**
      * specifies whether the map-objects will be moved to target location instantly or with an animation, default false
      * @default false
      */
     instantObjectRelocation?: boolean;
 
-    /** 
+    /**
      * Make objects transparent when the controllable is behind them, default true
      * @default true
      */
     changeTransparencies?: boolean;
 
-    /** 
+    /**
      * Highlight the path when the current controllable moves on the map, default true
      * @default true
      */
     highlightPath?: boolean;
-    /** 
+    /**
      * Highlight the target tile when the current controllable moves on the map, default true
      * @default true
      */
     highlightTargetTile?: boolean;
-    /** 
+    /**
      * Animate the tile highlights, default true
      * @default true
      */
     tileHighlightAnimated?: boolean;
-    /** 
+    /**
      * Color code for the tile highlight fill (this will be overridden if a highlight-image is defined), default 0x80d7ff
      * @default 0x80d7ff
      */
@@ -146,22 +155,22 @@ export type TEngineConfiguration = {
      * @default 0.5
      */
     tileHighlightFillAlpha?: number;
-    /** 
+    /**
      * Color code for the tile highlight stroke (this will be overridden if a highlight-image is defined), default 0xFFFFFF
      * @default 0xFFFFFF
      */
     tileHighlightStrokeColor?: number;
-    /** 
+    /**
      * Alpha value for the tile highlight stroke (this will be overridden if a highlight-image is defined), default 1.0
      * @default 1.0
      */
     tileHighlightStrokeAlpha?: number;
-    /** 
+    /**
      * When a tile selected don't move the controllable immediately but still call 'tileSelectCallback', default false
      * @default false
      */
     dontAutoMoveToTile?: boolean;
-    /** 
+    /**
      * Looks for a path every time an object moves to a new tile (set to false if you don't have other moving objects on your map), default true
      * @default true
      */
@@ -173,12 +182,12 @@ export type TEngineConfiguration = {
      */
     mapDraggable?: boolean;
 
-    /** 
+    /**
      * Background color, if defined the engine will create a solid colored background for the map, default null
      * @default null
      */
     backgroundColor?: number;
-    /** 
+    /**
      * Creates a mask using the position frame defined by 'initialPositionFrame' property or the 'posFrame' parameter that is passed to 'repositionContent' method, default false
      * @default false
      */
@@ -186,29 +195,46 @@ export type TEngineConfiguration = {
 
     /** The path to the json file that defines map data, required */
     mapDataPath: string;
-    /** 
+    /**
      * Array of paths to the assets that are desired to be loaded by traviso, no need to use if assets are already loaded to PIXI cache, default null
      * @default null
      */
     assetsToLoad?: string[];
 
-    /** Callback function that will be called once everything is loaded and engine instance is ready, default null  */
+    /**
+     * Callback function that will be called once everything is loaded and engine instance is ready, default null
+     * @default null
+     */
     engineInstanceReadyCallback?: (engineInstance: EngineView) => unknown;
-    /** Callback function that will be called when a tile is selected (call params will be the row and column indexes of the tile selected), default null  */
+    /**
+     * Callback function that will be called when a tile is selected (call params will be the row and column indexes of the tile selected), default null
+     * @default null
+     */
     tileSelectCallback?: (r: number, c: number) => unknown;
-    /** Callback function that will be called when a tile with an interactive map-object on it is selected (call param will be the object selected), default null  */
+    /**
+     * Callback function that will be called when a tile with an interactive map-object on it is selected (call param will be the object selected), default null
+     * @default null
+     */
     objectSelectCallback?: (objectView: ObjectView) => unknown;
-    /** Callback function that will be called when any moving object reaches its destination (call param will be the moving object itself), default null  */
+    /**
+     * Callback function that will be called when any moving object reaches its destination (call param will be the moving object itself), default null
+     * @default null
+     */
     objectReachedDestinationCallback?: (objectView: ObjectView) => unknown;
-    /** Callback function that will be called when any moving object is in move and there are other objects on the next tile, default null  */
+    /**
+     * Callback function that will be called when any moving object is in move and there are other objects on the next tile, default null
+     * @default null
+     */
     otherObjectsOnTheNextTileCallback?: (objectView: ObjectView, otherObjectViews: ObjectView[]) => unknown;
-    /** Callback function that will be called every time an objects direction or position changed, default null  */
+    /**
+     * Callback function that will be called every time an objects direction or position changed, default null
+     * @default null
+     */
     objectUpdateCallback?: (objectView: ObjectView) => unknown;
 };
 
 /**
- * Main display object container class to hold all views
- * within the engine and all map related logic.
+ * Main PIXI.Container class to hold all views within the engine and all map related logic.
  *
  * @class EngineView
  * @extends PIXI.Container
@@ -225,47 +251,45 @@ export class EngineView extends Container {
 
     /**
      * The default height of a single isometric tile
-     * 
+     *
      * @default 74
      * @property
      * @private
-     * @internal
      * @static
      */
-    private static DEFAULT_TILE_H: number = 74;
+    private static readonly DEFAULT_TILE_H: number = 74;
 
     /**
      * The default angle (in degrees) between the top-left edge and the horizontal diagonal of a isometric quad
-     * 
+     *
      * @default 30
      * @property
      * @private
-     * @internal
      * @static
      */
-    private static DEFAULT_ISO_ANGLE: number = 30;
+    private static readonly DEFAULT_ISO_ANGLE: number = 30;
 
     /**
      * Half-height of a single isometric tile
-     * 
+     *
      * @default 37
      * @property
      * @public
      */
-    public tileHalfHeight: number;
+    public readonly tileHalfHeight: number;
 
     /**
      * Half-width of a single isometric tile
-     * 
+     *
      * @default 64
      * @property
      * @public
      */
-    public tileHalfWidth: number;
+    public readonly tileHalfWidth: number;
 
     /**
      * Variable holding the parsed and processed map data
-     * 
+     *
      * @property
      * @public
      */
@@ -273,14 +297,14 @@ export class EngineView extends Container {
 
     /**
      * MoveEngine instance to handle all animations and tweens
-     * 
+     *
      * @property
      * @public
      */
     public moveEngine: MoveEngine;
     /**
      * Current scale of the map's display object
-     * 
+     *
      * @property
      * @private
      * @internal
@@ -288,148 +312,205 @@ export class EngineView extends Container {
     private _currentScale: number;
     /**
      * Current zoom amount of the map
-     * 
+     *
      * @property
      * @private
      * @internal
      */
-    private currentZoom: number;
-
-    private posFrame: TPositionFrame = { x: 0, y: 0, w: 800, h: 600 };
-
-    private externalCenter: TPositionPair;
+    private _currentZoom: number;
+    /**
+     * Active position frame for the engine.
+     *
+     * @property
+     * @private
+     * @internal
+     */
+    private _posFrame: TPositionFrame = { x: 0, y: 0, w: 800, h: 600 };
+    /**
+     * Active external center point for the engine.
+     *
+     * @property
+     * @private
+     * @internal
+     */
+    private _externalCenter: TPositionPair;
 
     /**
      * Solid colored background
-     * 
+     *
      * @property
      * @private
      * @internal
      */
-    private bg: Graphics;
+    private _bg: Graphics;
     /**
      * Mask graphics for the mask
-     * 
+     *
      * @property
      * @private
      * @internal
      */
-    private mapMask: Graphics;
+    private _mapMask: Graphics;
     /**
      * Display object for the map visuals
-     * 
+     *
      * @property
      * @private
      * @internal
      */
-    private mapContainer: Container;
+    private _mapContainer: Container;
     /**
      * Display object for the ground/terrain visuals
-     * 
+     *
      * @property
      * @private
      * @internal
      */
-    private groundContainer: Container;
+    private _groundContainer: Container;
     /**
      * Display object for the map-object visuals
-     * 
+     *
      * @property
      * @private
      * @internal
      */
-    private objContainer: Container;
+    private _objContainer: Container;
     /**
      * Number of rows in the isometric map
-     * 
+     *
      * @property
      * @private
      * @internal
      */
-    private mapSizeR: number;
+    private _mapSizeR: number;
     /**
      * Number of columns in the isometric map
-     * 
+     *
      * @property
      * @private
      * @internal
      */
-    private mapSizeC: number;
+    private _mapSizeC: number;
     /**
      * Array to hold map-tiles
-     * 
+     *
      * @property
      * @private
      * @internal
      */
-    private tileArray: TileView[][];
+    private _tileArray: TileView[][];
     /**
      * Array to hold map-objects
-     * 
+     *
      * @property
      * @private
      * @internal
      */
-    private objArray: ObjectView[][][];
+    private _objArray: ObjectView[][][];
     /**
      * PathFinding instance to handle all path finding logic
-     * 
+     *
      * @property
      * @private
      * @internal
      */
-    private pathFinding: PathFinding;
+    private _pathFinding: PathFinding;
     /**
      * Current controllable map-object that will be the default object to move in user interactions
-     * 
+     *
      * @property
      * @private
      * @internal
      */
-    private currentControllable: ObjectView;
+    private _currentControllable: ObjectView;
     /**
      * Vertices of the map
-     * 
+     *
      * @property
      * @private
      * @internal
      */
-    private mapVertices: number[][];
+    private _mapVertices: number[][];
     /**
      * Total width of all ground tiles
-     * 
+     *
      * @property
      * @private
      * @internal
      */
-    private mapVisualWidthReal: number;
+    private _mapVisualWidthReal: number;
     /**
      * Total height of all ground tiles
-     * 
+     *
      * @property
      * @private
      * @internal
      */
-    private mapVisualHeightReal: number;
-
-    private currentFocusLocation: TColumnRowPair;
-
-    private mapVisualWidthScaled: number;
-    // private mapVisualHeightScaled: number;
-
-    private dragging: boolean = false;
-    private dragInitStartingX: number;
-    private dragInitStartingY: number;
-    private dragPrevStartingX: number;
-    private dragPrevStartingY: number;
-
-    private onMouseUp_binded: (event: InteractionEvent) => void;
-    private onMouseDown_binded: (event: InteractionEvent) => void;
-    private onMouseMove_binded: (event: InteractionEvent) => void;
-    
+    private _mapVisualHeightReal: number;
     /**
-     * Main display object container class to hold all views
-     * within the engine and all map related logic
+     * @property
+     * @private
+     * @internal
+     */
+    private _currentFocusLocation: TColumnRowPair;
+    /**
+     * @property
+     * @private
+     * @internal
+     */
+    private _mapVisualWidthScaled: number;
+    /**
+     * @default `false`
+     * @property
+     * @private
+     * @internal
+     */
+    private _dragging: boolean = false;
+    /**
+     * @property
+     * @private
+     * @internal
+     */
+    private _dragInitStartingX: number;
+    /**
+     * @property
+     * @private
+     * @internal
+     */
+    private _dragInitStartingY: number;
+    /**
+     * @property
+     * @private
+     * @internal
+     */
+    private _dragPrevStartingX: number;
+    /**
+     * @property
+     * @private
+     * @internal
+     */
+    private _dragPrevStartingY: number;
+    /**
+     * @property
+     * @private
+     * @internal
+     */
+    private onMouseUp_binded: (event: InteractionEvent) => void;
+    /**
+     * @property
+     * @private
+     * @internal
+     */
+    private onMouseDown_binded: (event: InteractionEvent) => void;
+    /**
+     * @property
+     * @private
+     * @internal
+     */
+    private onMouseMove_binded: (event: InteractionEvent) => void;
+
+    /**
+     * Constructor method for the main PIXI.Container class to hold all views within the engine and all map related logic.
      *
      * @constructor
      * @param config {TEngineConfiguration} configuration object for the isometric engine instance
@@ -528,7 +609,7 @@ export class EngineView extends Container {
      * @function
      * @private
      * @internal
-     * 
+     *
      * @param loader {Loader} PIXI's loader instance
      */
     private assetsAndDataLoaded(loader: Loader): void {
@@ -683,18 +764,18 @@ export class EngineView extends Container {
         this.moveEngine = new MoveEngine(this);
 
         this._currentScale = 1.0;
-        this.currentZoom = 0;
+        this._currentZoom = 0;
 
-        this.posFrame = this._config.initialPositionFrame || {
+        this._posFrame = this._config.initialPositionFrame || {
             x: 0,
             y: 0,
             w: 800,
             h: 600,
         };
 
-        this.externalCenter = {
-            x: this.posFrame.w >> 1,
-            y: this.posFrame.h >> 1,
+        this._externalCenter = {
+            x: this._posFrame.w >> 1,
+            y: this._posFrame.h >> 1,
         };
 
         this.createMap();
@@ -719,29 +800,29 @@ export class EngineView extends Container {
     private createMap(): void {
         // create background
         if (this._config.backgroundColor) {
-            this.bg = new Graphics();
-            this.addChild(this.bg);
+            this._bg = new Graphics();
+            this.addChild(this._bg);
         }
 
         // create mask
         if (this._config.useMask) {
-            this.mapMask = new Graphics();
-            this.addChild(this.mapMask);
+            this._mapMask = new Graphics();
+            this.addChild(this._mapMask);
         }
 
         // create containers for visual map elements
-        this.mapContainer = new Container();
-        this.addChild(this.mapContainer);
+        this._mapContainer = new Container();
+        this.addChild(this._mapContainer);
 
         // Define two layers of maps
         // One for the world and one for the objects (static/dynamic) over it
         // This enables us not to update the whole world in every move but instead just update the object depths over it
 
-        this.groundContainer = new Container();
-        this.mapContainer.addChild(this.groundContainer);
+        this._groundContainer = new Container();
+        this._mapContainer.addChild(this._groundContainer);
 
-        this.objContainer = new Container();
-        this.mapContainer.addChild(this.objContainer);
+        this._objContainer = new Container();
+        this._mapContainer.addChild(this._objContainer);
 
         const groundMapData = this.mapData.groundMapData;
         const objectsMapData = this.mapData.objectsMapData;
@@ -749,28 +830,28 @@ export class EngineView extends Container {
         const initialControllableLocation = this.mapData.initialControllableLocation;
 
         // set map size
-        this.mapSizeR = groundMapData.length;
-        this.mapSizeC = groundMapData[0].length;
+        this._mapSizeR = groundMapData.length;
+        this._mapSizeC = groundMapData[0].length;
 
         // add ground image first if it is defined
         let groundImageSprite: Sprite;
         if (this.mapData.singleGroundImage) {
             groundImageSprite = new Sprite(Texture.from(this.mapData.singleGroundImage.path));
-            this.groundContainer.addChild(groundImageSprite);
+            this._groundContainer.addChild(groundImageSprite);
 
             groundImageSprite.scale.set(this.mapData.singleGroundImage.scale || 1);
         }
 
         // create arrays to hold tiles and objects
-        this.tileArray = [];
-        this.objArray = [];
+        this._tileArray = [];
+        this._objArray = [];
         let i, j;
-        for (i = 0; i < this.mapSizeR; i++) {
-            this.tileArray[i] = [];
-            this.objArray[i] = [];
-            for (j = 0; j < this.mapSizeC; j++) {
-                this.tileArray[i][j] = null;
-                this.objArray[i][j] = null;
+        for (i = 0; i < this._mapSizeR; i++) {
+            this._tileArray[i] = [];
+            this._objArray[i] = [];
+            for (j = 0; j < this._mapSizeC; j++) {
+                this._tileArray[i][j] = null;
+                this._objArray[i][j] = null;
             }
         }
 
@@ -778,37 +859,37 @@ export class EngineView extends Container {
         // its content will be different acc to the path-finding algorithm.
         // It is still being stored in engine.mapData but you must be aware
         // of the structure if you want to use it after this point.
-        this.pathFinding = new PathFinding(this.mapSizeC, this.mapSizeR, {
+        this._pathFinding = new PathFinding(this._mapSizeC, this._mapSizeR, {
             diagonal: this._config.pathFindingType === PF_ALGORITHMS.ASTAR_DIAGONAL,
             closest: this._config.pathFindingClosest,
         });
 
         let tile;
-        for (i = 0; i < this.mapSizeR; i++) {
-            for (j = this.mapSizeC - 1; j >= 0; j--) {
-                this.tileArray[i][j] = null;
+        for (i = 0; i < this._mapSizeR; i++) {
+            for (j = this._mapSizeC - 1; j >= 0; j--) {
+                this._tileArray[i][j] = null;
                 if (groundMapData[i][j] && groundMapData[i][j] !== KEY_EMPTY_TILE) {
                     tile = new TileView(this, groundMapData[i][j]);
                     tile.position.x = this.getTilePosXFor(i, j);
                     tile.position.y = this.getTilePosYFor(i, j);
                     tile.mapPos = { c: j, r: i };
-                    this.tileArray[i][j] = tile;
-                    this.groundContainer.addChild(tile);
+                    this._tileArray[i][j] = tile;
+                    this._groundContainer.addChild(tile);
 
                     if (!tile.isMovableTo) {
-                        this.pathFinding.setCell(j, i, 0);
+                        this._pathFinding.setCell(j, i, 0);
                     }
                 } else {
-                    this.pathFinding.setCell(j, i, 0);
+                    this._pathFinding.setCell(j, i, 0);
                 }
             }
         }
 
         let obj,
             floorObjectFound = false;
-        for (i = 0; i < this.mapSizeR; i++) {
-            for (j = this.mapSizeC - 1; j >= 0; j--) {
-                this.objArray[i][j] = null;
+        for (i = 0; i < this._mapSizeR; i++) {
+            for (j = this._mapSizeC - 1; j >= 0; j--) {
+                this._objArray[i][j] = null;
                 if (objectsMapData[i][j] && objectsMapData[i][j] !== KEY_NO_OBJECTS) {
                     obj = new ObjectView(this, objectsMapData[i][j]);
                     obj.position.x = this.getTilePosXFor(i, j);
@@ -819,7 +900,7 @@ export class EngineView extends Container {
                         floorObjectFound = true;
                     }
 
-                    this.objContainer.addChild(obj);
+                    this._objContainer.addChild(obj);
 
                     this.addObjRefToLocation(obj, obj.mapPos);
 
@@ -829,7 +910,7 @@ export class EngineView extends Container {
                         initialControllableLocation.columnIndex === j &&
                         initialControllableLocation.rowIndex === i
                     ) {
-                        this.currentControllable = obj;
+                        this._currentControllable = obj;
                     }
                 }
             }
@@ -837,13 +918,13 @@ export class EngineView extends Container {
         if (floorObjectFound) {
             // run the loop again to bring the other objects on top of the floor objects
             let a, k;
-            for (i = 0; i < this.mapSizeR; i++) {
-                for (j = this.mapSizeC - 1; j >= 0; j--) {
-                    a = this.objArray[i][j];
+            for (i = 0; i < this._mapSizeR; i++) {
+                for (j = this._mapSizeC - 1; j >= 0; j--) {
+                    a = this._objArray[i][j];
                     if (a) {
                         for (k = 0; k < a.length; k++) {
                             if (!a[k].isFloorObject) {
-                                this.objContainer.addChild(a[k]);
+                                this._objContainer.addChild(a[k]);
                             }
                         }
                     }
@@ -851,27 +932,36 @@ export class EngineView extends Container {
             }
         }
         // cacheAsBitmap: for now this creates problem with tile highlights
-        // this.groundContainer.cacheAsBitmap = true;
+        // this._groundContainer.cacheAsBitmap = true;
 
-        this.mapVertices = [
+        this._mapVertices = [
             [this.getTilePosXFor(0, 0) - this.tileHalfWidth, this.getTilePosYFor(0, 0)],
-            [this.getTilePosXFor(0, this.mapSizeC - 1), this.getTilePosYFor(0, this.mapSizeC - 1) - this.tileHalfHeight],
             [
-                this.getTilePosXFor(this.mapSizeR - 1, this.mapSizeC - 1) + this.tileHalfWidth,
-                this.getTilePosYFor(this.mapSizeR - 1, this.mapSizeC - 1),
+                this.getTilePosXFor(0, this._mapSizeC - 1),
+                this.getTilePosYFor(0, this._mapSizeC - 1) - this.tileHalfHeight,
             ],
-            [this.getTilePosXFor(this.mapSizeR - 1, 0), this.getTilePosYFor(this.mapSizeR - 1, 0) + this.tileHalfHeight],
+            [
+                this.getTilePosXFor(this._mapSizeR - 1, this._mapSizeC - 1) + this.tileHalfWidth,
+                this.getTilePosYFor(this._mapSizeR - 1, this._mapSizeC - 1),
+            ],
+            [
+                this.getTilePosXFor(this._mapSizeR - 1, 0),
+                this.getTilePosYFor(this._mapSizeR - 1, 0) + this.tileHalfHeight,
+            ],
         ];
 
-        this.mapVisualWidthReal = this.getTilePosXFor(this.mapSizeR - 1, this.mapSizeC - 1) - this.getTilePosXFor(0, 0);
-        this.mapVisualHeightReal =
-            this.getTilePosYFor(this.mapSizeR - 1, 0) - this.getTilePosYFor(0, this.mapSizeC - 1);
+        this._mapVisualWidthReal =
+            this.getTilePosXFor(this._mapSizeR - 1, this._mapSizeC - 1) - this.getTilePosXFor(0, 0);
+        this._mapVisualHeightReal =
+            this.getTilePosYFor(this._mapSizeR - 1, 0) - this.getTilePosYFor(0, this._mapSizeC - 1);
 
         if (groundImageSprite) {
             groundImageSprite.position.x =
-                this.mapVertices[0][0] + this.tileHalfWidth + (this.mapVisualWidthReal - groundImageSprite.width) / 2;
+                this._mapVertices[0][0] + this.tileHalfWidth + (this._mapVisualWidthReal - groundImageSprite.width) / 2;
             groundImageSprite.position.y =
-                this.mapVertices[1][1] + this.tileHalfHeight + (this.mapVisualHeightReal - groundImageSprite.height) / 2;
+                this._mapVertices[1][1] +
+                this.tileHalfHeight +
+                (this._mapVisualHeightReal - groundImageSprite.height) / 2;
         }
 
         this.zoomTo(this._config.initialZoomLevel, true);
@@ -894,7 +984,7 @@ export class EngineView extends Container {
      * @method
      * @function
      * @public
-     * 
+     *
      * @param r {number} row index of the tile
      * @param c {number} column index of the tile
      * @return {number} 2D X position of a tile
@@ -909,7 +999,7 @@ export class EngineView extends Container {
      * @method
      * @function
      * @public
-     * 
+     *
      * @param r {number} row index of the tile
      * @param c {number} column index of the tile
      * @return {number} 2D Y position of a tile
@@ -924,11 +1014,11 @@ export class EngineView extends Container {
      * @method
      * @function
      * @public
-     * 
-     * @param show {boolean} show the object layer, default false
+     *
+     * @param show {boolean} show the object layer, default `false`
      */
     public showHideObjectLayer(show: boolean = false): void {
-        this.objContainer.visible = show;
+        this._objContainer.visible = show;
     }
     /**
      * Shows or hides the display object that includes the ground/terrain layer
@@ -936,11 +1026,11 @@ export class EngineView extends Container {
      * @method
      * @function
      * @public
-     * 
-     * @param show {boolean} show the ground layer, default false
+     *
+     * @param show {boolean} show the ground layer, default `false`
      */
     public showHideGroundLayer(show: boolean = false): void {
-        this.groundContainer.visible = show;
+        this._groundContainer.visible = show;
     }
     /**
      * Returns the TileView instance that sits in the location given by row and column indices.
@@ -948,13 +1038,13 @@ export class EngineView extends Container {
      * @method
      * @function
      * @public
-     * 
+     *
      * @param r {number} row index of the tile
      * @param c {number} column index of the tile
      * @return {TileView} the tile in the location given
      */
     public getTileAtRowAndColumn(r: number, c: number): TileView {
-        return this.tileArray[r][c];
+        return this._tileArray[r][c];
     }
     /**
      * Returns all the ObjectView instances referenced to the given location with the specified row and column indices.
@@ -962,13 +1052,13 @@ export class EngineView extends Container {
      * @method
      * @function
      * @public
-     * 
+     *
      * @param r {number} the row index of the map location
      * @param c {number} the column index of the map location
      * @return {Array(ObjectView)} an array of map-objects referenced to the given location
      */
     public getObjectsAtRowAndColumn(r: number, c: number): ObjectView[] {
-        return this.objArray[r][c];
+        return this._objArray[r][c];
     }
     /**
      * Returns all the ObjectView instances referenced to the given location.
@@ -976,12 +1066,12 @@ export class EngineView extends Container {
      * @method
      * @function
      * @public
-     * 
+     *
      * @param pos {TColumnRowPair} position object including row and column coordinates
      * @return {Array(ObjectView)} an array of map-objects referenced to the given location
      */
     public getObjectsAtLocation(pos: TColumnRowPair): ObjectView[] {
-        return this.objArray[pos.r][pos.c];
+        return this._objArray[pos.r][pos.c];
     }
 
     /**
@@ -990,7 +1080,7 @@ export class EngineView extends Container {
      * @method
      * @function
      * @public
-     * 
+     *
      * @param type {number} type-id of the object as defined in the json file
      * @param pos {TColumnRowPair} position object including row and column coordinates
      * @return {ObjectView} the newly created map-object
@@ -1004,7 +1094,7 @@ export class EngineView extends Container {
      * @method
      * @function
      * @public
-     * 
+     *
      * @param obj {ObjectView} a map-object to add to the map and the given location
      * @param pos {TColumnRowPair} position object including row and column coordinates
      * @return {ObjectView} the newly added object
@@ -1014,10 +1104,10 @@ export class EngineView extends Container {
         obj.position.y = this.getTilePosYFor(pos.r, pos.c) + this.tileHalfHeight;
         obj.mapPos = { c: pos.c, r: pos.r };
 
-        this.objContainer.addChild(obj);
+        this._objContainer.addChild(obj);
 
         this.addObjRefToLocation(obj, obj.mapPos);
-        this.arrangeDepthsFromLocation(obj.isFloorObject ? { c: this.mapSizeC - 1, r: 0 } : obj.mapPos);
+        this.arrangeDepthsFromLocation(obj.isFloorObject ? { c: this._mapSizeC - 1, r: 0 } : obj.mapPos);
 
         return obj;
     }
@@ -1030,11 +1120,11 @@ export class EngineView extends Container {
      * @method
      * @function
      * @public
-     * 
+     *
      * @param displayObject {PIXI.DisplayObject} object to be added to location
-     * @param [displayObject.isMovableTo=true] {Boolean} if the object can be moved onto by other map-objects, default true
-     * @param [displayObject.columnSpan] {Number} number of tiles that map-object covers horizontally on the isometric map
-     * @param [displayObject.rowSpan] {Number} number of tiles that map-object covers vertically on the isometric map
+     * @param displayObject.isMovableTo {boolean} if the object can be moved onto by other map-objects, default true
+     * @param displayObject.columnSpan {number} number of tiles that map-object covers horizontally on the isometric map
+     * @param displayObject.rowSpan {number} number of tiles that map-object covers vertically on the isometric map
      * @param pos {TColumnRowPair} position object including row and column coordinates
      * @return {PIXI.DisplayObject} the newly added object
      */
@@ -1053,13 +1143,13 @@ export class EngineView extends Container {
      * @method
      * @function
      * @public
-     * 
+     *
      * @param obj {ObjectView} Either an external display object or a map-object (ObjectView)
      * @param pos {TColumnRowPair} position object including row and column coordinates. If not defined, the engine will use `obj.mapPos` to remove the map-object
      */
     public removeObjectFromLocation(obj: ObjectView, pos: TColumnRowPair): void {
         pos = pos || obj.mapPos;
-        this.objContainer.removeChild(obj);
+        this._objContainer.removeChild(obj);
         this.removeObjRefFromLocation(obj, pos);
     }
     /**
@@ -1068,10 +1158,10 @@ export class EngineView extends Container {
      * @method focusMapToObject
      * @param obj {ObjectView} the object that map will be focused with respect to
      * @param obj.mapPos {Object} the object that holds the location of the map-object on the map
-     * @param obj.mapPos.c {Number} the column index of the map location
-     * @param obj.mapPos.r {Number} the row index of the map location
-     * @param obj.columnSpan {Number} number of tiles that map-object covers horizontally on the isometric map
-     * @param obj.rowSpan {Number} number of tiles that map-object covers vertically on the isometric map
+     * @param obj.mapPos.c {number} the column index of the map location
+     * @param obj.mapPos.r {number} the row index of the map location
+     * @param obj.columnSpan {number} number of tiles that map-object covers horizontally on the isometric map
+     * @param obj.rowSpan {number} number of tiles that map-object covers vertically on the isometric map
      */
     public focusMapToObject(obj: ObjectView): void {
         this.focusMapToLocation(obj.mapPos.c + (obj.columnSpan - 1) / 2, obj.mapPos.r - (obj.rowSpan - 1) / 2, 0);
@@ -1095,8 +1185,8 @@ export class EngineView extends Container {
      * @method centralizeToObject
      * @param obj {ObjectView} the object that map will be centralized with respect to
      * @param obj.mapPos {Object} the object that holds the location of the map-object on the map
-     * @param obj.mapPos.c {Number} the column index of the map location
-     * @param obj.mapPos.r {Number} the row index of the map location
+     * @param obj.mapPos.c {number} the column index of the map location
+     * @param obj.mapPos.r {number} the row index of the map location
      */
     public centralizeToObject(obj: ObjectView): void {
         this.centralizeToLocation(obj.mapPos.c, obj.mapPos.r, this._config.instantCameraRelocation);
@@ -1105,25 +1195,25 @@ export class EngineView extends Container {
      * Centralizes the EngineView instance to the map location specified by row and column index.
      *
      * @method centralizeToLocation
-     * @param c {Number} the column index of the map location
-     * @param r {Number} the row index of the map location
-     * @param [instantRelocate=false] {Boolean} specifies if the camera move will be animated or instant
+     * @param c {number} the column index of the map location
+     * @param r {number} the row index of the map location
+     * @param [instantRelocate=false] {boolean} specifies if the camera move will be animated or instant
      */
     public centralizeToLocation(c: number, r: number, instantRelocate: boolean): void {
-        this.currentFocusLocation = { c: c, r: r };
+        this._currentFocusLocation = { c: c, r: r };
         const px =
-            this.externalCenter.x + (this.mapVisualWidthScaled >> 1) - this.getTilePosXFor(r, c) * this._currentScale;
-        const py = this.externalCenter.y - this.getTilePosYFor(r, c) * this._currentScale;
+            this._externalCenter.x + (this._mapVisualWidthScaled >> 1) - this.getTilePosXFor(r, c) * this._currentScale;
+        const py = this._externalCenter.y - this.getTilePosYFor(r, c) * this._currentScale;
         this.centralizeToPoint(px, py, instantRelocate);
     }
     /**
      * Centralizes the EngineView instance to the current location of the attention/focus.
      *
      * @method centralizeToCurrentFocusLocation
-     * @param [instantRelocate=false] {Boolean} specifies if the camera move will be animated or instant
+     * @param [instantRelocate=false] {boolean} specifies if the camera move will be animated or instant
      */
     public centralizeToCurrentFocusLocation(instantRelocate: boolean): void {
-        this.centralizeToLocation(this.currentFocusLocation.c, this.currentFocusLocation.r, instantRelocate);
+        this.centralizeToLocation(this._currentFocusLocation.c, this._currentFocusLocation.r, instantRelocate);
     }
     /**
      * External center is the central point of the frame defined by the user to be used as the visual size of the engine.
@@ -1132,16 +1222,16 @@ export class EngineView extends Container {
      * @method
      * @function
      * @public
-     * 
+     *
      * @param instantRelocate {boolean} specifies if the camera move will be animated or instant
      */
     public centralizeToCurrentExternalCenter(instantRelocate: boolean): void {
-        if (this.externalCenter) {
-            this.currentFocusLocation = {
-                c: this.mapSizeC >> 1,
-                r: this.mapSizeR >> 1,
+        if (this._externalCenter) {
+            this._currentFocusLocation = {
+                c: this._mapSizeC >> 1,
+                r: this._mapSizeR >> 1,
             };
-            this.centralizeToPoint(this.externalCenter.x, this.externalCenter.y, instantRelocate);
+            this.centralizeToPoint(this._externalCenter.x, this._externalCenter.y, instantRelocate);
         }
     }
     /**
@@ -1150,23 +1240,23 @@ export class EngineView extends Container {
      * @method
      * @function
      * @public
-     * 
+     *
      * @param px {number} the x coordinate of the center point with respect to EngineView frame
      * @param py {number} the y coordinate of the center point with respect to EngineView frame
      * @param instantRelocate {boolean} specifies if the relocation will be animated or instant
      */
     public centralizeToPoint(px: number, py: number, instantRelocate: boolean): void {
-        if (this.tileArray) {
-            px = px - (this.mapVisualWidthScaled >> 1);
+        if (this._tileArray) {
+            px = px - (this._mapVisualWidthScaled >> 1);
             if (
                 (existy(instantRelocate) && instantRelocate) ||
                 (!existy(instantRelocate) && this._config.instantCameraRelocation)
             ) {
-                this.mapContainer.position.x = px;
-                this.mapContainer.position.y = py;
+                this._mapContainer.position.x = px;
+                this._mapContainer.position.y = py;
             } else {
                 this.moveEngine.addTween(
-                    this.mapContainer.position as unknown as ITweenTarget,
+                    this._mapContainer.position as unknown as ITweenTarget,
                     0.5,
                     { x: px, y: py },
                     0,
@@ -1182,7 +1272,7 @@ export class EngineView extends Container {
      * @method
      * @function
      * @public
-     * 
+     *
      * @param minScale {number} minimum scale that the PIXI.Container for the map can get, default 0.5
      * @param maxScale {number} maximum scale that the PIXI.Container for the map can get, default 1.5
      * @param numberOfZoomLevels {number} used to calculate zoom increment, defined by user, default 5
@@ -1216,7 +1306,7 @@ export class EngineView extends Container {
      * @function
      * @private
      * @internal
-     * 
+     *
      * @param s {number} Scale amount for both x and y coordinates
      * @param instantZoom {boolean} Specifies if the scaling will be animated or instant
      */
@@ -1227,14 +1317,14 @@ export class EngineView extends Container {
             s = this._config.maxScale;
         }
         this._currentScale = s;
-        this.mapVisualWidthScaled = this.mapVisualWidthReal * this._currentScale;
-        // this.mapVisualHeightScaled = this.mapVisualHeightReal * this._currentScale;
+        this._mapVisualWidthScaled = this._mapVisualWidthReal * this._currentScale;
+        // this.mapVisualHeightScaled = this._mapVisualHeightReal * this._currentScale;
 
         if ((existy(instantZoom) && instantZoom) || (!existy(instantZoom) && this._config.instantCameraZoom)) {
-            this.mapContainer.scale.set(this._currentScale);
+            this._mapContainer.scale.set(this._currentScale);
         } else {
             this.moveEngine.addTween(
-                this.mapContainer.scale as unknown as ITweenTarget,
+                this._mapContainer.scale as unknown as ITweenTarget,
                 0.5,
                 { x: this._currentScale, y: this._currentScale },
                 0,
@@ -1249,7 +1339,7 @@ export class EngineView extends Container {
      * @method
      * @function
      * @public
-     * 
+     *
      * @param zoomAmount {number} specifies zoom amount (between -1 and 1). Use -1, -0.5, 0, 0,5, 1 for better results.
      * @param instantZoom {boolean} specifies whether to zoom instantly or with a tween animation
      */
@@ -1265,7 +1355,7 @@ export class EngineView extends Container {
         );
         s = Math.round(s * 10) / 10;
 
-        this.currentZoom = mathMap(
+        this._currentZoom = mathMap(
             s,
             this._config.minScale,
             this._config.maxScale,
@@ -1274,10 +1364,12 @@ export class EngineView extends Container {
             true
         );
 
-        this.externalCenter = this.externalCenter ? this.externalCenter : { x: this.mapVisualWidthScaled >> 1, y: 0 };
+        this._externalCenter = this._externalCenter
+            ? this._externalCenter
+            : { x: this._mapVisualWidthScaled >> 1, y: 0 };
         const diff = {
-            x: this.mapContainer.position.x + (this.mapVisualWidthScaled >> 1) - this.externalCenter.x,
-            y: this.mapContainer.position.y - this.externalCenter.y,
+            x: this._mapContainer.position.x + (this._mapVisualWidthScaled >> 1) - this._externalCenter.x,
+            y: this._mapContainer.position.y - this._externalCenter.y,
         };
         const oldScale = this._currentScale;
 
@@ -1285,13 +1377,13 @@ export class EngineView extends Container {
 
         const ratio = this._currentScale / oldScale;
         this.centralizeToPoint(
-            this.externalCenter.x + diff.x * ratio,
-            this.externalCenter.y + diff.y * ratio,
+            this._externalCenter.x + diff.x * ratio,
+            this._externalCenter.y + diff.y * ratio,
             (existy(instantZoom) && instantZoom) || (!existy(instantZoom) && this._config.instantCameraZoom)
         );
 
         // trace("scalingTo: " + this._currentScale);
-        // trace("zoomingTo: " + this.currentZoom);
+        // trace("zoomingTo: " + this._currentZoom);
     }
     /**
      * Zooms the camera one level out.
@@ -1299,20 +1391,20 @@ export class EngineView extends Container {
      * @method
      * @function
      * @public
-     * 
+     *
      * @param instantZoom {boolean} Specifies whether to zoom instantly or with a tween animation
      */
     public zoomOut(instantZoom: boolean): void {
-        this.zoomTo(this.currentZoom - this._config.zoomIncrement, instantZoom);
+        this.zoomTo(this._currentZoom - this._config.zoomIncrement, instantZoom);
     }
     /**
      * Zooms the camera one level in.
      *
      * @method zoomIn
-     * @param [instantZoom=false] {Boolean} specifies whether to zoom instantly or with a tween animation
+     * @param [instantZoom=false] {boolean} specifies whether to zoom instantly or with a tween animation
      */
     public zoomIn(instantZoom: boolean): void {
-        this.zoomTo(this.currentZoom + this._config.zoomIncrement, instantZoom);
+        this.zoomTo(this._currentZoom + this._config.zoomIncrement, instantZoom);
     }
     /**
      * Returns the current controllable map-object.
@@ -1321,7 +1413,7 @@ export class EngineView extends Container {
      * @return {ObjectView} current controllable map-object
      */
     public getCurrentControllable(): ObjectView {
-        return this.currentControllable;
+        return this._currentControllable;
     }
     /**
      * Sets a map-object as the current controllable. This object will be moving in further relevant user interactions.
@@ -1329,11 +1421,11 @@ export class EngineView extends Container {
      * @method setCurrentControllable
      * @param obj {ObjectView} object to be set as current controllable
      * @param obj.mapPos {Object} object including r and c coordinates
-     * @param obj.mapPos.c {Number} the column index of the map location
-     * @param obj.mapPos.r {Number} the row index of the map location
+     * @param obj.mapPos.c {number} the column index of the map location
+     * @param obj.mapPos.r {number} the row index of the map location
      */
     public setCurrentControllable(obj: ObjectView): void {
-        this.currentControllable = obj;
+        this._currentControllable = obj;
     }
     /**
      * Adds a reference of the given map-object to the given location in the object array.
@@ -1343,10 +1435,11 @@ export class EngineView extends Container {
      * @method
      * @function
      * @private
-     * 
+     * @internal
+     *
      * @param obj {ObjectView} object to be bind to location
-     * @param obj.columnSpan {Number} number of tiles that map-object covers horizontally on the isometric map
-     * @param obj.rowSpan {Number} number of tiles that map-object covers vertically on the isometric map
+     * @param obj.columnSpan {number} number of tiles that map-object covers horizontally on the isometric map
+     * @param obj.rowSpan {number} number of tiles that map-object covers vertically on the isometric map
      * @param pos {TColumnRowPair} position object including row and column coordinates
      */
     private addObjRefToLocation(obj: ObjectView, pos: TColumnRowPair): void {
@@ -1364,22 +1457,23 @@ export class EngineView extends Container {
      * @method
      * @function
      * @private
-     * 
+     * @internal
+     *
      * @param obj {ObjectView} object to be bind to location
-     * @param obj.isMovableTo {Boolean} is the object is movable onto by the other objects or not
+     * @param obj.isMovableTo {boolean} is the object is movable onto by the other objects or not
      * @param pos {TColumnRowPair} position object including row and column coordinates
      */
     private addObjRefToSingleLocation(obj: ObjectView, pos: TColumnRowPair): void {
-        if (!this.objArray[pos.r][pos.c]) {
-            this.objArray[pos.r][pos.c] = [];
+        if (!this._objArray[pos.r][pos.c]) {
+            this._objArray[pos.r][pos.c] = [];
         }
-        const index = this.objArray[pos.r][pos.c].indexOf(obj);
+        const index = this._objArray[pos.r][pos.c].indexOf(obj);
         if (index < 0) {
-            this.objArray[pos.r][pos.c].push(obj);
+            this._objArray[pos.r][pos.c].push(obj);
         }
 
         if (!obj.isMovableTo) {
-            this.pathFinding.setDynamicCell(pos.c, pos.r, 0);
+            this._pathFinding.setDynamicCell(pos.c, pos.r, 0);
         }
     }
     /**
@@ -1390,10 +1484,11 @@ export class EngineView extends Container {
      * @method
      * @function
      * @private
-     * 
+     * @internal
+     *
      * @param obj {ObjectView} object to be bind to location
-     * @param obj.columnSpan {Number} number of tiles that map-object covers horizontally on the isometric map
-     * @param obj.rowSpan {Number} number of tiles that map-object covers vertically on the isometric map
+     * @param obj.columnSpan {number} number of tiles that map-object covers horizontally on the isometric map
+     * @param obj.rowSpan {number} number of tiles that map-object covers vertically on the isometric map
      * @param pos {TColumnRowPair} position object including row and column coordinates
      */
     private removeObjRefFromLocation(obj: ObjectView, pos: TColumnRowPair): void {
@@ -1411,28 +1506,29 @@ export class EngineView extends Container {
      * @method
      * @function
      * @private
-     * 
+     * @internal
+     *
      * @param obj {ObjectView} object to be bind to location
      * @param pos {TColumnRowPair} position object including row and column coordinates
      */
     private removeObjRefFromSingleLocation(obj: ObjectView, pos: TColumnRowPair): void {
-        if (this.objArray[pos.r][pos.c]) {
-            const index = this.objArray[pos.r][pos.c].indexOf(obj);
+        if (this._objArray[pos.r][pos.c]) {
+            const index = this._objArray[pos.r][pos.c].indexOf(obj);
             if (index > -1) {
-                this.objArray[pos.r][pos.c].splice(index, 1);
+                this._objArray[pos.r][pos.c].splice(index, 1);
             }
-            if (this.objArray[pos.r][pos.c].length === 0) {
-                this.pathFinding.setDynamicCell(pos.c, pos.r, 1);
-                this.objArray[pos.r][pos.c] = null;
+            if (this._objArray[pos.r][pos.c].length === 0) {
+                this._pathFinding.setDynamicCell(pos.c, pos.r, 1);
+                this._objArray[pos.r][pos.c] = null;
             } else {
-                const a = this.objArray[pos.r][pos.c];
+                const a = this._objArray[pos.r][pos.c];
                 const l = a.length;
                 for (let i = 0; i < l; i++) {
                     if (!a[i].isMovableTo) {
-                        this.pathFinding.setDynamicCell(pos.c, pos.r, 0);
+                        this._pathFinding.setDynamicCell(pos.c, pos.r, 0);
                         break;
                     } else if (i === l - 1) {
-                        this.pathFinding.setDynamicCell(pos.c, pos.r, 1);
+                        this._pathFinding.setDynamicCell(pos.c, pos.r, 1);
                     }
                 }
             }
@@ -1446,20 +1542,20 @@ export class EngineView extends Container {
     //  * @param {TColumnRowPair} pos object including r and c coordinates
     //  */
     // private removeAllObjectRefsFromLocation(pos: TColumnRowPair): void {
-    //     if (this.objArray[pos.r][pos.c]) {
-    //         this.pathFinding.setDynamicCell(pos.c, pos.r, 1);
-    //         this.objArray[pos.r][pos.c] = null;
+    //     if (this._objArray[pos.r][pos.c]) {
+    //         this._pathFinding.setDynamicCell(pos.c, pos.r, 1);
+    //         this._objArray[pos.r][pos.c] = null;
     //     }
     // }
     /**
      * Sets alphas of the map-objects referenced to the given location.
      *
      * @method changeObjAlphasInLocation
-     * @param value {Number} alpha value, should be between 0 and 1
+     * @param value {number} alpha value, should be between 0 and 1
      * @param pos {TColumnRowPair} position object including row and column coordinates
      */
     public changeObjAlphasInLocation(value: number, pos: TColumnRowPair): void {
-        const a = this.objArray[pos.r][pos.c];
+        const a = this._objArray[pos.r][pos.c];
         if (a) {
             const l = a.length;
             for (let i = 0; i < l; i++) {
@@ -1476,7 +1572,7 @@ export class EngineView extends Container {
      * @function
      * @private
      * @internal
-     * 
+     *
      * @param obj {ObjectView} map-object to be moved
      * @param obj.mapPos {Object} object including r and c coordinates
      * @param obj.mapPos.c {number} the column index of the map location
@@ -1497,27 +1593,27 @@ export class EngineView extends Container {
      * @function
      * @private
      * @internal
-     * 
+     *
      * @param obj {ObjectView} current controllable map-object
      * @param prevPos {TColumnRowPair} previous location of the map-object in terms of row and column coordinates
      * @param pos {TColumnRowPair} new location of the map-object in terms of row and column coordinates
      */
     private arrangeObjTransparencies(obj: ObjectView, prevPos: TColumnRowPair, pos: TColumnRowPair): void {
         if (this._config.changeTransparencies) {
-            if (this.currentControllable === obj) {
+            if (this._currentControllable === obj) {
                 if (prevPos.c > 0) {
                     this.changeObjAlphasInLocation(1, {
                         c: prevPos.c - 1,
                         r: prevPos.r,
                     });
                 }
-                if (prevPos.c > 0 && prevPos.r < this.mapSizeR - 1) {
+                if (prevPos.c > 0 && prevPos.r < this._mapSizeR - 1) {
                     this.changeObjAlphasInLocation(1, {
                         c: prevPos.c - 1,
                         r: prevPos.r + 1,
                     });
                 }
-                if (prevPos.r < this.mapSizeR - 1) {
+                if (prevPos.r < this._mapSizeR - 1) {
                     this.changeObjAlphasInLocation(1, {
                         c: prevPos.c,
                         r: prevPos.r + 1,
@@ -1530,13 +1626,13 @@ export class EngineView extends Container {
                         r: pos.r,
                     });
                 }
-                if (pos.c > 0 && pos.r < this.mapSizeR - 1) {
+                if (pos.c > 0 && pos.r < this._mapSizeR - 1) {
                     this.changeObjAlphasInLocation(0.7, {
                         c: pos.c - 1,
                         r: pos.r + 1,
                     });
                 }
-                if (pos.r < this.mapSizeR - 1) {
+                if (pos.r < this._mapSizeR - 1) {
                     this.changeObjAlphasInLocation(0.7, {
                         c: pos.c,
                         r: pos.r + 1,
@@ -1555,18 +1651,18 @@ export class EngineView extends Container {
      * @function
      * @private
      * @internal
-     * 
+     *
      * @param pos {TColumnRowPair} position object including row and column coordinates
      */
     private arrangeDepthsFromLocation(pos: TColumnRowPair): void {
         let a, i, j, k;
-        for (i = pos.r; i < this.mapSizeR; i++) {
+        for (i = pos.r; i < this._mapSizeR; i++) {
             for (j = pos.c; j >= 0; j--) {
-                a = this.objArray[i][j];
+                a = this._objArray[i][j];
                 if (a) {
                     for (k = 0; k < a.length; k++) {
                         if (!a[k].isFloorObject) {
-                            this.objContainer.addChild(a[k]);
+                            this._objContainer.addChild(a[k]);
                         }
                     }
                 }
@@ -1580,7 +1676,7 @@ export class EngineView extends Container {
      * @function
      * @private
      * @internal
-     * 
+     *
      * @param currentPath {Array(GridNode)} the old path to clear the highlight from
      * @param newPath {Array(GridNode)} the new path to highlight
      */
@@ -1590,7 +1686,7 @@ export class EngineView extends Container {
             for (i = 0; i < currentPath.length; i++) {
                 pathItem = currentPath[i];
                 if (!newPath || newPath.indexOf(pathItem) === -1) {
-                    tile = this.tileArray[pathItem.mapPos.r][pathItem.mapPos.c];
+                    tile = this._tileArray[pathItem.mapPos.r][pathItem.mapPos.c];
                     tile.setHighlighted(false, !this._config.tileHighlightAnimated);
                 }
             }
@@ -1599,7 +1695,7 @@ export class EngineView extends Container {
             for (i = 0; i < newPath.length; i++) {
                 pathItem = newPath[i];
                 if (!currentPath || currentPath.indexOf(pathItem) === -1) {
-                    tile = this.tileArray[pathItem.mapPos.r][pathItem.mapPos.c];
+                    tile = this._tileArray[pathItem.mapPos.r][pathItem.mapPos.c];
                     tile.setHighlighted(true, !this._config.tileHighlightAnimated);
                 }
             }
@@ -1608,9 +1704,12 @@ export class EngineView extends Container {
     /**
      * Stops a moving object.
      *
-     * @method stopObject
+     * @method
+     * @function
      * @private
-     * @param obj {ObjectView} map-object to be moved on path
+     * @internal
+     *
+     * @param obj {IMovable} map-object to be moved on path
      */
     private stopObject(obj: IMovable): void {
         obj.currentPath = null;
@@ -1621,25 +1720,25 @@ export class EngineView extends Container {
     /**
      * Moves the specified map-object through a path.
      *
-     * @method moveObjThrough
+     * @method
+     * @function
      * @private
-     * @param obj {ObjectView} map-object to be moved on path
-     * @param obj.mapPos {Object} object including r and c coordinates of the map-object
-     * @param obj.mapPos.c {Number} the column index of the map location
-     * @param obj.mapPos.r {Number} the row index of the map location
-     * @param path {Array(Object)} path to move object on
-     * @param [speed=null] {Number} speed of the map-object to be used during movement, if not defined it uses previous speed or the MoveEngine's default speed, default null
+     * @internal
+     *
+     * @param obj {IMovable} map-object to be moved on path
+     * @param path {Array(GridNode)} path to move object on
+     * @param speed {number} speed of the map-object to be used during movement, if not defined it uses previous speed or the MoveEngine's default speed, default null
      */
     private moveObjThrough(obj: IMovable, path: GridNode[], speed: number = null): void {
         if (this._config.instantObjectRelocation) {
-            const tile = this.tileArray[path[0].mapPos.r][path[0].mapPos.c];
+            const tile = this._tileArray[path[0].mapPos.r][path[0].mapPos.c];
             obj.position.x = tile.position.x;
             obj.position.y = tile.position.y + this.tileHalfHeight;
             this.arrangeObjTransparencies(obj, obj.mapPos, tile.mapPos);
             this.arrangeObjLocation(obj, tile.mapPos);
             this.arrangeDepthsFromLocation(tile.mapPos);
         } else {
-            if (this._config.highlightPath && this.currentControllable === obj) {
+            if (this._config.highlightPath && this._currentControllable === obj) {
                 this.arrangePathHighlight(obj.currentPath, path);
             }
 
@@ -1659,17 +1758,14 @@ export class EngineView extends Container {
     /**
      * Sets up the engine at the beginning of each tile change move for the specified object
      *
-     * @method onObjMoveStepBegin
+     * @method
+     * @function
      * @private
-     * @param obj {ObjectView} map-object that is being moved
-     * @param obj.mapPos {Object} object including r and c coordinates of the map-object
-     * @param obj.mapPos.c {Number} the column index of the map location
-     * @param obj.mapPos.r {Number} the row index of the map location
-     * @param [obj.currentDirection="idle"] {Number} current direction id of the map-object
-     * @param pos {Object} object including r and c coordinates for the target location
-     * @param pos.r {Number} the row index of the map location
-     * @param pos.c {Number} the column index of the map location
-     * @return {Boolean} if the target tile was available and map-object has moved
+     * @internal
+     *
+     * @param obj {IMovable} map-object that is being moved
+     * @param pos {TColumnRowPair} position object including row and column coordinates
+     * @return {boolean} if the target tile was available and map-object has moved
      */
     private onObjMoveStepBegin(obj: IMovable, pos: TColumnRowPair): boolean {
         // trace("onObjMoveStepBegin");
@@ -1680,7 +1776,7 @@ export class EngineView extends Container {
         obj.changeVisualToDirection(obj.currentDirection, true);
 
         // check if the next target pos is still empty
-        if (!this.pathFinding.isCellFilled(pos.c, pos.r)) {
+        if (!this._pathFinding.isCellFilled(pos.c, pos.r)) {
             // pos is movable
             // this.arrangeObjTransparencies(obj, obj.mapPos, pos);
             // this.arrangeObjLocation(obj, pos);
@@ -1709,15 +1805,12 @@ export class EngineView extends Container {
     /**
      * Sets up the engine at the end of each tile change move for the specified object
      *
-     * @method onObjMoveStepEnd
-     * @private
-     * @param obj {ObjectView} map-object that is being moved
-     * @param obj.mapPos {Object} object including r and c coordinates of the map-object
-     * @param obj.mapPos.c {Number} the column index of the map location
-     * @param obj.mapPos.r {Number} the row index of the map location
-     * @param obj.currentPath {Array(Object)} current path assigned to the map-object
-     * @param obj.currentPathStep {Number} current step on the path
-     * @param [obj.currentDirection="idle"] {String} current direction id of the map-object
+     * @method
+     * @function
+     * @public
+     * @internal
+     *
+     * @param obj {IMovable} map-object that is being moved
      */
     public onObjMoveStepEnd(obj: IMovable): void {
         //trace("onObjMoveStepEnd");
@@ -1740,8 +1833,8 @@ export class EngineView extends Container {
             obj.changeVisualToDirection(obj.currentDirection, false);
         }
 
-        if (this.currentControllable === obj) {
-            const tile = this.tileArray[obj.mapPos.r][obj.mapPos.c];
+        if (this._currentControllable === obj) {
+            const tile = this._tileArray[obj.mapPos.r][obj.mapPos.c];
             tile.setHighlighted(false, !this._config.tileHighlightAnimated);
 
             // if (this._config.followCharacter) { this.centralizeToLocation(obj.mapPos.c, obj.mapPos.r); }
@@ -1752,14 +1845,24 @@ export class EngineView extends Container {
         }
     }
 
+    /**
+     * Checks and follows a character
+     *
+     * @method
+     * @function
+     * @public
+     * @internal
+     *
+     * @param obj {IMovable} map-object to check if it is being followed
+     */
     public checkForFollowCharacter(obj: IMovable): void {
-        if (this._config.followCharacter && this.currentControllable === obj) {
-            this.currentFocusLocation = { c: obj.mapPos.c, r: obj.mapPos.r };
-            const px = this.externalCenter.x - obj.position.x * this._currentScale;
-            const py = this.externalCenter.y - obj.position.y * this._currentScale;
+        if (this._config.followCharacter && this._currentControllable === obj) {
+            this._currentFocusLocation = { c: obj.mapPos.c, r: obj.mapPos.r };
+            const px = this._externalCenter.x - obj.position.x * this._currentScale;
+            const py = this._externalCenter.y - obj.position.y * this._currentScale;
             // this.centralizeToPoint(px, py, true);
             this.moveEngine.addTween(
-                this.mapContainer.position as unknown as ITweenTarget,
+                this._mapContainer.position as unknown as ITweenTarget,
                 0.1,
                 { x: px, y: py },
                 0,
@@ -1769,14 +1872,24 @@ export class EngineView extends Container {
         }
     }
 
+    /**
+     * Checks if a map-object changes the tile it is on.
+     *
+     * @method
+     * @function
+     * @public
+     * @internal
+     *
+     * @param obj {IMovable} map-object to be checked
+     */
     public checkForTileChange(obj: IMovable): void {
         if (this._config.objectUpdateCallback) {
             this._config.objectUpdateCallback(obj);
         }
 
         const pos = { x: obj.position.x, y: obj.position.y - this.tileHalfHeight };
-        // const tile = this.tileArray[obj.mapPos.r][obj.mapPos.c];
-        const tile = this.tileArray[obj.currentTargetTile.mapPos.r][obj.currentTargetTile.mapPos.c];
+        // const tile = this._tileArray[obj.mapPos.r][obj.mapPos.c];
+        const tile = this._tileArray[obj.currentTargetTile.mapPos.r][obj.currentTargetTile.mapPos.c];
         // move positions to parent scale
         const vertices = [];
         for (let i = 0; i < tile.vertices.length; i++) {
@@ -1803,18 +1916,18 @@ export class EngineView extends Container {
     /**
      * Searches and returns a path between two locations if there is one.
      *
-     * @method getPath
-     * @param from {Object} object including r and c coordinates of the source location
-     * @param from.c {Number} the column index of the map location
-     * @param from.r {Number} the row index of the map location
-     * @param to {Object} object including r and c coordinates of the target location
-     * @param to.c {Number} the column index of the map location
-     * @param to.r {Number} the row index of the map location
+     * @method
+     * @function
+     * @public
+     *
+     * @param from {TColumnRowPair} object including row and column coordinates of the source location
+     * @param to {TColumnRowPair} object including row and column coordinates of the target location
+     *
      * @return {Array(Object)} an array of path items defining the path
      */
     public getPath(from: TColumnRowPair, to: TColumnRowPair): GridNode[] {
-        if (this.pathFinding) {
-            return this.pathFinding.solve(from.c, from.r, to.c, to.r);
+        if (this._pathFinding) {
+            return this._pathFinding.solve(from.c, from.r, to.c, to.r);
         } else {
             throw new Error("Path finding hasn't been initialized yet!");
         }
@@ -1822,18 +1935,14 @@ export class EngineView extends Container {
     /**
      * Checks for a path and moves the map-object on map if there is an available path
      *
-     * @method checkAndMoveObjectToTile
+     * @method
+     * @function
+     * @public
+     *
      * @param obj {ObjectView} map-object that is being moved
-     * @param obj.mapPos {Object} object including r and c coordinates of the map-object
-     * @param obj.mapPos.c {Number} the column index of the map location
-     * @param obj.mapPos.r {Number} the row index of the map location
      * @param tile {TileView} target map-tile or any custom object that has 'mapPos' and 'isMovableTo' defined
-     * @param tile.isMovableTo {Boolean} if the target tile is movable onto
-     * @param tile.mapPos {Object} object including r and c coordinates of the map-tile
-     * @param tile.mapPos.c {Number} the column index of the map location
-     * @param tile.mapPos.r {Number} the row index of the map location
-     * @param [speed=null] {Number} speed of the map-object to be used during movement, if not defined it uses previous speed or the MoveEngine's default speed, default null
-     * @return {Boolean} if there is an available path to move to the target tile
+     * @param speed {number} speed of the map-object to be used during movement, if not defined it uses previous speed or the MoveEngine's default speed, default null
+     * @return {boolean} if there is an available path to move to the target tile
      */
     public checkAndMoveObjectToTile(obj: ObjectView, tile: TileView, speed: number = null): boolean {
         if (tile.isMovableTo) {
@@ -1844,16 +1953,14 @@ export class EngineView extends Container {
     /**
      * Checks for a path and moves the map-object on map if there is an available path
      *
-     * @method checkAndMoveObjectToLocation
+     * @method
+     * @function
+     * @public
+     *
      * @param obj {ObjectView} map-object that is being moved
-     * @param obj.mapPos {Object} object including r and c coordinates of the map-object
-     * @param obj.mapPos.c {Number} the column index of the map location
-     * @param obj.mapPos.r {Number} the row index of the map location
-     * @param pos {Object} object including r and c coordinates for the target location
-     * @param pos.r {Number} the row index of the map location
-     * @param pos.c {Number} the column index of the map location
-     * @param [speed=null] {Number} speed of the map-object to be used during movement, if not defined it uses previous speed or the MoveEngine's default speed, default null
-     * @return {Boolean} if there is an available path to move to the target tile
+     * @param pos {TColumnRowPair} object including row and column coordinates for the target location
+     * @param speed {number} speed of the map-object to be used during movement, if not defined it uses previous speed or the MoveEngine's default speed, default null
+     * @return {boolean} if there is an available path to move to the target tile
      */
     public checkAndMoveObjectToLocation(obj: ObjectView, pos: TColumnRowPair, speed: number = null): boolean {
         const path = this.getPath(obj.mapPos, pos);
@@ -1868,35 +1975,34 @@ export class EngineView extends Container {
     /**
      * Moves the current controllable map-object to a location if available.
      *
-     * @method moveCurrentControllableToLocation
-     * @param pos {Object} object including r and c coordinates for the target location
-     * @param pos.r {Number} the row index of the map location
-     * @param pos.c {Number} the column index of the map location
-     * @param [speed=null] {Number} speed of the map-object to be used during movement, if not defined it uses previous speed or the MoveEngine's default speed, default null
-     * @return {Boolean} if there is an available path to move to the target tile
+     * @method
+     * @function
+     * @public
+     *
+     * @param pos {TColumnRowPair} object including row and column coordinates for the target location
+     * @param speed {number} speed of the map-object to be used during movement, if not defined it uses previous speed or the MoveEngine's default speed, default null
+     * @return {boolean} if there is an available path to move to the target tile
      */
     public moveCurrentControllableToLocation(pos: TColumnRowPair, speed: number = null): boolean {
-        if (!this.currentControllable) {
-            throw new Error('TRAVISO: currentControllable is not defined!');
+        if (!this._currentControllable) {
+            throw new Error('TRAVISO: _currentControllable is not defined!');
         }
-        return this.checkAndMoveObjectToLocation(this.currentControllable, pos, speed);
+        return this.checkAndMoveObjectToLocation(this._currentControllable, pos, speed);
     }
     /**
      * Moves the current controllable map-object to one of the adjacent available tiles of the map-object specified.
      *
-     * @method moveCurrentControllableToObj
+     * @method
+     * @function
+     * @public
+     *
      * @param obj {ObjectView} target map-object
-     * @param obj.mapPos {Object} object including r and c coordinates
-     * @param obj.mapPos.c {Number} the column index of the map location
-     * @param obj.mapPos.r {Number} the row index of the map location
-     * @param obj.columnSpan {Number} number of tiles that map-object covers horizontally on the isometric map
-     * @param obj.rowSpan {Number} number of tiles that map-object covers vertically on the isometric map
-     * @param [speed=null] {Number} speed of the map-object to be used during movement, if not defined it uses previous speed or the MoveEngine's default speed, default null
-     * @return {Boolean} if there is an available path to move to the target map-object
+     * @param speed {number} speed of the map-object to be used during movement, if not defined it uses previous speed or the MoveEngine's default speed, default null
+     * @return {boolean} if there is an available path to move to the target map-object
      */
     public moveCurrentControllableToObj(obj: ObjectView, speed: number = null): boolean {
-        if (!this.currentControllable) {
-            throw new Error('TRAVISO: currentControllable is not defined!');
+        if (!this._currentControllable) {
+            throw new Error('TRAVISO: _currentControllable is not defined!');
         }
         // check if there is a preferred interaction point
         if (obj.currentInteractionOffset) {
@@ -1904,11 +2010,11 @@ export class EngineView extends Container {
                 c: obj.mapPos.c + obj.currentInteractionOffset.c,
                 r: obj.mapPos.r + obj.currentInteractionOffset.r,
             };
-            if (this.checkAndMoveObjectToLocation(this.currentControllable, targetPos, speed)) {
+            if (this.checkAndMoveObjectToLocation(this._currentControllable, targetPos, speed)) {
                 return true;
             }
         }
-        const cellArray = this.pathFinding.getAdjacentOpenCells(
+        const cellArray = this._pathFinding.getAdjacentOpenCells(
             obj.mapPos.c,
             obj.mapPos.r,
             obj.columnSpan,
@@ -1918,28 +2024,31 @@ export class EngineView extends Container {
         let minLength = 3000;
         let path, minPath, tempFlagHolder;
         for (let i = 0; i < cellArray.length; i++) {
-            tile = this.tileArray[cellArray[i].mapPos.r][cellArray[i].mapPos.c];
+            tile = this._tileArray[cellArray[i].mapPos.r][cellArray[i].mapPos.c];
             if (tile) {
                 if (
-                    tile.mapPos.c === this.currentControllable.mapPos.c &&
-                    tile.mapPos.r === this.currentControllable.mapPos.r
+                    tile.mapPos.c === this._currentControllable.mapPos.c &&
+                    tile.mapPos.r === this._currentControllable.mapPos.r
                 ) {
                     // already next to the object, do nothing
-                    this.arrangePathHighlight((this.currentControllable as IMovable).currentPath, null);
-                    this.stopObject(this.currentControllable as IMovable);
+                    this.arrangePathHighlight((this._currentControllable as IMovable).currentPath, null);
+                    this.stopObject(this._currentControllable as IMovable);
                     tempFlagHolder = this._config.instantObjectRelocation;
                     this._config.instantObjectRelocation = true;
-                    this.moveObjThrough(this.currentControllable as IMovable, [
+                    this.moveObjThrough(this._currentControllable as IMovable, [
                         new GridNode(tile.mapPos.c, tile.mapPos.r, 1),
                     ]);
                     this._config.instantObjectRelocation = tempFlagHolder;
-                    this.currentControllable.changeVisualToDirection(this.currentControllable.currentDirection, false);
+                    this._currentControllable.changeVisualToDirection(
+                        this._currentControllable.currentDirection,
+                        false
+                    );
                     if (this._config.objectReachedDestinationCallback) {
-                        this._config.objectReachedDestinationCallback(this.currentControllable);
+                        this._config.objectReachedDestinationCallback(this._currentControllable);
                     }
                     return true;
                 }
-                path = this.getPath(this.currentControllable.mapPos, tile.mapPos);
+                path = this.getPath(this._currentControllable.mapPos, tile.mapPos);
                 if (path && path.length < minLength) {
                     minLength = path.length;
                     minPath = path;
@@ -1948,7 +2057,7 @@ export class EngineView extends Container {
         }
 
         if (minPath) {
-            this.moveObjThrough(this.currentControllable as IMovable, minPath, speed);
+            this.moveObjThrough(this._currentControllable as IMovable, minPath, speed);
             return true;
         }
         return false;
@@ -1959,21 +2068,21 @@ export class EngineView extends Container {
      * @method
      * @function
      * @public
-     * 
+     *
      * @param lp {TPositionPair} Point to check
      * @return {TileView} The nearest map-tile if there is one. Otherwise `null`
      */
     public getTileFromLocalPos(lp: TPositionPair): TileView {
         let closestTile: TileView = null;
-        if (isInPolygon(lp, this.mapVertices)) {
+        if (isInPolygon(lp, this._mapVertices)) {
             // Using nearest point instead of checking polygon vertices for each tile. Should be faster...
             // NOTE: there is an ignored bug (for better performance) that tile is not selected when u click on the far corner
             const thresh = this.tileHalfWidth / 2;
             let tile, i, j, dist;
             let closestDist = 3000;
-            for (i = 0; i < this.mapSizeR; i++) {
-                for (j = 0; j < this.mapSizeC; j++) {
-                    tile = this.tileArray[i][j];
+            for (i = 0; i < this._mapSizeR; i++) {
+                for (j = 0; j < this._mapSizeC; j++) {
+                    tile = this._tileArray[i][j];
                     if (tile) {
                         dist = getDist(lp, tile.position);
                         if (dist < closestDist) {
@@ -1993,16 +2102,18 @@ export class EngineView extends Container {
      * Checks if an interaction occurs using the interaction data coming from PIXI.
      * If there is any interaction starts necessary movements or performs necessary callbacks.
      *
-     * @method checkForTileClick
+     * @method
+     * @function
      * @private
-     * @param interactionData {Object} interaction data coming from PIXI
-     * @param interactionData.global {Object} global interaction point
+     * @internal
+     *
+     * @param interactionData {PIXI.InteractionData} interaction data coming from PIXI
      */
     private checkForTileClick(interactionData: InteractionData): void {
-        const lp = this.mapContainer.toLocal(interactionData.global);
+        const lp = this._mapContainer.toLocal(interactionData.global);
         const closestTile = this.getTileFromLocalPos(lp);
         if (closestTile) {
-            const a = this.objArray[closestTile.mapPos.r][closestTile.mapPos.c];
+            const a = this._objArray[closestTile.mapPos.r][closestTile.mapPos.c];
             if (a) {
                 for (let k = 0; k < a.length; k++) {
                     if (a[k].isInteractive) {
@@ -2015,8 +2126,8 @@ export class EngineView extends Container {
                     else if (a[k].isMovableTo) {
                         if (
                             this._config.dontAutoMoveToTile ||
-                            !this.currentControllable ||
-                            this.checkAndMoveObjectToTile(this.currentControllable, closestTile)
+                            !this._currentControllable ||
+                            this.checkAndMoveObjectToTile(this._currentControllable, closestTile)
                         ) {
                             if (this._config.highlightTargetTile) {
                                 closestTile.setHighlighted(true, !this._config.tileHighlightAnimated);
@@ -2030,8 +2141,8 @@ export class EngineView extends Container {
                 }
             } else if (
                 this._config.dontAutoMoveToTile ||
-                !this.currentControllable ||
-                this.checkAndMoveObjectToTile(this.currentControllable, closestTile)
+                !this._currentControllable ||
+                this.checkAndMoveObjectToTile(this._currentControllable, closestTile)
             ) {
                 if (this._config.highlightTargetTile) {
                     closestTile.setHighlighted(true, !this._config.tileHighlightAnimated);
@@ -2045,7 +2156,9 @@ export class EngineView extends Container {
     /**
      * Enables mouse/touch interactions.
      *
-     * @method enableInteraction
+     * @method
+     * @function
+     * @public
      */
     public enableInteraction(): void {
         // this.mousedown = this.touchstart = this.onMouseDown.bind(this);
@@ -2061,7 +2174,9 @@ export class EngineView extends Container {
     /**
      * Disables mouse/touch interactions.
      *
-     * @method disableInteraction
+     * @method
+     * @function
+     * @public
      */
     public disableInteraction(): void {
         // this.mousedown = this.touchstart = null;
@@ -2073,25 +2188,26 @@ export class EngineView extends Container {
             .off('pointerupoutside', this.onMouseUp_binded)
             .off('pointermove', this.onMouseMove_binded);
         this.interactive = true;
-        this.dragging = false;
+        this._dragging = false;
     }
     /**
      * Checks if the given point is inside the masked area if there is a mask defined.
      *
-     * @method isInteractionInMask
+     * @method
+     * @function
      * @private
-     * @param p {Object} point to check
-     * @param p.x {Number} x component
-     * @param p.y {Number} y component
-     * @return {Boolean} if the point is inside the masked area
+     * @internal
+     *
+     * @param p {TPositionPair} point to check
+     * @return {boolean} if the point is inside the masked area
      */
     private isInteractionInMask(p: TPositionPair): boolean {
         if (this._config.useMask) {
             if (
-                p.x < this.posFrame.x ||
-                p.y < this.posFrame.y ||
-                p.x > this.posFrame.x + this.posFrame.w ||
-                p.y > this.posFrame.y + this.posFrame.h
+                p.x < this._posFrame.x ||
+                p.y < this._posFrame.y ||
+                p.x > this._posFrame.x + this._posFrame.w ||
+                p.y > this._posFrame.y + this._posFrame.h
             ) {
                 return false;
             }
@@ -2099,30 +2215,60 @@ export class EngineView extends Container {
         return true;
     }
     // ******************** START: MOUSE INTERACTIONS **************************** //
+    /**
+     * Handler function for mouse-down event.
+     *
+     * @method
+     * @function
+     * @private
+     * @internal
+     *
+     * @param event {InteractionEvent} interaction event object
+     */
     private onMouseDown(event: InteractionEvent): void {
         const globalPos = event.data.global;
-        if (!this.dragging && this.isInteractionInMask(globalPos)) {
-            this.dragging = true;
+        if (!this._dragging && this.isInteractionInMask(globalPos)) {
+            this._dragging = true;
             //this.mouseDownTime = new Date();
-            this.dragInitStartingX = this.dragPrevStartingX = globalPos.x;
-            this.dragInitStartingY = this.dragPrevStartingY = globalPos.y;
+            this._dragInitStartingX = this._dragPrevStartingX = globalPos.x;
+            this._dragInitStartingY = this._dragPrevStartingY = globalPos.y;
         }
     }
+    /**
+     * Handler function for mouse-move event.
+     *
+     * @method
+     * @function
+     * @private
+     * @internal
+     *
+     * @param event {InteractionEvent} interaction event object
+     */
     private onMouseMove(event: InteractionEvent): void {
-        if (this.dragging && this._config.mapDraggable) {
+        if (this._dragging && this._config.mapDraggable) {
             const globalPos = event.data.global;
-            this.mapContainer.position.x += globalPos.x - this.dragPrevStartingX;
-            this.mapContainer.position.y += globalPos.y - this.dragPrevStartingY;
-            this.dragPrevStartingX = globalPos.x;
-            this.dragPrevStartingY = globalPos.y;
+            this._mapContainer.position.x += globalPos.x - this._dragPrevStartingX;
+            this._mapContainer.position.y += globalPos.y - this._dragPrevStartingY;
+            this._dragPrevStartingX = globalPos.x;
+            this._dragPrevStartingY = globalPos.y;
         }
     }
+    /**
+     * Handler function for mouse-up event.
+     *
+     * @method
+     * @function
+     * @private
+     * @internal
+     *
+     * @param event {InteractionEvent} interaction event object
+     */
     private onMouseUp(event: InteractionEvent): void {
-        if (this.dragging) {
-            this.dragging = false;
+        if (this._dragging) {
+            this._dragging = false;
             //const passedTime = (new Date()) - this.mouseDownTime;
-            const distX = event.data.global.x - this.dragInitStartingX;
-            const distY = event.data.global.y - this.dragInitStartingY;
+            const distX = event.data.global.x - this._dragInitStartingX;
+            const distY = event.data.global.y - this._dragInitStartingY;
 
             if (Math.abs(distX) < 5 && Math.abs(distY) < 5) {
                 // NOT DRAGGING IT IS A CLICK
@@ -2135,46 +2281,52 @@ export class EngineView extends Container {
      * Repositions the content according to user settings. Call this method
      * whenever you want to change the size or position of the engine.
      *
-     * @param [posFrame=null] {TPositionFrame} frame to position the engine, default is `{ x : 0, y : 0, w : 800, h : 600 }`
+     * @method
+     * @function
+     * @public
+     *
+     * @param posFrame {TPositionFrame} frame to position the engine, default is the previously set posFrame and if not set, it is `{ x : 0, y : 0, w : 800, h : 600 }`
      */
     public repositionContent(posFrame: TPositionFrame = null): void {
         trace('EngineView repositionContent');
 
-        posFrame = posFrame || this.posFrame || { x: 0, y: 0, w: 800, h: 600 };
+        posFrame = posFrame || this._posFrame || { x: 0, y: 0, w: 800, h: 600 };
 
         this.position.x = posFrame.x;
         this.position.y = posFrame.y;
 
-        this.externalCenter = {
+        this._externalCenter = {
             x: posFrame.w >> 1,
             y: posFrame.h >> 1,
         };
         this.centralizeToCurrentFocusLocation(true);
 
-        if (this.bg) {
-            this.bg.clear();
-            // this.bg.lineStyle(2, 0x000000, 1);
-            this.bg.beginFill(this._config.backgroundColor, 1.0);
-            this.bg.drawRect(0, 0, posFrame.w, posFrame.h);
-            this.bg.endFill();
+        if (this._bg) {
+            this._bg.clear();
+            // this._bg.lineStyle(2, 0x000000, 1);
+            this._bg.beginFill(this._config.backgroundColor, 1.0);
+            this._bg.drawRect(0, 0, posFrame.w, posFrame.h);
+            this._bg.endFill();
         }
 
-        if (this.mapMask && this.mapContainer) {
-            this.mapMask.clear();
-            this.mapMask.beginFill(0x000000);
-            this.mapMask.drawRect(0, 0, posFrame.w, posFrame.h);
-            this.mapMask.endFill();
+        if (this._mapMask && this._mapContainer) {
+            this._mapMask.clear();
+            this._mapMask.beginFill(0x000000);
+            this._mapMask.drawRect(0, 0, posFrame.w, posFrame.h);
+            this._mapMask.endFill();
 
-            this.mapContainer.mask = this.mapMask;
+            this._mapContainer.mask = this._mapMask;
         }
 
-        this.posFrame = posFrame;
+        this._posFrame = posFrame;
     }
     /**
      * Clears all references and stops all animations inside the engine.
      * Call this method when you want to get rid of an engine instance.
      *
-     * @method destroy
+     * @method
+     * @function
+     * @public
      */
     public destroy(): void {
         trace('EngineView destroy');
@@ -2185,48 +2337,48 @@ export class EngineView extends Container {
         this.moveEngine = null;
 
         let item, i, j, k;
-        for (i = 0; i < this.mapSizeR; i++) {
-            for (j = this.mapSizeC - 1; j >= 0; j--) {
-                item = this.tileArray[i][j];
+        for (i = 0; i < this._mapSizeR; i++) {
+            for (j = this._mapSizeC - 1; j >= 0; j--) {
+                item = this._tileArray[i][j];
                 if (item) {
                     item.destroy();
-                    // this.groundContainer.removeChild(item);
+                    // this._groundContainer.removeChild(item);
                 }
-                this.tileArray[i][j] = null;
+                this._tileArray[i][j] = null;
 
-                item = this.objArray[i][j];
+                item = this._objArray[i][j];
                 if (item) {
                     for (k = 0; k < item.length; k++) {
                         if (item[k]) {
                             item[k].destroy();
-                            // this.objContainer.removeChild(item[k]);
+                            // this._objContainer.removeChild(item[k]);
                         }
                         item[k] = null;
                     }
                 }
-                this.objArray[i][j] = null;
+                this._objArray[i][j] = null;
             }
         }
         item = null;
 
-        this.pathFinding.destroy();
-        this.pathFinding = null;
+        this._pathFinding.destroy();
+        this._pathFinding = null;
 
-        this.currentControllable = null;
-        this.tileArray = null;
-        this.objArray = null;
-        this.bg = null;
-        this.groundContainer = null;
-        this.objContainer = null;
+        this._currentControllable = null;
+        this._tileArray = null;
+        this._objArray = null;
+        this._bg = null;
+        this._groundContainer = null;
+        this._objContainer = null;
 
-        if (this.mapContainer) {
-            this.mapContainer.mask = null;
-            this.removeChild(this.mapContainer);
-            this.mapContainer = null;
+        if (this._mapContainer) {
+            this._mapContainer.mask = null;
+            this.removeChild(this._mapContainer);
+            this._mapContainer = null;
         }
-        if (this.mapMask) {
-            this.removeChild(this.mapMask);
-            this.mapMask = null;
+        if (this._mapMask) {
+            this.removeChild(this._mapMask);
+            this._mapMask = null;
         }
 
         this._config = null;
@@ -2240,7 +2392,7 @@ export class EngineView extends Container {
     // Externally modifiable properties for EngineView
     /**
      * specifies whether to zoom instantly or with a tween animation
-     * @property {Boolean} instantCameraZoom
+     * @property
      * @default false
      */
     public get instantCameraZoom(): boolean {
@@ -2251,7 +2403,7 @@ export class EngineView extends Container {
     }
     /**
      * defines if the camera will follow the current controllable or not
-     * @property {Boolean} followCharacter
+     * @property
      * @default true
      */
     public get followCharacter(): boolean {
@@ -2262,7 +2414,7 @@ export class EngineView extends Container {
     }
     /**
      * specifies whether the camera moves instantly or with a tween animation to the target location
-     * @property {Boolean} instantCameraRelocation
+     * @property
      * @default false
      */
     public get instantCameraRelocation(): boolean {
@@ -2273,7 +2425,7 @@ export class EngineView extends Container {
     }
     /**
      * specifies whether the map-objects will be moved to target location instantly or with an animation
-     * @property {Boolean} instantObjectRelocation
+     * @property
      * @default false
      */
     public get instantObjectRelocation(): boolean {
@@ -2284,7 +2436,7 @@ export class EngineView extends Container {
     }
     /**
      * make objects transparent when the controllable is behind them
-     * @property {Boolean} changeTransparencies
+     * @property
      * @default true
      */
     public get changeTransparencies(): boolean {
@@ -2295,7 +2447,7 @@ export class EngineView extends Container {
     }
     /**
      * highlight the path when the current controllable moves on the map
-     * @property {Boolean} highlightPath
+     * @property
      * @default true
      */
     public get highlightPath(): boolean {
@@ -2306,7 +2458,7 @@ export class EngineView extends Container {
     }
     /**
      * Highlight the target tile when the current controllable moves on the map
-     * @member {Boolean} highlightTargetTile
+     * @property
      * @default true
      */
     public get highlightTargetTile(): boolean {
@@ -2317,7 +2469,7 @@ export class EngineView extends Container {
     }
     /**
      * animate the tile highlights
-     * @member {Boolean} tileHighlightAnimated
+     * @property
      * @default true
      */
     public get tileHighlightAnimated(): boolean {
@@ -2328,7 +2480,7 @@ export class EngineView extends Container {
     }
     /**
      * When a tile selected don't move the controllable immediately but still call 'tileSelectCallback'
-     * @member {Boolean} dontAutoMoveToTile
+     * @property
      * @default false
      */
     public get dontAutoMoveToTile(): boolean {
@@ -2351,7 +2503,7 @@ export class EngineView extends Container {
     }
     /**
      * enable dragging the map with touch-and-touchmove or mousedown-and-mousemove on the map
-     * @property {Boolean} mapDraggable
+     * @property
      * @default true
      */
     public get mapDraggable(): boolean {
@@ -2362,7 +2514,7 @@ export class EngineView extends Container {
     }
     /**
      * callback function that will be called once everything is loaded and engine instance is ready
-     * @property {Function}
+     * @property
      * @default null
      */
     public get engineInstanceReadyCallback(): (engineInstance: EngineView) => unknown {
@@ -2373,7 +2525,7 @@ export class EngineView extends Container {
     }
     /**
      * callback function that will be called when a tile is selected. Params will be the row and column indexes of the tile selected.
-     * @property {Function} tileSelectCallback
+     * @property
      * @default null
      */
     public get tileSelectCallback(): (r: number, c: number) => unknown {
@@ -2384,7 +2536,7 @@ export class EngineView extends Container {
     }
     /**
      * callback function that will be called when a tile with an interactive map-object on it is selected. Call param will be the object selected.
-     * @property {Function} objectSelectCallback
+     * @property
      * @default null
      */
     public get objectSelectCallback(): (objectView: ObjectView) => unknown {
@@ -2395,7 +2547,7 @@ export class EngineView extends Container {
     }
     /**
      * callback function that will be called when any moving object reaches its destination. Call param will be the moving object itself.
-     * @property {Function} objectReachedDestinationCallback
+     * @property
      * @default null
      */
     public get objectReachedDestinationCallback(): (objectView: ObjectView) => unknown {
@@ -2406,7 +2558,7 @@ export class EngineView extends Container {
     }
     /**
      * callback function that will be called when any moving object is in move and there are other objects on the next tile. Call params will be the moving object and an array of objects on the next tile.
-     * @property {Function} otherObjectsOnTheNextTileCallback
+     * @property
      * @default null
      */
     public get otherObjectsOnTheNextTileCallback(): (
@@ -2422,7 +2574,7 @@ export class EngineView extends Container {
     }
     /**
      * callback function that will be called every time an objects direction or position changed
-     * @property {Function} objectUpdateCallback
+     * @property
      * @default null
      */
     public get objectUpdateCallback(): (objectView: ObjectView) => unknown {
@@ -2433,7 +2585,7 @@ export class EngineView extends Container {
     }
     /**
      * alpha value for the tile highlight stroke (this will be overridden if a highlight-image is defined)
-     * @property {number} tileHighlightStrokeAlpha
+     * @property
      * @default 1.0
      */
     public get tileHighlightStrokeAlpha(): number {
@@ -2444,7 +2596,7 @@ export class EngineView extends Container {
     }
     /**
      * color code for the tile highlight stroke (this will be overridden if a highlight-image is defined)
-     * @property {number} tileHighlightStrokeColor
+     * @property
      * @default 0xFFFFFF
      */
     public get tileHighlightStrokeColor(): number {
@@ -2455,7 +2607,7 @@ export class EngineView extends Container {
     }
     /**
      * alpha value for the tile highlight fill (this will be overridden if a highlight-image is defined)
-     * @property {number} tileHighlightFillAlpha
+     * @property
      * @default 1.0
      */
     public get tileHighlightFillAlpha(): number {
@@ -2466,7 +2618,7 @@ export class EngineView extends Container {
     }
     /**
      * color code for the tile highlight fill (this will be overridden if a highlight-image is defined)
-     * @property {number} tileHighlightFillColor
+     * @property
      * @default 0x80d7ff
      */
     public get tileHighlightFillColor(): number {

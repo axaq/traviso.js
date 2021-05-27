@@ -15,7 +15,7 @@ export type EasingFunction = (t: number, b: number, c: number, d: number) => num
  *
  * @method getEasingFunc
  * @private
- * @param e {String} the easing id
+ * @param e {string} the easing id
  * @return {Function} the easing method to use
  */
 export const getEasingFunc = (e: EasingType): EasingFunction => {
@@ -35,11 +35,11 @@ export const getEasingFunc = (e: EasingType): EasingFunction => {
  *
  * @method linearTween
  * @private
- * @param t {Number} current time
- * @param b {Number} initial value
- * @param c {Number} difference with the target value
- * @param d {Number} total time
- * @return {Number} result of the calculation
+ * @param t {number} current time
+ * @param b {number} initial value
+ * @param c {number} difference with the target value
+ * @param d {number} total time
+ * @return {number} result of the calculation
  */
 export const linearTween = (t: number, b: number, c: number, d: number): number => {
     return (c * t) / d + b;
@@ -49,11 +49,11 @@ export const linearTween = (t: number, b: number, c: number, d: number): number 
  *
  * @method easeInQuad
  * @private
- * @param t {Number} current time
- * @param b {Number} initial value
- * @param c {Number} difference with the target value
- * @param d {Number} total time
- * @return {Number} result of the calculation
+ * @param t {number} current time
+ * @param b {number} initial value
+ * @param c {number} difference with the target value
+ * @param d {number} total time
+ * @return {number} result of the calculation
  */
 export const easeInQuad = (t: number, b: number, c: number, d: number): number => {
     t /= d;
@@ -65,11 +65,11 @@ export const easeInQuad = (t: number, b: number, c: number, d: number): number =
  *
  * @method easeOutQuad
  * @private
- * @param t {Number} current time
- * @param b {Number} initial value
- * @param c {Number} difference with the target value
- * @param d {Number} total time
- * @return {Number} result of the calculation
+ * @param t {number} current time
+ * @param b {number} initial value
+ * @param c {number} difference with the target value
+ * @param d {number} total time
+ * @return {number} result of the calculation
  */
 export const easeOutQuad = (t: number, b: number, c: number, d: number): number => {
     t /= d;
@@ -80,11 +80,11 @@ export const easeOutQuad = (t: number, b: number, c: number, d: number): number 
  *
  * @method easeInOutQuad
  * @private
- * @param t {Number} current time
- * @param b {Number} initial value
- * @param c {Number} difference with the target value
- * @param d {Number} total time
- * @return {Number} result of the calculation
+ * @param t {number} current time
+ * @param b {number} initial value
+ * @param c {number} difference with the target value
+ * @param d {number} total time
+ * @return {number} result of the calculation
  */
 export const easeInOutQuad = (t: number, b: number, c: number, d: number): number => {
     t /= d / 2;

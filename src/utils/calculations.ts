@@ -4,11 +4,16 @@ import { TPositionPair } from './map';
 /**
  * Checks if the value existy.
  *
- * @method existy
+ * @memberof TRAVISO
  * @for TRAVISO
+ *
+ * @method
+ * @function
+ * @public
  * @static
- * @param value {Object} value to check
- * @return {Boolean} if the value existy
+ *
+ * @param value {unknown} value to check
+ * @return {boolean} if the value existy or not
  */
 export const existy = (value: unknown): boolean => {
     return value !== null && value !== undefined;
@@ -17,16 +22,21 @@ export const existy = (value: unknown): boolean => {
 /**
  * Linear maps a given number in a source range to a target range
  *
- * @method mathMap
+ * @memberof TRAVISO
  * @for TRAVISO
+ *
+ * @method
+ * @function
+ * @public
  * @static
- * @param v {Number} value to map
- * @param min1 {Number} minimum value of the source range
- * @param max1 {Number} maximum value of the source range
- * @param min2 {Number} minimum value of the target range
- * @param max2 {Number} maximum value of the target range
- * @param [noOutliers=false] {Boolean} If the outlier values won't be processed, default false
- * @return {Number} mapped value according to target range
+ *
+ * @param v {number} value to map
+ * @param min1 {number} minimum value of the source range
+ * @param max1 {number} maximum value of the source range
+ * @param min2 {number} minimum value of the target range
+ * @param max2 {number} maximum value of the target range
+ * @param noOutliers {boolean} If the outlier values won't be processed, default false
+ * @return {number} mapped value according to target range
  */
 export const mathMap = (
     v: number,
@@ -34,7 +44,7 @@ export const mathMap = (
     max1: number,
     min2: number,
     max2: number,
-    noOutliers: boolean
+    noOutliers: boolean = false
 ): number => {
     if (noOutliers) {
         if (v < min1) {
@@ -49,16 +59,17 @@ export const mathMap = (
 /**
  * Produces dot product of two vectors.
  *
- * @method dotProduct
+ * @memberof TRAVISO
  * @for TRAVISO
+ *
+ * @method
+ * @function
+ * @public
  * @static
- * @param v1 {Object} first vector
- * @param v1.x {Number} x component
- * @param v1.y {Number} y component
- * @param v2 {Object} second vector
- * @param v2.x {Number} x component
- * @param v2.y {Number} y component
- * @return {Number} dot product of two vectors
+ *
+ * @param v1 {TPositionPair} first vector
+ * @param v2 {TPositionPair} second vector
+ * @return {number} dot product of two vectors
  */
 export const dotProduct = (v1: TPositionPair, v2: TPositionPair): number => {
     return v1.x * v2.x + v1.y * v2.y;
@@ -67,13 +78,16 @@ export const dotProduct = (v1: TPositionPair, v2: TPositionPair): number => {
 /**
  * Produces unit vector of a given vector.
  *
- * @method getUnit
+ * @memberof TRAVISO
  * @for TRAVISO
+ *
+ * @method
+ * @function
+ * @public
  * @static
- * @param v {Object} source vector
- * @param v.x {Number} x component
- * @param v.y {Number} y component
- * @return {Object} unit vector
+ *
+ * @param v {TPositionPair} source vector
+ * @return {TPositionPair} unit vector
  */
 export const getUnit = (v: TPositionPair): TPositionPair => {
     const m = Math.sqrt(v.x * v.x + v.y * v.y);
@@ -83,14 +97,17 @@ export const getUnit = (v: TPositionPair): TPositionPair => {
 /**
  * Checks if the given point is the polygon defined by the vertices.
  *
- * @method isInPolygon
+ * @memberof TRAVISO
  * @for TRAVISO
+ *
+ * @method
+ * @function
+ * @public
  * @static
- * @param gp {Object} point to check
- * @param gp.x {Number} x component
- * @param gp.y {Number} y component
+ *
+ * @param gp {TPositionPair} point to check
  * @param vertices {Array(Array(Number))} array containing the vertices of the polygon
- * @return {Boolean} if the point is inside the polygon
+ * @return {boolean} if the point is inside the polygon
  */
 export const isInPolygon = (gp: TPositionPair, vertices: number[][]): boolean => {
     const testY = gp.y;
@@ -115,16 +132,17 @@ export const isInPolygon = (gp: TPositionPair, vertices: number[][]): boolean =>
 /**
  * Calculates the distance between two points.
  *
- * @method getDist
+ * @memberof TRAVISO
  * @for TRAVISO
+ *
+ * @method
+ * @function
+ * @public
  * @static
- * @param p1 {Object} first point
- * @param p1.x {Number} x component
- * @param p1.y {Number} y component
- * @param p2 {Object} second point
- * @param p2.x {Number} x component
- * @param p2.y {Number} y component
- * @return {Boolean} the distance between two points
+ *
+ * @param p1 {TPositionPair} first point
+ * @param p2 {TPositionPair} second point
+ * @return {number} the distance between two points
  */
 export const getDist = (p1: TPositionPair, p2: TPositionPair): number => {
     return Math.sqrt((p2.x - p1.x) * (p2.x - p1.x) + (p2.y - p1.y) * (p2.y - p1.y));
@@ -133,14 +151,15 @@ export const getDist = (p1: TPositionPair, p2: TPositionPair): number => {
 /**
  * Calculates the global point with respect to given local point and scope.
  *
- * @method localToGlobal
- * @for TRAVISO
+ * @method
+ * @function
+ * @private
+ * @internal
  * @static
- * @param lp {Object} local point
- * @param lp.x {Number} x component
- * @param lp.y {Number} y component
- * @param scope {Object} local scope
- * @return {Boolean} global point
+ *
+ * @param lp {TPositionPair} local point
+ * @param scope {PIXI.DisplayObject} local scope
+ * @return {TPositionPair} global point
  */
 export const localToGlobal = (lp: TPositionPair, scope: DisplayObject): TPositionPair => {
     let sX = scope.position.x + lp.x;
@@ -162,14 +181,15 @@ export const localToGlobal = (lp: TPositionPair, scope: DisplayObject): TPositio
 /**
  * Calculates the local point with respect to given global point and local scope.
  *
- * @method globalToLocal
- * @for TRAVISO
+ * @method
+ * @function
+ * @private
+ * @internal
  * @static
- * @param gp {Object} global point
- * @param gp.x {Number} x component
- * @param gp.y {Number} y component
- * @param scope {Object} local scope
- * @return {Boolean} local point
+ *
+ * @param gp {TPositionPair} global point
+ * @param scope {PIXI.DisplayObject} local scope
+ * @return {TPositionPair} local point
  */
 export const globalToLocal = (gp: TPositionPair, scope: DisplayObject): TPositionPair => {
     let sX = scope.position.x;

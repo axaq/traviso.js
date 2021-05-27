@@ -3,11 +3,11 @@
  *
  * @memberof TRAVISO
  * @for TRAVISO
- * 
- * @static
- * @protected
- * @constant
+ *
  * @property
+ * @static
+ * @public
+ * @constant
  */
 
-export const VERSION: string = '$_VERSION';
+export const VERSION: Readonly<string> = '$_VERSION';
