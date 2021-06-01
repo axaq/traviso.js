@@ -5,5 +5,7 @@
     "excludeInternal": false,
     "includeVersion": true,
     "theme": "minimal",
-    "hideGenerator": true
+    "hideGenerator": true,
+    "gaID": "UA-60720270-1",
+    "gaSite": "traviso"
 }
