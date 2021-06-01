@@ -30,9 +30,9 @@ export class ObjectView extends Container {
     /**
      * Type-id of the map-object as defined in the json file.
      * @property
-     * @private
+     * @public
      */
-    private _type: string;
+    private type: string;
     /**
      * Defines if the map-object is movable onto by other map-objects.
      * @property
@@ -149,9 +149,9 @@ export class ObjectView extends Container {
         this.onContainerAnimComplete_binded = this.onContainerAnimComplete.bind(this);
 
         this._engine = engine;
-        this._type = type;
+        this.type = type;
 
-        const info: IObjectInfo = getObjectInfo(this._engine, this._type);
+        const info: IObjectInfo = getObjectInfo(this._engine, this.type);
         this.isMovableTo = info.m;
         this.isInteractive = info.i;
         this.interactive = this.interactiveChildren = false;
@@ -218,7 +218,7 @@ export class ObjectView extends Container {
             )
         ) {
             if (!this.changeVisual('idle', stopOnFirstFrame, noLoop, onAnimComplete, animSpeed)) {
-                throw new Error("no 'idle' visual defined as backup for object type " + this._type);
+                throw new Error("no 'idle' visual defined as backup for object type " + this.type);
             } else {
                 this.currentDirection = DIRECTIONS.O;
             }

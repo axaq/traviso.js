@@ -23,9 +23,9 @@ export class TileView extends Container {
     /**
      * Type-id of the map-tile as defined in the JSON file.
      * @property
-     * @private
+     * @public
      */
-    private _type: string;
+    public type: string;
     /**
      * Defines the positions of the vertices of the tile.
      * @property
@@ -85,7 +85,7 @@ export class TileView extends Container {
         this.onHighlightTweenEnd_binded = this.onHighlightTweenEnd.bind(this);
 
         this._engine = engine;
-        this._type = type;
+        this.type = type;
 
         const halfHeight = this._engine.tileHalfHeight;
         const halfWidth = this._engine.tileHalfWidth;
@@ -97,7 +97,7 @@ export class TileView extends Container {
             [0, halfHeight],
         ];
 
-        const tileInfo = getTileInfo(this._engine, this._type);
+        const tileInfo = getTileInfo(this._engine, this.type);
         this.isMovableTo = tileInfo.m;
 
         if (tileInfo.t.length > 0) {
@@ -105,11 +105,11 @@ export class TileView extends Container {
             this._tileGraphics.anchor.x = 0.5;
             this._tileGraphics.anchor.y = 0.5;
             this.addChild(this._tileGraphics);
-            this._tileGraphics.gotoAndStop(parseInt(this._type));
+            this._tileGraphics.gotoAndStop(parseInt(this.type));
         }
 
         // const colorsArray = [0x0106ff, 0x3b6d14, 0x8789ff, 0xb32bf9, 0xeb36d0, 0xfe0000, 0xeb3647, 0xf27e31, 0xffea01, 0x00ff18, 0x3b6d14, 0xfa9bbb, 0xf9c7bc, 0x8d6729, 0x633e07];
-        // const c = colorsArray[ this._type < 2 ? this._type : 0 ];
+        // const c = colorsArray[ this.type < 2 ? this.type : 0 ];
 
         // this._tileGraphics = new PIXI.Graphics();
         // this._tileGraphics.clear();
