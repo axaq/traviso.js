@@ -1,32 +1,32 @@
 import {
-    Texture,
     Container,
+    DisplayObject,
     Graphics,
     InteractionData,
     InteractionEvent,
     Loader,
     Sprite,
-    DisplayObject,
+    Texture,
 } from 'pixi.js';
-import { ObjectView } from './ObjectView';
-import { TileView } from './TileView';
-import { MoveEngine, IMovable, ITweenTarget } from './MoveEngine';
 import { GridNode } from '../pathFinding/GridNode';
 import { PathFinding } from '../pathFinding/PathFinding';
 import { existy, getDist, isInPolygon, mathMap } from '../utils/calculations';
 import { KEY_EMPTY_TILE, KEY_NO_OBJECTS, PF_ALGORITHMS } from '../utils/constants';
-import { trace } from '../utils/trace';
 import {
-    TColumnRowPair,
     getDirBetween,
-    TMapData,
     IMapDataObject,
     MapDataObjectVisual,
     ObjectInfoInteractionOffsets,
     ObjectInfoTextureNames,
     ObjectVisualKey,
+    TColumnRowPair,
+    TMapData,
     TPositionPair,
 } from '../utils/map';
+import { trace } from '../utils/trace';
+import { IMovable, ITweenTarget, MoveEngine } from './MoveEngine';
+import { ObjectView } from './ObjectView';
+import { TileView } from './TileView';
 
 /**
  * Type declaration for position frame setting.
@@ -591,15 +591,14 @@ export class EngineView extends Container {
         }
 
         const loader = new Loader();
+
         loader.add('mapData', this._config.mapDataPath);
 
         if (this._config.assetsToLoad && this._config.assetsToLoad.length > 0) {
             loader.add(this._config.assetsToLoad);
         }
 
-        loader.load(this.assetsAndDataLoaded.bind(this));
-
-        // TRAVISO.loadData();
+        loader.load(this.assetsAndDataLoaded.bind(this, loader));
     }
 
     /**
@@ -613,10 +612,11 @@ export class EngineView extends Container {
      * @param loader {Loader} PIXI's loader instance
      */
     private assetsAndDataLoaded(loader: Loader): void {
-        // console.log('assetsAndDataLoaded', resources.mapData.data);
+        console.log('assetsAndDataLoaded', loader.resources.mapData);
 
         const mapData: TMapData = loader.resources.mapData.data as TMapData;
 
+        console.log('mapData', mapData);
         // initial controls
 
         if (!existy(mapData.initialControllableLocation)) {
@@ -827,6 +827,7 @@ export class EngineView extends Container {
         const groundMapData = this.mapData.groundMapData;
         const objectsMapData = this.mapData.objectsMapData;
 
+        console.log('this.mapData', this.mapData);
         const initialControllableLocation = this.mapData.initialControllableLocation;
 
         // set map size
@@ -904,6 +905,8 @@ export class EngineView extends Container {
 
                     this.addObjRefToLocation(obj, obj.mapPos);
 
+                    console.log('initialControllableLocation', initialControllableLocation);
+
                     // if (initialControllableLocation && initialControllableLocation.c === j && initialControllableLocation.r === i)
                     if (
                         initialControllableLocation &&
@@ -965,6 +968,7 @@ export class EngineView extends Container {
         }
 
         this.zoomTo(this._config.initialZoomLevel, true);
+        console.log('initialControllableLocation', initialControllableLocation);
 
         if (this._config.followCharacter && initialControllableLocation) {
             // this.centralizeToLocation(initialControllableLocation.c, initialControllableLocation.r, true);

@@ -1,0 +1,28 @@
+{"frames": {
+
+"group_1909.png":
+{
+	"frame": {"x":0,"y":0,"w":521,"h":914},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":521,"h":914},
+	"sourceSize": {"w":521,"h":914}
+},
+"sea.png":
+{
+	"frame": {"x":521,"y":0,"w":480,"h":540},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":480,"h":540},
+	"sourceSize": {"w":480,"h":540}
+}},
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "custom.png",
+	"format": "RGBA8888",
+	"size": {"w":1001,"h":914},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:479f4bc9c791e458fb2b12e400ca8823:df45e133739695947f983022194469be:31d08ff5a3be2ea6ae3dc47def51455a$"
+}
+}
