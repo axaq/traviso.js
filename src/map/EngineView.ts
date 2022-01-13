@@ -1,32 +1,32 @@
 import {
-    Texture,
     Container,
+    DisplayObject,
     Graphics,
     InteractionData,
     InteractionEvent,
     Loader,
     Sprite,
-    DisplayObject,
+    Texture,
 } from 'pixi.js';
-import { ObjectView } from './ObjectView';
-import { TileView } from './TileView';
-import { MoveEngine, IMovable, ITweenTarget } from './MoveEngine';
 import { GridNode } from '../pathFinding/GridNode';
 import { PathFinding } from '../pathFinding/PathFinding';
 import { existy, getDist, isInPolygon, mathMap } from '../utils/calculations';
 import { KEY_EMPTY_TILE, KEY_NO_OBJECTS, PF_ALGORITHMS } from '../utils/constants';
-import { trace } from '../utils/trace';
 import {
-    TColumnRowPair,
     getDirBetween,
-    TMapData,
     IMapDataObject,
     MapDataObjectVisual,
     ObjectInfoInteractionOffsets,
     ObjectInfoTextureNames,
     ObjectVisualKey,
+    TColumnRowPair,
+    TMapData,
     TPositionPair,
 } from '../utils/map';
+import { trace } from '../utils/trace';
+import { IMovable, ITweenTarget, MoveEngine } from './MoveEngine';
+import { ObjectView } from './ObjectView';
+import { TileView } from './TileView';
 
 /**
  * Type declaration for position frame setting.
@@ -591,7 +591,7 @@ export class EngineView extends Container {
         }
 
         const loader = new Loader();
-        loader.add('mapData', this._config.mapDataPath);
+        loader.add('mapData', this._config.mapDataPath, { crossOrigin: true });
 
         if (this._config.assetsToLoad && this._config.assetsToLoad.length > 0) {
             loader.add(this._config.assetsToLoad);

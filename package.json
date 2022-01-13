@@ -1,20 +1,21 @@
 {
-    "name": "traviso.js",
-    "version": "0.1.5",
+    "name": "@gaudiy/traviso.js",
+    "version": "0.0.1",
     "description": "Traviso.js - Isometric Javascript Engine",
-    "author": {
-        "name": "Hakan Karlidag - @axaq",
-        "url": "https://twitter.com/axaq"
-    },
+    "author": "gaudiy",
     "url": "www.travisojs.com",
     "homepage": "http://www.travisojs.com",
-    "bugs": "https://github.com/axaq/traviso.js/issues",
+    "bugs": "https://github.com/gaudiy/traviso.js/issues",
     "logo": "http://www.travisojs.com/img/logo_small.jpg",
     "license": "MIT",
+    "publishConfig": {
+        "access": "restricted",
+        "registry": "https://npm.pkg.github.com/"
+      },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/axaq/traviso.js.git"
-    },
+        "url": "https://github.com/gaudiy/traviso.js.git"
+      },
     "keywords": [
         "typescript",
         "javascript",
