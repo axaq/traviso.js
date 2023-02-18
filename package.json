@@ -22,7 +22,7 @@
         "isometric",
         "pixijs"
     ],
-    "main": "dist/cjs/traviso.js",
+    "main": "./dist/cjs/traviso.js",
     "module": "dist/es/traviso.js",
     "iife": "dist/browser/traviso.js",
     "types": "types/index.d.ts",
@@ -53,7 +53,6 @@
         "test:package": "pkg-ok",
         "preversion": "npm-run-all clean build test"
     },
-    "dependencies": {},
     "peerDependencies": {
         "pixi.js": "^6.0.4"
     },
@@ -66,20 +65,20 @@
         "@types/chai": "^4.2.18",
         "@types/mocha": "^8.2.2",
         "chai": "^4.3.4",
-        "cpy-cli": "^3.1.1",
-        "mocha": "^8.4.0",
+        "cpy-cli": "^4.2.0",
+        "mocha": "^10.2.0",
         "npm-run-all": "^4.1.5",
         "pixi.js": "^6.0.4",
-        "pkg-ok": "^2.3.1",
+        "pkg-ok": "^3.0.0",
         "prettier": "^2.3.0",
         "rimraf": "^3.0.2",
         "rollup": "^2.47.0",
         "rollup-plugin-jscc": "^2.0.0",
         "rollup-plugin-peer-deps-external": "^2.2.4",
         "rollup-plugin-terser": "^7.0.2",
-        "rollup-plugin-typescript2": "^0.30.0",
+        "rollup-plugin-typescript2": "^0.34.1",
         "ts-node": "^9.1.1",
-        "typedoc": "^0.20.36",
+        "typedoc": "^0.23.25",
         "typescript": "^4.2.4"
     }
 }
