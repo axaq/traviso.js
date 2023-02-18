@@ -1,61 +1,29 @@
 {
     "compilerOptions": {
-        // This defines the version of JavaScript to compile the TypeScript code to.
-        // Setting "esnext" allows you to play with all the latest features, but if
-        // you need greater compatibility with older browsers, you can set this to another option.
         "target": "es5",
-
-        // You should set this option to "commonjs" to make sure everybody can use your package,
-        // whether they’re using TypeScript or JavaScript, are targeting Node.js or the Web.
         "module": "ES2015",
-
-        // Activate strict compiler checks.
         "strict": true,
-
-        // Do not compile when there are unused variables or imports.
         "noUnusedLocals": true,
-
         "noImplicitAny": true,
         "noUnusedParameters": false,
         "noImplicitReturns": true,
         "strictNullChecks": false,
-
-        // Let TypeScript transpile JSX. Setting this can save you from setting up Babel.
-        // You can read more at https://www.typescriptlang.org/docs/handbook/jsx.html#basic-usage
         "jsx": "react",
-
-        // Allow TypeScript to import JSON files directly.
         "resolveJsonModule": true,
-
         "allowSyntheticDefaultImports": true,
         "moduleResolution": "node",
         "esModuleInterop": true,
-
-        // Remove comments from generated JavaScript code.
         "removeComments": false,
-
-        // "outDir": "./dist",
-        // "rootDir": "./src",
-
-        // Generate a source map from JS to TS. Useful for debugging.
-        // Don't forget to blacklist ./dist/**/*.js.map in the "files" key of package.json
         "sourceMap": true,
-
-        // Generate a .d.ts file, for TypeScript users.
         "declaration": true,
         "declarationMap": false,
         "declarationDir": "types",
-
-        // Do not emit output files. Prevents us from accidentally building with this file
-        // instead of tsconfig.build.json.
         "noEmit": true,
-
         "baseUrl": "./",
         "paths": {
             "mini-signals": ["node_modules/resource-loader/typings/mini-signals.d.ts"]
         }
     },
-    // Include all TypeScript files, including those that shouldn't be built.
     "include": ["src", "benchmark"],
     "exclude": ["dist", "types", "docs", "**/node_modules", "**/rollup.config.js"],
     "ts-node": {
