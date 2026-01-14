@@ -1,6 +1,6 @@
 {
     // To run tests written in TS without having to compile them, we need to run them in ts-node
-    "require": "ts-node/register",
+    "require": ["ts-node/register", "./test/setup.ts"],
 
     // Any *.test.ts file in ./test will be run as a test
     "spec": "test/**/*.test.ts",
@@ -9,5 +9,10 @@
     "watch-files": ["test/**", "src/**"],
 
     "watch-ignore": ["node_modules"],
-    "global": ["jQuery", "$", "pixi.js", "PIXI"]
+    "global": ["jQuery", "$", "pixi.js", "PIXI"],
+
+    // Use test-specific tsconfig
+    "ts-node": {
+        "project": "tsconfig.test.json"
+    }
 }

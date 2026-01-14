@@ -95,7 +95,7 @@ export const getUnit = (v: TPositionPair): TPositionPair => {
 };
 
 /**
- * Checks if the given point is the polygon defined by the vertices.
+ * Checks if the given point is inside the polygon defined by the vertices.
  *
  * @memberof TRAVISO
  * @for TRAVISO
