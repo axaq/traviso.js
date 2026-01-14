@@ -35,16 +35,10 @@ const plugins = [
         extensions,
         preferBuiltins: false,
     }),
-    // typescript({
-    //     tsconfig: 'tsconfig.build.json'
-    // }),
-    // commonjs(),
     typescript({
         useTsconfigDeclarationDir: true,
         tsconfigOverride: {
             compilerOptions: {
-                // exclude: ['**/*.stories.*'],
-                noEmit: true,
                 declaration: true,
                 emitDeclarationOnly: false,
             },
@@ -62,13 +56,10 @@ const plugins = [
     }),
     babel({
         exclude: 'node_modules/**',
-        extensions,
+        extensions: ['.js', '.jsx'], // Exclude .ts files - TypeScript plugin handles them
         comments: true,
         babelHelpers: 'bundled',
-        presets: [
-            '@babel/preset-env',
-            // '@babel/preset-typescript'
-        ],
+        presets: ['@babel/preset-env'],
         minified: false,
     }),
     // uglify({
