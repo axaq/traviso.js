@@ -1,6 +1,6 @@
 # Traviso Isometric JS Engine [![Build Status](https://img.shields.io/travis/axaq/traviso.js.svg)](https://travis-ci.org/axaq/traviso.js) [![npm](https://img.shields.io/npm/v/traviso.js.svg)](https://www.npmjs.com/package/traviso.js)
 
-![traviso.js logo](http://www.travisojs.com/img/logo_small.jpg)
+![traviso.js logo](https://www.travisojs.com/img/logo_small.jpg)
 
 #### JavaScript Isometric World Engine
 
@@ -8,7 +8,7 @@ Traviso is an open source JS engine that makes it easy to build isometric
 applications that run in a web browser. It aims maximum flexibility in
 order you to implement your own logic on top of it. Along with a set of
 optimised algorithms, Traviso is built on top of the awesomely fast
-[pixi.js](http://www.pixijs.com) rendering engine.
+[pixi.js](https://www.pixijs.com) rendering engine.
 
 If you’re interested, you can follow me on twitter
 ([@axaq](https://twitter.com/axaq)) or visit the

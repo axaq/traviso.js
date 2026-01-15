@@ -8,6 +8,7 @@
         // You should set this option to "commonjs" to make sure everybody can use your package,
         // whether they’re using TypeScript or JavaScript, are targeting Node.js or the Web.
         "module": "ES2015",
+        "skipLibCheck": true,
 
         // Activate strict compiler checks.
         "strict": true,
