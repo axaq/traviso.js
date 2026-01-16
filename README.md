@@ -1,4 +1,5 @@
-# Traviso Isometric JS Engine [![Build Status](https://img.shields.io/travis/axaq/traviso.js.svg)](https://travis-ci.org/axaq/traviso.js) [![npm](https://img.shields.io/npm/v/traviso.js.svg)](https://www.npmjs.com/package/traviso.js)
+# Traviso Isometric JS Engine
+[![npm](https://img.shields.io/npm/v/traviso.js.svg)](https://www.npmjs.com/package/traviso.js)
 
 ![traviso.js logo](https://www.travisojs.com/img/logo_small.jpg)
 

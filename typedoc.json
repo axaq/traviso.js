@@ -4,6 +4,6 @@
     "excludeExternals": true,
     "excludeInternal": false,
     "includeVersion": true,
-    "theme": "minimal",
+    "theme": "default",
     "hideGenerator": true
 }
