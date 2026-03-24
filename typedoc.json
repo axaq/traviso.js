@@ -3,6 +3,8 @@
     "out": "docs",
     "excludeExternals": true,
     "excludeInternal": false,
+    "excludePrivate": false,
+    "excludePrivateClassFields": false,
     "includeVersion": true,
     "theme": "default",
     "hideGenerator": true

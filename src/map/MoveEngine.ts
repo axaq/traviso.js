@@ -51,6 +51,7 @@ export class MoveEngine {
      * A reference to the engine view that uses this move engine.
      * @property
      * @private
+     * @internal
      */
     private _engine: EngineView;
 
@@ -58,6 +59,7 @@ export class MoveEngine {
      * The speed value to be used for object movements if not defined specifically.
      * @property
      * @private
+     * @internal
      * @default `3`
      */
     private _defaultSpeed: number;
@@ -65,6 +67,7 @@ export class MoveEngine {
      * Specifies if the move-engine will process the object movements.
      * @property
      * @private
+     * @internal
      * @default `false`
      */
     private _activeForMovables: boolean = false;
@@ -72,6 +75,7 @@ export class MoveEngine {
      * Specifies if the move-engine will process the tweens.
      * @property
      * @private
+     * @internal
      * @default `false`
      */
     private _activeForTweens: boolean = false;
@@ -79,6 +83,7 @@ export class MoveEngine {
      * Specifies if the move-engine will process the tweens and object movements.
      * @property
      * @private
+     * @internal
      * @default `true`
      */
     private _processFrame: boolean = true;
@@ -86,6 +91,7 @@ export class MoveEngine {
      * The list to store current map-objects in move.
      * @property
      * @private
+     * @internal
      * @default `[]`
      */
     private _movables: IMovable[] = [];
@@ -93,13 +99,15 @@ export class MoveEngine {
      * The list to store targets for the current tweens.
      * @property
      * @private
+     * @internal
      * @default `[]`
      */
     private _tweenTargets: ITweenTarget[] = [];
     /**
      * Used to calculate how many frames a tween will take to process.
      * @property
-     * @private
+     * @private 
+     * @internal
      * @default `60`
      */
     private _fps: number = 60;
@@ -290,6 +298,7 @@ export class MoveEngine {
      * @method
      * @function
      * @private
+     * @internal
      */
     private removeAllTweens(): void {
         this._activeForTweens = false;
@@ -367,6 +376,7 @@ export class MoveEngine {
      * @method
      * @function
      * @private
+     * @internal
      */
     private removeAllMovables(): void {
         this._activeForMovables = false;
@@ -444,6 +454,7 @@ export class MoveEngine {
      * @method
      * @function
      * @private
+     * @internal
      */
     private run(): void {
         // NOTE: Write an alternative with a real time driven animator
