@@ -34,7 +34,7 @@ export {
     TPathFindingAlgorithms,
     TPathFindingAlgorithmID,
 } from './utils/constants';
-export { TColumnRowPair, TPositionPair } from './utils/map';
+export { TColumnRowPair, TPositionPair, TMapData, TMapDataObjects, MapDataTile, MapDataTiles } from './utils/map';
 
 /**
  * Global configuration settings for traviso

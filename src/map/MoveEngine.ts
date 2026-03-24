@@ -106,7 +106,7 @@ export class MoveEngine {
     /**
      * Used to calculate how many frames a tween will take to process.
      * @property
-     * @private 
+     * @private
      * @internal
      * @default `60`
      */
