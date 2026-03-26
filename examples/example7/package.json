@@ -1,0 +1,13 @@
+{
+    "name": "traviso-example7-pack-fixture",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "pack:traviso": "node ./scripts/pack-traviso.mjs",
+        "build": "../../node_modules/.bin/rollup -c"
+    },
+    "dependencies": {
+        "pixi.js": "file:../../node_modules/pixi.js",
+        "traviso.js": "file:./traviso.tgz"
+    }
+}
