@@ -38,11 +38,12 @@ const plugins = [
         useTsconfigDeclarationDir: true,
         tsconfigOverride: {
             compilerOptions: {
+                noEmit: false,
                 declaration: true,
-                emitDeclarationOnly: false,
             },
-            include: ['src'],
         },
+        include: ['src/**/*.ts', 'src/**/*.tsx'],
+        exclude: ['node_modules/**'],
     }),
     // typescript({
     //     tsconfig: './tsconfig.json',
