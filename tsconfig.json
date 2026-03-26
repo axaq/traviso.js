@@ -3,7 +3,7 @@
         // This defines the version of JavaScript to compile the TypeScript code to.
         // Setting "esnext" allows you to play with all the latest features, but if
         // you need greater compatibility with older browsers, you can set this to another option.
-        "target": "es5",
+        "target": "es2017",
 
         // You should set this option to "commonjs" to make sure everybody can use your package,
         // whether they’re using TypeScript or JavaScript, are targeting Node.js or the Web.

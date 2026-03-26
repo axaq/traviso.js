@@ -68,37 +68,43 @@
         btnCentralizeToObject.position.x = btnCentralize.position.x + btnCentralize.width + 8;
         btnFocusMapToObject.position.x = btnCentralizeToObject.position.x + btnCentralizeToObject.width + 8;
         
-        btnZoomIn.interactive = btnZoomIn.buttonMode = true;
-        btnZoomOut.interactive = btnZoomOut.buttonMode = true;
-        btnCentralize.interactive = btnCentralize.buttonMode = true;
-        btnCentralizeToObject.interactive = btnCentralizeToObject.buttonMode = true;
-        btnFocusMapToObject.interactive = btnFocusMapToObject.buttonMode = true;
-        
+        btnZoomIn.eventMode = "static";
+        btnZoomOut.eventMode = "static";
+        btnCentralize.eventMode = "static";
+        btnCentralizeToObject.eventMode = "static";
+        btnFocusMapToObject.eventMode = "static";
+
+        btnZoomIn.cursor = "pointer";
+        btnZoomOut.cursor = "pointer";
+        btnCentralize.cursor = "pointer";
+        btnCentralizeToObject.cursor = "pointer";
+        btnFocusMapToObject.cursor = "pointer";
+
         // add click callbacks
-        btnZoomIn.click = btnZoomIn.tap = function(data)
+        btnZoomIn.on("pointertap", function()
         {
             engine.zoomIn();
-        };
-        
-        btnZoomOut.click = btnZoomOut.tap = function(data)
+        });
+
+        btnZoomOut.on("pointertap", function()
         {
             engine.zoomOut();
-        };
-        
-        btnCentralize.click = btnCentralize.tap = function(data)
+        });
+
+        btnCentralize.on("pointertap", function()
         {
             engine.centralizeToCurrentExternalCenter();
-        };
-        
-        btnCentralizeToObject.click = btnCentralizeToObject.tap = function(data)
+        });
+
+        btnCentralizeToObject.on("pointertap", function()
         {
             engine.centralizeToObject(engine.getCurrentControllable());
-        };
-        
-        btnFocusMapToObject.click = btnFocusMapToObject.tap = function(data)
+        });
+
+        btnFocusMapToObject.on("pointertap", function()
         {
             engine.focusMapToObject(engine.getCurrentControllable());
-        };
+        });
     }
 
         </script>

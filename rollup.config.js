@@ -1,7 +1,6 @@
 import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 import resolve from '@rollup/plugin-node-resolve';
 import pkg from './package.json';
-import babel from '@rollup/plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';
 // import typescript from '@rollup/plugin-typescript';
 import typescript from 'rollup-plugin-typescript2';
@@ -53,14 +52,6 @@ const plugins = [
     commonjs({
         exclude: 'node_modules',
         ignoreGlobal: true,
-    }),
-    babel({
-        exclude: 'node_modules/**',
-        extensions: ['.js', '.jsx'], // Exclude .ts files - TypeScript plugin handles them
-        comments: true,
-        babelHelpers: 'bundled',
-        presets: ['@babel/preset-env'],
-        minified: false,
     }),
     // uglify({
     //     sourcemap: {

@@ -1,13 +1,4 @@
-import {
-    Texture,
-    Container,
-    Graphics,
-    InteractionData,
-    InteractionEvent,
-    Loader,
-    Sprite,
-    DisplayObject,
-} from 'pixi.js';
+import { Assets, Texture, Container, Graphics, FederatedPointerEvent, Sprite, DisplayObject } from 'pixi.js';
 import { ObjectView } from './ObjectView';
 import { TileView } from './TileView';
 import { MoveEngine, IMovable, ITweenTarget } from './MoveEngine';
@@ -495,19 +486,19 @@ export class EngineView extends Container {
      * @private
      * @internal
      */
-    private onMouseUp_binded: (event: InteractionEvent) => void;
+    private onMouseUp_binded: (event: FederatedPointerEvent) => void;
     /**
      * @property
      * @private
      * @internal
      */
-    private onMouseDown_binded: (event: InteractionEvent) => void;
+    private onMouseDown_binded: (event: FederatedPointerEvent) => void;
     /**
      * @property
      * @private
      * @internal
      */
-    private onMouseMove_binded: (event: InteractionEvent) => void;
+    private onMouseMove_binded: (event: FederatedPointerEvent) => void;
 
     /**
      * Constructor method for the main PIXI.Container class to hold all views within the engine and all map related logic.
@@ -570,7 +561,7 @@ export class EngineView extends Container {
         this.tileHalfWidth = this.tileHalfHeight * Math.tan(((90 - this._config.isoAngle) * Math.PI) / 180);
         // this.TILE_W = this.tileHalfWidth * 2;
 
-        this.loadAssetsAndData();
+        void this.loadAssetsAndData();
     }
 
     /**
@@ -581,7 +572,7 @@ export class EngineView extends Container {
      * @private
      * @internal
      */
-    private loadAssetsAndData(): void {
+    private async loadAssetsAndData(): Promise<void> {
         if (!this._config.mapDataPath) {
             throw new Error(
                 "TRAVISO: No JSON-file path defined for map data. Please check your configuration object that you pass to the 'getEngineInstance' method."
@@ -590,16 +581,12 @@ export class EngineView extends Container {
             throw new Error('TRAVISO: Invalid map-data file path. This file has to be a json file.');
         }
 
-        const loader = new Loader();
-        loader.add('mapData', this._config.mapDataPath);
-
         if (this._config.assetsToLoad && this._config.assetsToLoad.length > 0) {
-            loader.add(this._config.assetsToLoad);
+            await Assets.load(this._config.assetsToLoad);
         }
 
-        loader.load(this.assetsAndDataLoaded.bind(this));
-
-        // TRAVISO.loadData();
+        const mapData = await Assets.load<TMapData>(this._config.mapDataPath);
+        this.assetsAndDataLoaded(mapData);
     }
 
     /**
@@ -610,12 +597,10 @@ export class EngineView extends Container {
      * @private
      * @internal
      *
-     * @param loader {Loader} PIXI's loader instance
+     * @param rawMapData {TMapData} loaded map data
      */
-    private assetsAndDataLoaded(loader: Loader): void {
-        // console.log('assetsAndDataLoaded', resources.mapData.data);
-
-        const mapData: TMapData = loader.resources.mapData.data as TMapData;
+    private assetsAndDataLoaded(rawMapData: TMapData): void {
+        const mapData: TMapData = JSON.parse(JSON.stringify(rawMapData)) as TMapData;
 
         // initial controls
 
@@ -2099,7 +2084,7 @@ export class EngineView extends Container {
         return closestTile;
     }
     /**
-     * Checks if an interaction occurs using the interaction data coming from PIXI.
+     * Checks if an interaction occurs using the global pointer position coming from PIXI.
      * If there is any interaction starts necessary movements or performs necessary callbacks.
      *
      * @method
@@ -2107,16 +2092,16 @@ export class EngineView extends Container {
      * @private
      * @internal
      *
-     * @param interactionData {PIXI.InteractionData} interaction data coming from PIXI
+     * @param globalPos {TPositionPair} pointer position in global coordinates
      */
-    private checkForTileClick(interactionData: InteractionData): void {
-        const lp = this._mapContainer.toLocal(interactionData.global);
+    private checkForTileClick(globalPos: TPositionPair): void {
+        const lp = this._mapContainer.toLocal(globalPos as any);
         const closestTile = this.getTileFromLocalPos(lp);
         if (closestTile) {
             const a = this._objArray[closestTile.mapPos.r][closestTile.mapPos.c];
             if (a) {
                 for (let k = 0; k < a.length; k++) {
-                    if (a[k].isInteractive) {
+                    if (a[k].isInteractiveObject) {
                         if (this._config.objectSelectCallback) {
                             this._config.objectSelectCallback(a[k]);
                         }
@@ -2169,7 +2154,7 @@ export class EngineView extends Container {
             // .on('pointerout', this.onMouseUp_binded)
             .on('pointerupoutside', this.onMouseUp_binded)
             .on('pointermove', this.onMouseMove_binded);
-        this.interactive = true;
+        this.eventMode = 'static';
     }
     /**
      * Disables mouse/touch interactions.
@@ -2187,7 +2172,7 @@ export class EngineView extends Container {
             // .off('pointerout', this.onMouseUp_binded)
             .off('pointerupoutside', this.onMouseUp_binded)
             .off('pointermove', this.onMouseMove_binded);
-        this.interactive = true;
+        this.eventMode = 'passive';
         this._dragging = false;
     }
     /**
@@ -2223,10 +2208,10 @@ export class EngineView extends Container {
      * @private
      * @internal
      *
-     * @param event {InteractionEvent} interaction event object
+     * @param event {FederatedPointerEvent} interaction event object
      */
-    private onMouseDown(event: InteractionEvent): void {
-        const globalPos = event.data.global;
+    private onMouseDown(event: FederatedPointerEvent): void {
+        const globalPos = event.global;
         if (!this._dragging && this.isInteractionInMask(globalPos)) {
             this._dragging = true;
             //this.mouseDownTime = new Date();
@@ -2242,11 +2227,11 @@ export class EngineView extends Container {
      * @private
      * @internal
      *
-     * @param event {InteractionEvent} interaction event object
+     * @param event {FederatedPointerEvent} interaction event object
      */
-    private onMouseMove(event: InteractionEvent): void {
+    private onMouseMove(event: FederatedPointerEvent): void {
         if (this._dragging && this._config.mapDraggable) {
-            const globalPos = event.data.global;
+            const globalPos = event.global;
             this._mapContainer.position.x += globalPos.x - this._dragPrevStartingX;
             this._mapContainer.position.y += globalPos.y - this._dragPrevStartingY;
             this._dragPrevStartingX = globalPos.x;
@@ -2261,18 +2246,18 @@ export class EngineView extends Container {
      * @private
      * @internal
      *
-     * @param event {InteractionEvent} interaction event object
+     * @param event {FederatedPointerEvent} interaction event object
      */
-    private onMouseUp(event: InteractionEvent): void {
+    private onMouseUp(event: FederatedPointerEvent): void {
         if (this._dragging) {
             this._dragging = false;
             //const passedTime = (new Date()) - this.mouseDownTime;
-            const distX = event.data.global.x - this._dragInitStartingX;
-            const distY = event.data.global.y - this._dragInitStartingY;
+            const distX = event.global.x - this._dragInitStartingX;
+            const distY = event.global.y - this._dragInitStartingY;
 
             if (Math.abs(distX) < 5 && Math.abs(distY) < 5) {
                 // NOT DRAGGING IT IS A CLICK
-                this.checkForTileClick(event.data);
+                this.checkForTileClick({ x: event.global.x, y: event.global.y });
             }
         }
     }

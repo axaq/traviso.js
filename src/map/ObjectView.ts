@@ -44,7 +44,7 @@ export class ObjectView extends Container {
      * @property
      * @public
      */
-    public isInteractive: boolean;
+    public isInteractiveObject: boolean;
     /**
      * Number of tiles that map-object covers horizontally on the isometric map
      * @property
@@ -153,8 +153,9 @@ export class ObjectView extends Container {
 
         const info: IObjectInfo = getObjectInfo(this._engine, this.type);
         this.isMovableTo = info.m;
-        this.isInteractive = info.i;
-        this.interactive = this.interactiveChildren = false;
+        this.isInteractiveObject = info.i;
+        this.eventMode = 'passive';
+        this.interactiveChildren = false;
         this.isFloorObject = info.f;
         this.noTransparency = info.nt;
         this.rowSpan = info.rowSpan;
@@ -165,7 +166,8 @@ export class ObjectView extends Container {
         this.currentInteractionOffset = this._interactionOffsets.idle;
 
         this._container = new AnimatedSprite(this._textures.idle);
-        this._container.interactive = this._container.interactiveChildren = false;
+        this._container.eventMode = 'passive';
+        this._container.interactiveChildren = false;
         this._container.anchor.x = xAnchor;
         this._container.anchor.y = 1;
         this.addChild(this._container);

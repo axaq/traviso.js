@@ -30,6 +30,19 @@ if (typeof global !== 'undefined') {
         }
     }
 
+    if (!global.requestAnimationFrame) {
+        // @ts-ignore
+        global.requestAnimationFrame = (callback: FrameRequestCallback): number =>
+            setTimeout(() => callback(Date.now()), 16) as unknown as number;
+    }
+
+    if (!global.cancelAnimationFrame) {
+        // @ts-ignore
+        global.cancelAnimationFrame = (id: number): void => {
+            clearTimeout(id);
+        };
+    }
+
     // Create a minimal document for PIXI.js
     if (!global.document) {
         // Create a mock 2D canvas context
@@ -62,29 +75,56 @@ if (typeof global !== 'undefined') {
             setTransform: () => {},
         });
 
+        class MockCanvas {
+            public width = 0;
+            public height = 0;
+            public style = {};
+
+            public getContext(contextType: string): any {
+                if (contextType === '2d') {
+                    return createMockContext();
+                }
+                return null;
+            }
+
+            public addEventListener(): void {}
+            public removeEventListener(): void {}
+            public getBoundingClientRect() {
+                return {
+                    x: 0,
+                    y: 0,
+                    width: 0,
+                    height: 0,
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                };
+            }
+
+            public toDataURL(): string {
+                return 'data:image/png;base64,';
+            }
+        }
+
+        // @ts-ignore
+        global.HTMLCanvasElement = MockCanvas;
+
         // @ts-ignore
         global.document = {
             createElement: (tagName: string): any => {
                 if (tagName === 'canvas') {
-                    return {
-                        getContext: (contextType: string): any => {
-                            if (contextType === '2d') {
-                                return createMockContext();
-                            }
-                            return null;
-                        },
-                        width: 0,
-                        height: 0,
-                        toDataURL: () => 'data:image/png;base64,',
-                    };
+                    return new MockCanvas();
                 }
                 return {};
             },
-            createElementNS: (): any => ({
-                getContext: (): any => createMockContext(),
-                width: 0,
-                height: 0,
-            }),
+            createElementNS: (): any => new MockCanvas(),
+            addEventListener: () => {},
+            removeEventListener: () => {},
+            body: {
+                appendChild: <T>(node: T): T => node,
+                removeChild: <T>(node: T): T => node,
+            } as any,
         };
     }
 }

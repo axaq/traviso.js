@@ -61,6 +61,15 @@ $> npm run build
 
 This will create browser, CommonJS, and ES module versions of the library under `dist` folder. A minified version for browsers can be found at the same place.
 
+### Compatibility
+
+| traviso.js | Supported pixi.js |
+| ---------- | ----------------- |
+| `0.1.x`    | `^6.0.4`          |
+| `0.2.x`    | `^7.0.0`          |
+
+Pixi 8 support is not included in the `0.2.x` line yet. That will ship in a later release.
+
 ### Usage
 
 ```javascript
@@ -88,7 +97,7 @@ pixiRoot.stage.addChild(engine);
 You can now also use traviso as a npm module:
 
 ```bash
-$> npm install traviso.js
+$> npm install traviso.js pixi.js@^7.0.0
 ```
 
 ```javascript
@@ -96,5 +105,7 @@ import * as TRAVISO from 'traviso.js';
 
 var engine = TRAVISO.getEngineInstance(instanceConfig);
 ```
+
+If you need to stay on Pixi 6, keep using `traviso.js@0.1.12` with `pixi.js@^6.0.4`.
 
 This content is released under the (http://opensource.org/licenses/MIT) MIT License.
